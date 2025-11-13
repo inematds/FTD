@@ -317,6 +317,274 @@
         </div>
       </section>
 
+      <!-- SEÇÃO PRÁTICA: RAG Implementation Guide -->
+      <section class="bg-gradient-to-br from-tecnico/5 to-blue-50/50 dark:from-tecnico/10 dark:to-blue-900/20 rounded-2xl shadow-lg p-8 border-2 border-tecnico/20">
+        <h2 class="text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-6 flex items-center">
+          <span class="text-tecnico mr-3">🚀</span>
+          RAG Implementation: Do Zero à Produção
+        </h2>
+
+        <div class="space-y-6">
+          <div class="bg-white dark:bg-neutral-800 rounded-lg p-6 border-l-4 border-tecnico">
+            <h3 class="text-xl font-bold text-tecnico mb-3">Fase 1: MVP - Prototipação Rápida (2-4 horas)</h3>
+            <div class="grid md:grid-cols-2 gap-4 mb-4">
+              <div class="bg-blue-50 dark:bg-blue-900/20 rounded p-4">
+                <p class="font-semibold text-sm mb-2">Stack Mínimo</p>
+                <ul class="text-xs space-y-1 text-neutral-700 dark:text-neutral-300">
+                  <li>• LangChain + OpenAI</li>
+                  <li>• Chroma (local, in-memory)</li>
+                  <li>• Python + Streamlit UI</li>
+                  <li>• 10-50 documentos teste</li>
+                </ul>
+              </div>
+              <div class="bg-green-50 dark:bg-green-900/20 rounded p-4">
+                <p class="font-semibold text-sm mb-2">Resultados Esperados</p>
+                <ul class="text-xs space-y-1 text-neutral-700 dark:text-neutral-300">
+                  <li>✓ Q&A funcional básico</li>
+                  <li>✓ Latência: 2-5s</li>
+                  <li>✓ Accuracy: 60-70%</li>
+                  <li>✓ Custo: ~$5 para testes</li>
+                </ul>
+              </div>
+            </div>
+            <div class="bg-neutral-900 text-neutral-100 p-4 rounded text-xs font-mono overflow-x-auto">
+# MVP em 50 linhas
+from langchain.vectorstores import Chroma
+from langchain.embeddings import OpenAIEmbeddings
+from langchain.chains import RetrievalQA
+from langchain.llms import OpenAI
+
+# Load docs, create embeddings, setup RAG
+embeddings = OpenAIEmbeddings()
+vectorstore = Chroma.from_documents(docs, embeddings)
+qa = RetrievalQA.from_chain_type(
+    llm=OpenAI(),
+    retriever=vectorstore.as_retriever(k=3)
+)
+answer = qa.run("Sua pergunta aqui")
+            </div>
+          </div>
+
+          <div class="bg-white dark:bg-neutral-800 rounded-lg p-6 border-l-4 border-purple-500">
+            <h3 class="text-xl font-bold text-purple-600 dark:text-purple-400 mb-3">Fase 2: Produção - Sistema Robusto (1-2 semanas)</h3>
+            <div class="grid md:grid-cols-2 gap-4 mb-4">
+              <div class="bg-purple-50 dark:bg-purple-900/20 rounded p-4">
+                <p class="font-semibold text-sm mb-2">Stack Production-Ready</p>
+                <ul class="text-xs space-y-1 text-neutral-700 dark:text-neutral-300">
+                  <li>• FastAPI + async/await</li>
+                  <li>• Pinecone/Weaviate (cloud)</li>
+                  <li>• PostgreSQL (metadata)</li>
+                  <li>• Redis (caching)</li>
+                  <li>• Celery (background jobs)</li>
+                  <li>• 1000+ documentos</li>
+                </ul>
+              </div>
+              <div class="bg-orange-50 dark:bg-orange-900/20 rounded p-4">
+                <p class="font-semibold text-sm mb-2">Melhorias Implementadas</p>
+                <ul class="text-xs space-y-1 text-neutral-700 dark:text-neutral-300">
+                  <li>✓ Hybrid search (semantic + keyword)</li>
+                  <li>✓ Reranking com Cohere</li>
+                  <li>✓ Chunk optimization (overlap)</li>
+                  <li>✓ Metadata filtering</li>
+                  <li>✓ Source citation</li>
+                </ul>
+              </div>
+            </div>
+            <div class="grid grid-cols-3 gap-2 text-center text-xs">
+              <div class="bg-white dark:bg-neutral-700 p-2 rounded">
+                <p class="font-bold text-purple-600">300ms</p>
+                <p class="text-neutral-600 dark:text-neutral-400">Latência média</p>
+              </div>
+              <div class="bg-white dark:bg-neutral-700 p-2 rounded">
+                <p class="font-bold text-green-600">85%</p>
+                <p class="text-neutral-600 dark:text-neutral-400">Accuracy</p>
+              </div>
+              <div class="bg-white dark:bg-neutral-700 p-2 rounded">
+                <p class="font-bold text-blue-600">$200</p>
+                <p class="text-neutral-600 dark:text-neutral-400">Custo/mês (10k queries)</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white dark:bg-neutral-800 rounded-lg p-6 border-l-4 border-green-500">
+            <h3 class="text-xl font-bold text-green-600 dark:text-green-400 mb-3">Fase 3: Scale - Enterprise (2-4 semanas)</h3>
+            <div class="bg-green-50 dark:bg-green-900/20 rounded p-4 mb-3">
+              <p class="font-semibold text-sm mb-2">Otimizações Avançadas:</p>
+              <ul class="text-sm space-y-2 text-neutral-700 dark:text-neutral-300">
+                <li>• <strong>Query expansion:</strong> LLM reformula pergunta antes de buscar (↑15% accuracy)</li>
+                <li>• <strong>Multi-query retrieval:</strong> Gera variações da query (↑20% recall)</li>
+                <li>• <strong>Contextual compression:</strong> Remove chunks irrelevantes pós-retrieval</li>
+                <li>• <strong>Adaptive chunking:</strong> Tamanho dinâmico baseado em tipo de documento</li>
+                <li>• <strong>Feedback loop:</strong> Thumbs up/down melhora ranking</li>
+              </ul>
+            </div>
+            <div class="text-xs bg-blue-50 dark:bg-blue-900/20 p-3 rounded">
+              <strong>Benchmarks Enterprise:</strong> Latência p95 < 500ms • Accuracy 90%+ • Suporta 100k+ documentos • $500-1k/mês
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- COMPARATIVO: Vector Databases -->
+      <section class="bg-white dark:bg-neutral-800 rounded-2xl shadow-lg p-8">
+        <h2 class="text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-6 flex items-center">
+          <span class="text-tecnico mr-3">📊</span>
+          Comparativo Completo: Vector Databases 2025
+        </h2>
+
+        <div class="overflow-x-auto mb-6">
+          <table class="w-full text-sm border-collapse">
+            <thead>
+              <tr class="bg-tecnico/10 dark:bg-tecnico/20">
+                <th class="p-3 text-left font-bold border border-neutral-300 dark:border-neutral-600">Database</th>
+                <th class="p-3 text-left font-bold border border-neutral-300 dark:border-neutral-600">Tipo</th>
+                <th class="p-3 text-left font-bold border border-neutral-300 dark:border-neutral-600">Preço</th>
+                <th class="p-3 text-left font-bold border border-neutral-300 dark:border-neutral-600">Performance</th>
+                <th class="p-3 text-left font-bold border border-neutral-300 dark:border-neutral-600">Melhor Para</th>
+              </tr>
+            </thead>
+            <tbody class="text-neutral-700 dark:text-neutral-300">
+              <tr>
+                <td class="p-3 font-semibold border border-neutral-300 dark:border-neutral-600">Pinecone</td>
+                <td class="p-3 border border-neutral-300 dark:border-neutral-600">Managed</td>
+                <td class="p-3 border border-neutral-300 dark:border-neutral-600">$70/mês (100k vectors)</td>
+                <td class="p-3 border border-neutral-300 dark:border-neutral-600"><span class="text-green-600">Latência: 50-100ms</span></td>
+                <td class="p-3 border border-neutral-300 dark:border-neutral-600">Começar rápido, zero ops</td>
+              </tr>
+              <tr class="bg-neutral-50 dark:bg-neutral-700/30">
+                <td class="p-3 font-semibold border border-neutral-300 dark:border-neutral-600">Weaviate</td>
+                <td class="p-3 border border-neutral-300 dark:border-neutral-600">Open-source + Cloud</td>
+                <td class="p-3 border border-neutral-300 dark:border-neutral-600">Grátis (self-host) / $25+/mês</td>
+                <td class="p-3 border border-neutral-300 dark:border-neutral-600"><span class="text-green-600">Muito rápido</span></td>
+                <td class="p-3 border border-neutral-300 dark:border-neutral-600">Controle total, multi-tenancy</td>
+              </tr>
+              <tr>
+                <td class="p-3 font-semibold border border-neutral-300 dark:border-neutral-600">Qdrant</td>
+                <td class="p-3 border border-neutral-300 dark:border-neutral-600">Open-source + Cloud</td>
+                <td class="p-3 border border-neutral-300 dark:border-neutral-600">Grátis (self-host) / $30+/mês</td>
+                <td class="p-3 border border-neutral-300 dark:border-neutral-600"><span class="text-blue-600">Ultra-rápido (Rust)</span></td>
+                <td class="p-3 border border-neutral-300 dark:border-neutral-600">High performance, filtering avançado</td>
+              </tr>
+              <tr class="bg-neutral-50 dark:bg-neutral-700/30">
+                <td class="p-3 font-semibold border border-neutral-300 dark:border-neutral-600">pgvector</td>
+                <td class="p-3 border border-neutral-300 dark:border-neutral-600">PostgreSQL extension</td>
+                <td class="p-3 border border-neutral-300 dark:border-neutral-600"><span class="text-green-600">$0 (usa Postgres)</span></td>
+                <td class="p-3 border border-neutral-300 dark:border-neutral-600"><span class="text-yellow-600">Moderado</span></td>
+                <td class="p-3 border border-neutral-300 dark:border-neutral-600">Já usa Postgres, simplicidade</td>
+              </tr>
+              <tr>
+                <td class="p-3 font-semibold border border-neutral-300 dark:border-neutral-600">Chroma</td>
+                <td class="p-3 border border-neutral-300 dark:border-neutral-600">Open-source (local)</td>
+                <td class="p-3 border border-neutral-300 dark:border-neutral-600"><span class="text-green-600">Grátis</span></td>
+                <td class="p-3 border border-neutral-300 dark:border-neutral-600">Local/small scale</td>
+                <td class="p-3 border border-neutral-300 dark:border-neutral-600">Protótipos, dev local</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-4">
+          <div class="border-2 border-blue-500 rounded-lg p-4 bg-blue-50 dark:bg-blue-900/20">
+            <h4 class="font-bold text-blue-700 dark:text-blue-400 mb-2">🥇 Para Startups</h4>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300 mb-2"><strong>Recomendação:</strong> Pinecone</p>
+            <p class="text-xs text-neutral-600 dark:text-neutral-400">Setup em minutos, escala automática, suporte excepcional. Vale o custo para focar em produto.</p>
+          </div>
+
+          <div class="border-2 border-purple-500 rounded-lg p-4 bg-purple-50 dark:bg-purple-900/20">
+            <h4 class="font-bold text-purple-700 dark:text-purple-400 mb-2">🥈 Para Empresas</h4>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300 mb-2"><strong>Recomendação:</strong> Weaviate/Qdrant</p>
+            <p class="text-xs text-neutral-600 dark:text-neutral-400">Controle, custo otimizado em escala, features enterprise (multi-tenancy, RBAC).</p>
+          </div>
+
+          <div class="border-2 border-green-500 rounded-lg p-4 bg-green-50 dark:bg-green-900/20">
+            <h4 class="font-bold text-green-700 dark:text-green-400 mb-2">🥉 Para Protótipos</h4>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300 mb-2"><strong>Recomendação:</strong> Chroma ou pgvector</p>
+            <p class="text-xs text-neutral-600 dark:text-neutral-400">Zero custo, setup instantâneo. Perfeito para validar ideia antes de investir.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- GUIA: Chunking Strategies -->
+      <section class="bg-white dark:bg-neutral-800 rounded-2xl shadow-lg p-8">
+        <h2 class="text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-6 flex items-center">
+          <span class="text-tecnico mr-3">✂️</span>
+          Guia Definitivo: Chunking Strategies
+        </h2>
+
+        <div class="bg-yellow-50 dark:bg-yellow-900/20 border-l-4 border-yellow-500 p-4 mb-6">
+          <p class="text-sm text-neutral-700 dark:text-neutral-300">
+            <strong>Por que chunking importa:</strong> Chunks muito grandes = contexto irrelevante. Chunks muito pequenos = informação fragmentada. O sweet spot: 500-1000 tokens com 10-20% overlap.
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-6 mb-6">
+          <div class="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-6">
+            <h3 class="text-lg font-bold text-blue-700 dark:text-blue-400 mb-4">Estratégias por Tipo de Documento</h3>
+            <div class="space-y-3 text-sm">
+              <div class="border-l-4 border-blue-500 pl-3">
+                <p class="font-semibold">Documentação Técnica</p>
+                <p class="text-xs text-neutral-600 dark:text-neutral-400">Split por headers (H2/H3). Mantém estrutura lógica. 800-1200 tokens.</p>
+              </div>
+              <div class="border-l-4 border-purple-500 pl-3">
+                <p class="font-semibold">Contratos/Legal</p>
+                <p class="text-xs text-neutral-600 dark:text-neutral-400">Split por cláusulas. Preserva contexto legal. 600-1000 tokens.</p>
+              </div>
+              <div class="border-l-4 border-green-500 pl-3">
+                <p class="font-semibold">Artigos/Blog Posts</p>
+                <p class="text-xs text-neutral-600 dark:text-neutral-400">Split por parágrafos. Overlap agressivo. 400-800 tokens.</p>
+              </div>
+              <div class="border-l-4 border-orange-500 pl-3">
+                <p class="font-semibold">Código</p>
+                <p class="text-xs text-neutral-600 dark:text-neutral-400">Split por funções/classes. AST-based. 200-500 tokens.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-purple-50 dark:bg-purple-900/20 rounded-lg p-6">
+            <h3 class="text-lg font-bold text-purple-700 dark:text-purple-400 mb-4">Técnicas Avançadas</h3>
+            <div class="space-y-3 text-sm text-neutral-700 dark:text-neutral-300">
+              <div class="border-l-4 border-purple-500 pl-3">
+                <p class="font-semibold">Semantic Chunking</p>
+                <p class="text-xs">Split baseado em mudança semântica (embeddings de sentenças). Mais preciso, mais caro.</p>
+              </div>
+              <div class="border-l-4 border-purple-500 pl-3">
+                <p class="font-semibold">Recursive Chunking</p>
+                <p class="text-xs">Tenta splits maiores (sections), depois médios (paragraphs), depois pequenos (sentences).</p>
+              </div>
+              <div class="border-l-4 border-purple-500 pl-3">
+                <p class="font-semibold">Parent-Child Chunks</p>
+                <p class="text-xs">Chunks pequenos para retrieval, chunks grandes para context. Melhor de dois mundos.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-gradient-to-r from-tecnico/10 to-blue-100/50 dark:from-tecnico/20 dark:to-blue-900/30 rounded-lg p-6">
+          <h4 class="font-bold text-tecnico mb-3">🧪 Framework de Experimentação</h4>
+          <div class="grid md:grid-cols-4 gap-3 text-xs">
+            <div class="bg-white dark:bg-neutral-800 p-3 rounded">
+              <p class="font-bold mb-1">Tamanho</p>
+              <p class="text-neutral-600 dark:text-neutral-400">Teste: 300, 500, 800, 1200 tokens</p>
+            </div>
+            <div class="bg-white dark:bg-neutral-800 p-3 rounded">
+              <p class="font-bold mb-1">Overlap</p>
+              <p class="text-neutral-600 dark:text-neutral-400">Teste: 0%, 10%, 20%, 30%</p>
+            </div>
+            <div class="bg-white dark:bg-neutral-800 p-3 rounded">
+              <p class="font-bold mb-1">Método</p>
+              <p class="text-neutral-600 dark:text-neutral-400">Teste: Fixed, Semantic, Recursive</p>
+            </div>
+            <div class="bg-white dark:bg-neutral-800 p-3 rounded">
+              <p class="font-bold mb-1">Métrica</p>
+              <p class="text-neutral-600 dark:text-neutral-400">Medir: Recall, Precision, F1</p>
+            </div>
+          </div>
+          <p class="text-xs text-neutral-600 dark:text-neutral-400 mt-3">
+            <strong>Dica:</strong> Crie eval set com 50-100 perguntas + respostas esperadas. Meça accuracy de cada configuração.
+          </p>
+        </div>
+      </section>
+
     </div>
 
     <!-- Navigation Footer -->
