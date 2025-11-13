@@ -317,6 +317,258 @@
         </div>
       </section>
 
+      <!-- SEÇÃO PRÁTICA: 3 Agent Systems in Production -->
+      <section class="bg-gradient-to-br from-tecnico/5 to-blue-50/50 dark:from-tecnico/10 dark:to-blue-900/20 rounded-2xl shadow-lg p-8 border-2 border-tecnico/20">
+        <h2 class="text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-6 flex items-center">
+          <span class="text-tecnico mr-3">🚀</span>
+          3 Sistemas de Agentes para Produção
+        </h2>
+
+        <div class="space-y-6">
+          <div class="bg-white dark:bg-neutral-800 rounded-lg p-6 border-l-4 border-tecnico">
+            <h3 class="text-xl font-bold text-tecnico mb-3">1. Research Assistant Multi-Agent (CrewAI)</h3>
+            <p class="text-neutral-700 dark:text-neutral-300 mb-4">
+              <strong>Use Case:</strong> Pesquisa competitiva automatizada com múltiplos agentes especializados<br>
+              <strong>Stack:</strong> CrewAI + GPT-4o + Serper API + Playwright + PostgreSQL
+            </p>
+            <div class="grid md:grid-cols-2 gap-4 mb-4">
+              <div class="bg-blue-50 dark:bg-blue-900/20 rounded p-4">
+                <h4 class="font-semibold text-sm mb-2">Agentes do Sistema:</h4>
+                <ul class="text-xs space-y-1 text-neutral-700 dark:text-neutral-300">
+                  <li>• <strong>Researcher:</strong> Busca web + scraping</li>
+                  <li>• <strong>Analyst:</strong> Analisa dados coletados</li>
+                  <li>• <strong>Writer:</strong> Gera relatório estruturado</li>
+                  <li>• <strong>Critic:</strong> Valida qualidade e facts</li>
+                </ul>
+              </div>
+              <div class="bg-green-50 dark:bg-green-900/20 rounded p-4">
+                <h4 class="font-semibold text-sm mb-2">Métricas de Performance:</h4>
+                <ul class="text-xs space-y-1 text-neutral-700 dark:text-neutral-300">
+                  <li>✓ Tempo: 5-10 min por relatório</li>
+                  <li>✓ Custo: $0.50-1.50 por execução</li>
+                  <li>✓ Accuracy: 85-90% vs humano</li>
+                  <li>✓ Throughput: 100+ reports/dia</li>
+                </ul>
+              </div>
+            </div>
+            <div class="bg-neutral-900 text-neutral-100 p-4 rounded text-xs font-mono overflow-x-auto">
+from crewai import Agent, Task, Crew
+
+researcher = Agent(
+    role="Research Specialist",
+    goal="Find comprehensive data on {topic}",
+    tools=[web_search_tool, scraper_tool]
+)
+
+analyst = Agent(
+    role="Data Analyst",
+    goal="Analyze and structure findings",
+    tools=[calculator_tool, data_analysis_tool]
+)
+
+crew = Crew(agents=[researcher, analyst], process="sequential")
+result = crew.kickoff(inputs={{"topic": "AI competitors"}})
+            </div>
+          </div>
+
+          <div class="bg-white dark:bg-neutral-800 rounded-lg p-6 border-l-4 border-purple-500">
+            <h3 class="text-xl font-bold text-purple-600 dark:text-purple-400 mb-3">2. Customer Support Agent (LangGraph)</h3>
+            <p class="text-neutral-700 dark:text-neutral-300 mb-4">
+              <strong>Use Case:</strong> Suporte técnico automatizado com routing inteligente<br>
+              <strong>Stack:</strong> LangGraph + Claude + Zendesk API + Knowledge Base (Pinecone)
+            </p>
+            <div class="bg-purple-50 dark:bg-purple-900/20 rounded-lg p-4 mb-4">
+              <h4 class="font-semibold text-sm mb-2">Workflow Graph:</h4>
+              <ul class="text-sm space-y-1 text-neutral-700 dark:text-neutral-300">
+                <li>1. <strong>Classify Intent:</strong> Support, sales, billing, technical</li>
+                <li>2. <strong>Retrieve Context:</strong> RAG sobre docs + historical tickets</li>
+                <li>3. <strong>Generate Response:</strong> Claude com context injection</li>
+                <li>4. <strong>Validation:</strong> Confidence score > 0.8 → auto-respond, else → human</li>
+                <li>5. <strong>Feedback Loop:</strong> Thumbs up/down melhora retrieval</li>
+              </ul>
+            </div>
+            <div class="grid grid-cols-3 gap-2 text-center text-xs">
+              <div class="bg-white dark:bg-neutral-700 p-2 rounded">
+                <p class="font-bold text-purple-600">70%</p>
+                <p class="text-neutral-600 dark:text-neutral-400">Tickets resolvidos automaticamente</p>
+              </div>
+              <div class="bg-white dark:bg-neutral-700 p-2 rounded">
+                <p class="font-bold text-green-600">< 30s</p>
+                <p class="text-neutral-600 dark:text-neutral-400">Tempo médio resposta</p>
+              </div>
+              <div class="bg-white dark:bg-neutral-700 p-2 rounded">
+                <p class="font-bold text-blue-600">$2k/mês</p>
+                <p class="text-neutral-600 dark:text-neutral-400">Economia em headcount</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white dark:bg-neutral-800 rounded-lg p-6 border-l-4 border-orange-500">
+            <h3 class="text-xl font-bold text-orange-600 dark:text-orange-400 mb-3">3. Code Review Agent (AutoGen)</h3>
+            <p class="text-neutral-700 dark:text-neutral-300 mb-4">
+              <strong>Use Case:</strong> Code review automatizado com múltiplas perspectivas<br>
+              <strong>Stack:</strong> AutoGen + GPT-4 + GitHub API + Static Analysis Tools
+            </p>
+            <div class="bg-orange-50 dark:bg-orange-900/20 rounded-lg p-4 mb-3">
+              <h4 class="font-semibold text-sm mb-2">Agentes Especializados:</h4>
+              <ul class="text-sm space-y-1 text-neutral-700 dark:text-neutral-300">
+                <li>• <strong>Security Reviewer:</strong> Busca vulnerabilidades (SQL injection, XSS)</li>
+                <li>• <strong>Performance Reviewer:</strong> Analisa complexidade, bottlenecks</li>
+                <li>• <strong>Style Reviewer:</strong> Enforça coding standards</li>
+                <li>• <strong>Test Reviewer:</strong> Valida coverage e edge cases</li>
+                <li>• <strong>Consensus Agent:</strong> Agrega feedback e prioriza issues</li>
+              </ul>
+            </div>
+            <div class="text-xs bg-blue-50 dark:bg-blue-900/20 p-3 rounded">
+              <strong>Impacto:</strong> Reduz tempo de review em 60%. Detecta 40% mais issues que single-agent. $500/mês vs $15k custo reviewer humano adicional
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- COMPARATIVO: Agent Frameworks -->
+      <section class="bg-white dark:bg-neutral-800 rounded-2xl shadow-lg p-8">
+        <h2 class="text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-6 flex items-center">
+          <span class="text-tecnico mr-3">⚖️</span>
+          Comparativo: Frameworks de Agentes 2025
+        </h2>
+
+        <div class="overflow-x-auto mb-6">
+          <table class="w-full text-sm border-collapse">
+            <thead>
+              <tr class="bg-tecnico/10 dark:bg-tecnico/20">
+                <th class="p-3 text-left font-bold border border-neutral-300 dark:border-neutral-600">Framework</th>
+                <th class="p-3 text-left font-bold border border-neutral-300 dark:border-neutral-600">Paradigma</th>
+                <th class="p-3 text-left font-bold border border-neutral-300 dark:border-neutral-600">Curva Aprendizado</th>
+                <th class="p-3 text-left font-bold border border-neutral-300 dark:border-neutral-600">Melhor Para</th>
+                <th class="p-3 text-left font-bold border border-neutral-300 dark:border-neutral-600">Comunidade</th>
+              </tr>
+            </thead>
+            <tbody class="text-neutral-700 dark:text-neutral-300">
+              <tr>
+                <td class="p-3 font-semibold border border-neutral-300 dark:border-neutral-600">LangChain</td>
+                <td class="p-3 border border-neutral-300 dark:border-neutral-600">Chains + Agents</td>
+                <td class="p-3 border border-neutral-300 dark:border-neutral-600"><span class="text-yellow-600">Média</span></td>
+                <td class="p-3 border border-neutral-300 dark:border-neutral-600">Workflows sequenciais, RAG</td>
+                <td class="p-3 border border-neutral-300 dark:border-neutral-600"><span class="text-green-600">Maior (80k+ stars)</span></td>
+              </tr>
+              <tr class="bg-neutral-50 dark:bg-neutral-700/30">
+                <td class="p-3 font-semibold border border-neutral-300 dark:border-neutral-600">LangGraph</td>
+                <td class="p-3 border border-neutral-300 dark:border-neutral-600">State Machines</td>
+                <td class="p-3 border border-neutral-300 dark:border-neutral-600"><span class="text-red-600">Alta</span></td>
+                <td class="p-3 border border-neutral-300 dark:border-neutral-600">Workflows complexos com loops</td>
+                <td class="p-3 border border-neutral-300 dark:border-neutral-600"><span class="text-blue-600">Crescendo rápido</span></td>
+              </tr>
+              <tr>
+                <td class="p-3 font-semibold border border-neutral-300 dark:border-neutral-600">CrewAI</td>
+                <td class="p-3 border border-neutral-300 dark:border-neutral-600">Role-based Agents</td>
+                <td class="p-3 border border-neutral-300 dark:border-neutral-600"><span class="text-green-600">Baixa</span></td>
+                <td class="p-3 border border-neutral-300 dark:border-neutral-600">Multi-agent collaboration</td>
+                <td class="p-3 border border-neutral-300 dark:border-neutral-600"><span class="text-yellow-600">Média (15k stars)</span></td>
+              </tr>
+              <tr class="bg-neutral-50 dark:bg-neutral-700/30">
+                <td class="p-3 font-semibold border border-neutral-300 dark:border-neutral-600">AutoGen</td>
+                <td class="p-3 border border-neutral-300 dark:border-neutral-600">Conversational</td>
+                <td class="p-3 border border-neutral-300 dark:border-neutral-600"><span class="text-yellow-600">Média</span></td>
+                <td class="p-3 border border-neutral-300 dark:border-neutral-600">Code generation, debugging</td>
+                <td class="p-3 border border-neutral-300 dark:border-neutral-600"><span class="text-blue-600">Microsoft backing</span></td>
+              </tr>
+              <tr>
+                <td class="p-3 font-semibold border border-neutral-300 dark:border-neutral-600">LlamaIndex</td>
+                <td class="p-3 border border-neutral-300 dark:border-neutral-600">Data-centric</td>
+                <td class="p-3 border border-neutral-300 dark:border-neutral-600"><span class="text-green-600">Baixa-Média</span></td>
+                <td class="p-3 border border-neutral-300 dark:border-neutral-600">RAG, document Q&A</td>
+                <td class="p-3 border border-neutral-300 dark:border-neutral-600"><span class="text-green-600">Grande (30k+ stars)</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-4">
+          <div class="border-2 border-blue-500 rounded-lg p-4 bg-blue-50 dark:bg-blue-900/20">
+            <h4 class="font-bold text-blue-700 dark:text-blue-400 mb-2">Para Iniciantes</h4>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300 mb-2"><strong>Recomendação:</strong> CrewAI ou LlamaIndex</p>
+            <p class="text-xs text-neutral-600 dark:text-neutral-400">Abstrações simples, docs excelentes, resultados rápidos.</p>
+          </div>
+
+          <div class="border-2 border-purple-500 rounded-lg p-4 bg-purple-50 dark:bg-purple-900/20">
+            <h4 class="font-bold text-purple-700 dark:text-purple-400 mb-2">Para Produção</h4>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300 mb-2"><strong>Recomendação:</strong> LangGraph</p>
+            <p class="text-xs text-neutral-600 dark:text-neutral-400">Controle granular, observability built-in, debugging robusto.</p>
+          </div>
+
+          <div class="border-2 border-green-500 rounded-lg p-4 bg-green-50 dark:bg-green-900/20">
+            <h4 class="font-bold text-green-700 dark:text-green-400 mb-2">Para Code Tasks</h4>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300 mb-2"><strong>Recomendação:</strong> AutoGen</p>
+            <p class="text-xs text-neutral-600 dark:text-neutral-400">Otimizado para coding, debugging, e conversational code gen.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- GUIA: Tool Use Best Practices -->
+      <section class="bg-white dark:bg-neutral-800 rounded-2xl shadow-lg p-8">
+        <h2 class="text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-6 flex items-center">
+          <span class="text-tecnico mr-3">🛠️</span>
+          Guia Completo: Tool Use & Function Calling
+        </h2>
+
+        <div class="grid md:grid-cols-2 gap-6 mb-6">
+          <div class="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-6">
+            <h3 class="text-lg font-bold text-blue-700 dark:text-blue-400 mb-4">Anatomia de uma Tool</h3>
+            <div class="space-y-3 text-sm">
+              <div class="border-l-4 border-blue-500 pl-3">
+                <p class="font-semibold">Name (obrigatório)</p>
+                <p class="text-xs text-neutral-600 dark:text-neutral-400">Descritivo, snake_case. Ex: search_web, get_weather, execute_sql</p>
+              </div>
+              <div class="border-l-4 border-blue-500 pl-3">
+                <p class="font-semibold">Description (crítico)</p>
+                <p class="text-xs text-neutral-600 dark:text-neutral-400">Explique QUANDO usar. "Use this to search the web for current information"</p>
+              </div>
+              <div class="border-l-4 border-blue-500 pl-3">
+                <p class="font-semibold">Parameters Schema</p>
+                <p class="text-xs text-neutral-600 dark:text-neutral-400">JSON Schema com tipos, required, descriptions detalhadas</p>
+              </div>
+              <div class="border-l-4 border-blue-500 pl-3">
+                <p class="font-semibold">Error Handling</p>
+                <p class="text-xs text-neutral-600 dark:text-neutral-400">Retorne mensagens claras para o LLM se tool falha</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-purple-50 dark:bg-purple-900/20 rounded-lg p-6">
+            <h3 class="text-lg font-bold text-purple-700 dark:text-purple-400 mb-4">Tools Essenciais</h3>
+            <div class="space-y-3 text-sm text-neutral-700 dark:text-neutral-300">
+              <div class="border-l-4 border-purple-500 pl-3">
+                <p class="font-semibold">Web Search</p>
+                <p class="text-xs">Serper, Brave Search API para info atualizada</p>
+              </div>
+              <div class="border-l-4 border-purple-500 pl-3">
+                <p class="font-semibold">Calculator</p>
+                <p class="text-xs">Python eval() ou WolframAlpha para cálculos precisos</p>
+              </div>
+              <div class="border-l-4 border-purple-500 pl-3">
+                <p class="font-semibold">Database Query</p>
+                <p class="text-xs">Text-to-SQL + execution (com sandboxing)</p>
+              </div>
+              <div class="border-l-4 border-purple-500 pl-3">
+                <p class="font-semibold">Code Interpreter</p>
+                <p class="text-xs">Execução segura de Python em container isolado</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-red-50 dark:bg-red-900/20 border-l-4 border-red-500 p-4">
+          <h4 class="font-bold text-red-700 dark:text-red-400 mb-2">⚠️ Segurança em Tool Use</h4>
+          <ul class="text-sm space-y-1 text-neutral-700 dark:text-neutral-300">
+            <li>❌ <strong>NUNCA confie em tool inputs:</strong> Sanitize SQL queries, validate file paths</li>
+            <li>❌ <strong>Rate limiting:</strong> Limite execuções/min para prevenir abuse</li>
+            <li>❌ <strong>Sandboxing:</strong> Execute código em containers isolados (Docker, E2B)</li>
+            <li>❌ <strong>Approval gates:</strong> Ações destrutivas (delete, pay) requerem confirmação humana</li>
+          </ul>
+        </div>
+      </section>
+
     </div>
 
     <!-- Navigation Footer -->
