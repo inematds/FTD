@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Nível Iniciante - Fundamentos de IA e Transformação Digital">
+  <title>Nível Iniciante | FTD</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Tailwind Config -->
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            iniciante: '#10B981',
+            tecnico: '#3B82F6',
+            masterclass: '#8B5CF6',
+          },
+          fontFamily: {
+            sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <style>
+    * {
+      transition: background-color 200ms ease-in-out, border-color 200ms ease-in-out, color 200ms ease-in-out;
+    }
+    .preload * {
+      transition: none !important;
+    }
+
+    /* Modal CSS */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 100;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.6);
+      backdrop-filter: blur(4px);
+    }
+    .modal.active {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-content {
+      background-color: white;
+      margin: auto;
+      padding: 0;
+      width: 90%;
+      max-width: 1000px;
+      max-height: 90vh;
+      border-radius: 1rem;
+      overflow: hidden;
+      box-shadow: 0 20px 25px rgba(0,0,0,0.3);
+    }
+    .dark .modal-content {
+      background-color: #1f2937;
+    }
+    .modal-header {
+      padding: 1.5rem 2rem;
+      border-bottom: 1px solid #e5e7eb;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .dark .modal-header {
+      border-bottom-color: #374151;
+    }
+    .modal-body {
+      padding: 2rem;
+      overflow-y: auto;
+      max-height: calc(90vh - 80px);
+    }
+    .close-modal {
+      color: #9ca3af;
+      font-size: 2rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .close-modal:hover {
+      color: #ef4444;
+    }
+  </style>
+</head>
+<body class="preload bg-neutral-50 dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100">
+
+  <!-- Navegação -->
+  <nav class="sticky top-0 z-50 bg-white/90 dark:bg-neutral-800/90 backdrop-blur-sm border-b border-neutral-200 dark:border-neutral-700">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <a href="../index.html" class="text-2xl font-bold bg-gradient-to-r from-iniciante via-tecnico to-masterclass bg-clip-text text-transparent">
+          🎓 FTD
+        </a>
+
+        <div class="hidden md:flex items-center space-x-8">
+          <a href="../index.html" class="text-neutral-700 dark:text-neutral-300 hover:text-iniciante transition">Início</a>
+          <a href="../index.html#niveis" class="text-neutral-700 dark:text-neutral-300 hover:text-iniciante transition">Níveis</a>
+          <a href="https://github.com/ftd-project" class="text-neutral-700 dark:text-neutral-300 hover:text-iniciante transition">GitHub</a>
+
+          <button id="theme-toggle" class="p-2 rounded-lg bg-neutral-100 dark:bg-neutral-700 hover:bg-neutral-200 dark:hover:bg-neutral-600">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+            </svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path>
+            </svg>
+          </button>
+        </div>
+
+        <div class="md:hidden flex items-center gap-3">
+          <button id="theme-toggle-mobile" class="p-2 rounded-lg bg-neutral-100 dark:bg-neutral-700">
+            <svg class="theme-icon-dark-mobile hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+            </svg>
+            <svg class="theme-icon-light-mobile hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path>
+            </svg>
+          </button>
+          <button id="mobile-menu-button" class="text-neutral-700 dark:text-neutral-300">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-neutral-800 border-t border-neutral-200 dark:border-neutral-700">
+        <div class="px-4 py-2 space-y-1">
+          <a href="../index.html" class="block px-3 py-2 rounded-md hover:bg-neutral-100 dark:hover:bg-neutral-700">Início</a>
+          <a href="../index.html#niveis" class="block px-3 py-2 rounded-md hover:bg-neutral-100 dark:hover:bg-neutral-700">Níveis</a>
+          <a href="https://github.com/ftd-project" class="block px-3 py-2 rounded-md hover:bg-neutral-100 dark:hover:bg-neutral-700">GitHub</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Breadcrumb -->
+  <div class="bg-white dark:bg-neutral-800 border-b border-neutral-200 dark:border-neutral-700">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+      <nav class="flex text-sm" aria-label="Breadcrumb">
+        <a href="../index.html" class="text-iniciante hover:text-emerald-600">Início</a>
+        <span class="mx-2 text-neutral-400">/</span>
+        <span class="text-neutral-600 dark:text-neutral-400">Nível Iniciante</span>
+      </nav>
+    </div>
+  </div>
+
+  <!-- Hero Section -->
+  <section class="bg-gradient-to-r from-iniciante to-emerald-600 py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-white">
+
+      <div class="flex items-center gap-4 mb-4">
+        <span class="inline-block px-4 py-2 bg-white/20 rounded-full text-sm font-semibold">
+          30 horas
+        </span>
+        <span class="inline-block px-4 py-2 bg-white/20 rounded-full text-sm font-semibold">
+          Obrigatório
+        </span>
+      </div>
+
+      <h1 class="text-4xl lg:text-5xl font-bold mb-4">
+        🌟 Nível Iniciante: Fundamentos de IA
+      </h1>
+
+      <p class="text-xl text-white/90 mb-6">
+        Base essencial para começar sua jornada em Inteligência Artificial
+      </p>
+
+      <!-- Stats Grid -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
+        <div class="bg-white/10 backdrop-blur p-4 rounded-lg">
+          <div class="text-2xl font-bold">9</div>
+          <div class="text-sm text-emerald-100">Módulos</div>
+        </div>
+        <div class="bg-white/10 backdrop-blur p-4 rounded-lg">
+          <div class="text-2xl font-bold">30h</div>
+          <div class="text-sm text-emerald-100">Duração</div>
+        </div>
+        <div class="bg-white/10 backdrop-blur p-4 rounded-lg">
+          <div class="text-2xl font-bold">100%</div>
+          <div class="text-sm text-emerald-100">Prático</div>
+        </div>
+        <div class="bg-white/10 backdrop-blur p-4 rounded-lg">
+          <div class="text-2xl font-bold">Grátis</div>
+          <div class="text-sm text-emerald-100">Acesso Base</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Módulos -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- MÓDULO 1.1 -->
+    <div class="chapter-card bg-white dark:bg-neutral-800 rounded-2xl shadow-lg p-8 mb-8 border-2 border-transparent hover:border-iniciante transition-all">
+
+      <!-- Header -->
+      <div class="flex items-start justify-between mb-6">
+        <div>
+          <span class="inline-block px-3 py-1 bg-iniciante/10 text-iniciante rounded-full text-sm font-semibold mb-3">
+            3 horas
+          </span>
+          <h2 class="text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-2">
+            🧠 Módulo 1.1: Impacto da IA
+          </h2>
+          <p class="text-neutral-600 dark:text-neutral-400">
+            Entenda o que é IA, sua evolução histórica e impacto transformador no mundo atual
+          </p>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="flex flex-wrap gap-3 mb-6">
+        <button onclick="openModal('modulo-1-1')" class="px-6 py-3 bg-iniciante text-white rounded-lg font-semibold hover:bg-emerald-600 transition-colors flex items-center gap-2">
+          <span>📖</span>
+          <span>Ver em Modal</span>
+        </button>
+
+        <a href="../modulos/modulo-1-1.html" class="px-6 py-3 bg-transparent border-2 border-iniciante text-iniciante dark:text-iniciante rounded-lg font-semibold hover:bg-iniciante hover:text-white transition-colors flex items-center gap-2">
+          <span>📄</span>
+          <span>Abrir Página Completa</span>
+        </a>
+
+        <a href="../pdfs/modulo-1-1.md" download class="px-6 py-3 bg-transparent border-2 border-neutral-300 dark:border-neutral-600 text-neutral-700 dark:text-neutral-300 rounded-lg font-semibold hover:bg-neutral-100 dark:hover:bg-neutral-700 transition-colors flex items-center gap-2">
+          <span>📥</span>
+          <span>Download PDF/MD</span>
+        </a>
+      </div>
+
+      <!-- Tópicos Expansíveis (Ultra Compactos) -->
+      <div class="mb-4">
+        <h3 class="font-semibold text-neutral-900 dark:text-neutral-100 mb-3 text-lg">
+          📚 Tópicos-chave do módulo:
+        </h3>
+
+        <ul class="topics-list space-y-0.5">
+
+          <!-- Tópico 1 -->
+          <li class="topic-item" data-topic="m1-1-definicao">
+            <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+              🎯 O que é Inteligência Artificial
+            </button>
+
+            <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg border-l-4 border-iniciante">
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">O que é:</strong> Inteligência Artificial são sistemas computacionais que simulam capacidades humanas como aprendizado, raciocínio e adaptação. Esses sistemas processam grandes volumes de dados para identificar padrões e tomar decisões.
+              </p>
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">Por que aprender:</strong> A IA está transformando todos os setores da economia. Profissionais que entendem IA têm vantagem competitiva no mercado de trabalho e podem aplicar essas tecnologias para resolver problemas reais.
+              </p>
+              <p class="text-sm text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">Conceitos chave:</strong> Machine Learning, redes neurais, processamento de linguagem natural (NLP), visão computacional, algoritmos de aprendizado
+              </p>
+            </div>
+          </li>
+
+          <!-- Tópico 2 -->
+          <li class="topic-item" data-topic="m1-1-evolucao">
+            <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+              📜 Evolução da IA: Dos Primórdios até 2025
+            </button>
+
+            <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg border-l-4 border-iniciante">
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">O que é:</strong> A história da IA começou em 1950 com o Teste de Turing. Passou por várias fases: sistemas especialistas nos anos 80, machine learning nos anos 2000, e deep learning que revolucionou o campo a partir de 2010. Em 2022, o ChatGPT marcou a era da IA generativa acessível.
+              </p>
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">Por que aprender:</strong> Conhecer a evolução ajuda a entender as limitações atuais e o potencial futuro da tecnologia. Evita expectativas irreais e permite aplicar IA de forma mais estratégica.
+              </p>
+              <p class="text-sm text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">Conceitos chave:</strong> Teste de Turing, invernos da IA, revolução do deep learning, transformers, GPT, IA generativa, modelos multimodais
+              </p>
+            </div>
+          </li>
+
+          <!-- Tópico 3 -->
+          <li class="topic-item" data-topic="m1-1-aplicacoes">
+            <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+              🌍 IA no Seu Dia a Dia
+            </button>
+
+            <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg border-l-4 border-iniciante">
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">O que é:</strong> Você já usa IA diariamente sem perceber: recomendações da Netflix, filtro de spam do Gmail, reconhecimento facial do celular, assistentes como Siri e Alexa, sugestões do Waze, feed personalizado das redes sociais.
+              </p>
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">Por que aprender:</strong> Reconhecer onde a IA atua permite usar essas ferramentas de forma mais consciente e eficiente. Identifica oportunidades de automação na sua rotina profissional e pessoal.
+              </p>
+              <p class="text-sm text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">Conceitos chave:</strong> Sistemas de recomendação, filtros inteligentes, reconhecimento de padrões, personalização, automação de tarefas, assistentes virtuais
+              </p>
+            </div>
+          </li>
+
+          <!-- Tópico 4 -->
+          <li class="topic-item" data-topic="m1-1-limitacoes">
+            <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+              ⚖️ Poder e Limitações da IA Atual
+            </button>
+
+            <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg border-l-4 border-iniciante">
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">O que é:</strong> A IA de hoje é poderosa em tarefas específicas mas tem limitações importantes: pode "alucinar" (inventar informações), não entende contexto como humanos, depende da qualidade dos dados de treinamento, e não possui consciência ou raciocínio causal verdadeiro.
+              </p>
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">Por que aprender:</strong> Conhecer as limitações é tão importante quanto conhecer as capacidades. Previne erros críticos, evita frustrações e permite criar expectativas realistas ao usar IA em projetos.
+              </p>
+              <p class="text-sm text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">Conceitos chave:</strong> Alucinações de IA, vieses algorítmicos, caixa preta, dependência de dados, ausência de senso comum, limitações de raciocínio causal
+              </p>
+            </div>
+          </li>
+
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- MÓDULO 1.2 -->
+    <div class="chapter-card bg-white dark:bg-neutral-800 rounded-2xl shadow-lg p-8 mb-8 border-2 border-transparent hover:border-iniciante transition-all">
+
+      <div class="flex items-start justify-between mb-6">
+        <div>
+          <span class="inline-block px-3 py-1 bg-iniciante/10 text-iniciante rounded-full text-sm font-semibold mb-3">
+            2 horas
+          </span>
+          <h2 class="text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-2">
+            🌐 Módulo 1.2: Navegando no Mundo Digital
+          </h2>
+          <p class="text-neutral-600 dark:text-neutral-400">
+            Domine o ecossistema de ferramentas IA, escolha as certas e desenvolva letramento digital avançado
+          </p>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap gap-3 mb-6">
+        <button onclick="openModal('modulo-1-2')" class="px-6 py-3 bg-iniciante text-white rounded-lg font-semibold hover:bg-emerald-600 transition-colors flex items-center gap-2">
+          <span>📖</span>
+          <span>Ver em Modal</span>
+        </button>
+
+        <a href="../modulos/modulo-1-2.html" class="px-6 py-3 bg-transparent border-2 border-iniciante text-iniciante dark:text-iniciante rounded-lg font-semibold hover:bg-iniciante hover:text-white transition-colors flex items-center gap-2">
+          <span>📄</span>
+          <span>Abrir Página Completa</span>
+        </a>
+
+        <a href="../pdfs/modulo-1-2.md" download class="px-6 py-3 bg-transparent border-2 border-neutral-300 dark:border-neutral-600 text-neutral-700 dark:text-neutral-300 rounded-lg font-semibold hover:bg-neutral-100 dark:hover:bg-neutral-700 transition-colors flex items-center gap-2">
+          <span>📥</span>
+          <span>Download PDF/MD</span>
+        </a>
+      </div>
+
+      <div class="mb-4">
+        <h3 class="font-semibold text-neutral-900 dark:text-neutral-100 mb-3 text-lg">
+          📚 Tópicos-chave do módulo:
+        </h3>
+
+        <ul class="topics-list space-y-0.5">
+
+          <li class="topic-item" data-topic="m1-2-letramento">
+            <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+              📖 Letramento Digital Avançado
+            </button>
+
+            <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg border-l-4 border-iniciante">
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">O que é:</strong> Capacidade de usar tecnologias digitais de forma crítica, estratégica e ética. Vai além de saber usar apps - envolve entender como algoritmos funcionam, avaliar fontes, proteger privacidade e identificar desinformação.
+              </p>
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">Por que aprender:</strong> Diferencial competitivo no mercado de trabalho. Profissionais digitalmente fluentes são 3x mais produtivos e tomam decisões mais informadas sobre tecnologia.
+              </p>
+              <p class="text-sm text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">Conceitos chave:</strong> Pensamento crítico digital, curadoria de informação, privacidade de dados, alfabetização algorítmica, ética digital
+              </p>
+            </div>
+          </li>
+
+          <li class="topic-item" data-topic="m1-2-ferramentas">
+            <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+              🛠️ Ecossistema de Ferramentas IA (2025)
+            </button>
+
+            <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg border-l-4 border-iniciante">
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">O que é:</strong> Mais de 15.000 ferramentas IA disponíveis em 2025, divididas em categorias: texto (ChatGPT, Claude, Gemini), imagem (Midjourney, Leonardo.AI), vídeo (Runway, Sora), áudio (ElevenLabs), código (GitHub Copilot) e multimodais.
+              </p>
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">Por que aprender:</strong> Escolher a ferramenta certa para cada tarefa economiza tempo e dinheiro. Evita pagar por recursos desnecessários e maximiza resultados.
+              </p>
+              <p class="text-sm text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">Conceitos chave:</strong> LLMs, modelos de difusão, APIs, freemium vs premium, comparação de custos, casos de uso específicos
+              </p>
+            </div>
+          </li>
+
+          <li class="topic-item" data-topic="m1-2-escolha">
+            <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+              ✅ Escolhendo a Ferramenta Certa
+            </button>
+
+            <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg border-l-4 border-iniciante">
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">O que é:</strong> Metodologia de decisão baseada em critérios: objetivo da tarefa, qualidade necessária, custo aceitável, facilidade de uso, integrações disponíveis e requisitos de privacidade. Framework para comparar opções de forma sistemática.
+              </p>
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">Por que aprender:</strong> Decisões erradas custam tempo e recursos. Uma escolha informada pode aumentar produtividade em 50-70% em tarefas específicas.
+              </p>
+              <p class="text-sm text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">Conceitos chave:</strong> Matriz de decisão, trade-offs custo-qualidade-velocidade, vendor lock-in, testes A/B, ROI de ferramentas
+              </p>
+            </div>
+          </li>
+
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- MÓDULO 1.3 -->
+    <div class="chapter-card bg-white dark:bg-neutral-800 rounded-2xl shadow-lg p-8 mb-8 border-2 border-transparent hover:border-iniciante transition-all">
+
+      <div class="flex items-start justify-between mb-6">
+        <div>
+          <span class="inline-block px-3 py-1 bg-iniciante/10 text-iniciante rounded-full text-sm font-semibold mb-3">
+            4 horas
+          </span>
+          <h2 class="text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-2">
+            ✍️ Módulo 1.3: Engenharia de Prompts
+          </h2>
+          <p class="text-neutral-600 dark:text-neutral-400">
+            Domine a arte de criar prompts eficientes e técnicas avançadas de comunicação com IA
+          </p>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap gap-3 mb-6">
+        <button onclick="openModal('modulo-1-3')" class="px-6 py-3 bg-iniciante text-white rounded-lg font-semibold hover:bg-emerald-600 transition-colors flex items-center gap-2">
+          <span>📖</span>
+          <span>Ver em Modal</span>
+        </button>
+        <a href="../modulos/modulo-1-3.html" class="px-6 py-3 bg-transparent border-2 border-iniciante text-iniciante dark:text-iniciante rounded-lg font-semibold hover:bg-iniciante hover:text-white transition-colors flex items-center gap-2">
+          <span>📄</span>
+          <span>Abrir Página Completa</span>
+        </a>
+        <a href="../pdfs/modulo-1-3.md" download class="px-6 py-3 bg-transparent border-2 border-neutral-300 dark:border-neutral-600 text-neutral-700 dark:text-neutral-300 rounded-lg font-semibold hover:bg-neutral-100 dark:hover:bg-neutral-700 transition-colors flex items-center gap-2">
+          <span>📥</span>
+          <span>Download PDF/MD</span>
+        </a>
+      </div>
+
+      <div class="mb-4">
+        <h3 class="font-semibold text-neutral-900 dark:text-neutral-100 mb-3 text-lg">
+          📚 Tópicos-chave do módulo:
+        </h3>
+
+        <ul class="topics-list space-y-0.5">
+
+          <li class="topic-item" data-topic="m1-3-fundamentos">
+            <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+              📝 Fundamentos de Prompts Eficientes
+            </button>
+            <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg border-l-4 border-iniciante">
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">O que é:</strong> Prompt é a instrução que você dá à IA. Um bom prompt é claro, específico, contextualizado e define o formato desejado da resposta. A diferença entre "escreva sobre marketing" e "crie um plano de marketing digital para pequena empresa de cosméticos, com orçamento de R$5mil/mês, focado em Instagram" é resultado medíocre vs. excelente.
+              </p>
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">Por que aprender:</strong> Prompts ruins geram respostas genéricas que não servem para nada. Profissionais que dominam prompting economizam 70% do tempo em iterações e obtêm resultados úteis na primeira tentativa.
+              </p>
+              <p class="text-sm text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">Conceitos chave:</strong> Clareza, contexto, especificidade, formato de saída, tom de voz, exemplos, restrições
+              </p>
+            </div>
+          </li>
+
+          <li class="topic-item" data-topic="m1-3-anatomia">
+            <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+              🧬 Anatomia de um Prompt Perfeito
+            </button>
+            <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg border-l-4 border-iniciante">
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">O que é:</strong> Estrutura ideal tem 5 componentes: Papel (quem é a IA), Tarefa (o que fazer), Contexto (informações relevantes), Formato (como entregar) e Tom (estilo de linguagem). Exemplo: "Você é um [papel]. Crie [tarefa] para [contexto]. Formato: [estrutura]. Tom: [estilo]."
+              </p>
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">Por que aprender:</strong> Seguir essa estrutura garante consistência e qualidade. Transforma você de iniciante tentando na sorte para profissional que sabe exatamente como obter o resultado desejado.
+              </p>
+              <p class="text-sm text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">Conceitos chave:</strong> Role prompting, task definition, context window, output formatting, tone specification
+              </p>
+            </div>
+          </li>
+
+          <li class="topic-item" data-topic="m1-3-tecnicas">
+            <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+              🎯 Técnicas Avançadas de Prompting
+            </button>
+            <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg border-l-4 border-iniciante">
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">O que é:</strong> Chain-of-Thought (pedir para pensar passo a passo), Few-Shot (dar exemplos), Zero-Shot (sem exemplos), Self-Consistency (gerar múltiplas respostas), e Prompt Chaining (usar output de um prompt como input do próximo).
+              </p>
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">Por que aprender:</strong> Cada técnica resolve problemas específicos. Chain-of-Thought melhora raciocínio em 40-60%, Few-Shot garante formato consistente, Chaining permite tarefas complexas. São ferramentas do arsenal de um expert em IA.
+              </p>
+              <p class="text-sm text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">Conceitos chave:</strong> CoT prompting, few-shot learning, prompt decomposition, iterative refinement, meta-prompting
+              </p>
+            </div>
+          </li>
+
+          <li class="topic-item" data-topic="m1-3-biblioteca">
+            <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+              📚 Construindo Sua Biblioteca de Prompts
+            </button>
+            <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg border-l-4 border-iniciante">
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">O que é:</strong> Coleção pessoal de prompts testados e aprovados, organizados por categoria (escrita, análise, criação, resumo). Inclui templates com variáveis [substituíveis] para reutilização rápida. Como ter um caderno de receitas - prompts que funcionam sempre.
+              </p>
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">Por que aprender:</strong> Economiza horas toda semana. Ao invés de criar do zero, você adapta um prompt já validado. Profissionais com biblioteca de 20-50 prompts são 5x mais produtivos.
+              </p>
+              <p class="text-sm text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">Conceitos chave:</strong> Prompt templates, variáveis parametrizadas, categorização, versionamento, teste e refinamento contínuo
+              </p>
+            </div>
+          </li>
+
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- MÓDULO 1.4 -->
+    <div class="chapter-card bg-white dark:bg-neutral-800 rounded-2xl shadow-lg p-8 mb-8 border-2 border-transparent hover:border-iniciante transition-all">
+
+      <div class="flex items-start justify-between mb-6">
+        <div>
+          <span class="inline-block px-3 py-1 bg-iniciante/10 text-iniciante rounded-full text-sm font-semibold mb-3">
+            3 horas
+          </span>
+          <h2 class="text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-2">
+            🤖 Módulo 1.4: Assistentes e Agentes de IA
+          </h2>
+          <p class="text-neutral-600 dark:text-neutral-400">
+            Crie assistentes personalizados e agentes autônomos para automatizar tarefas complexas
+          </p>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap gap-3 mb-6">
+        <button onclick="openModal('modulo-1-4')" class="px-6 py-3 bg-iniciante text-white rounded-lg font-semibold hover:bg-emerald-600 transition-colors flex items-center gap-2">
+          <span>📖</span>
+          <span>Ver em Modal</span>
+        </button>
+        <a href="../modulos/modulo-1-4.html" class="px-6 py-3 bg-transparent border-2 border-iniciante text-iniciante dark:text-iniciante rounded-lg font-semibold hover:bg-iniciante hover:text-white transition-colors flex items-center gap-2">
+          <span>📄</span>
+          <span>Abrir Página Completa</span>
+        </a>
+        <a href="../pdfs/modulo-1-4.md" download class="px-6 py-3 bg-transparent border-2 border-neutral-300 dark:border-neutral-600 text-neutral-700 dark:text-neutral-300 rounded-lg font-semibold hover:bg-neutral-100 dark:hover:bg-neutral-700 transition-colors flex items-center gap-2">
+          <span>📥</span>
+          <span>Download PDF/MD</span>
+        </a>
+      </div>
+
+      <div class="mb-4">
+        <h3 class="font-semibold text-neutral-900 dark:text-neutral-100 mb-3 text-lg">
+          📚 Tópicos-chave do módulo:
+        </h3>
+
+        <ul class="topics-list space-y-0.5">
+
+          <li class="topic-item" data-topic="m1-4-assistentes">
+            <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+              💬 GPTs e Assistentes Personalizados
+            </button>
+            <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg border-l-4 border-iniciante">
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">O que é:</strong> Assistentes são versões customizadas de ChatGPT/Claude com instruções específicas, conhecimento adicional e comportamento definido. Você cria um assistente especializado (ex: revisor de textos, analista de dados) que sempre segue suas regras.
+              </p>
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">Por que aprender:</strong> Elimina repetição. Ao invés de explicar o contexto toda vez, o assistente já sabe. Pode ter 50+ assistentes especializados, cada um expert em uma tarefa. Economiza 80% do tempo em briefings.
+              </p>
+              <p class="text-sm text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">Conceitos chave:</strong> Custom instructions, knowledge base upload, behavior programming, use case specialization
+              </p>
+            </div>
+          </li>
+
+          <li class="topic-item" data-topic="m1-4-agentes">
+            <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+              🔮 Agentes Autônomos e Tool Calling
+            </button>
+            <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg border-l-4 border-iniciante">
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">O que é:</strong> Agentes são IAs que podem usar ferramentas (pesquisar web, executar código, acessar APIs) de forma autônoma para completar objetivos. Diferente de assistentes passivos, agentes tomam decisões e executam ações.
+              </p>
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">Por que aprender:</strong> Representam o futuro do trabalho com IA. Ao invés de você fazer 10 tarefas manualmente, um agente pode executar todas automaticamente. Multiplica sua capacidade produtiva exponencialmente.
+              </p>
+              <p class="text-sm text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">Conceitos chave:</strong> Function calling, tool use, autonomous agents, ReAct framework, chain of actions
+              </p>
+            </div>
+          </li>
+
+          <li class="topic-item" data-topic="m1-4-casos-uso">
+            <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+              ⚙️ Casos de Uso Práticos
+            </button>
+            <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg border-l-4 border-iniciante">
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">O que é:</strong> Aplicações reais: assistente de atendimento ao cliente 24/7, analista de dados que gera relatórios automáticos, pesquisador que compila informações de múltiplas fontes, criador de conteúdo que adapta tom para diferentes plataformas.
+              </p>
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">Por que aprender:</strong> Ver aplicações práticas inspira ideias para seu próprio trabalho. Entender casos de sucesso acelera implementação e evita erros comuns. ROI médio de 300% em 6 meses.
+              </p>
+              <p class="text-sm text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">Conceitos chave:</strong> Customer service bots, data analysis automation, research assistants, content creation pipelines
+              </p>
+            </div>
+          </li>
+
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- MÓDULO 1.5 -->
+    <div class="chapter-card bg-white dark:bg-neutral-800 rounded-2xl shadow-lg p-8 mb-8 border-2 border-transparent hover:border-iniciante transition-all">
+
+      <div class="flex items-start justify-between mb-6">
+        <div>
+          <span class="inline-block px-3 py-1 bg-iniciante/10 text-iniciante rounded-full text-sm font-semibold mb-3">
+            4 horas
+          </span>
+          <h2 class="text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-2">
+            🎨 Módulo 1.5: Criatividade Visual com IA
+          </h2>
+          <p class="text-neutral-600 dark:text-neutral-400">
+            Gere imagens, vídeos e designs profissionais usando ferramentas de IA generativa
+          </p>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap gap-3 mb-6">
+        <button onclick="openModal('modulo-1-5')" class="px-6 py-3 bg-iniciante text-white rounded-lg font-semibold hover:bg-emerald-600 transition-colors flex items-center gap-2">
+          <span>📖</span>
+          <span>Ver em Modal</span>
+        </button>
+        <a href="../modulos/modulo-1-5.html" class="px-6 py-3 bg-transparent border-2 border-iniciante text-iniciante dark:text-iniciante rounded-lg font-semibold hover:bg-iniciante hover:text-white transition-colors flex items-center gap-2">
+          <span>📄</span>
+          <span>Abrir Página Completa</span>
+        </a>
+        <a href="../pdfs/modulo-1-5.md" download class="px-6 py-3 bg-transparent border-2 border-neutral-300 dark:border-neutral-600 text-neutral-700 dark:text-neutral-300 rounded-lg font-semibold hover:bg-neutral-100 dark:hover:bg-neutral-700 transition-colors flex items-center gap-2">
+          <span>📥</span>
+          <span>Download PDF/MD</span>
+        </a>
+      </div>
+
+      <div class="mb-4">
+        <h3 class="font-semibold text-neutral-900 dark:text-neutral-100 mb-3 text-lg">
+          📚 Tópicos-chave do módulo:
+        </h3>
+
+        <ul class="topics-list space-y-0.5">
+
+          <li class="topic-item" data-topic="m1-5-imagem">
+            <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+              🖼️ Geração de Imagens (Text-to-Image)
+            </button>
+            <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg border-l-4 border-iniciante">
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">O que é:</strong> Ferramentas como Midjourney, Leonardo.AI, DALL-E e Ideogram criam imagens a partir de descrições textuais. Você descreve o que quer ("cachorro golden retriever brincando no parque ao pôr do sol, fotografia profissional") e a IA gera.
+              </p>
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">Por que aprender:</strong> Democratiza criação visual. Não precisa ser designer ou fotógrafo para ter imagens profissionais. Economiza milhares em bancos de imagem e designers freelancer. Protótipos visuais em minutos.
+              </p>
+              <p class="text-sm text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">Conceitos chave:</strong> Prompts visuais, estilos artísticos, aspect ratio, modelos de difusão, negative prompts, inpainting
+              </p>
+            </div>
+          </li>
+
+          <li class="topic-item" data-topic="m1-5-video">
+            <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+              🎬 Criação de Vídeos com IA
+            </button>
+            <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg border-l-4 border-iniciante">
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">O que é:</strong> Runway, Pika, Sora (OpenAI) e outras ferramentas geram vídeos curtos a partir de texto ou transformam imagens estáticas em vídeo. Animação de personagens, efeitos especiais, edição automática.
+              </p>
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">Por que aprender:</strong> Vídeo é o formato de conteúdo que mais engaja em 2025. Criar vídeos profissionais sem equipe de produção abre portas para marketing, educação, entretenimento. Custos reduzidos em 90%.
+              </p>
+              <p class="text-sm text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">Conceitos chave:</strong> Text-to-video, image-to-video, motion control, camera movements, temporal consistency
+              </p>
+            </div>
+          </li>
+
+          <li class="topic-item" data-topic="m1-5-design">
+            <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+              🎯 Design e Branding com IA
+            </button>
+            <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg border-l-4 border-iniciante">
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">O que é:</strong> Criação de logos, identidades visuais, paletas de cores, layouts de websites e posts para redes sociais usando IA. Ferramentas como Canva AI, Looka e Designs.AI automatizam design profissional.
+              </p>
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">Por que aprender:</strong> Pequenas empresas e freelancers podem ter presença visual profissional sem contratar agências caras. Testes A/B de diferentes estilos visuais se tornam viáveis. Agilidade competitiva.
+              </p>
+              <p class="text-sm text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">Conceitos chave:</strong> Logo generation, brand kits, color palette extraction, layout automation, template customization
+              </p>
+            </div>
+          </li>
+
+          <li class="topic-item" data-topic="m1-5-audio">
+            <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+              🎵 Áudio e Música com IA
+            </button>
+            <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg border-l-4 border-iniciante">
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">O que é:</strong> ElevenLabs (clonagem de voz), Suno (criação de músicas), Adobe Podcast AI (edição de áudio) e outras ferramentas geram narrações, trilhas sonoras e efeitos de áudio profissionais.
+              </p>
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">Por que aprender:</strong> Podcasts, vídeos explicativos, audiolivros e cursos online precisam de áudio de qualidade. IA elimina necessidade de estúdio profissional e dubladores caros. Localizações em múltiplos idiomas.
+              </p>
+              <p class="text-sm text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">Conceitos chave:</strong> Voice cloning, text-to-speech, music generation, audio enhancement, sound effects
+              </p>
+            </div>
+          </li>
+
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- MÓDULO 1.6 -->
+    <div class="chapter-card bg-white dark:bg-neutral-800 rounded-2xl shadow-lg p-8 mb-8 border-2 border-transparent hover:border-iniciante transition-all">
+
+      <div class="flex items-start justify-between mb-6">
+        <div>
+          <span class="inline-block px-3 py-1 bg-iniciante/10 text-iniciante rounded-full text-sm font-semibold mb-3">
+            3 horas
+          </span>
+          <h2 class="text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-2">
+            📢 Módulo 1.6: Marketing e Vendas com IA
+          </h2>
+          <p class="text-neutral-600 dark:text-neutral-400">
+            Aplique IA em estratégias de marketing digital, criação de conteúdo e otimização de vendas
+          </p>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap gap-3 mb-6">
+        <button onclick="openModal('modulo-1-6')" class="px-6 py-3 bg-iniciante text-white rounded-lg font-semibold hover:bg-emerald-600 transition-colors flex items-center gap-2">
+          <span>📖</span>
+          <span>Ver em Modal</span>
+        </button>
+        <a href="../modulos/modulo-1-6.html" class="px-6 py-3 bg-transparent border-2 border-iniciante text-iniciante dark:text-iniciante rounded-lg font-semibold hover:bg-iniciante hover:text-white transition-colors flex items-center gap-2">
+          <span>📄</span>
+          <span>Abrir Página Completa</span>
+        </a>
+        <a href="../pdfs/modulo-1-6.md" download class="px-6 py-3 bg-transparent border-2 border-neutral-300 dark:border-neutral-600 text-neutral-700 dark:text-neutral-300 rounded-lg font-semibold hover:bg-neutral-100 dark:hover:bg-neutral-700 transition-colors flex items-center gap-2">
+          <span>📥</span>
+          <span>Download PDF/MD</span>
+        </a>
+      </div>
+
+      <div class="mb-4">
+        <h3 class="font-semibold text-neutral-900 dark:text-neutral-100 mb-3 text-lg">
+          📚 Tópicos-chave do módulo:
+        </h3>
+
+        <ul class="topics-list space-y-0.5">
+
+          <li class="topic-item" data-topic="m1-6-conteudo">
+            <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+              ✍️ Criação de Conteúdo em Escala
+            </button>
+            <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg border-l-4 border-iniciante">
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">O que é:</strong> Uso de IA para gerar posts para redes sociais, artigos de blog, scripts de vídeo, emails de marketing e copy para anúncios. Produção de 1 semana em 1 dia mantendo qualidade e personalização.
+              </p>
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">Por que aprender:</strong> Marketing de conteúdo exige volume consistente. IA permite pequenos times competirem com grandes empresas. Redução de 70% no tempo de produção, aumento de 300% na quantidade sem perder qualidade.
+              </p>
+              <p class="text-sm text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">Conceitos chave:</strong> Content calendars, batch creation, brand voice consistency, SEO optimization, multi-platform adaptation
+              </p>
+            </div>
+          </li>
+
+          <li class="topic-item" data-topic="m1-6-copy">
+            <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+              💬 Copywriting e Persuasão com IA
+            </button>
+            <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg border-l-4 border-iniciante">
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">O que é:</strong> IA treinada em frameworks de copywriting (AIDA, PAS, StoryBrand) cria textos persuasivos para landing pages, emails de vendas, anúncios e páginas de produto. Testes A/B de múltiplas variações instantaneamente.
+              </p>
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">Por que aprender:</strong> Copy ruim desperdiça investimento em tráfego. IA acelera iterações e traz perspectivas diferentes. Profissionais reportam aumento de 50-100% em taxas de conversão com copy otimizado por IA.
+              </p>
+              <p class="text-sm text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">Conceitos chave:</strong> AIDA framework, pain points identification, benefit-focused writing, calls-to-action, emotional triggers
+              </p>
+            </div>
+          </li>
+
+          <li class="topic-item" data-topic="m1-6-analise">
+            <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+              📊 Análise de Dados e Insights
+            </button>
+            <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg border-l-4 border-iniciante">
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">O que é:</strong> IA analisa dados de campanhas, identifica padrões, prevê tendências e sugere otimizações. Transforma planilhas complexas em insights acionáveis através de linguagem natural.
+              </p>
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">Por que aprender:</strong> Dados sem análise não servem para nada. IA democratiza análise avançada - não precisa ser analista de dados para entender performance. Decisões baseadas em dados aumentam ROI em 200%.
+              </p>
+              <p class="text-sm text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">Conceitos chave:</strong> Data visualization, trend analysis, predictive analytics, customer segmentation, attribution modeling
+              </p>
+            </div>
+          </li>
+
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- MÓDULO 1.7 -->
+    <div class="chapter-card bg-white dark:bg-neutral-800 rounded-2xl shadow-lg p-8 mb-8 border-2 border-transparent hover:border-iniciante transition-all">
+
+      <div class="flex items-start justify-between mb-6">
+        <div>
+          <span class="inline-block px-3 py-1 bg-iniciante/10 text-iniciante rounded-full text-sm font-semibold mb-3">
+            3 horas
+          </span>
+          <h2 class="text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-2">
+            ⚙️ Módulo 1.7: Automação de Processos
+          </h2>
+          <p class="text-neutral-600 dark:text-neutral-400">
+            Automatize tarefas repetitivas com ferramentas no-code e integração de sistemas
+          </p>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap gap-3 mb-6">
+        <button onclick="openModal('modulo-1-7')" class="px-6 py-3 bg-iniciante text-white rounded-lg font-semibold hover:bg-emerald-600 transition-colors flex items-center gap-2">
+          <span>📖</span>
+          <span>Ver em Modal</span>
+        </button>
+        <a href="../modulos/modulo-1-7.html" class="px-6 py-3 bg-transparent border-2 border-iniciante text-iniciante dark:text-iniciante rounded-lg font-semibold hover:bg-iniciante hover:text-white transition-colors flex items-center gap-2">
+          <span>📄</span>
+          <span>Abrir Página Completa</span>
+        </a>
+        <a href="../pdfs/modulo-1-7.md" download class="px-6 py-3 bg-transparent border-2 border-neutral-300 dark:border-neutral-600 text-neutral-700 dark:text-neutral-300 rounded-lg font-semibold hover:bg-neutral-100 dark:hover:bg-neutral-700 transition-colors flex items-center gap-2">
+          <span>📥</span>
+          <span>Download PDF/MD</span>
+        </a>
+      </div>
+
+      <div class="mb-4">
+        <h3 class="font-semibold text-neutral-900 dark:text-neutral-100 mb-3 text-lg">
+          📚 Tópicos-chave do módulo:
+        </h3>
+
+        <ul class="topics-list space-y-0.5">
+
+          <li class="topic-item" data-topic="m1-7-nocode">
+            <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+              🔧 Ferramentas No-Code (Zapier, Make)
+            </button>
+            <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg border-l-4 border-iniciante">
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">O que é:</strong> Plataformas que conectam diferentes aplicativos sem código. Exemplo: quando receber email no Gmail → extrair dados → adicionar em planilha Google → enviar notificação no Slack. Tudo automático.
+              </p>
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">Por que aprender:</strong> Tarefas manuais consomem 40-60% do tempo de trabalho. Automação no-code permite qualquer pessoa criar workflows sem programar. ROI médio: economiza 20h/semana por pessoa.
+              </p>
+              <p class="text-sm text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">Conceitos chave:</strong> Triggers, actions, conditional logic, multi-step workflows, API integrations
+              </p>
+            </div>
+          </li>
+
+          <li class="topic-item" data-topic="m1-7-workflows">
+            <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+              🔄 Design de Workflows Eficientes
+            </button>
+            <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg border-l-4 border-iniciante">
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">O que é:</strong> Metodologia para mapear processos, identificar gargalos, definir regras de automação e criar fluxos que realmente funcionam. Inclui tratamento de erros, fallbacks e monitoramento.
+              </p>
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">Por que aprender:</strong> Automatização mal planejada cria mais problemas que soluções. Workflows bem desenhados são confiáveis, escaláveis e fáceis de manter. Diferença entre automação que ajuda vs. que atrapalha.
+              </p>
+              <p class="text-sm text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">Conceitos chave:</strong> Process mapping, bottleneck identification, error handling, testing workflows, monitoring & alerts
+              </p>
+            </div>
+          </li>
+
+          <li class="topic-item" data-topic="m1-7-casos">
+            <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+              💡 Casos de Uso e Templates
+            </button>
+            <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg border-l-4 border-iniciante">
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">O que é:</strong> Automações prontas para usar: geração automática de relatórios, backup de dados, resposta automática a clientes, publicação em múltiplas redes sociais, gestão de leads, faturamento automatizado.
+              </p>
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">Por que aprender:</strong> Não reinvente a roda. Templates aceleraram implementação em 80%. Ver casos reais inspira aplicações no seu contexto. Cada automação economiza 2-10h/semana.
+              </p>
+              <p class="text-sm text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">Conceitos chave:</strong> Template library, use case adaptation, workflow cloning, customization strategies
+              </p>
+            </div>
+          </li>
+
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- MÓDULO 1.8 -->
+    <div class="chapter-card bg-white dark:bg-neutral-800 rounded-2xl shadow-lg p-8 mb-8 border-2 border-transparent hover:border-iniciante transition-all">
+
+      <div class="flex items-start justify-between mb-6">
+        <div>
+          <span class="inline-block px-3 py-1 bg-iniciante/10 text-iniciante rounded-full text-sm font-semibold mb-3">
+            4 horas
+          </span>
+          <h2 class="text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-2">
+            🧬 Módulo 1.8: Inteligência Artificial Avançada
+          </h2>
+          <p class="text-neutral-600 dark:text-neutral-400">
+            Explore RAG, embeddings, fine-tuning e técnicas de IA de ponta
+          </p>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap gap-3 mb-6">
+        <button onclick="openModal('modulo-1-8')" class="px-6 py-3 bg-iniciante text-white rounded-lg font-semibold hover:bg-emerald-600 transition-colors flex items-center gap-2">
+          <span>📖</span>
+          <span>Ver em Modal</span>
+        </button>
+        <a href="../modulos/modulo-1-8.html" class="px-6 py-3 bg-transparent border-2 border-iniciante text-iniciante dark:text-iniciante rounded-lg font-semibold hover:bg-iniciante hover:text-white transition-colors flex items-center gap-2">
+          <span>📄</span>
+          <span>Abrir Página Completa</span>
+        </a>
+        <a href="../pdfs/modulo-1-8.md" download class="px-6 py-3 bg-transparent border-2 border-neutral-300 dark:border-neutral-600 text-neutral-700 dark:text-neutral-300 rounded-lg font-semibold hover:bg-neutral-100 dark:hover:bg-neutral-700 transition-colors flex items-center gap-2">
+          <span>📥</span>
+          <span>Download PDF/MD</span>
+        </a>
+      </div>
+
+      <div class="mb-4">
+        <h3 class="font-semibold text-neutral-900 dark:text-neutral-100 mb-3 text-lg">
+          📚 Tópicos-chave do módulo:
+        </h3>
+
+        <ul class="topics-list space-y-0.5">
+
+          <li class="topic-item" data-topic="m1-8-rag">
+            <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+              📚 RAG - Retrieval Augmented Generation
+            </button>
+            <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg border-l-4 border-iniciante">
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">O que é:</strong> Técnica que combina LLMs com bases de conhecimento externas. A IA busca informações relevantes em seus documentos antes de responder, reduzindo alucinações e permitindo respostas baseadas em dados proprietários.
+              </p>
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">Por que aprender:</strong> Permite criar assistentes especializados em seu negócio usando seus próprios dados. Essencial para aplicações empresariais que exigem precisão factual. Reduz alucinações em 90%.
+              </p>
+              <p class="text-sm text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">Conceitos chave:</strong> Vector databases, embeddings, semantic search, chunk strategies, retrieval optimization
+              </p>
+            </div>
+          </li>
+
+          <li class="topic-item" data-topic="m1-8-embeddings">
+            <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+              🔢 Embeddings e Busca Semântica
+            </button>
+            <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg border-l-4 border-iniciante">
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">O que é:</strong> Representação numérica do significado de textos. Permite buscar por conceitos similares mesmo usando palavras diferentes. "Cachorro" e "pet" ficam próximos no espaço vetorial.
+              </p>
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">Por que aprender:</strong> Revoluciona busca e recomendação. Encontra documentos relacionados por significado, não por palavras-chave. Base para RAG, sistemas de recomendação inteligentes e análise de similaridade.
+              </p>
+              <p class="text-sm text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">Conceitos chave:</strong> Vector representations, cosine similarity, semantic search, nearest neighbors, dimensionality
+              </p>
+            </div>
+          </li>
+
+          <li class="topic-item" data-topic="m1-8-finetuning">
+            <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+              🎯 Fine-tuning e Modelos Customizados
+            </button>
+            <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg border-l-4 border-iniciante">
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">O que é:</strong> Processo de treinar modelos existentes com seus dados específicos para melhorar performance em tarefas especializadas. Cria modelos otimizados para seu caso de uso único.
+              </p>
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">Por que aprender:</strong> Quando prompts não bastam, fine-tuning é o próximo passo. Melhora precisão, consistência e permite comportamentos impossíveis com prompting. Usado por empresas sérias que dependem de IA.
+              </p>
+              <p class="text-sm text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">Conceitos chave:</strong> Training data preparation, hyperparameter tuning, evaluation metrics, overfitting prevention, deployment
+              </p>
+            </div>
+          </li>
+
+          <li class="topic-item" data-topic="m1-8-multimodal">
+            <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+              🌐 Modelos Multimodais
+            </button>
+            <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg border-l-4 border-iniciante">
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">O que é:</strong> IAs que processam múltiplos tipos de dados simultaneamente: texto, imagem, áudio, vídeo. GPT-4 Vision, Gemini e Claude 3 entendem imagens e respondem sobre elas. Futuro dos assistentes.
+              </p>
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">Por que aprender:</strong> Unlock de casos de uso impossíveis antes: análise de documentos com imagens, OCR inteligente, descrição automática de produtos, acessibilidade para deficientes visuais. Fronteira da tecnologia.
+              </p>
+              <p class="text-sm text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">Conceitos chave:</strong> Vision-language models, cross-modal understanding, image captioning, visual question answering
+              </p>
+            </div>
+          </li>
+
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- MÓDULO 1.9 -->
+    <div class="chapter-card bg-white dark:bg-neutral-800 rounded-2xl shadow-lg p-8 mb-8 border-2 border-transparent hover:border-iniciante transition-all">
+
+      <div class="flex items-start justify-between mb-6">
+        <div>
+          <span class="inline-block px-3 py-1 bg-iniciante/10 text-iniciante rounded-full text-sm font-semibold mb-3">
+            4 horas
+          </span>
+          <h2 class="text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-2">
+            💼 Módulo 1.9: Negócios e Monetização com IA
+          </h2>
+          <p class="text-neutral-600 dark:text-neutral-400">
+            Crie modelos de negócio, monetize com IA e escale sua operação
+          </p>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap gap-3 mb-6">
+        <button onclick="openModal('modulo-1-9')" class="px-6 py-3 bg-iniciante text-white rounded-lg font-semibold hover:bg-emerald-600 transition-colors flex items-center gap-2">
+          <span>📖</span>
+          <span>Ver em Modal</span>
+        </button>
+        <a href="../modulos/modulo-1-9.html" class="px-6 py-3 bg-transparent border-2 border-iniciante text-iniciante dark:text-iniciante rounded-lg font-semibold hover:bg-iniciante hover:text-white transition-colors flex items-center gap-2">
+          <span>📄</span>
+          <span>Abrir Página Completa</span>
+        </a>
+        <a href="../pdfs/modulo-1-9.md" download class="px-6 py-3 bg-transparent border-2 border-neutral-300 dark:border-neutral-600 text-neutral-700 dark:text-neutral-300 rounded-lg font-semibold hover:bg-neutral-100 dark:hover:bg-neutral-700 transition-colors flex items-center gap-2">
+          <span>📥</span>
+          <span>Download PDF/MD</span>
+        </a>
+      </div>
+
+      <div class="mb-4">
+        <h3 class="font-semibold text-neutral-900 dark:text-neutral-100 mb-3 text-lg">
+          📚 Tópicos-chave do módulo:
+        </h3>
+
+        <ul class="topics-list space-y-0.5">
+
+          <li class="topic-item" data-topic="m1-9-modelos">
+            <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+              🏢 Modelos de Negócio com IA
+            </button>
+            <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg border-l-4 border-iniciante">
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">O que é:</strong> Negócios baseados em IA: SaaS (software as a service), agências de serviços IA, produtos digitais, consultoria em implementação, criação de ferramentas customizadas. Diferentes formas de monetizar conhecimento em IA.
+              </p>
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">Por que aprender:</strong> Mercado de IA movimentará US$ 1.8 trilhões até 2030. Oportunidades para empreendedores, freelancers e empresas. Barreiras de entrada baixas, margens altas, demanda crescente.
+              </p>
+              <p class="text-sm text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">Conceitos chave:</strong> SaaS models, service-based business, digital products, consulting, AI-as-a-service
+              </p>
+            </div>
+          </li>
+
+          <li class="topic-item" data-topic="m1-9-estrategia">
+            <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+              🎯 Estratégia de Implementação
+            </button>
+            <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg border-l-4 border-iniciante">
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">O que é:</strong> Roadmap para adotar IA na empresa ou começar negócio: identificar oportunidades, validar demanda, escolher tech stack, construir MVP, testar com early adopters, iterar baseado em feedback, escalar.
+              </p>
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">Por que aprender:</strong> 70% dos projetos de IA falham por falta de estratégia. Plano claro reduz risco, acelera resultados e evita desperdício de recursos. Diferença entre sucesso e fracasso está na execução estratégica.
+              </p>
+              <p class="text-sm text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">Conceitos chave:</strong> Opportunity mapping, market validation, MVP development, iterative testing, growth hacking
+              </p>
+            </div>
+          </li>
+
+          <li class="topic-item" data-topic="m1-9-precificacao">
+            <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+              💰 Precificação e Monetização
+            </button>
+            <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg border-l-4 border-iniciante">
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">O que é:</strong> Estratégias de preço: freemium, subscription mensal/anual, pay-per-use, one-time payment, enterprise custom pricing. Como precificar serviços de IA baseado em valor entregue, não em horas trabalhadas.
+              </p>
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">Por que aprender:</strong> Precificação errada destrói negócios. Cobrar muito pouco deixa dinheiro na mesa, cobrar muito afasta clientes. IA permite preço baseado em resultado (cliente economiza 10h → você cobra R$2.000).
+              </p>
+              <p class="text-sm text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">Conceitos chave:</strong> Value-based pricing, subscription models, tiered pricing, usage-based billing, lifetime deals
+              </p>
+            </div>
+          </li>
+
+          <li class="topic-item" data-topic="m1-9-escala">
+            <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+              🚀 Escalando Operações com IA
+            </button>
+            <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg border-l-4 border-iniciante">
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">O que é:</strong> Usar IA para crescer sem aumentar custos proporcionalmente: automação de atendimento, onboarding automático, criação de conteúdo em escala, personalização 1-to-1 para milhares de clientes. Crescer 10x sem contratar 10x mais pessoas.
+              </p>
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">Por que aprender:</strong> Escalabilidade é o Santo Graal de negócios digitais. IA permite operações com margens de 80-90% porque custos não crescem linearmente. Diferencial competitivo definitivo.
+              </p>
+              <p class="text-sm text-neutral-700 dark:text-neutral-300">
+                <strong class="text-iniciante">Conceitos chave:</strong> Automation at scale, operational efficiency, margin optimization, leverage, unit economics
+              </p>
+            </div>
+          </li>
+
+        </ul>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-neutral-900 dark:bg-black text-neutral-300 py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div>
+          <h3 class="text-xl font-bold text-white mb-4">FTD</h3>
+          <p class="text-sm">Formação da Transformação Digital</p>
+        </div>
+        <div>
+          <h4 class="font-semibold text-white mb-4">Links</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="../index.html" class="hover:text-white transition">Início</a></li>
+            <li><a href="../index.html#niveis" class="hover:text-white transition">Níveis</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold text-white mb-4">Contato</h4>
+          <p class="text-sm">contato@ftd.com.br</p>
+        </div>
+      </div>
+      <div class="border-t border-neutral-800 mt-8 pt-8 text-center text-sm">
+        <p>&copy; 2025 FTD. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Modals (placeholder - conteúdo será preenchido) -->
+  <div id="modulo-1-1" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="text-2xl font-bold text-neutral-900 dark:text-neutral-100">Módulo 1.1: Impacto da IA</h2>
+        <span class="close-modal">&times;</span>
+      </div>
+      <div class="modal-body">
+        <p class="text-neutral-700 dark:text-neutral-300">Conteúdo completo do módulo será exibido aqui...</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="modulo-1-2" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="text-2xl font-bold text-neutral-900 dark:text-neutral-100">Módulo 1.2: Navegando no Mundo Digital</h2>
+        <span class="close-modal">&times;</span>
+      </div>
+      <div class="modal-body">
+        <p class="text-neutral-700 dark:text-neutral-300">Conteúdo completo do módulo será exibido aqui...</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script src="../js/app.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Módulo 2.3: RAG e Knowledge Bases | FTD - Formação Transformação Digital</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Tailwind Config -->
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            iniciante: '#10B981',
+            tecnico: '#3B82F6',
+            masterclass: '#8B5CF6',
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom Styles -->
+  <style>
+    body.preload * {
+      transition: none !important;
+    }
+  </style>
+</head>
+
+<body class="preload bg-neutral-50 dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 transition-colors duration-300">
+
+  <!-- Navigation -->
+  <nav class="bg-white/80 dark:bg-neutral-800/80 backdrop-blur-lg sticky top-0 z-50 border-b border-neutral-200 dark:border-neutral-700">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+
+        <!-- Back Button + Logo -->
+        <div class="flex items-center space-x-4">
+          <a href="../niveis/nivel-tecnico.html" class="text-tecnico hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-semibold flex items-center space-x-2">
+            <span>←</span>
+            <span>Voltar</span>
+          </a>
+          <div class="h-6 w-px bg-neutral-300 dark:bg-neutral-600"></div>
+          <a href="../index.html" class="text-xl font-bold text-tecnico">FTD</a>
+        </div>
+
+        <!-- Desktop Theme Toggle -->
+        <button id="theme-toggle" class="p-2 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700 transition-colors hidden md:block">
+          <svg id="theme-toggle-dark-icon" class="w-5 h-5 hidden" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+          </svg>
+          <svg id="theme-toggle-light-icon" class="w-5 h-5 hidden" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path>
+          </svg>
+        </button>
+
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- Module Header -->
+    <div class="mb-12">
+      <a href="../niveis/nivel-tecnico.html" class="inline-flex items-center text-tecnico hover:text-blue-600 dark:hover:text-blue-400 mb-6 transition-colors">
+        <span class="mr-2">←</span>
+        <span>Nível Técnico</span>
+      </a>
+
+      <div class="flex items-center space-x-3 mb-4">
+        <span class="inline-block px-4 py-1.5 bg-tecnico/10 text-tecnico rounded-full text-sm font-semibold">
+          5 horas
+        </span>
+        <span class="inline-block px-4 py-1.5 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-200 rounded-full text-sm font-semibold">
+          4 tópicos
+        </span>
+      </div>
+
+      <h1 class="text-5xl font-bold text-neutral-900 dark:text-neutral-100 mb-4">
+        📚 Módulo 2.3: RAG e Knowledge Bases
+      </h1>
+      <p class="text-xl text-neutral-600 dark:text-neutral-400 leading-relaxed">
+        Implemente sistemas de Retrieval-Augmented Generation usando vector databases e técnicas avançadas de recuperação de informação.
+      </p>
+    </div>
+
+    <!-- Topics Content -->
+    <div class="space-y-8">
+
+      <!-- Tópico 1 -->
+      <section class="bg-white dark:bg-neutral-800 rounded-2xl shadow-lg p-8">
+        <h2 class="text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-6 flex items-center">
+          <span class="text-tecnico mr-3">📚</span>
+          Vector Databases (Pinecone, Weaviate, Chroma)
+        </h2>
+
+        <div class="space-y-6">
+          <div>
+            <h3 class="text-xl font-semibold text-tecnico mb-3">O que é</h3>
+            <p class="text-neutral-700 dark:text-neutral-300 leading-relaxed">
+              Vector databases são sistemas de armazenamento especializados em embeddings vetoriais de alta dimensionalidade. Diferentemente de bancos relacionais ou NoSQL tradicionais, eles utilizam índices como HNSW, IVF, ou FAISS para busca por similaridade semântica em tempo real. Pinecone (managed), Weaviate (open-source/cloud), e Chroma (local/embedded) são as principais soluções para aplicações de IA.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-xl font-semibold text-tecnico mb-3">Por que aprender</h3>
+            <p class="text-neutral-700 dark:text-neutral-300 leading-relaxed">
+              RAG (Retrieval-Augmented Generation) está se tornando o padrão para aplicações de IA empresariais, permitindo que LLMs acessem conhecimento atualizado e específico sem fine-tuning. Vector databases são a espinha dorsal de sistemas de busca semântica, recomendação, Q&A sobre documentos privados, e chatbots empresariais. Empresas buscam profissionais com essas habilidades.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-xl font-semibold text-tecnico mb-3">Conceitos chave</h3>
+            <div class="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-6">
+              <ul class="space-y-3 text-neutral-700 dark:text-neutral-300">
+                <li class="flex items-start">
+                  <span class="text-tecnico mr-2 mt-1">•</span>
+                  <span><strong>Vector Embeddings:</strong> Representações numéricas densas de texto, imagens ou áudio</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-tecnico mr-2 mt-1">•</span>
+                  <span><strong>Similarity Metrics:</strong> Cosine similarity, Euclidean distance, dot product</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-tecnico mr-2 mt-1">•</span>
+                  <span><strong>ANN Algorithms:</strong> Approximate Nearest Neighbor (HNSW, IVF, LSH)</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-tecnico mr-2 mt-1">•</span>
+                  <span><strong>Index Types:</strong> Flat, IVF, HNSW trade-offs de velocidade vs precisão</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-tecnico mr-2 mt-1">•</span>
+                  <span><strong>Metadata Filtering:</strong> Combinação de busca vetorial com filtros estruturados</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-tecnico mr-2 mt-1">•</span>
+                  <span><strong>Sharding e Replication:</strong> Escalabilidade horizontal para bilhões de vetores</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tópico 2 -->
+      <section class="bg-white dark:bg-neutral-800 rounded-2xl shadow-lg p-8">
+        <h2 class="text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-6 flex items-center">
+          <span class="text-tecnico mr-3">🔍</span>
+          Chunking Strategies e Retrieval
+        </h2>
+
+        <div class="space-y-6">
+          <div>
+            <h3 class="text-xl font-semibold text-tecnico mb-3">O que é</h3>
+            <p class="text-neutral-700 dark:text-neutral-300 leading-relaxed">
+              Chunking é o processo de dividir documentos longos em pedaços menores para processamento e indexação eficiente. Estratégias incluem fixed-size chunking, semantic chunking (baseado em parágrafos/tópicos), recursive splitting, e sliding window. Retrieval refere-se às técnicas para encontrar chunks mais relevantes dada uma query, incluindo dense retrieval, sparse retrieval, e métodos híbridos.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-xl font-semibold text-tecnico mb-3">Por que aprender</h3>
+            <p class="text-neutral-700 dark:text-neutral-300 leading-relaxed">
+              A qualidade do chunking impacta diretamente a precisão de sistemas RAG. Chunks muito grandes perdem relevância semântica específica; muito pequenos perdem contexto. Estratégias inadequadas resultam em retrieval de 30-40% de precisão vs 80-90% com técnicas otimizadas. Dominar chunking e retrieval é essencial para sistemas de Q&A e busca de alta qualidade.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-xl font-semibold text-tecnico mb-3">Conceitos chave</h3>
+            <div class="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-6">
+              <ul class="space-y-3 text-neutral-700 dark:text-neutral-300">
+                <li class="flex items-start">
+                  <span class="text-tecnico mr-2 mt-1">•</span>
+                  <span><strong>Chunk Size Optimization:</strong> Trade-offs entre 200-1000 tokens baseado no use case</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-tecnico mr-2 mt-1">•</span>
+                  <span><strong>Overlap Strategy:</strong> 10-20% de sobreposição para preservar contexto entre chunks</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-tecnico mr-2 mt-1">•</span>
+                  <span><strong>Semantic Chunking:</strong> LangChain SemanticChunker, sentence-transformers</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-tecnico mr-2 mt-1">•</span>
+                  <span><strong>Parent-Child Chunking:</strong> Hierarchical chunks para contexto multi-nível</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-tecnico mr-2 mt-1">•</span>
+                  <span><strong>Query Expansion:</strong> Reformulação de queries para melhor recall</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-tecnico mr-2 mt-1">•</span>
+                  <span><strong>Top-K Selection:</strong> Balanceamento entre relevância e diversidade de resultados</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tópico 3 -->
+      <section class="bg-white dark:bg-neutral-800 rounded-2xl shadow-lg p-8">
+        <h2 class="text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-6 flex items-center">
+          <span class="text-tecnico mr-3">🎯</span>
+          Hybrid Search e Reranking
+        </h2>
+
+        <div class="space-y-6">
+          <div>
+            <h3 class="text-xl font-semibold text-tecnico mb-3">O que é</h3>
+            <p class="text-neutral-700 dark:text-neutral-300 leading-relaxed">
+              Hybrid search combina busca vetorial (dense retrieval via embeddings) com busca lexical tradicional (sparse retrieval via BM25, TF-IDF). Reranking é uma segunda etapa que re-ordena resultados iniciais usando modelos mais sofisticados (cross-encoders) para maximizar relevância. Essa abordagem em duas etapas balanceia velocidade e precisão, alcançando state-of-the-art em retrieval.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-xl font-semibold text-tecnico mb-3">Por que aprender</h3>
+            <p class="text-neutral-700 dark:text-neutral-300 leading-relaxed">
+              Busca puramente vetorial falha em queries com termos específicos ou nomes próprios; busca lexical falha em queries semânticas. Hybrid search oferece o melhor dos dois mundos, aumentando recall em 20-40%. Reranking melhora precision em outros 15-30%. Sistemas enterprise de alto desempenho sempre utilizam essas técnicas para resultados superiores.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-xl font-semibold text-tecnico mb-3">Conceitos chave</h3>
+            <div class="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-6">
+              <ul class="space-y-3 text-neutral-700 dark:text-neutral-300">
+                <li class="flex items-start">
+                  <span class="text-tecnico mr-2 mt-1">•</span>
+                  <span><strong>BM25 Algorithm:</strong> Probabilistic ranking baseado em term frequency e document frequency</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-tecnico mr-2 mt-1">•</span>
+                  <span><strong>Score Fusion:</strong> Reciprocal Rank Fusion (RRF), weighted averaging para combinar scores</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-tecnico mr-2 mt-1">•</span>
+                  <span><strong>Cross-Encoders:</strong> BERT-based rerankers para scoring preciso de pares query-document</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-tecnico mr-2 mt-1">•</span>
+                  <span><strong>Cohere Rerank API:</strong> Modelos especializados de reranking como serviço</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-tecnico mr-2 mt-1">•</span>
+                  <span><strong>Multi-Stage Retrieval:</strong> Recall rápido (milhões) → Rerank preciso (top-100)</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-tecnico mr-2 mt-1">•</span>
+                  <span><strong>Diversity Boosting:</strong> Maximal Marginal Relevance (MMR) para resultados diversificados</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tópico 4 -->
+      <section class="bg-white dark:bg-neutral-800 rounded-2xl shadow-lg p-8">
+        <h2 class="text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-6 flex items-center">
+          <span class="text-tecnico mr-3">🧪</span>
+          Avaliação e Métricas de RAG
+        </h2>
+
+        <div class="space-y-6">
+          <div>
+            <h3 class="text-xl font-semibold text-tecnico mb-3">O que é</h3>
+            <p class="text-neutral-700 dark:text-neutral-300 leading-relaxed">
+              Avaliação de sistemas RAG envolve métricas objetivas e subjetivas para medir qualidade de retrieval e geração. Métricas incluem precision@k, recall@k, MRR (Mean Reciprocal Rank), NDCG (Normalized Discounted Cumulative Gain) para retrieval, e RAGAS, faithfulness, answer relevancy para geração. Frameworks como RAGAS, TruLens, e LlamaIndex avaliam sistemas end-to-end.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-xl font-semibold text-tecnico mb-3">Por que aprender</h3>
+            <p class="text-neutral-700 dark:text-neutral-300 leading-relaxed">
+              Sem avaliação rigorosa, é impossível saber se mudanças melhoram ou pioram o sistema. Métricas permitem comparações objetivas entre diferentes estratégias de chunking, embedding models, e retrieval methods. Empresas sérias exigem evidências quantitativas de performance antes de deploy. Dominar avaliação de RAG é essencial para engenheiros de ML sênior.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-xl font-semibold text-tecnico mb-3">Conceitos chave</h3>
+            <div class="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-6">
+              <ul class="space-y-3 text-neutral-700 dark:text-neutral-300">
+                <li class="flex items-start">
+                  <span class="text-tecnico mr-2 mt-1">•</span>
+                  <span><strong>Context Precision/Recall:</strong> Relevância dos chunks recuperados vs ground truth</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-tecnico mr-2 mt-1">•</span>
+                  <span><strong>Answer Faithfulness:</strong> Grau de hallucination vs informação nos chunks</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-tecnico mr-2 mt-1">•</span>
+                  <span><strong>Answer Relevancy:</strong> Quão bem a resposta atende à pergunta original</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-tecnico mr-2 mt-1">•</span>
+                  <span><strong>RAGAS Framework:</strong> Suite completa de métricas RAG-específicas</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-tecnico mr-2 mt-1">•</span>
+                  <span><strong>Human Evaluation:</strong> RLHF, preference scoring para fine-tuning de métricas</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-tecnico mr-2 mt-1">•</span>
+                  <span><strong>A/B Testing:</strong> Comparação estatística de sistemas em produção</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- Navigation Footer -->
+    <div class="mt-12 pt-8 border-t border-neutral-200 dark:border-neutral-700 flex justify-between items-center">
+      <a href="modulo-2-2.html" class="inline-flex items-center px-6 py-3 bg-neutral-200 dark:bg-neutral-700 text-neutral-900 dark:text-neutral-100 rounded-lg hover:bg-neutral-300 dark:hover:bg-neutral-600 transition-colors font-semibold">
+        <span class="mr-2">←</span>
+        <span>Módulo Anterior</span>
+      </a>
+
+      <a href="modulo-2-4.html" class="inline-flex items-center px-6 py-3 bg-tecnico text-white rounded-lg hover:bg-blue-600 transition-colors font-semibold">
+        <span>Próximo Módulo</span>
+        <span class="ml-2">→</span>
+      </a>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white dark:bg-neutral-800 border-t border-neutral-200 dark:border-neutral-700 mt-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div class="text-center">
+        <p class="text-neutral-600 dark:text-neutral-400">
+          © 2024 FTD - Formação Transformação Digital. Todos os direitos reservados.
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script src="../js/app.js"></script>
+
+</body>
+</html>

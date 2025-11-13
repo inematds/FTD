@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Módulo 3.6: Segurança e Red Teaming | FTD - Formação Transformação Digital</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Tailwind Config -->
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            iniciante: '#10B981',
+            tecnico: '#3B82F6',
+            masterclass: '#8B5CF6',
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom Styles -->
+  <style>
+    body.preload * {
+      transition: none !important;
+    }
+  </style>
+</head>
+
+<body class="preload bg-neutral-50 dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 transition-colors duration-300">
+
+  <!-- Navigation -->
+  <nav class="bg-white/80 dark:bg-neutral-800/80 backdrop-blur-lg sticky top-0 z-50 border-b border-neutral-200 dark:border-neutral-700">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+
+        <!-- Back Button + Logo -->
+        <div class="flex items-center space-x-4">
+          <a href="../niveis/nivel-masterclass.html" class="text-masterclass hover:text-purple-600 dark:hover:text-purple-400 transition-colors font-semibold flex items-center space-x-2">
+            <span>←</span>
+            <span>Voltar</span>
+          </a>
+          <div class="h-6 w-px bg-neutral-300 dark:bg-neutral-600"></div>
+          <a href="../index.html" class="text-xl font-bold text-masterclass">FTD</a>
+        </div>
+
+        <!-- Desktop Theme Toggle -->
+        <button id="theme-toggle" class="p-2 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700 transition-colors hidden md:block">
+          <svg id="theme-toggle-dark-icon" class="w-5 h-5 hidden" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+          </svg>
+          <svg id="theme-toggle-light-icon" class="w-5 h-5 hidden" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path>
+          </svg>
+        </button>
+
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- Module Header -->
+    <div class="mb-12">
+      <a href="../niveis/nivel-masterclass.html" class="inline-flex items-center text-masterclass hover:text-purple-600 dark:hover:text-purple-400 mb-6 transition-colors">
+        <span class="mr-2">←</span>
+        <span>Nível Masterclass</span>
+      </a>
+
+      <div class="flex items-center space-x-3 mb-4">
+        <span class="inline-block px-4 py-1.5 bg-masterclass/10 text-masterclass rounded-full text-sm font-semibold">
+          5 horas
+        </span>
+        <span class="inline-block px-4 py-1.5 bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-200 rounded-full text-sm font-semibold">
+          4 tópicos
+        </span>
+      </div>
+
+      <h1 class="text-5xl font-bold text-neutral-900 dark:text-neutral-100 mb-4">
+        🛡️ Módulo 3.6: Segurança e Red Teaming
+      </h1>
+      <p class="text-xl text-neutral-600 dark:text-neutral-400 leading-relaxed">
+        Domine as técnicas de segurança ofensiva e defensiva para sistemas de IA, protegendo contra adversarial attacks e vulnerabilidades críticas.
+      </p>
+    </div>
+
+    <!-- Topics Content -->
+    <div class="space-y-8">
+
+      <!-- Tópico 1 -->
+      <section class="bg-white dark:bg-neutral-800 rounded-2xl shadow-lg p-8">
+        <h2 class="text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-6 flex items-center">
+          <span class="text-masterclass mr-3">🛡️</span>
+          Adversarial Attacks e Defense
+        </h2>
+
+        <div class="space-y-6">
+          <div>
+            <h3 class="text-xl font-semibold text-masterclass mb-3">O que é</h3>
+            <p class="text-neutral-700 dark:text-neutral-300 leading-relaxed">
+              Adversarial attacks exploram vulnerabilidades em modelos de IA através de inputs cuidadosamente crafted que causam misclassifications ou comportamentos indesejados. Isso inclui adversarial examples em visão (FGSM, PGD, C&W attacks), adversarial prompts em LLMs, data poisoning, model inversion, e membership inference attacks. Defesas incluem adversarial training, input sanitization, certified defenses, e ensemble methods. Esta é uma arms race contínua entre attackers e defenders, similar a security tradicional mas com superfície de ataque única para ML.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-xl font-semibold text-masterclass mb-3">Por que aprender</h3>
+            <p class="text-neutral-700 dark:text-neutral-300 leading-relaxed">
+              Com IA deployada em sistemas críticos (healthcare, finance, autonomous vehicles), vulnerabilidades podem ter consequências catastróficas. Companies precisam de security experts que entendem tanto traditional security quanto ML-specific vulnerabilities. Esta é uma das áreas mais hot de IA - empresas como Google, Microsoft, e Anthropic têm teams dedicados de AI security. Salários para AI security engineers frequentemente excedem $300K-$450K e há alta demanda mas supply limitado de profissionais qualificados. Também há oportunidades significativas em consultoria e startups de AI security.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-xl font-semibold text-masterclass mb-3">Conceitos chave</h3>
+            <div class="bg-purple-50 dark:bg-purple-900/20 rounded-lg p-6">
+              <ul class="space-y-3 text-neutral-700 dark:text-neutral-300">
+                <li class="flex items-start">
+                  <span class="text-masterclass mr-2 mt-1">•</span>
+                  <span><strong>Adversarial Examples:</strong> FGSM, PGD, C&W attacks para fooling vision/NLP models</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-masterclass mr-2 mt-1">•</span>
+                  <span><strong>Adversarial Training:</strong> Training com adversarial examples para robustness</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-masterclass mr-2 mt-1">•</span>
+                  <span><strong>Model Extraction:</strong> Stealing model functionality através de query access</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-masterclass mr-2 mt-1">•</span>
+                  <span><strong>Data Poisoning:</strong> Corrupting training data para backdoors ou degradation</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-masterclass mr-2 mt-1">•</span>
+                  <span><strong>Certified Defenses:</strong> Provable robustness bounds, randomized smoothing</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-masterclass mr-2 mt-1">•</span>
+                  <span><strong>Privacy Attacks:</strong> Membership inference, model inversion, attribute inference</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tópico 2 -->
+      <section class="bg-white dark:bg-neutral-800 rounded-2xl shadow-lg p-8">
+        <h2 class="text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-6 flex items-center">
+          <span class="text-masterclass mr-3">🔓</span>
+          Prompt Injection e Jailbreaking
+        </h2>
+
+        <div class="space-y-6">
+          <div>
+            <h3 class="text-xl font-semibold text-masterclass mb-3">O que é</h3>
+            <p class="text-neutral-700 dark:text-neutral-300 leading-relaxed">
+              Prompt injection e jailbreaking são técnicas para contornar safety guardrails de LLMs, fazendo-os gerar conteúdo harmful ou executar ações não-autorizadas. Prompt injection explora ambiguidade entre system prompts e user inputs, permitindo que adversaries "reprogramem" o modelo. Jailbreaking usa técnicas criativas (role-play, encoding, multi-language) para bypass filters. Indirect prompt injection permite ataques através de third-party content (websites, documents). Defesas incluem prompt hardening, input/output filtering, e constitutional AI approaches.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-xl font-semibold text-masterclass mb-3">Por que aprender</h3>
+            <p class="text-neutral-700 dark:text-neutral-300 leading-relaxed">
+              Prompt injection é o SQL injection da era de IA - uma vulnerabilidade fundamental que afeta praticamente todos os sistemas baseados em LLMs. À medida que LLMs ganham tool-use capabilities (chamar APIs, executar código), o impact de jailbreaking torna-se exponencialmente maior. Companies que deployam LLMs customer-facing precisam desesperadamente de experts que entendem essas vulnerabilidades. Esta expertise é critical para roles em AI safety, security engineering, e policy/governance. Também há oportunidades em bug bounties - Anthropic, OpenAI pagam $thousands-$tens of thousands por vulnerabilidades.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-xl font-semibold text-masterclass mb-3">Conceitos chave</h3>
+            <div class="bg-purple-50 dark:bg-purple-900/20 rounded-lg p-6">
+              <ul class="space-y-3 text-neutral-700 dark:text-neutral-300">
+                <li class="flex items-start">
+                  <span class="text-masterclass mr-2 mt-1">•</span>
+                  <span><strong>Direct Prompt Injection:</strong> User input overriding system prompts, delimiter attacks</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-masterclass mr-2 mt-1">•</span>
+                  <span><strong>Indirect Injection:</strong> Malicious content em websites/documents exploitando retrieval</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-masterclass mr-2 mt-1">•</span>
+                  <span><strong>Jailbreak Techniques:</strong> Role-play, DAN (Do Anything Now), token smuggling</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-masterclass mr-2 mt-1">•</span>
+                  <span><strong>Defense Strategies:</strong> Prompt hardening, instruction hierarchy, output filtering</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-masterclass mr-2 mt-1">•</span>
+                  <span><strong>Detection Mechanisms:</strong> Anomaly detection, semantic similarity, perplexity checks</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-masterclass mr-2 mt-1">•</span>
+                  <span><strong>Tool Use Safety:</strong> Sandboxing, permission models, action confirmation</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tópico 3 -->
+      <section class="bg-white dark:bg-neutral-800 rounded-2xl shadow-lg p-8">
+        <h2 class="text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-6 flex items-center">
+          <span class="text-masterclass mr-3">🔐</span>
+          Security Best Practices
+        </h2>
+
+        <div class="space-y-6">
+          <div>
+            <h3 class="text-xl font-semibold text-masterclass mb-3">O que é</h3>
+            <p class="text-neutral-700 dark:text-neutral-300 leading-relaxed">
+              Security best practices para IA envolvem defense-in-depth approach combinando security tradicional com ML-specific measures. Isso inclui secure model serving (authentication, rate limiting, API security), data security (encryption, access controls, PII handling), supply chain security (model provenance, dependency scanning), monitoring e incident response (anomaly detection, audit logs), e compliance frameworks (SOC2, ISO 27001, AI-specific regulations). Também envolve threat modeling específico para AI systems identificando attack vectors únicos.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-xl font-semibold text-masterclass mb-3">Por que aprender</h3>
+            <p class="text-neutral-700 dark:text-neutral-300 leading-relaxed">
+              Security breaches em sistemas de IA podem expor dados sensíveis, causar operational disruption, e destruir trust do usuário. Com regulações emergentes (EU AI Act, Executive Orders), companies enfrentam não só technical risk mas também legal/compliance risk. Security-minded AI engineers são critical para qualquer deployment enterprise. Essa expertise é necessária para passar security audits, conseguir certifications, e fechar enterprise deals. Profissionais com combined AI + security background comandam salários $280K-$400K+ e têm job security excepcional.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-xl font-semibold text-masterclass mb-3">Conceitos chave</h3>
+            <div class="bg-purple-50 dark:bg-purple-900/20 rounded-lg p-6">
+              <ul class="space-y-3 text-neutral-700 dark:text-neutral-300">
+                <li class="flex items-start">
+                  <span class="text-masterclass mr-2 mt-1">•</span>
+                  <span><strong>Secure Model Serving:</strong> API authentication, rate limiting, input validation, WAF</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-masterclass mr-2 mt-1">•</span>
+                  <span><strong>Data Protection:</strong> Encryption at rest/transit, tokenization, differential privacy</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-masterclass mr-2 mt-1">•</span>
+                  <span><strong>Supply Chain Security:</strong> Model provenance, SBOM, dependency scanning, signed artifacts</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-masterclass mr-2 mt-1">•</span>
+                  <span><strong>Access Controls:</strong> RBAC, least privilege, API key rotation, secrets management</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-masterclass mr-2 mt-1">•</span>
+                  <span><strong>Monitoring & Alerting:</strong> Anomaly detection, security events, audit logging</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-masterclass mr-2 mt-1">•</span>
+                  <span><strong>Incident Response:</strong> Playbooks, forensics, post-mortems, disclosure policy</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tópico 4 -->
+      <section class="bg-white dark:bg-neutral-800 rounded-2xl shadow-lg p-8">
+        <h2 class="text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-6 flex items-center">
+          <span class="text-masterclass mr-3">🧪</span>
+          Red Teaming Strategies
+        </h2>
+
+        <div class="space-y-6">
+          <div>
+            <h3 class="text-xl font-semibold text-masterclass mb-3">O que é</h3>
+            <p class="text-neutral-700 dark:text-neutral-300 leading-relaxed">
+              Red teaming de sistemas de IA envolve adversarial mindset para proactively descobrir vulnerabilidades antes que adversaries reais as explorem. Isso inclui systematic testing de safety boundaries, adversarial prompt engineering, automated attack generation (usando LLMs para gerar prompts maliciosos), boundary testing de content policies, e simulation de multi-step attacks complexos. Red teams trabalham iterativamente com developers para hardening systems. OpenAI, Anthropic, e Google têm red teams dedicados que testam models antes de release.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-xl font-semibold text-masterclass mb-3">Por que aprender</h3>
+            <p class="text-neutral-700 dark:text-neutral-300 leading-relaxed">
+              Red teaming é essencial para qualquer company que deploya AI systems customer-facing. É a única maneira de proactively descobrir vulnerabilidades que adversaries explorariam. Companies como OpenAI e Anthropic investem heavily em red teaming antes de cada release. Esta expertise combina creative thinking, technical depth, e understanding de human psychology/social engineering. Red teamers são raros e extremamente valorizados - salários $250K-$400K+ são comuns. Também há oportunidades de consultoria lucrativas, já que muitas companies precisam de red teaming mas não têm expertise interna.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-xl font-semibold text-masterclass mb-3">Conceitos chave</h3>
+            <div class="bg-purple-50 dark:bg-purple-900/20 rounded-lg p-6">
+              <ul class="space-y-3 text-neutral-700 dark:text-neutral-300">
+                <li class="flex items-start">
+                  <span class="text-masterclass mr-2 mt-1">•</span>
+                  <span><strong>Adversarial Mindset:</strong> Thinking como attacker, creative exploitation de edge cases</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-masterclass mr-2 mt-1">•</span>
+                  <span><strong>Automated Red Teaming:</strong> LLM-generated attacks, fuzzing prompts, genetic algorithms</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-masterclass mr-2 mt-1">•</span>
+                  <span><strong>Safety Boundary Testing:</strong> Systematic probing de content policies, edge cases</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-masterclass mr-2 mt-1">•</span>
+                  <span><strong>Multi-Step Attacks:</strong> Chain de interactions para bypass defenses complexas</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-masterclass mr-2 mt-1">•</span>
+                  <span><strong>Documentation & Reporting:</strong> Clear reproduction steps, impact assessment, mitigation recommendations</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-masterclass mr-2 mt-1">•</span>
+                  <span><strong>Iterative Hardening:</strong> Continuous testing as defenses are added, measuring improvement</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- Navigation Footer -->
+    <div class="mt-12 pt-8 border-t border-neutral-200 dark:border-neutral-700 flex justify-between items-center">
+      <a href="modulo-3-5.html" class="inline-flex items-center px-6 py-3 bg-neutral-200 dark:bg-neutral-700 text-neutral-900 dark:text-neutral-100 rounded-lg hover:bg-neutral-300 dark:hover:bg-neutral-600 transition-colors font-semibold">
+        <span class="mr-2">←</span>
+        <span>Módulo Anterior</span>
+      </a>
+
+      <a href="modulo-3-7.html" class="inline-flex items-center px-6 py-3 bg-masterclass text-white rounded-lg hover:bg-purple-600 transition-colors font-semibold">
+        <span>Próximo Módulo</span>
+        <span class="ml-2">→</span>
+      </a>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white dark:bg-neutral-800 border-t border-neutral-200 dark:border-neutral-700 mt-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div class="text-center">
+        <p class="text-neutral-600 dark:text-neutral-400">
+          © 2024 FTD - Formação Transformação Digital. Todos os direitos reservados.
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script src="../js/app.js"></script>
+
+</body>
+</html>

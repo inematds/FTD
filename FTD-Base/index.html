@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="FTD - Formação da Transformação Digital. Domine IA e tecnologias emergentes do zero ao avançado.">
+  <title>FTD - Formação da Transformação Digital</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Tailwind Config -->
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            iniciante: '#10B981',
+            tecnico: '#3B82F6',
+            masterclass: '#8B5CF6',
+          },
+          fontFamily: {
+            sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <style>
+    * {
+      transition: background-color 200ms ease-in-out, border-color 200ms ease-in-out, color 200ms ease-in-out;
+    }
+    .preload * {
+      transition: none !important;
+    }
+  </style>
+</head>
+<body class="preload bg-neutral-50 dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100">
+
+  <!-- Navegação -->
+  <nav class="sticky top-0 z-50 bg-white/90 dark:bg-neutral-800/90 backdrop-blur-sm border-b border-neutral-200 dark:border-neutral-700">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <!-- Logo -->
+        <a href="/" class="text-2xl font-bold bg-gradient-to-r from-iniciante via-tecnico to-masterclass bg-clip-text text-transparent">
+          🎓 FTD
+        </a>
+
+        <!-- Desktop Menu -->
+        <div class="hidden md:flex items-center space-x-8">
+          <a href="#niveis" class="text-neutral-700 dark:text-neutral-300 hover:text-tecnico transition">Níveis</a>
+          <a href="#modulos" class="text-neutral-700 dark:text-neutral-300 hover:text-tecnico transition">Módulos</a>
+          <a href="sobre.html" class="text-neutral-700 dark:text-neutral-300 hover:text-tecnico transition">Sobre</a>
+          <a href="faq.html" class="text-neutral-700 dark:text-neutral-300 hover:text-tecnico transition">FAQ</a>
+
+          <!-- Dark Mode Toggle -->
+          <button id="theme-toggle" class="p-2 rounded-lg bg-neutral-100 dark:bg-neutral-700 hover:bg-neutral-200 dark:hover:bg-neutral-600">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+            </svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Mobile Menu Button -->
+        <div class="md:hidden flex items-center gap-3">
+          <button id="theme-toggle-mobile" class="p-2 rounded-lg bg-neutral-100 dark:bg-neutral-700">
+            <svg class="theme-icon-dark-mobile hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+            </svg>
+            <svg class="theme-icon-light-mobile hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path>
+            </svg>
+          </button>
+          <button id="mobile-menu-button" class="text-neutral-700 dark:text-neutral-300">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Menu -->
+      <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-neutral-800 border-t border-neutral-200 dark:border-neutral-700">
+        <div class="px-4 py-2 space-y-1">
+          <a href="#niveis" class="block px-3 py-2 rounded-md hover:bg-neutral-100 dark:hover:bg-neutral-700">Níveis</a>
+          <a href="#modulos" class="block px-3 py-2 rounded-md hover:bg-neutral-100 dark:hover:bg-neutral-700">Módulos</a>
+          <a href="sobre.html" class="block px-3 py-2 rounded-md hover:bg-neutral-100 dark:hover:bg-neutral-700">Sobre</a>
+          <a href="faq.html" class="block px-3 py-2 rounded-md hover:bg-neutral-100 dark:hover:bg-neutral-700">FAQ</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="bg-gradient-to-r from-iniciante via-tecnico to-masterclass py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
+      <h1 class="text-4xl lg:text-5xl font-bold mb-6">
+        Domine a Transformação Digital
+      </h1>
+      <p class="text-xl mb-8 text-white/90">
+        Do iniciante ao masterclass em IA e tecnologias emergentes
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="#niveis" class="bg-white text-tecnico px-8 py-4 rounded-lg font-bold text-lg hover:bg-neutral-100 transition">
+          Começar Agora (Grátis)
+        </a>
+        <a href="#lead-form" class="bg-transparent border-2 border-white text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-white/10 transition">
+          Conhecer FTD PRO
+        </a>
+      </div>
+
+      <!-- Stats -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-12">
+        <div class="bg-white/10 backdrop-blur p-4 rounded-lg">
+          <div class="text-3xl font-bold">9</div>
+          <div class="text-sm text-white/80">Módulos</div>
+        </div>
+        <div class="bg-white/10 backdrop-blur p-4 rounded-lg">
+          <div class="text-3xl font-bold">120h</div>
+          <div class="text-sm text-white/80">de Conteúdo</div>
+        </div>
+        <div class="bg-white/10 backdrop-blur p-4 rounded-lg">
+          <div class="text-3xl font-bold">100%</div>
+          <div class="text-sm text-white/80">Prático</div>
+        </div>
+        <div class="bg-white/10 backdrop-blur p-4 rounded-lg">
+          <div class="text-3xl font-bold">Grátis</div>
+          <div class="text-sm text-white/80">Acesso Base</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Níveis do Curso -->
+  <section id="niveis" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl lg:text-4xl font-bold text-neutral-900 dark:text-neutral-100 mb-4">
+        Três Níveis de Aprendizado
+      </h2>
+      <p class="text-lg text-neutral-600 dark:text-neutral-400">
+        Escolha seu caminho de acordo com sua experiência
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+      <!-- Card Iniciante -->
+      <div class="bg-white dark:bg-neutral-800 border-2 border-iniciante/20 dark:border-iniciante/40 rounded-2xl p-8 hover:-translate-y-2 hover:border-iniciante transition-all shadow-lg">
+        <div class="text-4xl mb-4">🌟</div>
+        <h3 class="text-2xl font-bold text-neutral-900 dark:text-neutral-100 mb-2">Iniciante</h3>
+
+        <span class="inline-block px-3 py-1 bg-iniciante text-white text-sm font-semibold rounded-full mb-4">
+          30 horas
+        </span>
+
+        <p class="text-neutral-600 dark:text-neutral-400 mb-6">
+          Fundamentos de IA e transformação digital. Perfeito para quem está começando.
+        </p>
+
+        <ul class="space-y-2 mb-6">
+          <li class="flex items-start">
+            <span class="text-iniciante mr-2">✓</span>
+            <span class="text-neutral-700 dark:text-neutral-300">Conceitos básicos de IA</span>
+          </li>
+          <li class="flex items-start">
+            <span class="text-iniciante mr-2">✓</span>
+            <span class="text-neutral-700 dark:text-neutral-300">Primeiros prompts</span>
+          </li>
+          <li class="flex items-start">
+            <span class="text-iniciante mr-2">✓</span>
+            <span class="text-neutral-700 dark:text-neutral-300">Ferramentas essenciais</span>
+          </li>
+        </ul>
+
+        <a href="niveis/nivel-iniciante.html" class="block w-full bg-iniciante text-white py-3 rounded-lg font-semibold text-center hover:bg-emerald-600 transition">
+          Explorar Nível
+        </a>
+      </div>
+
+      <!-- Card Técnico -->
+      <div class="bg-white dark:bg-neutral-800 border-2 border-tecnico/20 dark:border-tecnico/40 rounded-2xl p-8 hover:-translate-y-2 hover:border-tecnico transition-all shadow-lg">
+        <div class="text-4xl mb-4">⚡</div>
+        <h3 class="text-2xl font-bold text-neutral-900 dark:text-neutral-100 mb-2">Técnico</h3>
+
+        <span class="inline-block px-3 py-1 bg-tecnico text-white text-sm font-semibold rounded-full mb-4">
+          40 horas
+        </span>
+
+        <p class="text-neutral-600 dark:text-neutral-400 mb-6">
+          Técnicas avançadas, automação e aplicações práticas em projetos reais.
+        </p>
+
+        <ul class="space-y-2 mb-6">
+          <li class="flex items-start">
+            <span class="text-tecnico mr-2">✓</span>
+            <span class="text-neutral-700 dark:text-neutral-300">Prompt engineering avançado</span>
+          </li>
+          <li class="flex items-start">
+            <span class="text-tecnico mr-2">✓</span>
+            <span class="text-neutral-700 dark:text-neutral-300">Automação de processos</span>
+          </li>
+          <li class="flex items-start">
+            <span class="text-tecnico mr-2">✓</span>
+            <span class="text-neutral-700 dark:text-neutral-300">Criação de conteúdo visual</span>
+          </li>
+        </ul>
+
+        <a href="niveis/nivel-tecnico.html" class="block w-full bg-tecnico text-white py-3 rounded-lg font-semibold text-center hover:bg-blue-600 transition">
+          Explorar Nível
+        </a>
+      </div>
+
+      <!-- Card Masterclass -->
+      <div class="bg-white dark:bg-neutral-800 border-2 border-masterclass/20 dark:border-masterclass/40 rounded-2xl p-8 hover:-translate-y-2 hover:border-masterclass transition-all shadow-lg">
+        <div class="text-4xl mb-4">👑</div>
+        <h3 class="text-2xl font-bold text-neutral-900 dark:text-neutral-100 mb-2">Masterclass</h3>
+
+        <span class="inline-block px-3 py-1 bg-masterclass text-white text-sm font-semibold rounded-full mb-4">
+          50 horas
+        </span>
+
+        <p class="text-neutral-600 dark:text-neutral-400 mb-6">
+          Visão estratégica, modelos de negócio e liderança em transformação digital.
+        </p>
+
+        <ul class="space-y-2 mb-6">
+          <li class="flex items-start">
+            <span class="text-masterclass mr-2">✓</span>
+            <span class="text-neutral-700 dark:text-neutral-300">Estratégia de negócios</span>
+          </li>
+          <li class="flex items-start">
+            <span class="text-masterclass mr-2">✓</span>
+            <span class="text-neutral-700 dark:text-neutral-300">IA avançada (RAG, Agents)</span>
+          </li>
+          <li class="flex items-start">
+            <span class="text-masterclass mr-2">✓</span>
+            <span class="text-neutral-700 dark:text-neutral-300">Monetização e escalabilidade</span>
+          </li>
+        </ul>
+
+        <a href="niveis/nivel-masterclass.html" class="block w-full bg-masterclass text-white py-3 rounded-lg font-semibold text-center hover:bg-purple-600 transition">
+          Explorar Nível
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CTA PRO -->
+  <section id="lead-form" class="bg-gradient-to-br from-purple-900 to-blue-900 py-20">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
+      <h2 class="text-3xl lg:text-5xl font-bold mb-6">
+        Quer Mais? Conheça o FTD PRO
+      </h2>
+      <p class="text-xl mb-8">
+        Certificados, comunidade exclusiva, suporte e muito mais.
+      </p>
+
+      <div class="bg-white dark:bg-neutral-800 rounded-2xl p-8 text-left max-w-md mx-auto">
+        <h3 class="text-2xl font-bold text-neutral-900 dark:text-neutral-100 mb-4">
+          Entre na Lista de Espera
+        </h3>
+        <p class="text-neutral-600 dark:text-neutral-400 mb-6">
+          Seja um dos primeiros a ter acesso ao FTD PRO com desconto especial.
+        </p>
+
+        <form id="lead-form-element" class="space-y-4">
+          <div>
+            <label class="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-1">
+              Nome Completo
+            </label>
+            <input
+              type="text"
+              name="name"
+              required
+              class="w-full px-4 py-2 border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-700 text-neutral-900 dark:text-neutral-100 rounded-lg focus:ring-2 focus:ring-tecnico focus:border-transparent"
+              placeholder="Seu nome"
+            >
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-1">
+              Email
+            </label>
+            <input
+              type="email"
+              name="email"
+              required
+              class="w-full px-4 py-2 border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-700 text-neutral-900 dark:text-neutral-100 rounded-lg focus:ring-2 focus:ring-tecnico focus:border-transparent"
+              placeholder="seu@email.com"
+            >
+          </div>
+
+          <button
+            type="submit"
+            class="w-full bg-tecnico text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition"
+          >
+            Quero Ser Notificado
+          </button>
+
+          <p class="text-xs text-neutral-500 dark:text-neutral-400 text-center">
+            Seus dados estão seguros. Sem spam.
+          </p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-neutral-900 dark:bg-black text-neutral-300 py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+        <!-- Coluna 1 -->
+        <div>
+          <h3 class="text-xl font-bold text-white mb-4">FTD</h3>
+          <p class="text-sm">
+            Formação da Transformação Digital
+          </p>
+        </div>
+
+        <!-- Coluna 2 -->
+        <div>
+          <h4 class="font-semibold text-white mb-4">Links</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="/" class="hover:text-white transition">Início</a></li>
+            <li><a href="#niveis" class="hover:text-white transition">Níveis</a></li>
+            <li><a href="sobre.html" class="hover:text-white transition">Sobre</a></li>
+            <li><a href="faq.html" class="hover:text-white transition">FAQ</a></li>
+          </ul>
+        </div>
+
+        <!-- Coluna 3 -->
+        <div>
+          <h4 class="font-semibold text-white mb-4">Contato</h4>
+          <p class="text-sm">contato@ftd.com.br</p>
+        </div>
+
+      </div>
+
+      <div class="border-t border-neutral-800 mt-8 pt-8 text-center text-sm">
+        <p>&copy; 2025 FTD. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script src="js/app.js"></script>
+
+</body>
+</html>

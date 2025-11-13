@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Módulo 2.7: NLP e Text Processing | FTD - Formação Transformação Digital</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Tailwind Config -->
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            iniciante: '#10B981',
+            tecnico: '#3B82F6',
+            masterclass: '#8B5CF6',
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom Styles -->
+  <style>
+    body.preload * {
+      transition: none !important;
+    }
+  </style>
+</head>
+
+<body class="preload bg-neutral-50 dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 transition-colors duration-300">
+
+  <!-- Navigation -->
+  <nav class="bg-white/80 dark:bg-neutral-800/80 backdrop-blur-lg sticky top-0 z-50 border-b border-neutral-200 dark:border-neutral-700">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+
+        <!-- Back Button + Logo -->
+        <div class="flex items-center space-x-4">
+          <a href="../niveis/nivel-tecnico.html" class="text-tecnico hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-semibold flex items-center space-x-2">
+            <span>←</span>
+            <span>Voltar</span>
+          </a>
+          <div class="h-6 w-px bg-neutral-300 dark:bg-neutral-600"></div>
+          <a href="../index.html" class="text-xl font-bold text-tecnico">FTD</a>
+        </div>
+
+        <!-- Desktop Theme Toggle -->
+        <button id="theme-toggle" class="p-2 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700 transition-colors hidden md:block">
+          <svg id="theme-toggle-dark-icon" class="w-5 h-5 hidden" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+          </svg>
+          <svg id="theme-toggle-light-icon" class="w-5 h-5 hidden" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path>
+          </svg>
+        </button>
+
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- Module Header -->
+    <div class="mb-12">
+      <a href="../niveis/nivel-tecnico.html" class="inline-flex items-center text-tecnico hover:text-blue-600 dark:hover:text-blue-400 mb-6 transition-colors">
+        <span class="mr-2">←</span>
+        <span>Nível Técnico</span>
+      </a>
+
+      <div class="flex items-center space-x-3 mb-4">
+        <span class="inline-block px-4 py-1.5 bg-tecnico/10 text-tecnico rounded-full text-sm font-semibold">
+          4 horas
+        </span>
+        <span class="inline-block px-4 py-1.5 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-200 rounded-full text-sm font-semibold">
+          4 tópicos
+        </span>
+      </div>
+
+      <h1 class="text-5xl font-bold text-neutral-900 dark:text-neutral-100 mb-4">
+        📝 Módulo 2.7: NLP e Text Processing
+      </h1>
+      <p class="text-xl text-neutral-600 dark:text-neutral-400 leading-relaxed">
+        Domine técnicas avançadas de processamento de linguagem natural, incluindo NER, tradução, análise de sentimento e extração de informação.
+      </p>
+    </div>
+
+    <!-- Topics Content -->
+    <div class="space-y-8">
+
+      <!-- Tópico 1 -->
+      <section class="bg-white dark:bg-neutral-800 rounded-2xl shadow-lg p-8">
+        <h2 class="text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-6 flex items-center">
+          <span class="text-tecnico mr-3">📝</span>
+          Named Entity Recognition
+        </h2>
+
+        <div class="space-y-6">
+          <div>
+            <h3 class="text-xl font-semibold text-tecnico mb-3">O que é</h3>
+            <p class="text-neutral-700 dark:text-neutral-300 leading-relaxed">
+              Named Entity Recognition (NER) identifica e classifica entidades mencionadas em texto (pessoas, organizações, locais, datas, valores monetários, etc.). Modelos modernos incluem spaCy, Stanford NER, BERT-based NER, e GLiNER para zero-shot entity extraction. NER é fundamental para information extraction, knowledge graph construction, e document understanding.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-xl font-semibold text-tecnico mb-3">Por que aprender</h3>
+            <p class="text-neutral-700 dark:text-neutral-300 leading-relaxed">
+              NER é base para inúmeras aplicações empresariais - análise de contratos (extração de partes, datas, valores), monitoramento de mídia (tracking de menções), compliance (identificação de PII), e pesquisa (indexação semântica). Sistemas de Q&A, chatbots e assistentes virtuais dependem de NER para entender queries. É uma das habilidades NLP mais valorizadas.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-xl font-semibold text-tecnico mb-3">Conceitos chave</h3>
+            <div class="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-6">
+              <ul class="space-y-3 text-neutral-700 dark:text-neutral-300">
+                <li class="flex items-start">
+                  <span class="text-tecnico mr-2 mt-1">•</span>
+                  <span><strong>Entity Types:</strong> PERSON, ORG, LOC, DATE, MONEY, GPE (geo-political entities)</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-tecnico mr-2 mt-1">•</span>
+                  <span><strong>spaCy NER:</strong> Pipeline eficiente com modelos pré-treinados multilíngues</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-tecnico mr-2 mt-1">•</span>
+                  <span><strong>BIO Tagging:</strong> Begin-Inside-Outside scheme para sequence labeling</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-tecnico mr-2 mt-1">•</span>
+                  <span><strong>GLiNER:</strong> Zero-shot NER para entidades customizadas sem treinamento</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-tecnico mr-2 mt-1">•</span>
+                  <span><strong>Entity Linking:</strong> Resolução de entidades para knowledge bases (Wikipedia, Wikidata)</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-tecnico mr-2 mt-1">•</span>
+                  <span><strong>Custom NER Training:</strong> Fine-tuning em domínios específicos (médico, jurídico, financeiro)</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tópico 2 -->
+      <section class="bg-white dark:bg-neutral-800 rounded-2xl shadow-lg p-8">
+        <h2 class="text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-6 flex items-center">
+          <span class="text-tecnico mr-3">🌍</span>
+          Translation e Multilingual Models
+        </h2>
+
+        <div class="space-y-6">
+          <div>
+            <h3 class="text-xl font-semibold text-tecnico mb-3">O que é</h3>
+            <p class="text-neutral-700 dark:text-neutral-300 leading-relaxed">
+              Machine translation converte texto entre idiomas automaticamente. Modelos modernos incluem Google Translate API, DeepL API, Meta's M2M-100, e NLLB (No Language Left Behind) para 200+ idiomas. Multilingual models como mBERT, XLM-RoBERTa processam múltiplos idiomas em um único modelo. Técnicas incluem neural machine translation (NMT), zero-shot translation, e domain adaptation.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-xl font-semibold text-tecnico mb-3">Por que aprender</h3>
+            <p class="text-neutral-700 dark:text-neutral-300 leading-relaxed">
+              Globalização exige aplicações multilíngues. Translation permite alcançar mercados internacionais, suporte a clientes em múltiplos idiomas, e análise de fontes globais de dados. Modelos multilíngues permitem transfer learning entre idiomas, reduzindo necessidade de dados em línguas de baixo recurso. Empresas globais priorizam desenvolvedores com essas habilidades.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-xl font-semibold text-tecnico mb-3">Conceitos chave</h3>
+            <div class="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-6">
+              <ul class="space-y-3 text-neutral-700 dark:text-neutral-300">
+                <li class="flex items-start">
+                  <span class="text-tecnico mr-2 mt-1">•</span>
+                  <span><strong>Transformer NMT:</strong> Encoder-decoder architecture para tradução neural</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-tecnico mr-2 mt-1">•</span>
+                  <span><strong>BLEU Score:</strong> Métrica padrão para avaliar qualidade de traduções</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-tecnico mr-2 mt-1">•</span>
+                  <span><strong>Zero-shot Translation:</strong> Tradução entre pares de idiomas não vistos no treinamento</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-tecnico mr-2 mt-1">•</span>
+                  <span><strong>Multilingual Embeddings:</strong> Representações compartilhadas entre idiomas</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-tecnico mr-2 mt-1">•</span>
+                  <span><strong>Domain Adaptation:</strong> Fine-tuning para terminologia específica (técnica, médica)</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-tecnico mr-2 mt-1">•</span>
+                  <span><strong>Language Detection:</strong> Identificação automática de idioma de entrada</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tópico 3 -->
+      <section class="bg-white dark:bg-neutral-800 rounded-2xl shadow-lg p-8">
+        <h2 class="text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-6 flex items-center">
+          <span class="text-tecnico mr-3">📊</span>
+          Sentiment Analysis e Classification
+        </h2>
+
+        <div class="space-y-6">
+          <div>
+            <h3 class="text-xl font-semibold text-tecnico mb-3">O que é</h3>
+            <p class="text-neutral-700 dark:text-neutral-300 leading-relaxed">
+              Sentiment analysis classifica texto como positivo, negativo ou neutro. Text classification categoriza documentos em classes predefinidas (spam/not spam, tópicos, urgência, etc.). Modelos incluem BERT-based classifiers, RoBERTa, DistilBERT para eficiência, e zero-shot classification com modelos generativos. Aplica-se em reviews, social media monitoring, customer feedback, e content moderation.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-xl font-semibold text-tecnico mb-3">Por que aprender</h3>
+            <p class="text-neutral-700 dark:text-neutral-300 leading-relaxed">
+              Empresas precisam entender sentimento de clientes em escala - analisar milhares de reviews, tweets, emails manualmente é inviável. Sentiment analysis automatiza isso, fornecendo insights acionáveis. Classification automatiza triagem de tickets, roteamento de emails, moderação de conteúdo. ROI é claro e imediato, tornando essas habilidades altamente valorizadas.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-xl font-semibold text-tecnico mb-3">Conceitos chave</h3>
+            <div class="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-6">
+              <ul class="space-y-3 text-neutral-700 dark:text-neutral-300">
+                <li class="flex items-start">
+                  <span class="text-tecnico mr-2 mt-1">•</span>
+                  <span><strong>Aspect-Based Sentiment:</strong> Sentimento para aspectos específicos (food vs service em reviews)</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-tecnico mr-2 mt-1">•</span>
+                  <span><strong>Multi-class Classification:</strong> Softmax, cross-entropy para múltiplas categorias</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-tecnico mr-2 mt-1">•</span>
+                  <span><strong>Zero-shot Classification:</strong> HuggingFace pipeline para classes sem exemplos de treino</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-tecnico mr-2 mt-1">•</span>
+                  <span><strong>Class Imbalance:</strong> SMOTE, class weights para datasets desbalanceados</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-tecnico mr-2 mt-1">•</span>
+                  <span><strong>Confusion Matrix:</strong> Precision, recall, F1-score para avaliar classifiers</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-tecnico mr-2 mt-1">•</span>
+                  <span><strong>Active Learning:</strong> Seleção inteligente de exemplos para annotation</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tópico 4 -->
+      <section class="bg-white dark:bg-neutral-800 rounded-2xl shadow-lg p-8">
+        <h2 class="text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-6 flex items-center">
+          <span class="text-tecnico mr-3">🔍</span>
+          Information Extraction
+        </h2>
+
+        <div class="space-y-6">
+          <div>
+            <h3 class="text-xl font-semibold text-tecnico mb-3">O que é</h3>
+            <p class="text-neutral-700 dark:text-neutral-300 leading-relaxed">
+              Information extraction (IE) converte texto não-estruturado em dados estruturados. Inclui entity extraction, relation extraction (identificar relações entre entidades), event extraction, e template filling. Técnicas incluem rule-based systems, statistical models (CRF), neural approaches (BERT, GPT), e hybrid methods. Frameworks como Stanford CoreNLP, AllenNLP facilitam IE complexo.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-xl font-semibold text-tecnico mb-3">Por que aprender</h3>
+            <p class="text-neutral-700 dark:text-neutral-300 leading-relaxed">
+              A maioria dos dados empresariais está em formato não-estruturado (emails, PDFs, relatórios, contratos). IE transforma esses dados em formato analisável, permitindo automação de processos, business intelligence, e data-driven decisions. Aplicações incluem parsing de currículos, análise de contratos, extração de dados de faturas, e construção de knowledge graphs.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-xl font-semibold text-tecnico mb-3">Conceitos chave</h3>
+            <div class="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-6">
+              <ul class="space-y-3 text-neutral-700 dark:text-neutral-300">
+                <li class="flex items-start">
+                  <span class="text-tecnico mr-2 mt-1">•</span>
+                  <span><strong>Relation Extraction:</strong> Identificar relações entre entidades (works_for, located_in)</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-tecnico mr-2 mt-1">•</span>
+                  <span><strong>Event Extraction:</strong> Detectar eventos (aquisições, lançamentos de produtos) com participantes</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-tecnico mr-2 mt-1">•</span>
+                  <span><strong>Template Filling:</strong> Preencher estruturas predefinidas com informações extraídas</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-tecnico mr-2 mt-1">•</span>
+                  <span><strong>Open IE:</strong> Extração sem esquema predefinido (ReVerb, OpenIE)</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-tecnico mr-2 mt-1">•</span>
+                  <span><strong>Structured Outputs:</strong> JSON Schema, Pydantic models para garantir formato</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-tecnico mr-2 mt-1">•</span>
+                  <span><strong>Document Understanding:</strong> Layout analysis + OCR + IE para PDFs e images</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- Navigation Footer -->
+    <div class="mt-12 pt-8 border-t border-neutral-200 dark:border-neutral-700 flex justify-between items-center">
+      <a href="modulo-2-6.html" class="inline-flex items-center px-6 py-3 bg-neutral-200 dark:bg-neutral-700 text-neutral-900 dark:text-neutral-100 rounded-lg hover:bg-neutral-300 dark:hover:bg-neutral-600 transition-colors font-semibold">
+        <span class="mr-2">←</span>
+        <span>Módulo Anterior</span>
+      </a>
+
+      <a href="modulo-2-8.html" class="inline-flex items-center px-6 py-3 bg-tecnico text-white rounded-lg hover:bg-blue-600 transition-colors font-semibold">
+        <span>Próximo Módulo</span>
+        <span class="ml-2">→</span>
+      </a>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white dark:bg-neutral-800 border-t border-neutral-200 dark:border-neutral-700 mt-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div class="text-center">
+        <p class="text-neutral-600 dark:text-neutral-400">
+          © 2024 FTD - Formação Transformação Digital. Todos os direitos reservados.
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script src="../js/app.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Módulo 2.6: Computer Vision Avançada | FTD - Formação Transformação Digital</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Tailwind Config -->
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            iniciante: '#10B981',
+            tecnico: '#3B82F6',
+            masterclass: '#8B5CF6',
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom Styles -->
+  <style>
+    body.preload * {
+      transition: none !important;
+    }
+  </style>
+</head>
+
+<body class="preload bg-neutral-50 dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 transition-colors duration-300">
+
+  <!-- Navigation -->
+  <nav class="bg-white/80 dark:bg-neutral-800/80 backdrop-blur-lg sticky top-0 z-50 border-b border-neutral-200 dark:border-neutral-700">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+
+        <!-- Back Button + Logo -->
+        <div class="flex items-center space-x-4">
+          <a href="../niveis/nivel-tecnico.html" class="text-tecnico hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-semibold flex items-center space-x-2">
+            <span>←</span>
+            <span>Voltar</span>
+          </a>
+          <div class="h-6 w-px bg-neutral-300 dark:bg-neutral-600"></div>
+          <a href="../index.html" class="text-xl font-bold text-tecnico">FTD</a>
+        </div>
+
+        <!-- Desktop Theme Toggle -->
+        <button id="theme-toggle" class="p-2 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700 transition-colors hidden md:block">
+          <svg id="theme-toggle-dark-icon" class="w-5 h-5 hidden" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+          </svg>
+          <svg id="theme-toggle-light-icon" class="w-5 h-5 hidden" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path>
+          </svg>
+        </button>
+
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- Module Header -->
+    <div class="mb-12">
+      <a href="../niveis/nivel-tecnico.html" class="inline-flex items-center text-tecnico hover:text-blue-600 dark:hover:text-blue-400 mb-6 transition-colors">
+        <span class="mr-2">←</span>
+        <span>Nível Técnico</span>
+      </a>
+
+      <div class="flex items-center space-x-3 mb-4">
+        <span class="inline-block px-4 py-1.5 bg-tecnico/10 text-tecnico rounded-full text-sm font-semibold">
+          4 horas
+        </span>
+        <span class="inline-block px-4 py-1.5 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-200 rounded-full text-sm font-semibold">
+          3 tópicos
+        </span>
+      </div>
+
+      <h1 class="text-5xl font-bold text-neutral-900 dark:text-neutral-100 mb-4">
+        👁️ Módulo 2.6: Computer Vision Avançada
+      </h1>
+      <p class="text-xl text-neutral-600 dark:text-neutral-400 leading-relaxed">
+        Explore técnicas avançadas de visão computacional, incluindo detecção de objetos, segmentação, reconhecimento facial e aplicações industriais.
+      </p>
+    </div>
+
+    <!-- Topics Content -->
+    <div class="space-y-8">
+
+      <!-- Tópico 1 -->
+      <section class="bg-white dark:bg-neutral-800 rounded-2xl shadow-lg p-8">
+        <h2 class="text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-6 flex items-center">
+          <span class="text-tecnico mr-3">👁️</span>
+          Object Detection e Segmentation
+        </h2>
+
+        <div class="space-y-6">
+          <div>
+            <h3 class="text-xl font-semibold text-tecnico mb-3">O que é</h3>
+            <p class="text-neutral-700 dark:text-neutral-300 leading-relaxed">
+              Object detection identifica e localiza múltiplos objetos em imagens através de bounding boxes. Segmentation vai além, classificando cada pixel da imagem (semantic segmentation) ou separando instâncias individuais (instance segmentation). Modelos state-of-the-art incluem YOLO (You Only Look Once), SAM (Segment Anything Model), Mask R-CNN, e GroundingDINO para detecção zero-shot.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-xl font-semibold text-tecnico mb-3">Por que aprender</h3>
+            <p class="text-neutral-700 dark:text-neutral-300 leading-relaxed">
+              Computer vision é fundamental em inúmeras indústrias - manufatura (controle de qualidade), retail (inventory management), saúde (diagnóstico médico), segurança (vigilância), automotivo (carros autônomos). APIs como Roboflow e Ultralytics tornam essas técnicas acessíveis. Desenvolvedores com skills em CV ganham 20-40% mais que generalistas.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-xl font-semibold text-tecnico mb-3">Conceitos chave</h3>
+            <div class="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-6">
+              <ul class="space-y-3 text-neutral-700 dark:text-neutral-300">
+                <li class="flex items-start">
+                  <span class="text-tecnico mr-2 mt-1">•</span>
+                  <span><strong>YOLO Family:</strong> YOLOv8, YOLOv9 para real-time object detection (>60 FPS)</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-tecnico mr-2 mt-1">•</span>
+                  <span><strong>Segment Anything (SAM):</strong> Meta's foundation model para segmentação universal</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-tecnico mr-2 mt-1">•</span>
+                  <span><strong>Bounding Box Formats:</strong> COCO, YOLO, Pascal VOC annotations</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-tecnico mr-2 mt-1">•</span>
+                  <span><strong>mAP (mean Average Precision):</strong> Métrica padrão para avaliar object detectors</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-tecnico mr-2 mt-1">•</span>
+                  <span><strong>Non-Maximum Suppression:</strong> Eliminação de detecções duplicadas</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-tecnico mr-2 mt-1">•</span>
+                  <span><strong>Transfer Learning:</strong> Fine-tuning de modelos pré-treinados em COCO para custom datasets</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tópico 2 -->
+      <section class="bg-white dark:bg-neutral-800 rounded-2xl shadow-lg p-8">
+        <h2 class="text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-6 flex items-center">
+          <span class="text-tecnico mr-3">🎭</span>
+          Facial Recognition e Tracking
+        </h2>
+
+        <div class="space-y-6">
+          <div>
+            <h3 class="text-xl font-semibold text-tecnico mb-3">O que é</h3>
+            <p class="text-neutral-700 dark:text-neutral-300 leading-relaxed">
+              Facial recognition identifica ou verifica pessoas através de características faciais únicas. Envolve face detection (localizar faces), face alignment (normalização), feature extraction (embeddings), e matching. Object tracking mantém identidade de objetos ao longo de frames em vídeos. Técnicas incluem DeepFace, FaceNet, ArcFace para recognition, e SORT/DeepSORT para tracking.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-xl font-semibold text-tecnico mb-3">Por que aprender</h3>
+            <p class="text-neutral-700 dark:text-neutral-300 leading-relaxed">
+              Facial recognition tem aplicações amplas - segurança (controle de acesso), varejo (análise de clientes), marketing (demographic analysis), entretenimento (filtros AR). Tracking é essencial para análise de vídeo, sports analytics, vigilância inteligente. Entretanto, também levanta questões éticas importantes que profissionais devem entender para uso responsável.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-xl font-semibold text-tecnico mb-3">Conceitos chave</h3>
+            <div class="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-6">
+              <ul class="space-y-3 text-neutral-700 dark:text-neutral-300">
+                <li class="flex items-start">
+                  <span class="text-tecnico mr-2 mt-1">•</span>
+                  <span><strong>Face Detection:</strong> MTCNN, RetinaFace para localização robusta de faces</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-tecnico mr-2 mt-1">•</span>
+                  <span><strong>Face Embeddings:</strong> FaceNet, ArcFace para representações vetoriais de 128-512D</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-tecnico mr-2 mt-1">•</span>
+                  <span><strong>Similarity Metrics:</strong> Cosine similarity, Euclidean distance para face matching</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-tecnico mr-2 mt-1">•</span>
+                  <span><strong>Liveness Detection:</strong> Anti-spoofing para prevenir ataques com fotos/vídeos</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-tecnico mr-2 mt-1">•</span>
+                  <span><strong>Multi-Object Tracking:</strong> SORT, DeepSORT, ByteTrack para tracking robusto</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-tecnico mr-2 mt-1">•</span>
+                  <span><strong>Re-identification:</strong> Matching de pessoas entre diferentes câmeras/views</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tópico 3 -->
+      <section class="bg-white dark:bg-neutral-800 rounded-2xl shadow-lg p-8">
+        <h2 class="text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-6 flex items-center">
+          <span class="text-tecnico mr-3">🏭</span>
+          Aplicações Industriais
+        </h2>
+
+        <div class="space-y-6">
+          <div>
+            <h3 class="text-xl font-semibold text-tecnico mb-3">O que é</h3>
+            <p class="text-neutral-700 dark:text-neutral-300 leading-relaxed">
+              Computer vision industrial envolve automação de inspeção de qualidade, detecção de defeitos, leitura de medidores, contagem de inventário, e robótica. Requer precisão extrema, velocidade (processamento em tempo real), e robustez a condições variadas (iluminação, ângulos, oclusões). Soluções incluem edge computing com câmeras industriais, modelos otimizados (TensorRT, OpenVINO), e pipelines customizados.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-xl font-semibold text-tecnico mb-3">Por que aprender</h3>
+            <p class="text-neutral-700 dark:text-neutral-300 leading-relaxed">
+              Indústria 4.0 depende fortemente de computer vision para automação. Empresas estão substituindo inspeção manual por sistemas de CV, economizando milhões e aumentando precisão. Aplicações variam de agricultura de precisão, inspeção de linhas de produção, manutenção preditiva, até logística automatizada. É um dos mercados de IA que mais cresce, com salários premium.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-xl font-semibold text-tecnico mb-3">Conceitos chave</h3>
+            <div class="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-6">
+              <ul class="space-y-3 text-neutral-700 dark:text-neutral-300">
+                <li class="flex items-start">
+                  <span class="text-tecnico mr-2 mt-1">•</span>
+                  <span><strong>Anomaly Detection:</strong> Detecção de defeitos em produtos sem exemplos prévios</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-tecnico mr-2 mt-1">•</span>
+                  <span><strong>OCR Industrial:</strong> Leitura de códigos, placas, medidores (EasyOCR, PaddleOCR)</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-tecnico mr-2 mt-1">•</span>
+                  <span><strong>Edge Deployment:</strong> NVIDIA Jetson, Raspberry Pi, Intel NUC para inference local</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-tecnico mr-2 mt-1">•</span>
+                  <span><strong>Model Optimization:</strong> Quantization, pruning, TensorRT para latência <10ms</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-tecnico mr-2 mt-1">•</span>
+                  <span><strong>Industrial Cameras:</strong> Machine vision cameras, high-speed capture, specialized lenses</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-tecnico mr-2 mt-1">•</span>
+                  <span><strong>Robotics Integration:</strong> ROS (Robot Operating System), pick-and-place automation</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- Navigation Footer -->
+    <div class="mt-12 pt-8 border-t border-neutral-200 dark:border-neutral-700 flex justify-between items-center">
+      <a href="modulo-2-5.html" class="inline-flex items-center px-6 py-3 bg-neutral-200 dark:bg-neutral-700 text-neutral-900 dark:text-neutral-100 rounded-lg hover:bg-neutral-300 dark:hover:bg-neutral-600 transition-colors font-semibold">
+        <span class="mr-2">←</span>
+        <span>Módulo Anterior</span>
+      </a>
+
+      <a href="modulo-2-7.html" class="inline-flex items-center px-6 py-3 bg-tecnico text-white rounded-lg hover:bg-blue-600 transition-colors font-semibold">
+        <span>Próximo Módulo</span>
+        <span class="ml-2">→</span>
+      </a>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white dark:bg-neutral-800 border-t border-neutral-200 dark:border-neutral-700 mt-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div class="text-center">
+        <p class="text-neutral-600 dark:text-neutral-400">
+          © 2024 FTD - Formação Transformação Digital. Todos os direitos reservados.
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script src="../js/app.js"></script>
+
+</body>
+</html>

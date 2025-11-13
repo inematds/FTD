@@ -1,0 +1,1330 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Nível Masterclass - Especialização e Liderança em IA">
+  <title>Nível Masterclass | FTD</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Tailwind Config -->
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            iniciante: '#10B981',
+            tecnico: '#3B82F6',
+            masterclass: '#8B5CF6',
+          },
+          fontFamily: {
+            sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <style>
+    * {
+      transition: background-color 200ms ease-in-out, border-color 200ms ease-in-out, color 200ms ease-in-out;
+    }
+    .preload * {
+      transition: none !important;
+    }
+
+    /* Modal CSS */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 100;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.6);
+      backdrop-filter: blur(4px);
+    }
+    .modal.active {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-content {
+      background-color: white;
+      margin: auto;
+      padding: 0;
+      width: 90%;
+      max-width: 1000px;
+      max-height: 90vh;
+      border-radius: 1rem;
+      overflow: hidden;
+      box-shadow: 0 20px 25px rgba(0,0,0,0.3);
+    }
+    .dark .modal-content {
+      background-color: #1f2937;
+    }
+    .modal-header {
+      padding: 1.5rem 2rem;
+      border-bottom: 1px solid #e5e7eb;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .dark .modal-header {
+      border-bottom-color: #374151;
+    }
+    .modal-body {
+      padding: 2rem;
+      overflow-y: auto;
+      max-height: calc(90vh - 80px);
+    }
+    .close-modal {
+      color: #9ca3af;
+      font-size: 2rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .close-modal:hover {
+      color: #ef4444;
+    }
+  </style>
+</head>
+<body class="preload bg-neutral-50 dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100">
+
+  <!-- Navegação -->
+  <nav class="sticky top-0 z-50 bg-white/90 dark:bg-neutral-800/90 backdrop-blur-sm border-b border-neutral-200 dark:border-neutral-700">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <a href="../index.html" class="text-2xl font-bold bg-gradient-to-r from-iniciante via-tecnico to-masterclass bg-clip-text text-transparent">
+          🎓 FTD
+        </a>
+
+        <div class="hidden md:flex items-center space-x-8">
+          <a href="../index.html" class="text-neutral-700 dark:text-neutral-300 hover:text-masterclass transition">Início</a>
+          <a href="../index.html#niveis" class="text-neutral-700 dark:text-neutral-300 hover:text-masterclass transition">Níveis</a>
+          <a href="https://github.com/ftd-project" class="text-neutral-700 dark:text-neutral-300 hover:text-masterclass transition">GitHub</a>
+
+          <button id="theme-toggle" class="p-2 rounded-lg bg-neutral-100 dark:bg-neutral-700 hover:bg-neutral-200 dark:hover:bg-neutral-600">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+            </svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path>
+            </svg>
+          </button>
+        </div>
+
+        <div class="md:hidden flex items-center gap-3">
+          <button id="theme-toggle-mobile" class="p-2 rounded-lg bg-neutral-100 dark:bg-neutral-700">
+            <svg class="theme-icon-dark-mobile hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+            </svg>
+            <svg class="theme-icon-light-mobile hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path>
+            </svg>
+          </button>
+          <button id="mobile-menu-button" class="text-neutral-700 dark:text-neutral-300">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-neutral-800 border-t border-neutral-200 dark:border-neutral-700">
+        <div class="px-4 py-2 space-y-1">
+          <a href="../index.html" class="block px-3 py-2 rounded-md hover:bg-neutral-100 dark:hover:bg-neutral-700">Início</a>
+          <a href="../index.html#niveis" class="block px-3 py-2 rounded-md hover:bg-neutral-100 dark:hover:bg-neutral-700">Níveis</a>
+          <a href="https://github.com/ftd-project" class="block px-3 py-2 rounded-md hover:bg-neutral-100 dark:hover:bg-neutral-700">GitHub</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Breadcrumb -->
+  <div class="bg-white dark:bg-neutral-800 border-b border-neutral-200 dark:border-neutral-700">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+      <nav class="flex text-sm" aria-label="Breadcrumb">
+        <a href="../index.html" class="text-masterclass hover:text-purple-600">Início</a>
+        <span class="mx-2 text-neutral-400">/</span>
+        <span class="text-neutral-600 dark:text-neutral-400">Nível Masterclass</span>
+      </nav>
+    </div>
+  </div>
+
+  <!-- Hero Section -->
+  <section class="bg-gradient-to-r from-masterclass to-purple-600 py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-white">
+
+      <div class="flex items-center gap-4 mb-4">
+        <span class="inline-block px-4 py-2 bg-white/20 rounded-full text-sm font-semibold">
+          44 horas
+        </span>
+        <span class="inline-block px-4 py-2 bg-white/20 rounded-full text-sm font-semibold">
+          Avançado
+        </span>
+      </div>
+
+      <h1 class="text-4xl lg:text-5xl font-bold mb-4">
+        👑 Nível Masterclass: Especialização em IA
+      </h1>
+
+      <p class="text-xl text-white/90 mb-6">
+        Domine arquiteturas avançadas, modelos customizados, pesquisa de ponta e liderança em projetos de IA
+      </p>
+
+      <!-- Stats Grid -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
+        <div class="bg-white/10 backdrop-blur p-4 rounded-lg">
+          <div class="text-2xl font-bold">9</div>
+          <div class="text-sm text-purple-100">Módulos</div>
+        </div>
+        <div class="bg-white/10 backdrop-blur p-4 rounded-lg">
+          <div class="text-2xl font-bold">44h</div>
+          <div class="text-sm text-purple-100">Duração</div>
+        </div>
+        <div class="bg-white/10 backdrop-blur p-4 rounded-lg">
+          <div class="text-2xl font-bold">Expert</div>
+          <div class="text-sm text-purple-100">Nível Profissional</div>
+        </div>
+        <div class="bg-white/10 backdrop-blur p-4 rounded-lg">
+          <div class="text-2xl font-bold">Research</div>
+          <div class="text-sm text-purple-100">State-of-the-Art</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Módulos -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- MÓDULO 3.1 -->
+    <div class="chapter-card bg-white dark:bg-neutral-800 rounded-2xl shadow-lg p-8 mb-8 border-2 border-transparent hover:border-masterclass transition-all">
+
+      <!-- Header -->
+      <div class="flex items-start justify-between mb-6">
+        <div>
+          <span class="inline-block px-3 py-1 bg-masterclass/10 text-masterclass rounded-full text-sm font-semibold mb-3">
+            5 horas
+          </span>
+          <h2 class="text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-2">
+            🏢 Módulo 3.1: Arquitetura de IA em Larga Escala
+          </h2>
+          <p class="text-neutral-600 dark:text-neutral-400">
+            Projete sistemas de IA enterprise com multi-tenancy, event-driven architecture e observabilidade avançada
+          </p>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="flex flex-wrap gap-3 mb-6">
+        <button onclick="openModal('modulo-3-1')" class="px-6 py-3 bg-masterclass text-white rounded-lg font-semibold hover:bg-purple-600 transition-colors flex items-center gap-2">
+          <span>📖</span>
+          <span>Ver em Modal</span>
+        </button>
+
+        <a href="../modulos/modulo-3-1.html" class="px-6 py-3 bg-transparent border-2 border-masterclass text-masterclass dark:text-masterclass rounded-lg font-semibold hover:bg-masterclass hover:text-white transition-colors flex items-center gap-2">
+          <span>📄</span>
+          <span>Abrir Página Completa</span>
+        </a>
+
+        <a href="../pdfs/modulo-3-1.md" download class="px-6 py-3 bg-transparent border-2 border-neutral-300 dark:border-neutral-600 text-neutral-700 dark:text-neutral-300 rounded-lg font-semibold hover:bg-neutral-100 dark:hover:bg-neutral-700 transition-colors flex items-center gap-2">
+          <span>📥</span>
+          <span>Download PDF/MD</span>
+        </a>
+      </div>
+
+      <!-- Tópicos Expansíveis (Ultra Compactos) -->
+      <div class="mb-4">
+        <h3 class="font-semibold text-neutral-900 dark:text-neutral-100 mb-3 text-lg">
+          📚 Tópicos-chave do módulo:
+        </h3>
+
+        <ul class="topics-list space-y-0.5">
+
+          <!-- Tópico 1 -->
+          <li class="topic-item" data-topic="m3-1-multitenancy">
+            <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+              🏢 Multi-Tenancy e Isolamento
+            </button>
+
+            <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg border-l-4 border-masterclass">
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">O que é:</strong> Arquitetura que permite múltiplos clientes (tenants) compartilharem infraestrutura mantendo isolamento completo de dados e configurações. Estratégias: database-per-tenant, schema-per-tenant, row-level security. Namespace isolation, API key segregation, resource quotas por tenant.
+              </p>
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">Por que aprender:</strong> Produtos SaaS de IA precisam servir centenas/milhares de clientes na mesma infraestrutura. Multi-tenancy bem projetado reduz custos em 10x comparado a instâncias separadas. Essencial para escalar aplicações B2B de IA mantendo segurança e compliance.
+              </p>
+              <p class="text-sm text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">Conceitos chave:</strong> Tenant isolation patterns, shared vs dedicated resources, data segregation, security boundaries, resource quotas, tenant context propagation
+              </p>
+            </div>
+          </li>
+
+          <!-- Tópico 2 -->
+          <li class="topic-item" data-topic="m3-1-distributed">
+            <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+              ⚡ Distributed Systems e Load Balancing
+            </button>
+
+            <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg border-l-4 border-masterclass">
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">O que é:</strong> Sistemas distribuídos com múltiplos nós processando requisições em paralelo. Load balancers (NGINX, HAProxy, ALB) distribuem tráfego. Service mesh (Istio, Linkerd) para comunicação inter-serviços. Consistent hashing, circuit breakers, health checks, failover automático.
+              </p>
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">Por que aprender:</strong> Aplicações de IA em produção recebem milhões de requisições. Single server não escala. Distributed systems com load balancing permitem horizontal scaling infinito. Alta disponibilidade (99.99%) impossível sem arquitetura distribuída. Fundamento de qualquer sistema enterprise.
+              </p>
+              <p class="text-sm text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">Conceitos chave:</strong> Load balancing algorithms, health checks, service discovery, circuit breakers, distributed tracing, horizontal scaling, failover strategies
+              </p>
+            </div>
+          </li>
+
+          <!-- Tópico 3 -->
+          <li class="topic-item" data-topic="m3-1-eventdriven">
+            <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+              🔄 Event-Driven Architecture
+            </button>
+
+            <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg border-l-4 border-masterclass">
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">O que é:</strong> Arquitetura baseada em eventos assíncronos. Message brokers (Kafka, RabbitMQ, SQS) para comunicação desacoplada. Producers emitem eventos, consumers processam independentemente. Event sourcing, CQRS patterns. Processamento batch vs streaming. Dead letter queues para falhas.
+              </p>
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">Por que aprender:</strong> LLMs são lentos (5-30s). Event-driven permite processamento assíncrono - usuário não espera bloqueado. Desacoplamento facilita escalabilidade e manutenção. Processamento batch de milhões de documentos impossível sem event-driven. Arquitetura moderna de microsserviços.
+              </p>
+              <p class="text-sm text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">Conceitos chave:</strong> Message queues, pub/sub patterns, event sourcing, CQRS, Kafka/RabbitMQ, async processing, backpressure handling
+              </p>
+            </div>
+          </li>
+
+          <!-- Tópico 4 -->
+          <li class="topic-item" data-topic="m3-1-observability">
+            <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+              📊 Observability e Telemetria Avançada
+            </button>
+
+            <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg border-l-4 border-masterclass">
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">O que é:</strong> Três pilares: logs (ELK stack, Loki), metrics (Prometheus, Grafana), traces (Jaeger, OpenTelemetry). Instrumentação de código para visibilidade completa. Custom metrics para IA: token usage, latência por modelo, embedding cache hit rate. Alerting inteligente, SLO/SLA monitoring.
+              </p>
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">Por que aprender:</strong> "You can't improve what you don't measure". Sistemas complexos de IA são caixas-pretas sem observability. Debugging de problemas em produção impossível sem traces. Otimização de custos requer métricas detalhadas. Observability profissional separa amadores de experts.
+              </p>
+              <p class="text-sm text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">Conceitos chave:</strong> Logs, metrics, traces, OpenTelemetry, Prometheus/Grafana, distributed tracing, SLO/SLA monitoring, alerting strategies
+              </p>
+            </div>
+          </li>
+
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- MÓDULO 3.2 -->
+    <div class="chapter-card bg-white dark:bg-neutral-800 rounded-2xl shadow-lg p-8 mb-8 border-2 border-transparent hover:border-masterclass transition-all">
+
+      <div class="flex items-start justify-between mb-6">
+        <div>
+          <span class="inline-block px-3 py-1 bg-masterclass/10 text-masterclass rounded-full text-sm font-semibold mb-3">
+            6 horas
+          </span>
+          <h2 class="text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-2">
+            🧬 Módulo 3.2: Modelos Customizados e Proprietários
+          </h2>
+          <p class="text-neutral-600 dark:text-neutral-400">
+            Treine modelos do zero, crie domain-specific models e otimize com compression e quantização
+          </p>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap gap-3 mb-6">
+        <button onclick="openModal('modulo-3-2')" class="px-6 py-3 bg-masterclass text-white rounded-lg font-semibold hover:bg-purple-600 transition-colors flex items-center gap-2">
+          <span>📖</span>
+          <span>Ver em Modal</span>
+        </button>
+
+        <a href="../modulos/modulo-3-2.html" class="px-6 py-3 bg-transparent border-2 border-masterclass text-masterclass dark:text-masterclass rounded-lg font-semibold hover:bg-masterclass hover:text-white transition-colors flex items-center gap-2">
+          <span>📄</span>
+          <span>Abrir Página Completa</span>
+        </a>
+
+        <a href="../pdfs/modulo-3-2.md" download class="px-6 py-3 bg-transparent border-2 border-neutral-300 dark:border-neutral-600 text-neutral-700 dark:text-neutral-300 rounded-lg font-semibold hover:bg-neutral-100 dark:hover:bg-neutral-700 transition-colors flex items-center gap-2">
+          <span>📥</span>
+          <span>Download PDF/MD</span>
+        </a>
+      </div>
+
+      <div class="mb-4">
+        <h3 class="font-semibold text-neutral-900 dark:text-neutral-100 mb-3 text-lg">
+          📚 Tópicos-chave do módulo:
+        </h3>
+
+        <ul class="topics-list space-y-0.5">
+
+          <li class="topic-item" data-topic="m3-2-training">
+            <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+              🧬 Treinamento de Modelos do Zero
+            </button>
+
+            <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg border-l-4 border-masterclass">
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">O que é:</strong> Pre-training de transformer models do zero: tokenização, arquitetura (decoder-only, encoder-decoder), treinamento distribuído em GPUs/TPUs. Dataset curation em escala (terabytes de texto). Frameworks: PyTorch, JAX, DeepSpeed. Learning rate scheduling, mixed precision training, gradient accumulation.
+              </p>
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">Por que aprender:</strong> Para casos extremos onde modelos públicos não servem (compliance, latência, custo a longo prazo). Controle total sobre arquitetura e dados. Diferencial competitivo impossível de copiar. Expertise rara e valorizada no mercado. Fundamento para pesquisa avançada.
+              </p>
+              <p class="text-sm text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">Conceitos chave:</strong> Transformer architecture, pre-training objectives, distributed training, data preprocessing, learning rate schedules, mixed precision, checkpointing
+              </p>
+            </div>
+          </li>
+
+          <li class="topic-item" data-topic="m3-2-domain">
+            <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+              🎯 Domain-Specific Models
+            </button>
+
+            <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg border-l-4 border-masterclass">
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">O que é:</strong> Modelos especializados em domínios: medicina (BioBERT, PubMedGPT), legal (LegalBERT), financeiro, código (CodeLlama, Codex). Continued pre-training em corpus específico. Domain adaptation vs treinamento from scratch. Avaliação com benchmarks específicos do domínio.
+              </p>
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">Por que aprender:</strong> Modelos generalistas são medíocres em domínios especializados. Domain-specific models superam GPT-4 em tarefas verticais. Vocabulário especializado, conhecimento profundo, menor alucinação. Essencial para aplicações mission-critical em setores regulados.
+              </p>
+              <p class="text-sm text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">Conceitos chave:</strong> Domain adaptation, continued pre-training, specialized tokenizers, domain-specific benchmarks, vertical AI applications
+              </p>
+            </div>
+          </li>
+
+          <li class="topic-item" data-topic="m3-2-experimentation">
+            <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+              🔬 Experimentação e Hyperparameter Tuning
+            </button>
+
+            <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg border-l-4 border-masterclass">
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">O que é:</strong> Otimização sistemática de hyperparameters: learning rate, batch size, warmup steps, weight decay, dropout. Grid search, random search, Bayesian optimization (Optuna, Ray Tune). Experiment tracking (Weights & Biases, MLflow). A/B testing de arquiteturas diferentes.
+              </p>
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">Por que aprender:</strong> Hyperparameters podem fazer diferença de 20-30% em performance final. Tuning eficiente economiza milhões em compute. Processo científico rigoroso evita overfitting e garante reprodutibilidade. Diferença entre pesquisa amadora e profissional.
+              </p>
+              <p class="text-sm text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">Conceitos chave:</strong> Hyperparameter search strategies, Bayesian optimization, experiment tracking, ablation studies, reproducibility
+              </p>
+            </div>
+          </li>
+
+          <li class="topic-item" data-topic="m3-2-compression">
+            <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+              💾 Model Compression e Quantização
+            </button>
+
+            <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg border-l-4 border-masterclass">
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">O que é:</strong> Técnicas para reduzir tamanho/latência de modelos: quantização (FP16, INT8, INT4), pruning (remover pesos irrelevantes), distillation (treinar modelo pequeno imitando grande). ONNX, TensorRT para otimização. Trade-off entre tamanho, velocidade e qualidade.
+              </p>
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">Por que aprender:</strong> Modelos grandes custam caro em inferência. Quantização reduz custos em 2-4x com perda mínima de qualidade. Permite rodar modelos maiores em hardware limitado (edge devices, mobile). Essencial para deployment em escala e otimização de TCO.
+              </p>
+              <p class="text-sm text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">Conceitos chave:</strong> Quantization (INT8, INT4), model pruning, knowledge distillation, ONNX, TensorRT, inference optimization
+              </p>
+            </div>
+          </li>
+
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- MÓDULO 3.3 -->
+    <div class="chapter-card bg-white dark:bg-neutral-800 rounded-2xl shadow-lg p-8 mb-8 border-2 border-transparent hover:border-masterclass transition-all">
+
+      <div class="flex items-start justify-between mb-6">
+        <div>
+          <span class="inline-block px-3 py-1 bg-masterclass/10 text-masterclass rounded-full text-sm font-semibold mb-3">
+            5 horas
+          </span>
+          <h2 class="text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-2">
+            🎨 Módulo 3.3: IA Multimodal Avançada
+          </h2>
+          <p class="text-neutral-600 dark:text-neutral-400">
+            Domine vision-language models, video understanding e cross-modal reasoning
+          </p>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap gap-3 mb-6">
+        <button onclick="openModal('modulo-3-3')" class="px-6 py-3 bg-masterclass text-white rounded-lg font-semibold hover:bg-purple-600 transition-colors flex items-center gap-2">
+          <span>📖</span>
+          <span>Ver em Modal</span>
+        </button>
+        <a href="../modulos/modulo-3-3.html" class="px-6 py-3 bg-transparent border-2 border-masterclass text-masterclass dark:text-masterclass rounded-lg font-semibold hover:bg-masterclass hover:text-white transition-colors flex items-center gap-2">
+          <span>📄</span>
+          <span>Abrir Página Completa</span>
+        </a>
+        <a href="../pdfs/modulo-3-3.md" download class="px-6 py-3 bg-transparent border-2 border-neutral-300 dark:border-neutral-600 text-neutral-700 dark:text-neutral-300 rounded-lg font-semibold hover:bg-neutral-100 dark:hover:bg-neutral-700 transition-colors flex items-center gap-2">
+          <span>📥</span>
+          <span>Download PDF/MD</span>
+        </a>
+      </div>
+
+      <div class="mb-4">
+        <h3 class="font-semibold text-neutral-900 dark:text-neutral-100 mb-3 text-lg">
+          📚 Tópicos-chave do módulo:
+        </h3>
+
+        <ul class="topics-list space-y-0.5">
+
+          <li class="topic-item" data-topic="m3-3-visionlanguage">
+            <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+              🎨 Vision-Language Models
+            </button>
+            <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg border-l-4 border-masterclass">
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">O que é:</strong> Modelos que integram visão e linguagem: CLIP, BLIP, Flamingo, GPT-4V. Visual question answering, image captioning, visual reasoning. Arquiteturas com vision encoder + language model. Contrastive learning para alinhar embeddings visuais e textuais. Applications em e-commerce, acessibilidade, educação.
+              </p>
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">Por que aprender:</strong> Futuro da IA é multimodal - texto + imagem + vídeo integrados. Vision-language models desbloqueiam casos de uso impossíveis com texto puro: análise de documentos visuais, moderação de conteúdo, shopping assistants. GPT-4V/Gemini mostram poder transformador dessa tecnologia.
+              </p>
+              <p class="text-sm text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">Conceitos chave:</strong> CLIP architecture, visual embeddings, contrastive learning, image-text alignment, visual question answering, multimodal fusion
+              </p>
+            </div>
+          </li>
+
+          <li class="topic-item" data-topic="m3-3-video">
+            <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+              🎬 Video Understanding e Generation
+            </button>
+            <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg border-l-4 border-masterclass">
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">O que é:</strong> Análise e geração de vídeo com IA. Video understanding: action recognition, temporal reasoning, summarization. Video generation: Runway, Pika, Sora-style models. Frame extraction, optical flow, 3D convolutions. Challenges: processamento temporal, memória, compute intensivo.
+              </p>
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">Por que aprender:</strong> Vídeo é modalidade dominante na internet. Applications: content moderation em escala, video search, automated editing, surveillance, sports analytics. Sora/Runway mostram revolução iminente em geração de vídeo. Early movers terão vantagem competitiva enorme.
+              </p>
+              <p class="text-sm text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">Conceitos chave:</strong> Temporal modeling, action recognition, video summarization, diffusion models for video, frame interpolation, motion understanding
+              </p>
+            </div>
+          </li>
+
+          <li class="topic-item" data-topic="m3-3-audio">
+            <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+              🎵 Audio-Visual Integration
+            </button>
+            <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg border-l-4 border-masterclass">
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">O que é:</strong> Modelos que combinam áudio e vídeo: lip-sync detection, audio-visual speech recognition, sound source localization, music generation condicionada por vídeo. Whisper para transcrição, AudioLM/MusicLM para geração. Sincronização temporal entre modalidades.
+              </p>
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">Por que aprender:</strong> Áudio + visual juntos criam experiências imersivas. Applications: dubbing automático, acessibilidade (legendas inteligentes), detecção de deepfakes, music/podcast generation. ElevenLabs e Suno mostram potencial comercial massivo da IA de áudio.
+              </p>
+              <p class="text-sm text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">Conceitos chave:</strong> Audio-visual sync, Whisper, speech recognition, sound generation, music AI, cross-modal attention
+              </p>
+            </div>
+          </li>
+
+          <li class="topic-item" data-topic="m3-3-crossmodal">
+            <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+              🧠 Cross-Modal Reasoning
+            </button>
+            <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg border-l-4 border-masterclass">
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">O que é:</strong> Raciocínio complexo integrando múltiplas modalidades simultaneamente. Modelos como Gemini Ultra processam texto + imagem + áudio + vídeo em contexto unificado. Cross-attention mechanisms, modality fusion strategies, unified embedding spaces. Reasoning sobre informações complementares de diferentes sources.
+              </p>
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">Por que aprender:</strong> Humanos raciocinam de forma multimodal naturalmente. IA precisa fazer o mesmo para resolver problemas complexos do mundo real. Cross-modal reasoning permite aplicações impossíveis com single modality: análise médica completa, robótica avançada, assistentes verdadeiramente inteligentes.
+              </p>
+              <p class="text-sm text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">Conceitos chave:</strong> Modality fusion, cross-attention, unified embeddings, multi-task learning, compositional reasoning
+              </p>
+            </div>
+          </li>
+
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- MÓDULO 3.4 -->
+    <div class="chapter-card bg-white dark:bg-neutral-800 rounded-2xl shadow-lg p-8 mb-8 border-2 border-transparent hover:border-masterclass transition-all">
+
+      <div class="flex items-start justify-between mb-6">
+        <div>
+          <span class="inline-block px-3 py-1 bg-masterclass/10 text-masterclass rounded-full text-sm font-semibold mb-3">
+            4 horas
+          </span>
+          <h2 class="text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-2">
+            📚 Módulo 3.4: Pesquisa e Papers de IA
+          </h2>
+          <p class="text-neutral-600 dark:text-neutral-400">
+            Leia papers científicos, implemente técnicas de pesquisa e contribua para a comunidade
+          </p>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap gap-3 mb-6">
+        <button onclick="openModal('modulo-3-4')" class="px-6 py-3 bg-masterclass text-white rounded-lg font-semibold hover:bg-purple-600 transition-colors flex items-center gap-2">
+          <span>📖</span>
+          <span>Ver em Modal</span>
+        </button>
+        <a href="../modulos/modulo-3-4.html" class="px-6 py-3 bg-transparent border-2 border-masterclass text-masterclass dark:text-masterclass rounded-lg font-semibold hover:bg-masterclass hover:text-white transition-colors flex items-center gap-2">
+          <span>📄</span>
+          <span>Abrir Página Completa</span>
+        </a>
+        <a href="../pdfs/modulo-3-4.md" download class="px-6 py-3 bg-transparent border-2 border-neutral-300 dark:border-neutral-600 text-neutral-700 dark:text-neutral-300 rounded-lg font-semibold hover:bg-neutral-100 dark:hover:bg-neutral-700 transition-colors flex items-center gap-2">
+          <span>📥</span>
+          <span>Download PDF/MD</span>
+        </a>
+      </div>
+
+      <div class="mb-4">
+        <h3 class="font-semibold text-neutral-900 dark:text-neutral-100 mb-3 text-lg">
+          📚 Tópicos-chave do módulo:
+        </h3>
+
+        <ul class="topics-list space-y-0.5">
+
+          <li class="topic-item" data-topic="m3-4-reading">
+            <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+              📚 Leitura e Análise de Papers
+            </button>
+            <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg border-l-4 border-masterclass">
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">O que é:</strong> Metodologia para ler papers eficientemente: abstract → conclusions → figuras → introdução → método → resultados. Identificar contribuições-chave, novelty claims, limitações. ArXiv, Papers with Code, conference proceedings (NeurIPS, ICML, ICLR). Crítica científica, identificação de gaps.
+              </p>
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">Por que aprender:</strong> IA avança rapidamente - papers são fonte primária de conhecimento cutting-edge. Frameworks e APIs implementam papers de 6-12 meses atrás. Ler papers diretamente dá vantagem competitiva. Necessário para pesquisa, inovação e estar na fronteira do conhecimento.
+              </p>
+              <p class="text-sm text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">Conceitos chave:</strong> Scientific reading methodology, ArXiv, Papers with Code, conference proceedings, critical analysis, literature review
+              </p>
+            </div>
+          </li>
+
+          <li class="topic-item" data-topic="m3-4-implementation">
+            <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+              🔬 Implementação de Técnicas de Pesquisa
+            </button>
+            <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg border-l-4 border-masterclass">
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">O que é:</strong> Reimplementar papers do zero em PyTorch/JAX. Reproduzir resultados reportados. Debugging quando implementação não converge. Adaptar técnicas de pesquisa para problemas práticos. Code reading de repos oficiais. Experimentação sistemática com ablation studies.
+              </p>
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">Por que aprender:</strong> Implementar papers solidifica entendimento profundo impossível de obter apenas lendo. Muitos papers têm detalhes cruciais omitidos - implementação força você a descobrir. Habilidade rara que diferencia practitioners de teóricos. Fundamento para pesquisa original.
+              </p>
+              <p class="text-sm text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">Conceitos chave:</strong> Paper reproduction, ablation studies, hyperparameter search, debugging training, code reading, experimental validation
+              </p>
+            </div>
+          </li>
+
+          <li class="topic-item" data-topic="m3-4-contribution">
+            <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+              📝 Contribuição para a Comunidade
+            </button>
+            <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg border-l-4 border-masterclass">
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">O que é:</strong> Open source contributions: implementações de papers em repos populares, bug fixes em frameworks (Transformers, LangChain), documentação. Escrever blog posts técnicos explicando papers. Compartilhar experimentos e aprendizados. Participar de comunidades (Hugging Face, EleutherAI). Publicar datasets e modelos.
+              </p>
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">Por que aprender:</strong> Contribuições open source constroem reputação e network. Ensinar é melhor forma de aprender. Comunidade acelera seu crescimento exponencialmente. Employers valorizam contribuições públicas. IA é campo colaborativo - contributing back é essencial.
+              </p>
+              <p class="text-sm text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">Conceitos chave:</strong> Open source contribution, technical writing, community engagement, knowledge sharing, reproducible research
+              </p>
+            </div>
+          </li>
+
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- MÓDULO 3.5 -->
+    <div class="chapter-card bg-white dark:bg-neutral-800 rounded-2xl shadow-lg p-8 mb-8 border-2 border-transparent hover:border-masterclass transition-all">
+
+      <div class="flex items-start justify-between mb-6">
+        <div>
+          <span class="inline-block px-3 py-1 bg-masterclass/10 text-masterclass rounded-full text-sm font-semibold mb-3">
+            6 horas
+          </span>
+          <h2 class="text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-2">
+            🎮 Módulo 3.5: IA Reinforcement Learning
+          </h2>
+          <p class="text-neutral-600 dark:text-neutral-400">
+            Domine RL fundamentals, RLHF, multi-agent systems e algoritmos avançados
+          </p>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap gap-3 mb-6">
+        <button onclick="openModal('modulo-3-5')" class="px-6 py-3 bg-masterclass text-white rounded-lg font-semibold hover:bg-purple-600 transition-colors flex items-center gap-2">
+          <span>📖</span>
+          <span>Ver em Modal</span>
+        </button>
+        <a href="../modulos/modulo-3-5.html" class="px-6 py-3 bg-transparent border-2 border-masterclass text-masterclass dark:text-masterclass rounded-lg font-semibold hover:bg-masterclass hover:text-white transition-colors flex items-center gap-2">
+          <span>📄</span>
+          <span>Abrir Página Completa</span>
+        </a>
+        <a href="../pdfs/modulo-3-5.md" download class="px-6 py-3 bg-transparent border-2 border-neutral-300 dark:border-neutral-600 text-neutral-700 dark:text-neutral-300 rounded-lg font-semibold hover:bg-neutral-100 dark:hover:bg-neutral-700 transition-colors flex items-center gap-2">
+          <span>📥</span>
+          <span>Download PDF/MD</span>
+        </a>
+      </div>
+
+      <div class="mb-4">
+        <h3 class="font-semibold text-neutral-900 dark:text-neutral-100 mb-3 text-lg">
+          📚 Tópicos-chave do módulo:
+        </h3>
+
+        <ul class="topics-list space-y-0.5">
+
+          <li class="topic-item" data-topic="m3-5-fundamentals">
+            <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+              🎮 Fundamentos de RL
+            </button>
+            <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg border-l-4 border-masterclass">
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">O que é:</strong> Markov Decision Processes (MDPs), states, actions, rewards, policies. Q-learning, Policy Gradients, Actor-Critic methods. Exploration vs exploitation. Bellman equations. Frameworks: OpenAI Gym, Stable Baselines3. Aplicações: games, robotics, resource optimization.
+              </p>
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">Por que aprender:</strong> RL é paradigma diferente de supervised learning - agente aprende por tentativa e erro. Fundamental para aplicações onde labels não existem: jogos, robótica, trading, controle de sistemas. AlphaGo, ChatGPT (via RLHF), robôs autônomos dependem de RL.
+              </p>
+              <p class="text-sm text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">Conceitos chave:</strong> MDPs, Q-learning, policy gradients, actor-critic, exploration strategies, reward shaping, OpenAI Gym
+              </p>
+            </div>
+          </li>
+
+          <li class="topic-item" data-topic="m3-5-rlhf">
+            <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+              🤖 RLHF (Reinforcement Learning from Human Feedback)
+            </button>
+            <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg border-l-4 border-masterclass">
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">O que é:</strong> Técnica que tornou ChatGPT possível. Treinar reward model com preferências humanas, depois otimizar LLM com PPO/DPO para maximizar reward. Processo: supervised fine-tuning → collect comparisons → train reward model → RL optimization. InstructGPT paper como blueprint.
+              </p>
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">Por que aprender:</strong> RLHF transformou LLMs de curiosidades em produtos revolucionários. Alinha modelos com valores humanos, reduz toxicidade, melhora utilidade. Técnica mais importante dos últimos anos em IA prática. Essencial para construir assistentes de IA úteis e seguros.
+              </p>
+              <p class="text-sm text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">Conceitos chave:</strong> Reward modeling, human preferences, PPO, DPO, alignment, InstructGPT methodology, preference learning
+              </p>
+            </div>
+          </li>
+
+          <li class="topic-item" data-topic="m3-5-multiagent">
+            <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+              🎯 Multi-Agent RL
+            </button>
+            <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg border-l-4 border-masterclass">
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">O que é:</strong> Múltiplos agentes aprendendo simultaneamente em ambiente compartilhado. Cooperative (team trabalha junto), competitive (adversarial), mixed. Nash equilibrium, self-play, emergent behaviors. OpenAI Five (Dota), AlphaStar (StarCraft). Challenges: non-stationarity, credit assignment.
+              </p>
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">Por que aprender:</strong> Mundo real é multi-agent: mercados financeiros, tráfego, negociações, jogos multiplayer. Single-agent RL não captura complexidade de interações. Multi-agent RL permite modelar e otimizar sistemas complexos. Fronteira de pesquisa com aplicações práticas crescentes.
+              </p>
+              <p class="text-sm text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">Conceitos chave:</strong> Multi-agent environments, self-play, cooperative/competitive learning, Nash equilibrium, emergent behavior
+              </p>
+            </div>
+          </li>
+
+          <li class="topic-item" data-topic="m3-5-advanced">
+            <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+              🏆 Advanced RL Algorithms
+            </button>
+            <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg border-l-4 border-masterclass">
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">O que é:</strong> State-of-the-art algorithms: PPO (Proximal Policy Optimization), SAC (Soft Actor-Critic), TD3 (Twin Delayed DDPG), Rainbow DQN. Model-based RL (world models, planning). Offline RL (aprender de datasets fixos). Hierarchical RL (meta-policies). Cada algoritmo tem trade-offs e use cases.
+              </p>
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">Por que aprender:</strong> Algoritmos básicos (Q-learning) são didáticos mas limitados. State-of-the-art algorithms são 10-100x mais eficientes. PPO é workhorse de RL moderno. Conhecer landscape de algoritmos permite escolher ferramenta certa para cada problema.
+              </p>
+              <p class="text-sm text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">Conceitos chave:</strong> PPO, SAC, TD3, model-based RL, offline RL, hierarchical RL, algorithm selection
+              </p>
+            </div>
+          </li>
+
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- MÓDULO 3.6 -->
+    <div class="chapter-card bg-white dark:bg-neutral-800 rounded-2xl shadow-lg p-8 mb-8 border-2 border-transparent hover:border-masterclass transition-all">
+
+      <div class="flex items-start justify-between mb-6">
+        <div>
+          <span class="inline-block px-3 py-1 bg-masterclass/10 text-masterclass rounded-full text-sm font-semibold mb-3">
+            5 horas
+          </span>
+          <h2 class="text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-2">
+            🛡️ Módulo 3.6: Segurança e Red Teaming
+          </h2>
+          <p class="text-neutral-600 dark:text-neutral-400">
+            Proteja sistemas de IA contra adversarial attacks, prompt injection e vulnerabilidades
+          </p>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap gap-3 mb-6">
+        <button onclick="openModal('modulo-3-6')" class="px-6 py-3 bg-masterclass text-white rounded-lg font-semibold hover:bg-purple-600 transition-colors flex items-center gap-2">
+          <span>📖</span>
+          <span>Ver em Modal</span>
+        </button>
+        <a href="../modulos/modulo-3-6.html" class="px-6 py-3 bg-transparent border-2 border-masterclass text-masterclass dark:text-masterclass rounded-lg font-semibold hover:bg-masterclass hover:text-white transition-colors flex items-center gap-2">
+          <span>📄</span>
+          <span>Abrir Página Completa</span>
+        </a>
+        <a href="../pdfs/modulo-3-6.md" download class="px-6 py-3 bg-transparent border-2 border-neutral-300 dark:border-neutral-600 text-neutral-700 dark:text-neutral-300 rounded-lg font-semibold hover:bg-neutral-100 dark:hover:bg-neutral-700 transition-colors flex items-center gap-2">
+          <span>📥</span>
+          <span>Download PDF/MD</span>
+        </a>
+      </div>
+
+      <div class="mb-4">
+        <h3 class="font-semibold text-neutral-900 dark:text-neutral-100 mb-3 text-lg">
+          📚 Tópicos-chave do módulo:
+        </h3>
+
+        <ul class="topics-list space-y-0.5">
+
+          <li class="topic-item" data-topic="m3-6-adversarial">
+            <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+              🛡️ Adversarial Attacks e Defense
+            </button>
+            <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg border-l-4 border-masterclass">
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">O que é:</strong> Ataques que enganam modelos com inputs maliciosamente crafted. FGSM, PGD, adversarial patches para vision. Defesas: adversarial training, input validation, certified defenses. Evasion attacks, poisoning attacks, model extraction. Robustness benchmarks (RobustBench).
+              </p>
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">Por que aprender:</strong> Modelos de IA são vulneráveis a ataques sutis invisíveis a humanos. Aplicações críticas (segurança, medicina, finanças) precisam de robustez garantida. Adversarial attacks são ameaça real e crescente. Defesa adequada é diferença entre produto seguro e desastre em produção.
+              </p>
+              <p class="text-sm text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">Conceitos chave:</strong> FGSM, PGD, adversarial training, certified defenses, robustness evaluation, attack detection
+              </p>
+            </div>
+          </li>
+
+          <li class="topic-item" data-topic="m3-6-injection">
+            <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+              🔓 Prompt Injection e Jailbreaking
+            </button>
+            <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg border-l-4 border-masterclass">
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">O que é:</strong> Técnicas para bypasses LLM safety measures. Prompt injection: inserir comandos maliciosos em inputs do usuário. Jailbreaking: fazer modelo ignorar regras (DAN attacks). Indirect injection via documentos. Defesas: input sanitization, prompt hardening, output validation, constitutional AI.
+              </p>
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">Por que aprender:</strong> LLMs com acesso a ferramentas/dados são vetores de ataque sérios. Prompt injection pode expor dados confidenciais, executar comandos não autorizados. Chatbots corporativos sem defesa adequada são liability massiva. Red teaming proativo identifica vulnerabilidades antes de atacantes.
+              </p>
+              <p class="text-sm text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">Conceitos chave:</strong> Prompt injection, jailbreaking, input sanitization, output validation, constitutional AI, safety measures
+              </p>
+            </div>
+          </li>
+
+          <li class="topic-item" data-topic="m3-6-security">
+            <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+              🔐 Security Best Practices
+            </button>
+            <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg border-l-4 border-masterclass">
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">O que é:</strong> Defense-in-depth: múltiplas camadas de segurança. Rate limiting, API authentication, data encryption, access control. PII detection e masking. Audit logging, compliance (SOC2, HIPAA, GDPR). Secrets management (Vault, AWS Secrets Manager). Security testing contínuo.
+              </p>
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">Por que aprender:</strong> Breaches de segurança destroem empresas. IA processa dados sensíveis - vazamentos têm consequências legais massivas. Security não é add-on, é fundamento. Compliance é obrigatório para clientes enterprise. Best practices profissionais são não-negociáveis.
+              </p>
+              <p class="text-sm text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">Conceitos chave:</strong> Defense-in-depth, encryption, access control, PII protection, compliance, audit logging, secrets management
+              </p>
+            </div>
+          </li>
+
+          <li class="topic-item" data-topic="m3-6-redteaming">
+            <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+              🧪 Red Teaming Strategies
+            </button>
+            <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg border-l-4 border-masterclass">
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">O que é:</strong> Processo sistemático de atacar próprio sistema para encontrar vulnerabilidades. Automated red teaming com LLMs. Adversarial testing suite, edge case discovery. Frameworks: Microsoft Counterfit, IBM Adversarial Robustness Toolbox. Bounty programs. Continuous security assessment.
+              </p>
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">Por que aprender:</strong> Assume breach mentality: melhor descobrir vulnerabilidades você mesmo que esperar ataque real. Red teaming proativo economiza milhões em incidentes evitados. OpenAI, Anthropic fazem red teaming extensivo antes de releases. Processo essencial para IA responsável e segura.
+              </p>
+              <p class="text-sm text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">Conceitos chave:</strong> Automated red teaming, adversarial testing, vulnerability assessment, penetration testing, security bounties
+              </p>
+            </div>
+          </li>
+
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- MÓDULO 3.7 -->
+    <div class="chapter-card bg-white dark:bg-neutral-800 rounded-2xl shadow-lg p-8 mb-8 border-2 border-transparent hover:border-masterclass transition-all">
+
+      <div class="flex items-start justify-between mb-6">
+        <div>
+          <span class="inline-block px-3 py-1 bg-masterclass/10 text-masterclass rounded-full text-sm font-semibold mb-3">
+            5 horas
+          </span>
+          <h2 class="text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-2">
+            🏢 Módulo 3.7: IA em Produção: Escala Enterprise
+          </h2>
+          <p class="text-neutral-600 dark:text-neutral-400">
+            Escale para milhões de usuários com arquitetura enterprise, TCO otimizado e distribuição global
+          </p>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap gap-3 mb-6">
+        <button onclick="openModal('modulo-3-7')" class="px-6 py-3 bg-masterclass text-white rounded-lg font-semibold hover:bg-purple-600 transition-colors flex items-center gap-2">
+          <span>📖</span>
+          <span>Ver em Modal</span>
+        </button>
+        <a href="../modulos/modulo-3-7.html" class="px-6 py-3 bg-transparent border-2 border-masterclass text-masterclass dark:text-masterclass rounded-lg font-semibold hover:bg-masterclass hover:text-white transition-colors flex items-center gap-2">
+          <span>📄</span>
+          <span>Abrir Página Completa</span>
+        </a>
+        <a href="../pdfs/modulo-3-7.md" download class="px-6 py-3 bg-transparent border-2 border-neutral-300 dark:border-neutral-600 text-neutral-700 dark:text-neutral-300 rounded-lg font-semibold hover:bg-neutral-100 dark:hover:bg-neutral-700 transition-colors flex items-center gap-2">
+          <span>📥</span>
+          <span>Download PDF/MD</span>
+        </a>
+      </div>
+
+      <div class="mb-4">
+        <h3 class="font-semibold text-neutral-900 dark:text-neutral-100 mb-3 text-lg">
+          📚 Tópicos-chave do módulo:
+        </h3>
+
+        <ul class="topics-list space-y-0.5">
+
+          <li class="topic-item" data-topic="m3-7-architecture">
+            <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+              🏢 Enterprise Architecture Patterns
+            </button>
+            <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg border-l-4 border-masterclass">
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">O que é:</strong> Padrões arquiteturais para sistemas enterprise-grade. Microservices vs monolith, API gateway patterns, strangler fig pattern para migração. Service mesh, sidecar pattern. Data governance, compliance architecture. Zero-trust security model. Disaster recovery, high availability (99.99%+).
+              </p>
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">Por que aprender:</strong> Empresas Fortune 500 têm requisitos que startups ignoram: compliance complexo, integrações legadas, governance rigoroso. Arquitetura enterprise bem projetada permite escalar mantendo controle. Conhecimento raro que abre portas para projetos de alto valor.
+              </p>
+              <p class="text-sm text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">Conceitos chave:</strong> Microservices, API gateway, service mesh, data governance, compliance architecture, disaster recovery
+              </p>
+            </div>
+          </li>
+
+          <li class="topic-item" data-topic="m3-7-tco">
+            <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+              💰 TCO e ROI de Projetos de IA
+            </button>
+            <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg border-l-4 border-masterclass">
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">O que é:</strong> Total Cost of Ownership: compute (GPU/API costs), storage, bandwidth, engenharia, overhead operacional. Calcular ROI: automação economiza X horas humanas, melhoria de Y% em conversão. Build vs buy decisions. Cost optimization: caching, model compression, batch processing, spot instances.
+              </p>
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">Por que aprender:</strong> CFOs/CTOs perguntam "Quanto custa? Qual retorno?". Projetos sem ROI claro não são aprovados. Otimização de TCO pode reduzir custos em 5-10x mantendo qualidade. Habilidade de falar linguagem de negócios separa technical leaders de ICs.
+              </p>
+              <p class="text-sm text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">Conceitos chave:</strong> TCO calculation, ROI analysis, cost optimization, build vs buy, financial modeling, business case
+              </p>
+            </div>
+          </li>
+
+          <li class="topic-item" data-topic="m3-7-scaling">
+            <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+              📈 Scaling to Millions of Users
+            </button>
+            <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg border-l-4 border-masterclass">
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">O que é:</strong> Engenharia para escala massiva: auto-scaling, database sharding, read replicas, CDN para assets. Queue-based load leveling, backpressure handling. Chaos engineering (Netflix style). Capacity planning, traffic forecasting. Performance testing em escala (k6, Locust).
+              </p>
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">Por que aprender:</strong> Sistemas que funcionam para 1000 usuários quebram em 1M. Scaling não é linear - requer repensar arquitetura. ChatGPT foi fastest-growing app na história - preparar para viral growth é crucial. Expertise em hyper-scale é extremamente valorizado.
+              </p>
+              <p class="text-sm text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">Conceitos chave:</strong> Auto-scaling, database sharding, queue-based leveling, chaos engineering, capacity planning, performance testing
+              </p>
+            </div>
+          </li>
+
+          <li class="topic-item" data-topic="m3-7-edge">
+            <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+              🌐 Global Distribution e Edge Computing
+            </button>
+            <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg border-l-4 border-masterclass">
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">O que é:</strong> Deployment global: multi-region active-active, geo-routing, data residency compliance. Edge computing: rodar inferência próximo ao usuário (Cloudflare Workers, Lambda@Edge). Edge caching, WebAssembly models. Latency optimization para usuários worldwide.
+              </p>
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">Por que aprender:</strong> Usuários globais esperam baixa latência - US-only deployment frustra 80% do mundo. Data residency é requisito legal em muitos países (GDPR, China). Edge computing permite experiências instantâneas. Diferencial competitivo significativo em produtos globais.
+              </p>
+              <p class="text-sm text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">Conceitos chave:</strong> Multi-region deployment, edge computing, geo-routing, data residency, latency optimization, CDN strategies
+              </p>
+            </div>
+          </li>
+
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- MÓDULO 3.8 -->
+    <div class="chapter-card bg-white dark:bg-neutral-800 rounded-2xl shadow-lg p-8 mb-8 border-2 border-transparent hover:border-masterclass transition-all">
+
+      <div class="flex items-start justify-between mb-6">
+        <div>
+          <span class="inline-block px-3 py-1 bg-masterclass/10 text-masterclass rounded-full text-sm font-semibold mb-3">
+            4 horas
+          </span>
+          <h2 class="text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-2">
+            👔 Módulo 3.8: Liderança e Estratégia em IA
+          </h2>
+          <p class="text-neutral-600 dark:text-neutral-400">
+            Lidere times de IA, desenvolva estratégia e crie vantagem competitiva com inovação
+          </p>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap gap-3 mb-6">
+        <button onclick="openModal('modulo-3-8')" class="px-6 py-3 bg-masterclass text-white rounded-lg font-semibold hover:bg-purple-600 transition-colors flex items-center gap-2">
+          <span>📖</span>
+          <span>Ver em Modal</span>
+        </button>
+        <a href="../modulos/modulo-3-8.html" class="px-6 py-3 bg-transparent border-2 border-masterclass text-masterclass dark:text-masterclass rounded-lg font-semibold hover:bg-masterclass hover:text-white transition-colors flex items-center gap-2">
+          <span>📄</span>
+          <span>Abrir Página Completa</span>
+        </a>
+        <a href="../pdfs/modulo-3-8.md" download class="px-6 py-3 bg-transparent border-2 border-neutral-300 dark:border-neutral-600 text-neutral-700 dark:text-neutral-300 rounded-lg font-semibold hover:bg-neutral-100 dark:hover:bg-neutral-700 transition-colors flex items-center gap-2">
+          <span>📥</span>
+          <span>Download PDF/MD</span>
+        </a>
+      </div>
+
+      <div class="mb-4">
+        <h3 class="font-semibold text-neutral-900 dark:text-neutral-100 mb-3 text-lg">
+          📚 Tópicos-chave do módulo:
+        </h3>
+
+        <ul class="topics-list space-y-0.5">
+
+          <li class="topic-item" data-topic="m3-8-teams">
+            <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+              👔 Building AI Teams
+            </button>
+            <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg border-l-4 border-masterclass">
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">O que é:</strong> Estruturação de times de IA: ML engineers, research scientists, data engineers, product managers, ML ops. Hiring: identificar talento real vs hype, entrevistas técnicas eficazes. Onboarding, mentorship, cultura de aprendizado. T-shaped skills, rotation entre projetos. Remote vs in-person considerations.
+              </p>
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">Por que aprender:</strong> Melhores ICs eventualmente precisam liderar times. Contratar errado em IA é caro - salary alto + ramp-up longo. Times mal estruturados desperdiçam potencial. Liderança técnica forte é bottleneck #1 de empresas escalando IA. Habilidade crítica para senior/staff/principal engineers.
+              </p>
+              <p class="text-sm text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">Conceitos chave:</strong> Team structure, hiring practices, onboarding, mentorship, technical leadership, talent development
+              </p>
+            </div>
+          </li>
+
+          <li class="topic-item" data-topic="m3-8-strategy">
+            <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+              📊 AI Strategy e Roadmapping
+            </button>
+            <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg border-l-4 border-masterclass">
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">O que é:</strong> Desenvolver estratégia de IA: identificar high-impact use cases, priorização (impacto vs esforço), sequencing de projetos. Roadmapping: quarters/years ahead. Stakeholder management, comunicação com C-level. Quick wins vs long-term bets. Build vs buy vs partner decisions. Technology radar.
+              </p>
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">Por que aprender:</strong> Empresas têm dezenas de oportunidades de IA - strategic prioritization decide sucesso. Roadmap mal pensado desperdiça anos em projetos de baixo impacto. C-level precisa de visão clara, não jargão técnico. Habilidade de pensar estrategicamente sobre IA é rara e valiosa.
+              </p>
+              <p class="text-sm text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">Conceitos chave:</strong> Strategic planning, roadmapping, prioritization frameworks, stakeholder management, build vs buy, technology assessment
+              </p>
+            </div>
+          </li>
+
+          <li class="topic-item" data-topic="m3-8-innovation">
+            <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+              🎯 Innovation e Competitive Advantage
+            </button>
+            <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg border-l-4 border-masterclass">
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">O que é:</strong> Como criar vantagem competitiva sustentável com IA. Data moats (network effects, proprietary datasets). Product differentiation via IA. Innovation processes: hackathons, 20% time, fail-fast culture. Tracking competitive landscape. IP strategy (patents vs trade secrets). First-mover vs fast-follower.
+              </p>
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">Por que aprender:</strong> IA democratizada (APIs baratas) reduz barreiras - vantagem competitiva vem de execução estratégica. Data moats e product innovation são defensible, modelo por si só não é. Empresas que não inovam continuamente ficam obsoletas em meses. Think like founder/executive.
+              </p>
+              <p class="text-sm text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">Conceitos chave:</strong> Competitive advantage, data moats, product differentiation, innovation culture, IP strategy, market positioning
+              </p>
+            </div>
+          </li>
+
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- MÓDULO 3.9 -->
+    <div class="chapter-card bg-white dark:bg-neutral-800 rounded-2xl shadow-lg p-8 mb-8 border-2 border-transparent hover:border-masterclass transition-all">
+
+      <div class="flex items-start justify-between mb-6">
+        <div>
+          <span class="inline-block px-3 py-1 bg-masterclass/10 text-masterclass rounded-full text-sm font-semibold mb-3">
+            4 horas
+          </span>
+          <h2 class="text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-2">
+            🚀 Módulo 3.9: Futuro da IA e AGI
+          </h2>
+          <p class="text-neutral-600 dark:text-neutral-400">
+            Explore tendências emergentes, o caminho para AGI e impacto socioeconômico da IA
+          </p>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap gap-3 mb-6">
+        <button onclick="openModal('modulo-3-9')" class="px-6 py-3 bg-masterclass text-white rounded-lg font-semibold hover:bg-purple-600 transition-colors flex items-center gap-2">
+          <span>📖</span>
+          <span>Ver em Modal</span>
+        </button>
+        <a href="../modulos/modulo-3-9.html" class="px-6 py-3 bg-transparent border-2 border-masterclass text-masterclass dark:text-masterclass rounded-lg font-semibold hover:bg-masterclass hover:text-white transition-colors flex items-center gap-2">
+          <span>📄</span>
+          <span>Abrir Página Completa</span>
+        </a>
+        <a href="../pdfs/modulo-3-9.md" download class="px-6 py-3 bg-transparent border-2 border-neutral-300 dark:border-neutral-600 text-neutral-700 dark:text-neutral-300 rounded-lg font-semibold hover:bg-neutral-100 dark:hover:bg-neutral-700 transition-colors flex items-center gap-2">
+          <span>📥</span>
+          <span>Download PDF/MD</span>
+        </a>
+      </div>
+
+      <div class="mb-4">
+        <h3 class="font-semibold text-neutral-900 dark:text-neutral-100 mb-3 text-lg">
+          📚 Tópicos-chave do módulo:
+        </h3>
+
+        <ul class="topics-list space-y-0.5">
+
+          <li class="topic-item" data-topic="m3-9-trends">
+            <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+              🚀 Tendências Emergentes
+            </button>
+            <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg border-l-4 border-masterclass">
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">O que é:</strong> Fronteiras da IA: mixture-of-experts at scale, constitutional AI, multimodal foundation models, AI agents que codificam. Novas modalidades: smell/taste AI, brain-computer interfaces. Democratização: open source LLMs competitivos, on-device AI. Tendências empresariais: AI-first companies, vertical AI solutions.
+              </p>
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">Por que aprender:</strong> IA evolui exponencialmente - o que é impossível hoje será commodity amanhã. Acompanhar tendências permite antecipar mudanças e se posicionar. Early adopters de tendências certas ganham vantagem enorme. Thinking de longo prazo separa vision de myopia.
+              </p>
+              <p class="text-sm text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">Conceitos chave:</strong> Emerging architectures, new modalities, democratization, AI-first products, vertical AI, technology foresight
+              </p>
+            </div>
+          </li>
+
+          <li class="topic-item" data-topic="m3-9-agi">
+            <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+              🧠 Path to AGI
+            </button>
+            <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg border-l-4 border-masterclass">
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">O que é:</strong> Artificial General Intelligence: sistemas com capacidades cognitivas humanas ou superiores em todos os domínios. Desafios: reasoning, planning, generalization, common sense, safety/alignment. Abordagens: scaling laws, emergent capabilities, architectural innovations. Timelines (2030s-2040s?), debates técnicos e filosóficos.
+              </p>
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">Por que aprender:</strong> AGI será transformação mais profunda da história humana - comparável a revolução industrial. Entender trajetória permite preparar-se pessoal e profissionalmente. Questões de safety/alignment são urgentes - precisam ser resolvidas ANTES de AGI. Perspectiva informada sobre futuro é valiosa.
+              </p>
+              <p class="text-sm text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">Conceitos chave:</strong> AGI definitions, scaling laws, emergent capabilities, alignment problem, safety research, timelines
+              </p>
+            </div>
+          </li>
+
+          <li class="topic-item" data-topic="m3-9-impact">
+            <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+              🌍 Impacto Socioeconômico
+            </button>
+            <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg border-l-4 border-masterclass">
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">O que é:</strong> Consequências da IA: automação de trabalho cognitivo, deslocamento vs criação de empregos, desigualdade (AI haves vs have-nots). Questões éticas: bias, privacidade, autonomia. Governança: regulação (EU AI Act), políticas públicas. Oportunidades: produtividade massiva, soluções para problemas globais (clima, saúde).
+              </p>
+              <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">Por que aprender:</strong> IA afeta sociedade inteira - engenheiros têm responsabilidade de entender implicações. Decisões técnicas têm consequências sociais. Regulação vem aí - entender landscape é necessário. Thinking holístico sobre impacto torna você líder mais eficaz e consciente.
+              </p>
+              <p class="text-sm text-neutral-700 dark:text-neutral-300">
+                <strong class="text-masterclass">Conceitos chave:</strong> Job automation, economic impact, inequality, ethics, governance, regulation, societal implications
+              </p>
+            </div>
+          </li>
+
+        </ul>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-neutral-900 text-neutral-400 py-12 mt-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div>
+          <h4 class="font-semibold text-white mb-4">Sobre o FTD</h4>
+          <p class="text-sm">Formação completa em IA do iniciante ao expert, com conteúdo prático e atualizado.</p>
+        </div>
+        <div>
+          <h4 class="font-semibold text-white mb-4">Links</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="../index.html" class="hover:text-white transition">Início</a></li>
+            <li><a href="../index.html#niveis" class="hover:text-white transition">Níveis</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold text-white mb-4">Contato</h4>
+          <p class="text-sm">contato@ftd.com.br</p>
+        </div>
+      </div>
+      <div class="border-t border-neutral-800 mt-8 pt-8 text-center text-sm">
+        <p>&copy; 2025 FTD. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Modals (placeholder - conteúdo será preenchido) -->
+  <div id="modulo-3-1" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="text-2xl font-bold text-neutral-900 dark:text-neutral-100">Módulo 3.1: Arquitetura de IA em Larga Escala</h2>
+        <span class="close-modal">&times;</span>
+      </div>
+      <div class="modal-body">
+        <p class="text-neutral-700 dark:text-neutral-300">Conteúdo completo do módulo será exibido aqui...</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="modulo-3-2" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="text-2xl font-bold text-neutral-900 dark:text-neutral-100">Módulo 3.2: Modelos Customizados e Proprietários</h2>
+        <span class="close-modal">&times;</span>
+      </div>
+      <div class="modal-body">
+        <p class="text-neutral-700 dark:text-neutral-300">Conteúdo completo do módulo será exibido aqui...</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="modulo-3-3" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="text-2xl font-bold text-neutral-900 dark:text-neutral-100">Módulo 3.3: IA Multimodal Avançada</h2>
+        <span class="close-modal">&times;</span>
+      </div>
+      <div class="modal-body">
+        <p class="text-neutral-700 dark:text-neutral-300">Conteúdo completo do módulo será exibido aqui...</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="modulo-3-4" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="text-2xl font-bold text-neutral-900 dark:text-neutral-100">Módulo 3.4: Pesquisa e Papers de IA</h2>
+        <span class="close-modal">&times;</span>
+      </div>
+      <div class="modal-body">
+        <p class="text-neutral-700 dark:text-neutral-300">Conteúdo completo do módulo será exibido aqui...</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="modulo-3-5" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="text-2xl font-bold text-neutral-900 dark:text-neutral-100">Módulo 3.5: IA Reinforcement Learning</h2>
+        <span class="close-modal">&times;</span>
+      </div>
+      <div class="modal-body">
+        <p class="text-neutral-700 dark:text-neutral-300">Conteúdo completo do módulo será exibido aqui...</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="modulo-3-6" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="text-2xl font-bold text-neutral-900 dark:text-neutral-100">Módulo 3.6: Segurança e Red Teaming</h2>
+        <span class="close-modal">&times;</span>
+      </div>
+      <div class="modal-body">
+        <p class="text-neutral-700 dark:text-neutral-300">Conteúdo completo do módulo será exibido aqui...</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="modulo-3-7" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="text-2xl font-bold text-neutral-900 dark:text-neutral-100">Módulo 3.7: IA em Produção: Escala Enterprise</h2>
+        <span class="close-modal">&times;</span>
+      </div>
+      <div class="modal-body">
+        <p class="text-neutral-700 dark:text-neutral-300">Conteúdo completo do módulo será exibido aqui...</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="modulo-3-8" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="text-2xl font-bold text-neutral-900 dark:text-neutral-100">Módulo 3.8: Liderança e Estratégia em IA</h2>
+        <span class="close-modal">&times;</span>
+      </div>
+      <div class="modal-body">
+        <p class="text-neutral-700 dark:text-neutral-300">Conteúdo completo do módulo será exibido aqui...</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="modulo-3-9" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="text-2xl font-bold text-neutral-900 dark:text-neutral-100">Módulo 3.9: Futuro da IA e AGI</h2>
+        <span class="close-modal">&times;</span>
+      </div>
+      <div class="modal-body">
+        <p class="text-neutral-700 dark:text-neutral-300">Conteúdo completo do módulo será exibido aqui...</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script src="../js/app.js"></script>
+
+</body>
+</html>

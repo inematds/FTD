@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Módulo 3.1: Arquitetura de IA em Larga Escala | FTD - Formação Transformação Digital</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Tailwind Config -->
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            iniciante: '#10B981',
+            tecnico: '#3B82F6',
+            masterclass: '#8B5CF6',
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom Styles -->
+  <style>
+    body.preload * {
+      transition: none !important;
+    }
+  </style>
+</head>
+
+<body class="preload bg-neutral-50 dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 transition-colors duration-300">
+
+  <!-- Navigation -->
+  <nav class="bg-white/80 dark:bg-neutral-800/80 backdrop-blur-lg sticky top-0 z-50 border-b border-neutral-200 dark:border-neutral-700">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+
+        <!-- Back Button + Logo -->
+        <div class="flex items-center space-x-4">
+          <a href="../niveis/nivel-masterclass.html" class="text-masterclass hover:text-purple-600 dark:hover:text-purple-400 transition-colors font-semibold flex items-center space-x-2">
+            <span>←</span>
+            <span>Voltar</span>
+          </a>
+          <div class="h-6 w-px bg-neutral-300 dark:bg-neutral-600"></div>
+          <a href="../index.html" class="text-xl font-bold text-masterclass">FTD</a>
+        </div>
+
+        <!-- Desktop Theme Toggle -->
+        <button id="theme-toggle" class="p-2 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700 transition-colors hidden md:block">
+          <svg id="theme-toggle-dark-icon" class="w-5 h-5 hidden" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+          </svg>
+          <svg id="theme-toggle-light-icon" class="w-5 h-5 hidden" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path>
+          </svg>
+        </button>
+
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- Module Header -->
+    <div class="mb-12">
+      <a href="../niveis/nivel-masterclass.html" class="inline-flex items-center text-masterclass hover:text-purple-600 dark:hover:text-purple-400 mb-6 transition-colors">
+        <span class="mr-2">←</span>
+        <span>Nível Masterclass</span>
+      </a>
+
+      <div class="flex items-center space-x-3 mb-4">
+        <span class="inline-block px-4 py-1.5 bg-masterclass/10 text-masterclass rounded-full text-sm font-semibold">
+          5 horas
+        </span>
+        <span class="inline-block px-4 py-1.5 bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-200 rounded-full text-sm font-semibold">
+          4 tópicos
+        </span>
+      </div>
+
+      <h1 class="text-5xl font-bold text-neutral-900 dark:text-neutral-100 mb-4">
+        🏢 Módulo 3.1: Arquitetura de IA em Larga Escala
+      </h1>
+      <p class="text-xl text-neutral-600 dark:text-neutral-400 leading-relaxed">
+        Domine os princípios e práticas de arquitetura para sistemas de IA que operam em escala empresarial, suportando milhões de usuários e transações.
+      </p>
+    </div>
+
+    <!-- Topics Content -->
+    <div class="space-y-8">
+
+      <!-- Tópico 1 -->
+      <section class="bg-white dark:bg-neutral-800 rounded-2xl shadow-lg p-8">
+        <h2 class="text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-6 flex items-center">
+          <span class="text-masterclass mr-3">🏢</span>
+          Multi-Tenancy e Isolamento
+        </h2>
+
+        <div class="space-y-6">
+          <div>
+            <h3 class="text-xl font-semibold text-masterclass mb-3">O que é</h3>
+            <p class="text-neutral-700 dark:text-neutral-300 leading-relaxed">
+              Multi-tenancy em sistemas de IA refere-se à arquitetura que permite múltiplos clientes (tenants) compartilharem a mesma infraestrutura computacional enquanto mantém isolamento lógico de dados, modelos e recursos. Isso envolve estratégias de particionamento de dados, isolamento de contexto, resource quotas, e políticas de segurança granulares que garantem que um tenant não possa acessar ou interferir nos recursos de outro, mesmo compartilhando o mesmo hardware subjacente.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-xl font-semibold text-masterclass mb-3">Por que aprender</h3>
+            <p class="text-neutral-700 dark:text-neutral-300 leading-relaxed">
+              Multi-tenancy é fundamental para SaaS de IA em escala empresarial, permitindo economia de custos de 60-80% através de compartilhamento eficiente de recursos. Arquitetos que dominam multi-tenancy conseguem construir plataformas que servem milhares de clientes com um único deployment, mantendo SLAs rigorosos e conformidade regulatória. Esta habilidade é crítica para CTOs e arquitetos sênior que lideram transformações digitais enterprise.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-xl font-semibold text-masterclass mb-3">Conceitos chave</h3>
+            <div class="bg-purple-50 dark:bg-purple-900/20 rounded-lg p-6">
+              <ul class="space-y-3 text-neutral-700 dark:text-neutral-300">
+                <li class="flex items-start">
+                  <span class="text-masterclass mr-2 mt-1">•</span>
+                  <span><strong>Tenant Isolation Strategies:</strong> Schema-based, database-per-tenant, hybrid approaches com trade-offs</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-masterclass mr-2 mt-1">•</span>
+                  <span><strong>Resource Quotas e Throttling:</strong> CPU, GPU, memory limits por tenant com enforcement em runtime</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-masterclass mr-2 mt-1">•</span>
+                  <span><strong>Context Isolation:</strong> Namespace isolation, vector database partitioning, embedding segregation</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-masterclass mr-2 mt-1">•</span>
+                  <span><strong>Security Boundaries:</strong> IAM policies, network segmentation, encryption at rest/in transit por tenant</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-masterclass mr-2 mt-1">•</span>
+                  <span><strong>Noisy Neighbor Prevention:</strong> Queue prioritization, fair scheduling, circuit breakers</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-masterclass mr-2 mt-1">•</span>
+                  <span><strong>Compliance per Tenant:</strong> GDPR, HIPAA, SOC2 requirements com configuração granular</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tópico 2 -->
+      <section class="bg-white dark:bg-neutral-800 rounded-2xl shadow-lg p-8">
+        <h2 class="text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-6 flex items-center">
+          <span class="text-masterclass mr-3">⚡</span>
+          Distributed Systems e Load Balancing
+        </h2>
+
+        <div class="space-y-6">
+          <div>
+            <h3 class="text-xl font-semibold text-masterclass mb-3">O que é</h3>
+            <p class="text-neutral-700 dark:text-neutral-300 leading-relaxed">
+              Sistemas distribuídos de IA envolvem orquestração de múltiplos nós computacionais (CPUs, GPUs, TPUs) trabalhando em conjunto para processar inferências e treinar modelos. Load balancing inteligente distribui requisições baseado em capacidade disponível, latência, afinidade de modelo, e características da requisição. Isso inclui techniques como consistent hashing, geographic routing, model sharding, e batching dinâmico para maximizar throughput e minimizar latência em sistemas com tráfego variável.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-xl font-semibold text-masterclass mb-3">Por que aprender</h3>
+            <p class="text-neutral-700 dark:text-neutral-300 leading-relaxed">
+              Sistemas de IA em produção precisam servir milhares de requisições por segundo com latências sub-segundo. Arquitetos que dominam distributed systems conseguem criar infraestruturas que escalam horizontalmente, mantêm 99.99% de uptime, e otimizam custos através de utilização eficiente de recursos caros como GPUs. Esta expertise é essencial para liderança técnica em empresas que operam IA em escala global, como OpenAI, Google, e Microsoft.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-xl font-semibold text-masterclass mb-3">Conceitos chave</h3>
+            <div class="bg-purple-50 dark:bg-purple-900/20 rounded-lg p-6">
+              <ul class="space-y-3 text-neutral-700 dark:text-neutral-300">
+                <li class="flex items-start">
+                  <span class="text-masterclass mr-2 mt-1">•</span>
+                  <span><strong>Model Serving Architecture:</strong> Ray Serve, TensorFlow Serving, TorchServe, Triton Inference Server</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-masterclass mr-2 mt-1">•</span>
+                  <span><strong>Intelligent Load Balancing:</strong> Weighted round-robin, least connections, model-aware routing</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-masterclass mr-2 mt-1">•</span>
+                  <span><strong>Horizontal Scaling:</strong> Auto-scaling policies baseadas em GPU utilization, queue depth, latency p99</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-masterclass mr-2 mt-1">•</span>
+                  <span><strong>Request Batching:</strong> Dynamic batching, continuous batching para maximizar GPU throughput</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-masterclass mr-2 mt-1">•</span>
+                  <span><strong>Model Sharding:</strong> Tensor parallelism, pipeline parallelism para modelos que não cabem em single GPU</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-masterclass mr-2 mt-1">•</span>
+                  <span><strong>Geographic Distribution:</strong> Edge deployments, CDN integration, latency-based routing</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tópico 3 -->
+      <section class="bg-white dark:bg-neutral-800 rounded-2xl shadow-lg p-8">
+        <h2 class="text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-6 flex items-center">
+          <span class="text-masterclass mr-3">🔄</span>
+          Event-Driven Architecture
+        </h2>
+
+        <div class="space-y-6">
+          <div>
+            <h3 class="text-xl font-semibold text-masterclass mb-3">O que é</h3>
+            <p class="text-neutral-700 dark:text-neutral-300 leading-relaxed">
+              Event-driven architecture (EDA) para sistemas de IA utiliza message queues, event streams, e pub/sub patterns para desacoplar componentes e processar cargas de trabalho assíncronas. Isso permite que inferências batch, fine-tuning jobs, embedding generation, e outras operações computacionalmente intensivas sejam processadas de forma resiliente e escalável. Tecnologias como Kafka, RabbitMQ, AWS SQS/SNS, e Azure Event Grid formam o backbone de sistemas modernos de IA em produção.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-xl font-semibold text-masterclass mb-3">Por que aprender</h3>
+            <p class="text-neutral-700 dark:text-neutral-300 leading-relaxed">
+              EDA é crucial para sistemas de IA resilientes que precisam lidar com picos de tráfego, falhas de componentes, e workloads com durações variáveis. Arquitetos que implementam EDA conseguem criar sistemas que se auto-recuperam de falhas, escalam automaticamente baseado em carga, e mantêm consistência eventual em ambientes distribuídos. Esta habilidade separa soluções enterprise-grade de protótipos acadêmicos, sendo fundamental para qualquer plataforma de IA séria.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-xl font-semibold text-masterclass mb-3">Conceitos chave</h3>
+            <div class="bg-purple-50 dark:bg-purple-900/20 rounded-lg p-6">
+              <ul class="space-y-3 text-neutral-700 dark:text-neutral-300">
+                <li class="flex items-start">
+                  <span class="text-masterclass mr-2 mt-1">•</span>
+                  <span><strong>Message Queue Patterns:</strong> Work queues, priority queues, dead letter queues para fault tolerance</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-masterclass mr-2 mt-1">•</span>
+                  <span><strong>Event Streaming:</strong> Kafka Streams, Apache Flink para processamento real-time de eventos de IA</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-masterclass mr-2 mt-1">•</span>
+                  <span><strong>Pub/Sub Architecture:</strong> Fan-out patterns, topic-based routing, subscription filters</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-masterclass mr-2 mt-1">•</span>
+                  <span><strong>Saga Pattern:</strong> Distributed transactions para workflows complexos de IA multi-step</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-masterclass mr-2 mt-1">•</span>
+                  <span><strong>Event Sourcing:</strong> Auditability completa de todas as operações de IA para compliance</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-masterclass mr-2 mt-1">•</span>
+                  <span><strong>Backpressure Management:</strong> Rate limiting, circuit breakers, exponential backoff</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tópico 4 -->
+      <section class="bg-white dark:bg-neutral-800 rounded-2xl shadow-lg p-8">
+        <h2 class="text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-6 flex items-center">
+          <span class="text-masterclass mr-3">📊</span>
+          Observability e Telemetria Avançada
+        </h2>
+
+        <div class="space-y-6">
+          <div>
+            <h3 class="text-xl font-semibold text-masterclass mb-3">O que é</h3>
+            <p class="text-neutral-700 dark:text-neutral-300 leading-relaxed">
+              Observability em sistemas de IA vai além de monitoring tradicional, incorporando métricas específicas de ML como model drift, prediction confidence distributions, embedding quality, e performance degradation over time. Telemetria avançada captura traces distribuídos de requisições através de múltiplos serviços, correlacionando latência de inferência com características do input, uso de recursos, e qualidade do output. Ferramentas como Prometheus, Grafana, Jaeger, OpenTelemetry, e plataformas especializadas como Weights & Biases e MLflow formam o stack de observability moderno.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-xl font-semibold text-masterclass mb-3">Por que aprender</h3>
+            <p class="text-neutral-700 dark:text-neutral-300 leading-relaxed">
+              Sistemas de IA falham de maneiras únicas que não são capturadas por métricas tradicionais de software - um modelo pode estar "funcionando" mas produzindo outputs degradados devido a drift de dados. Líderes técnicos que implementam observability robusta conseguem detectar problemas antes que afetem usuários, debugar issues complexos de produção, e otimizar custos identificando bottlenecks. Esta expertise é crítica para manter SLAs em produção e é uma expectativa fundamental para roles de Staff Engineer e Principal Architect.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-xl font-semibold text-masterclass mb-3">Conceitos chave</h3>
+            <div class="bg-purple-50 dark:bg-purple-900/20 rounded-lg p-6">
+              <ul class="space-y-3 text-neutral-700 dark:text-neutral-300">
+                <li class="flex items-start">
+                  <span class="text-masterclass mr-2 mt-1">•</span>
+                  <span><strong>ML-Specific Metrics:</strong> Model accuracy in production, drift detection, concept drift, label shift</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-masterclass mr-2 mt-1">•</span>
+                  <span><strong>Distributed Tracing:</strong> Request flow através de LLM → embedding → retrieval → response generation</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-masterclass mr-2 mt-1">•</span>
+                  <span><strong>Golden Signals for AI:</strong> Latency (p50/p99), throughput (tokens/sec), errors, saturation (GPU util)</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-masterclass mr-2 mt-1">•</span>
+                  <span><strong>Anomaly Detection:</strong> Statistical process control, time-series forecasting para alertas inteligentes</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-masterclass mr-2 mt-1">•</span>
+                  <span><strong>Cost Attribution:</strong> Token usage, GPU hours, storage per tenant/feature para showback/chargeback</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-masterclass mr-2 mt-1">•</span>
+                  <span><strong>Continuous Validation:</strong> Shadow deployments, canary analysis, A/B testing em produção</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- Navigation Footer -->
+    <div class="mt-12 pt-8 border-t border-neutral-200 dark:border-neutral-700 flex justify-between items-center">
+      <a href="../niveis/nivel-masterclass.html" class="inline-flex items-center px-6 py-3 bg-neutral-200 dark:bg-neutral-700 text-neutral-900 dark:text-neutral-100 rounded-lg hover:bg-neutral-300 dark:hover:bg-neutral-600 transition-colors font-semibold">
+        <span class="mr-2">←</span>
+        <span>Voltar ao Nível Masterclass</span>
+      </a>
+
+      <a href="modulo-3-2.html" class="inline-flex items-center px-6 py-3 bg-masterclass text-white rounded-lg hover:bg-purple-600 transition-colors font-semibold">
+        <span>Próximo Módulo</span>
+        <span class="ml-2">→</span>
+      </a>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white dark:bg-neutral-800 border-t border-neutral-200 dark:border-neutral-700 mt-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div class="text-center">
+        <p class="text-neutral-600 dark:text-neutral-400">
+          © 2024 FTD - Formação Transformação Digital. Todos os direitos reservados.
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script src="../js/app.js"></script>
+
+</body>
+</html>

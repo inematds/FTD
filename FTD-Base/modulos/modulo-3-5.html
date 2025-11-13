@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Módulo 3.5: IA Reinforcement Learning | FTD - Formação Transformação Digital</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Tailwind Config -->
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            iniciante: '#10B981',
+            tecnico: '#3B82F6',
+            masterclass: '#8B5CF6',
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom Styles -->
+  <style>
+    body.preload * {
+      transition: none !important;
+    }
+  </style>
+</head>
+
+<body class="preload bg-neutral-50 dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 transition-colors duration-300">
+
+  <!-- Navigation -->
+  <nav class="bg-white/80 dark:bg-neutral-800/80 backdrop-blur-lg sticky top-0 z-50 border-b border-neutral-200 dark:border-neutral-700">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+
+        <!-- Back Button + Logo -->
+        <div class="flex items-center space-x-4">
+          <a href="../niveis/nivel-masterclass.html" class="text-masterclass hover:text-purple-600 dark:hover:text-purple-400 transition-colors font-semibold flex items-center space-x-2">
+            <span>←</span>
+            <span>Voltar</span>
+          </a>
+          <div class="h-6 w-px bg-neutral-300 dark:bg-neutral-600"></div>
+          <a href="../index.html" class="text-xl font-bold text-masterclass">FTD</a>
+        </div>
+
+        <!-- Desktop Theme Toggle -->
+        <button id="theme-toggle" class="p-2 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700 transition-colors hidden md:block">
+          <svg id="theme-toggle-dark-icon" class="w-5 h-5 hidden" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+          </svg>
+          <svg id="theme-toggle-light-icon" class="w-5 h-5 hidden" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path>
+          </svg>
+        </button>
+
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- Module Header -->
+    <div class="mb-12">
+      <a href="../niveis/nivel-masterclass.html" class="inline-flex items-center text-masterclass hover:text-purple-600 dark:hover:text-purple-400 mb-6 transition-colors">
+        <span class="mr-2">←</span>
+        <span>Nível Masterclass</span>
+      </a>
+
+      <div class="flex items-center space-x-3 mb-4">
+        <span class="inline-block px-4 py-1.5 bg-masterclass/10 text-masterclass rounded-full text-sm font-semibold">
+          6 horas
+        </span>
+        <span class="inline-block px-4 py-1.5 bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-200 rounded-full text-sm font-semibold">
+          4 tópicos
+        </span>
+      </div>
+
+      <h1 class="text-5xl font-bold text-neutral-900 dark:text-neutral-100 mb-4">
+        🎮 Módulo 3.5: IA Reinforcement Learning
+      </h1>
+      <p class="text-xl text-neutral-600 dark:text-neutral-400 leading-relaxed">
+        Domine os fundamentos e técnicas avançadas de Reinforcement Learning, a tecnologia por trás de sistemas de IA que aprendem através de interação e feedback.
+      </p>
+    </div>
+
+    <!-- Topics Content -->
+    <div class="space-y-8">
+
+      <!-- Tópico 1 -->
+      <section class="bg-white dark:bg-neutral-800 rounded-2xl shadow-lg p-8">
+        <h2 class="text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-6 flex items-center">
+          <span class="text-masterclass mr-3">🎮</span>
+          Fundamentos de RL
+        </h2>
+
+        <div class="space-y-6">
+          <div>
+            <h3 class="text-xl font-semibold text-masterclass mb-3">O que é</h3>
+            <p class="text-neutral-700 dark:text-neutral-300 leading-relaxed">
+              Reinforcement Learning (RL) é um paradigma de machine learning onde agents aprendem comportamentos ótimos através de trial-and-error, recebendo rewards por ações boas e penalties por ruins. Core concepts incluem Markov Decision Processes (MDPs), value functions (V e Q), policies (π), e exploration vs exploitation trade-off. Algoritmos fundamentais incluem Q-Learning, SARSA, Policy Gradients (REINFORCE), Actor-Critic, e Deep RL variants como DQN, A3C, PPO, e SAC. RL é usado em robótica, games, recommendation systems, e autonomous vehicles.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-xl font-semibold text-masterclass mb-3">Por que aprender</h3>
+            <p class="text-neutral-700 dark:text-neutral-300 leading-relaxed">
+              RL é essencial para criar sistemas de IA que otimizam objetivos complexos ao longo do tempo, como maximizar user engagement, otimizar logistics, ou treinar robots. É a tecnologia por trás de breakthroughs como AlphaGo, ChatGPT (via RLHF), e autonomous driving. Specialists em RL são extremamente raros e valiosos - companies como DeepMind, OpenAI, e Tesla pagam $300K-$500K+ para RL engineers sênior. Esta skill abre portas para roles em cutting-edge research e produtos que definem o futuro da IA.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-xl font-semibold text-masterclass mb-3">Conceitos chave</h3>
+            <div class="bg-purple-50 dark:bg-purple-900/20 rounded-lg p-6">
+              <ul class="space-y-3 text-neutral-700 dark:text-neutral-300">
+                <li class="flex items-start">
+                  <span class="text-masterclass mr-2 mt-1">•</span>
+                  <span><strong>Markov Decision Processes:</strong> States, actions, transitions, rewards, discount factor γ</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-masterclass mr-2 mt-1">•</span>
+                  <span><strong>Value Functions:</strong> State value V(s), action-value Q(s,a), Bellman equations</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-masterclass mr-2 mt-1">•</span>
+                  <span><strong>Policy Optimization:</strong> Policy gradient theorem, REINFORCE, Actor-Critic architectures</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-masterclass mr-2 mt-1">•</span>
+                  <span><strong>Deep RL Algorithms:</strong> DQN, A3C, PPO, SAC - quando usar cada um</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-masterclass mr-2 mt-1">•</span>
+                  <span><strong>Exploration Strategies:</strong> ε-greedy, entropy regularization, curiosity-driven exploration</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-masterclass mr-2 mt-1">•</span>
+                  <span><strong>Training Stability:</strong> Experience replay, target networks, gradient clipping</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tópico 2 -->
+      <section class="bg-white dark:bg-neutral-800 rounded-2xl shadow-lg p-8">
+        <h2 class="text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-6 flex items-center">
+          <span class="text-masterclass mr-3">🤖</span>
+          RLHF (Reinforcement Learning from Human Feedback)
+        </h2>
+
+        <div class="space-y-6">
+          <div>
+            <h3 class="text-xl font-semibold text-masterclass mb-3">O que é</h3>
+            <p class="text-neutral-700 dark:text-neutral-300 leading-relaxed">
+              RLHF é a técnica que transforma LLMs brutos em assistentes úteis e seguros, usada por ChatGPT, Claude, e Gemini. O processo envolve três stages: supervised fine-tuning (SFT) com demonstrações humanas, training de um reward model baseado em preferências humanas (pairwise comparisons), e otimização da policy do LLM usando PPO para maximizar o reward model. Isso alinha o modelo com valores humanos, reduz hallucinations, e melhora instruction following. Variantes incluem DPO (Direct Preference Optimization) que simplifica o processo.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-xl font-semibold text-masterclass mb-3">Por que aprender</h3>
+            <p class="text-neutral-700 dark:text-neutral-300 leading-relaxed">
+              RLHF é arguably a técnica mais importante em LLMs modernos - é o que torna GPT-4 útil vs. apenas um text predictor. É também a barreira de entrada mais alta - requer expertise em RL, LLMs, human-in-the-loop systems, e distributed training. Companies que dominam RLHF têm vantagem competitiva massive. Engineers com esta skill são unicorns no mercado, comandando salários $350K-$500K+. Para aspirar a roles de Staff/Principal ML Engineer em companies de LLMs, RLHF é praticamente obrigatório.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-xl font-semibold text-masterclass mb-3">Conceitos chave</h3>
+            <div class="bg-purple-50 dark:bg-purple-900/20 rounded-lg p-6">
+              <ul class="space-y-3 text-neutral-700 dark:text-neutral-300">
+                <li class="flex items-start">
+                  <span class="text-masterclass mr-2 mt-1">•</span>
+                  <span><strong>Reward Modeling:</strong> Training models para predict human preferences, Bradley-Terry model</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-masterclass mr-2 mt-1">•</span>
+                  <span><strong>PPO for LLMs:</strong> Proximal Policy Optimization adaptado para language models em escala</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-masterclass mr-2 mt-1">•</span>
+                  <span><strong>KL Penalty:</strong> Preventing policy drift muito longe do initial model usando KL divergence</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-masterclass mr-2 mt-1">•</span>
+                  <span><strong>Human Annotation Pipeline:</strong> Interface design, annotator training, quality control</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-masterclass mr-2 mt-1">•</span>
+                  <span><strong>Direct Preference Optimization:</strong> DPO, IPO - alternativas mais simples que PPO</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-masterclass mr-2 mt-1">•</span>
+                  <span><strong>Constitutional AI:</strong> Self-improvement através de AI feedback vs human feedback</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tópico 3 -->
+      <section class="bg-white dark:bg-neutral-800 rounded-2xl shadow-lg p-8">
+        <h2 class="text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-6 flex items-center">
+          <span class="text-masterclass mr-3">🎯</span>
+          Multi-Agent RL
+        </h2>
+
+        <div class="space-y-6">
+          <div>
+            <h3 class="text-xl font-semibold text-masterclass mb-3">O que é</h3>
+            <p class="text-neutral-700 dark:text-neutral-300 leading-relaxed">
+              Multi-Agent Reinforcement Learning (MARL) envolve múltiplos agents aprendendo simultaneamente, podendo cooperar, competir, ou ambos. Isso adiciona complexidade significativa - o environment se torna non-stationary (outros agents estão mudando), credit assignment fica mais difícil (quem merece reward por sucesso do time?), e coordination é necessária. Frameworks como QMIX, MAPPO, e CommNet permitem treinar agents que comunicam e colaboram. Aplicações incluem autonomous fleets, multiplayer games, e distributed systems optimization.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-xl font-semibold text-masterclass mb-3">Por que aprender</h3>
+            <p class="text-neutral-700 dark:text-neutral-300 leading-relaxed">
+              MARL é essencial para sistemas do mundo real onde múltiplos agentes interagem - warehouse robots, autonomous vehicle fleets, distributed cloud systems, e MMO games. É uma das áreas mais challenging e menos compreendidas de RL, tornando experts extremamente valiosos. Companies como Waymo (coordenação de frotas), Amazon (warehouse robotics), e game studios (NPC AI) precisam desesperadamente de MARL experts. Salários para specialists podem atingir $400K+ e há oportunidades significativas de publicação em top venues.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-xl font-semibold text-masterclass mb-3">Conceitos chave</h3>
+            <div class="bg-purple-50 dark:bg-purple-900/20 rounded-lg p-6">
+              <ul class="space-y-3 text-neutral-700 dark:text-neutral-300">
+                <li class="flex items-start">
+                  <span class="text-masterclass mr-2 mt-1">•</span>
+                  <span><strong>Coordination Mechanisms:</strong> Centralized training decentralized execution (CTDE)</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-masterclass mr-2 mt-1">•</span>
+                  <span><strong>Value Decomposition:</strong> QMIX, QTRAN para cooperative multi-agent value factorization</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-masterclass mr-2 mt-1">•</span>
+                  <span><strong>Communication Protocols:</strong> CommNet, TarMAC para inter-agent communication learning</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-masterclass mr-2 mt-1">•</span>
+                  <span><strong>Game Theory:</strong> Nash equilibrium, Pareto optimality, mechanism design</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-masterclass mr-2 mt-1">•</span>
+                  <span><strong>Population-Based Training:</strong> Agents treinando contra população diversa de opponents</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-masterclass mr-2 mt-1">•</span>
+                  <span><strong>Emergent Behavior:</strong> Identificar e encorajar emergence de estratégias complexas</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tópico 4 -->
+      <section class="bg-white dark:bg-neutral-800 rounded-2xl shadow-lg p-8">
+        <h2 class="text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-6 flex items-center">
+          <span class="text-masterclass mr-3">🏆</span>
+          Advanced RL Algorithms
+        </h2>
+
+        <div class="space-y-6">
+          <div>
+            <h3 class="text-xl font-semibold text-masterclass mb-3">O que é</h3>
+            <p class="text-neutral-700 dark:text-neutral-300 leading-relaxed">
+              Advanced RL algorithms representam o estado da arte atual: model-based RL (DreamerV3, MuZero) que aprende world models para planning, offline RL (CQL, IQL) que aprende de datasets fixos sem interação, meta-RL que aprende a aprender rapidamente em novas tasks, e hierarchical RL que decompõe tasks complexas em subtasks. Cada abordagem resolve limitações específicas de vanilla RL - sample efficiency, safety, generalization. Esses algorithms frequentemente combinam múltiplas técnicas e requerem deep understanding de RL theory.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-xl font-semibold text-masterclass mb-3">Por que aprender</h3>
+            <p class="text-neutral-700 dark:text-neutral-300 leading-relaxed">
+              Advanced RL algorithms são necessários para aplicações reais onde sample efficiency, safety, e generalization são críticos - você não pode treinar um autonomous vehicle através de trial-and-error no mundo real. Companies que trabalham em robótica, autonomous systems, e complex optimization precisam de experts nessas técnicas. Esta é expertise de frontier research - papers nessas áreas são publicados em NeurIPS/ICML. Professionals com este knowledge estão no topo da hierarquia técnica, com compensação $400K-$600K+ em top labs e oportunidades de fundar startups baseadas em IP único.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-xl font-semibold text-masterclass mb-3">Conceitos chave</h3>
+            <div class="bg-purple-50 dark:bg-purple-900/20 rounded-lg p-6">
+              <ul class="space-y-3 text-neutral-700 dark:text-neutral-300">
+                <li class="flex items-start">
+                  <span class="text-masterclass mr-2 mt-1">•</span>
+                  <span><strong>Model-Based RL:</strong> World models, planning via imagination, Dreamer, MuZero</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-masterclass mr-2 mt-1">•</span>
+                  <span><strong>Offline RL:</strong> Learning from static datasets, conservative Q-learning, implicit Q-learning</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-masterclass mr-2 mt-1">•</span>
+                  <span><strong>Meta-RL:</strong> Learning to adapt rapidly, MAML, RL², task distributions</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-masterclass mr-2 mt-1">•</span>
+                  <span><strong>Hierarchical RL:</strong> Options framework, temporal abstraction, skill learning</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-masterclass mr-2 mt-1">•</span>
+                  <span><strong>Safe RL:</strong> Constraint satisfaction, shielding, risk-sensitive objectives</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-masterclass mr-2 mt-1">•</span>
+                  <span><strong>Inverse RL:</strong> Learning reward functions from expert demonstrations</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- Navigation Footer -->
+    <div class="mt-12 pt-8 border-t border-neutral-200 dark:border-neutral-700 flex justify-between items-center">
+      <a href="modulo-3-4.html" class="inline-flex items-center px-6 py-3 bg-neutral-200 dark:bg-neutral-700 text-neutral-900 dark:text-neutral-100 rounded-lg hover:bg-neutral-300 dark:hover:bg-neutral-600 transition-colors font-semibold">
+        <span class="mr-2">←</span>
+        <span>Módulo Anterior</span>
+      </a>
+
+      <a href="modulo-3-6.html" class="inline-flex items-center px-6 py-3 bg-masterclass text-white rounded-lg hover:bg-purple-600 transition-colors font-semibold">
+        <span>Próximo Módulo</span>
+        <span class="ml-2">→</span>
+      </a>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white dark:bg-neutral-800 border-t border-neutral-200 dark:border-neutral-700 mt-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div class="text-center">
+        <p class="text-neutral-600 dark:text-neutral-400">
+          © 2024 FTD - Formação Transformação Digital. Todos os direitos reservados.
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script src="../js/app.js"></script>
+
+</body>
+</html>
