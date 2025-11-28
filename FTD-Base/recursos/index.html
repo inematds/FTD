@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Recursos e materiais de apoio do FTD - Formação da Transformação Digital.">
+  <title>Recursos | FTD - Formação da Transformação Digital</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Tailwind Config -->
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            iniciante: '#10B981',
+            tecnico: '#3B82F6',
+            masterclass: '#8B5CF6',
+          },
+          fontFamily: {
+            sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <style>
+    body.preload * {
+      transition: none !important;
+    }
+  </style>
+</head>
+
+<body class="preload bg-neutral-50 dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 transition-colors duration-300">
+
+  <!-- Navigation -->
+  <nav class="bg-white/80 dark:bg-neutral-800/80 backdrop-blur-lg sticky top-0 z-50 border-b border-neutral-200 dark:border-neutral-700">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <div class="flex items-center space-x-4">
+          <a href="../index.html" class="text-tecnico hover:text-blue-600 transition-colors font-semibold flex items-center space-x-2">
+            <span>←</span>
+            <span>Voltar</span>
+          </a>
+          <div class="h-6 w-px bg-neutral-300 dark:bg-neutral-600"></div>
+          <a href="../index.html" class="text-xl font-bold bg-gradient-to-r from-iniciante via-tecnico to-masterclass bg-clip-text text-transparent">FTD</a>
+        </div>
+
+        <button id="theme-toggle" class="p-2 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700 transition-colors">
+          <svg id="theme-toggle-dark-icon" class="w-5 h-5 hidden" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+          </svg>
+          <svg id="theme-toggle-light-icon" class="w-5 h-5 hidden" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="bg-gradient-to-r from-iniciante via-tecnico to-masterclass py-16">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
+      <h1 class="text-4xl lg:text-5xl font-bold mb-4">
+        Recursos e Materiais
+      </h1>
+      <p class="text-xl text-white/90">
+        PDFs, checklists, templates e ferramentas para acelerar seu aprendizado
+      </p>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+
+    <!-- Filtros -->
+    <div class="flex flex-wrap gap-3 mb-12 justify-center">
+      <button class="resource-filter active px-4 py-2 rounded-full bg-tecnico text-white font-semibold transition" data-filter="all">
+        Todos
+      </button>
+      <button class="resource-filter px-4 py-2 rounded-full bg-iniciante/20 text-iniciante font-semibold hover:bg-iniciante hover:text-white transition" data-filter="iniciante">
+        Iniciante
+      </button>
+      <button class="resource-filter px-4 py-2 rounded-full bg-tecnico/20 text-tecnico font-semibold hover:bg-tecnico hover:text-white transition" data-filter="tecnico">
+        Técnico
+      </button>
+      <button class="resource-filter px-4 py-2 rounded-full bg-masterclass/20 text-masterclass font-semibold hover:bg-masterclass hover:text-white transition" data-filter="masterclass">
+        Masterclass
+      </button>
+    </div>
+
+    <!-- Recursos Grid -->
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="resources-grid">
+
+      <!-- Guia de Prompts Básicos -->
+      <div class="resource-card bg-white dark:bg-neutral-800 rounded-2xl shadow-lg overflow-hidden" data-level="iniciante">
+        <div class="h-2 bg-iniciante"></div>
+        <div class="p-6">
+          <div class="flex items-start justify-between mb-4">
+            <span class="text-4xl">📝</span>
+            <span class="px-3 py-1 bg-iniciante/10 text-iniciante text-sm font-semibold rounded-full">Iniciante</span>
+          </div>
+          <h3 class="text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-2">
+            Guia de Prompts Básicos
+          </h3>
+          <p class="text-neutral-600 dark:text-neutral-400 text-sm mb-4">
+            50+ prompts prontos para usar com ChatGPT, Claude e outras IAs de texto. Organize por categoria e adapte ao seu contexto.
+          </p>
+          <div class="flex items-center justify-between">
+            <span class="text-xs text-neutral-500 dark:text-neutral-400">PDF • 12 páginas</span>
+            <button class="px-4 py-2 bg-iniciante text-white rounded-lg text-sm font-semibold hover:bg-emerald-600 transition" onclick="alert('Download disponível no FTD PRO')">
+              Download
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Checklist Engenharia de Prompts -->
+      <div class="resource-card bg-white dark:bg-neutral-800 rounded-2xl shadow-lg overflow-hidden" data-level="iniciante">
+        <div class="h-2 bg-iniciante"></div>
+        <div class="p-6">
+          <div class="flex items-start justify-between mb-4">
+            <span class="text-4xl">✅</span>
+            <span class="px-3 py-1 bg-iniciante/10 text-iniciante text-sm font-semibold rounded-full">Iniciante</span>
+          </div>
+          <h3 class="text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-2">
+            Checklist de Prompts
+          </h3>
+          <p class="text-neutral-600 dark:text-neutral-400 text-sm mb-4">
+            Checklist para garantir que seus prompts seguem as melhores práticas. Contexto, clareza, formato e refinamento.
+          </p>
+          <div class="flex items-center justify-between">
+            <span class="text-xs text-neutral-500 dark:text-neutral-400">PDF • 2 páginas</span>
+            <button class="px-4 py-2 bg-iniciante text-white rounded-lg text-sm font-semibold hover:bg-emerald-600 transition" onclick="alert('Download disponível no FTD PRO')">
+              Download
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ferramentas de IA Recomendadas -->
+      <div class="resource-card bg-white dark:bg-neutral-800 rounded-2xl shadow-lg overflow-hidden" data-level="iniciante">
+        <div class="h-2 bg-iniciante"></div>
+        <div class="p-6">
+          <div class="flex items-start justify-between mb-4">
+            <span class="text-4xl">🛠️</span>
+            <span class="px-3 py-1 bg-iniciante/10 text-iniciante text-sm font-semibold rounded-full">Iniciante</span>
+          </div>
+          <h3 class="text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-2">
+            Mapa de Ferramentas de IA
+          </h3>
+          <p class="text-neutral-600 dark:text-neutral-400 text-sm mb-4">
+            Catálogo visual com 100+ ferramentas de IA organizadas por categoria. Texto, imagem, vídeo, áudio, código e mais.
+          </p>
+          <div class="flex items-center justify-between">
+            <span class="text-xs text-neutral-500 dark:text-neutral-400">PDF • 8 páginas</span>
+            <button class="px-4 py-2 bg-iniciante text-white rounded-lg text-sm font-semibold hover:bg-emerald-600 transition" onclick="alert('Download disponível no FTD PRO')">
+              Download
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Template de Automação -->
+      <div class="resource-card bg-white dark:bg-neutral-800 rounded-2xl shadow-lg overflow-hidden" data-level="tecnico">
+        <div class="h-2 bg-tecnico"></div>
+        <div class="p-6">
+          <div class="flex items-start justify-between mb-4">
+            <span class="text-4xl">⚙️</span>
+            <span class="px-3 py-1 bg-tecnico/10 text-tecnico text-sm font-semibold rounded-full">Técnico</span>
+          </div>
+          <h3 class="text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-2">
+            Templates de Automação
+          </h3>
+          <p class="text-neutral-600 dark:text-neutral-400 text-sm mb-4">
+            10 templates prontos para Make/n8n. Automações de email, social media, CRM, e integração com ChatGPT.
+          </p>
+          <div class="flex items-center justify-between">
+            <span class="text-xs text-neutral-500 dark:text-neutral-400">JSON • 10 arquivos</span>
+            <button class="px-4 py-2 bg-tecnico text-white rounded-lg text-sm font-semibold hover:bg-blue-600 transition" onclick="alert('Download disponível no FTD PRO')">
+              Download
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Guia de APIs -->
+      <div class="resource-card bg-white dark:bg-neutral-800 rounded-2xl shadow-lg overflow-hidden" data-level="tecnico">
+        <div class="h-2 bg-tecnico"></div>
+        <div class="p-6">
+          <div class="flex items-start justify-between mb-4">
+            <span class="text-4xl">🔗</span>
+            <span class="px-3 py-1 bg-tecnico/10 text-tecnico text-sm font-semibold rounded-full">Técnico</span>
+          </div>
+          <h3 class="text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-2">
+            Guia de APIs de IA
+          </h3>
+          <p class="text-neutral-600 dark:text-neutral-400 text-sm mb-4">
+            Referência rápida das principais APIs: OpenAI, Anthropic, Google AI, Replicate. Endpoints, autenticação e exemplos.
+          </p>
+          <div class="flex items-center justify-between">
+            <span class="text-xs text-neutral-500 dark:text-neutral-400">PDF • 20 páginas</span>
+            <button class="px-4 py-2 bg-tecnico text-white rounded-lg text-sm font-semibold hover:bg-blue-600 transition" onclick="alert('Download disponível no FTD PRO')">
+              Download
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Planilha de Custos -->
+      <div class="resource-card bg-white dark:bg-neutral-800 rounded-2xl shadow-lg overflow-hidden" data-level="tecnico">
+        <div class="h-2 bg-tecnico"></div>
+        <div class="p-6">
+          <div class="flex items-start justify-between mb-4">
+            <span class="text-4xl">📊</span>
+            <span class="px-3 py-1 bg-tecnico/10 text-tecnico text-sm font-semibold rounded-full">Técnico</span>
+          </div>
+          <h3 class="text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-2">
+            Calculadora de Custos API
+          </h3>
+          <p class="text-neutral-600 dark:text-neutral-400 text-sm mb-4">
+            Planilha para estimar custos de uso de APIs de IA. Compare preços entre provedores e planeje seu orçamento.
+          </p>
+          <div class="flex items-center justify-between">
+            <span class="text-xs text-neutral-500 dark:text-neutral-400">Excel • 1 arquivo</span>
+            <button class="px-4 py-2 bg-tecnico text-white rounded-lg text-sm font-semibold hover:bg-blue-600 transition" onclick="alert('Download disponível no FTD PRO')">
+              Download
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Framework de Arquitetura -->
+      <div class="resource-card bg-white dark:bg-neutral-800 rounded-2xl shadow-lg overflow-hidden" data-level="masterclass">
+        <div class="h-2 bg-masterclass"></div>
+        <div class="p-6">
+          <div class="flex items-start justify-between mb-4">
+            <span class="text-4xl">🏗️</span>
+            <span class="px-3 py-1 bg-masterclass/10 text-masterclass text-sm font-semibold rounded-full">Masterclass</span>
+          </div>
+          <h3 class="text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-2">
+            Framework de Arquitetura IA
+          </h3>
+          <p class="text-neutral-600 dark:text-neutral-400 text-sm mb-4">
+            Guia completo para arquitetar sistemas de IA em produção. Padrões, decisões técnicas e melhores práticas.
+          </p>
+          <div class="flex items-center justify-between">
+            <span class="text-xs text-neutral-500 dark:text-neutral-400">PDF • 35 páginas</span>
+            <button class="px-4 py-2 bg-masterclass text-white rounded-lg text-sm font-semibold hover:bg-purple-600 transition" onclick="alert('Download disponível no FTD PRO')">
+              Download
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Checklist de Ética -->
+      <div class="resource-card bg-white dark:bg-neutral-800 rounded-2xl shadow-lg overflow-hidden" data-level="masterclass">
+        <div class="h-2 bg-masterclass"></div>
+        <div class="p-6">
+          <div class="flex items-start justify-between mb-4">
+            <span class="text-4xl">⚖️</span>
+            <span class="px-3 py-1 bg-masterclass/10 text-masterclass text-sm font-semibold rounded-full">Masterclass</span>
+          </div>
+          <h3 class="text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-2">
+            Checklist de Ética em IA
+          </h3>
+          <p class="text-neutral-600 dark:text-neutral-400 text-sm mb-4">
+            Framework para avaliar implicações éticas de projetos de IA. Bias, privacidade, transparência e responsabilidade.
+          </p>
+          <div class="flex items-center justify-between">
+            <span class="text-xs text-neutral-500 dark:text-neutral-400">PDF • 6 páginas</span>
+            <button class="px-4 py-2 bg-masterclass text-white rounded-lg text-sm font-semibold hover:bg-purple-600 transition" onclick="alert('Download disponível no FTD PRO')">
+              Download
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Roadmap de Transformação -->
+      <div class="resource-card bg-white dark:bg-neutral-800 rounded-2xl shadow-lg overflow-hidden" data-level="masterclass">
+        <div class="h-2 bg-masterclass"></div>
+        <div class="p-6">
+          <div class="flex items-start justify-between mb-4">
+            <span class="text-4xl">🗺️</span>
+            <span class="px-3 py-1 bg-masterclass/10 text-masterclass text-sm font-semibold rounded-full">Masterclass</span>
+          </div>
+          <h3 class="text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-2">
+            Roadmap de Transformação Digital
+          </h3>
+          <p class="text-neutral-600 dark:text-neutral-400 text-sm mb-4">
+            Template para planejar a jornada de transformação digital da sua empresa. Fases, métricas e milestones.
+          </p>
+          <div class="flex items-center justify-between">
+            <span class="text-xs text-neutral-500 dark:text-neutral-400">PDF + Excel • 2 arquivos</span>
+            <button class="px-4 py-2 bg-masterclass text-white rounded-lg text-sm font-semibold hover:bg-purple-600 transition" onclick="alert('Download disponível no FTD PRO')">
+              Download
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- CTA para PRO -->
+    <section class="mt-16">
+      <div class="bg-gradient-to-r from-tecnico to-masterclass rounded-2xl p-8 text-center text-white">
+        <h2 class="text-2xl font-bold mb-4">
+          Quer acesso a todos os recursos?
+        </h2>
+        <p class="text-lg text-white/90 mb-6">
+          No FTD PRO você terá acesso a 50+ PDFs, templates, planilhas e uma biblioteca com 500+ prompts prontos.
+        </p>
+        <a href="../index.html#lead-form" class="inline-block bg-white text-tecnico px-6 py-3 rounded-lg font-semibold hover:bg-neutral-100 transition">
+          Entrar na Lista de Espera
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white dark:bg-neutral-800 border-t border-neutral-200 dark:border-neutral-700 mt-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div class="text-center">
+        <p class="text-neutral-600 dark:text-neutral-400">
+          © 2025 FTD - Formação da Transformação Digital | INEMA TDS
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script src="../js/app.js"></script>
+
+  <!-- Filter Script -->
+  <script>
+    document.querySelectorAll('.resource-filter').forEach(button => {
+      button.addEventListener('click', () => {
+        const filter = button.dataset.filter;
+        const cards = document.querySelectorAll('.resource-card');
+        const buttons = document.querySelectorAll('.resource-filter');
+
+        // Update active button
+        buttons.forEach(btn => {
+          btn.classList.remove('bg-tecnico', 'text-white', 'active');
+          btn.classList.add('bg-neutral-200', 'dark:bg-neutral-700', 'text-neutral-700', 'dark:text-neutral-300');
+        });
+        button.classList.add('bg-tecnico', 'text-white', 'active');
+        button.classList.remove('bg-neutral-200', 'dark:bg-neutral-700', 'text-neutral-700', 'dark:text-neutral-300');
+
+        // Filter cards
+        cards.forEach(card => {
+          if (filter === 'all' || card.dataset.level === filter) {
+            card.classList.remove('hidden');
+          } else {
+            card.classList.add('hidden');
+          }
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>
