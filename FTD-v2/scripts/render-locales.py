@@ -8,9 +8,10 @@ import os,posixpath
 BASE='https://inematds.github.io/FTD/FTD-v2/'
 LANGS={'pt':'pt-BR','en':'en','es':'es'}
 COURSE_PAGES={p.relative_to(ROOT).as_posix() for p in pages()}
+SEL_STYLE_NAV='display:inline-flex;flex-shrink:0;gap:0;padding:2px;border-radius:9px;background:rgba(12,12,16,.82);border:1px solid rgba(250,204,21,.45);font:600 11px/1 Sora,Inter,system-ui,sans-serif'
 SEL_STYLE='position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(250,204,21,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)'
-A_ON='padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#FACC15'
-A_OFF='padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee'
+A_ON='padding:5px 5px;border-radius:7px;text-decoration:none;color:#1a1206;background:#FACC15'
+A_OFF='padding:5px 5px;border-radius:7px;text-decoration:none;color:#e9e9ee'
 
 def url_rel(rel):return '' if rel=='index.html' else rel
 def lang_ui(soup,rel,lang):
@@ -21,7 +22,8 @@ def lang_ui(soup,rel,lang):
   soup.head.append(soup.new_tag('link',rel='alternate',hreflang=loc,href=BASE+p+url_rel(rel)))
  soup.head.append(soup.new_tag('link',rel='alternate',hreflang='x-default',href=BASE+url_rel(rel)))
  soup.head.append(soup.new_tag('link',rel='canonical',href=BASE+pre+url_rel(rel)))
- div=soup.new_tag('div',attrs={'class':'inema-lang','style':SEL_STYLE,'translate':'no'})
+ jb=soup.select_one('nav [data-inema-journey-open]')
+ div=soup.new_tag('div',attrs={'class':'inema-lang','style':SEL_STYLE_NAV if jb else SEL_STYLE,'translate':'no','aria-label':'Idioma'})
  here=posixpath.dirname(pre+rel)
  for code,loc in LANGS.items():
   tgt=('' if code=='pt' else code+'/')+rel
@@ -29,7 +31,8 @@ def lang_ui(soup,rel,lang):
   if href.endswith('index.html') and rel=='index.html':href=href[:-len('index.html')] or './'
   a=soup.new_tag('a',href=href,hreflang=loc,style=A_ON if code==lang else A_OFF);a.string=code.upper()
   div.append(a)
- soup.body.insert(0,div)
+ if jb:jb.insert_before(div)  # no menu, antes de "Minha jornada"
+ else:soup.body.insert(0,div)
 
 def fix_paths(soup,rel):
  """Página traduzida fica 1 nível abaixo: links para fora do curso (assets/, capa/, imagens) ganham ../"""
