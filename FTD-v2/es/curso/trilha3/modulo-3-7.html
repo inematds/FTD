@@ -1,0 +1,1214 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="ftd-v2-es" name="inema-course"/>
+<title>Módulo 3.7 · IA en producción — Escala empresarial | FTD v2</title>
+<meta content="Plataforma interna de IA, gateway, identidad, auditoría, SLA, FinOps y adopción en toda la empresa." name="description"/>
+<meta content="Módulo 3.7 · IA en producción — Escala empresarial | FTD v2" property="og:title"/>
+<meta content="Plataforma interna de IA, gateway, identidad, auditoría, SLA, FinOps y adopción en toda la empresa." property="og:description"/>
+<!-- ANTI-FOUC (Erro #18) — primeiro script do head -->
+<script>
+(function () {
+  try {
+    var html = document.documentElement;
+    var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+    function clone(o) { var r = {}; for (var x in o) r[x] = o[x]; return r; }
+    var p = clone(DEF);
+    try {
+      var raw = localStorage.getItem('inema.prefs');
+      if (raw) {
+        var parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === 'object') {
+          for (var k in DEF) if (parsed[k] != null) p[k] = parsed[k];
+        }
+      } else {
+        var legacy = localStorage.getItem('theme');
+        if (legacy === 'light') p.theme = 'claro';
+        else if (legacy === 'dark') p.theme = 'inema-dark';
+      }
+    } catch (e) { p = clone(DEF); }
+
+    var THEMES = {
+      'inema-dark': { dark: true,  attr: null,        cs: 'dark'  },
+      'claro':      { dark: false, attr: null,        cs: 'light' },
+      'sepia':      { dark: false, attr: 'sepia',     cs: 'light' },
+      'foco':       { dark: null,  attr: 'foco',      cs: null    },
+      'contraste':  { dark: true,  attr: 'contraste', cs: 'dark'  }
+    };
+    var t = THEMES[p.theme] || THEMES['inema-dark'];
+
+    if (t.dark === true) html.classList.add('dark');
+    else if (t.dark === false) html.classList.remove('dark');
+
+    if (t.attr) html.setAttribute('data-theme', t.attr);
+    else html.removeAttribute('data-theme');
+
+    html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark') ? 'dark' : 'light'));
+
+    html.setAttribute('data-font', p.font || 'inter');
+    html.setAttribute('data-accent', p.accent || 'emerald');
+
+    var s = html.style;
+    var scale = (+p.fontScale || 100);
+    s.setProperty('--inema-font-scale', (scale / 100).toString());
+    s.setProperty('font-size', scale + '%');
+    s.setProperty('--measure', (+p.lineWidth || 68) + 'ch');
+    s.setProperty('--lh-body', (+p.leading || 1.7).toString());
+    var fam = p.font === 'system'
+      ? 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif'
+      : (p.font === 'leitura'
+        ? '"Atkinson Hyperlegible", "Inter", system-ui, sans-serif'
+        : '"Inter", system-ui, sans-serif');
+    s.setProperty('--font-body', fam);
+
+    var ACC = {
+      emerald: [152, 76, 45], blue: [217, 91, 60], purple: [258, 90, 66],
+      amber: [38, 92, 50], teal: [174, 72, 41], rose: [350, 89, 60]
+    };
+    var a = ACC[p.accent] || ACC.emerald;
+    s.setProperty('--accent-h', a[0] + '');
+    s.setProperty('--accent-s', a[1] + '%');
+    s.setProperty('--accent-l', a[2] + '%');
+    s.setProperty('--accent', 'hsl(' + a[0] + ' ' + a[1] + '% ' + a[2] + '%)');
+  } catch (err) {
+    try { document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme = 'dark'; } catch (e) {}
+  }
+})();
+</script>
+<!-- MANIFESTO do curso (Erro #28) — idêntico em todas as páginas -->
+<script data-inema-manifest="" type="application/json">
+{
+  "course": "ftd-v2-es",
+  "tracks": [
+    {
+      "n": "1",
+      "title": "Principiante",
+      "modules": [
+        {
+          "id": "1-1",
+          "title": "Impacto de la IA",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-1.html"
+        },
+        {
+          "id": "1-2",
+          "title": "Navegar el mundo digital",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-2.html"
+        },
+        {
+          "id": "1-3",
+          "title": "Ingeniería de prompts",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-3.html"
+        },
+        {
+          "id": "1-4",
+          "title": "Asistentes y agentes de IA",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-4.html"
+        },
+        {
+          "id": "1-5",
+          "title": "Creatividad visual con IA",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-5.html"
+        },
+        {
+          "id": "1-6",
+          "title": "Marketing y ventas con IA",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-6.html"
+        },
+        {
+          "id": "1-7",
+          "title": "Automatización de procesos",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-7.html"
+        },
+        {
+          "id": "1-8",
+          "title": "Inteligencia artificial avanzada",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-8.html"
+        },
+        {
+          "id": "1-9",
+          "title": "Negocios y monetización con IA",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-9.html"
+        }
+      ]
+    },
+    {
+      "n": "2",
+      "title": "Técnico",
+      "modules": [
+        {
+          "id": "2-1",
+          "title": "Desarrollo con APIs de IA",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-1.html"
+        },
+        {
+          "id": "2-2",
+          "title": "Arquitectura de aplicaciones con IA",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-2.html"
+        },
+        {
+          "id": "2-3",
+          "title": "RAG y bases de conocimiento",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-3.html"
+        },
+        {
+          "id": "2-4",
+          "title": "Fine-tuning y personalización",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-4.html"
+        },
+        {
+          "id": "2-5",
+          "title": "Agentes y flujos de trabajo complejos",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-5.html"
+        },
+        {
+          "id": "2-6",
+          "title": "Visión artificial avanzada",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-6.html"
+        },
+        {
+          "id": "2-7",
+          "title": "NLP y procesamiento de texto",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-7.html"
+        },
+        {
+          "id": "2-8",
+          "title": "MLOps y producción",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-8.html"
+        },
+        {
+          "id": "2-9",
+          "title": "Ética y gobernanza de IA",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-9.html"
+        }
+      ]
+    },
+    {
+      "n": "3",
+      "title": "Masterclass",
+      "modules": [
+        {
+          "id": "3-1",
+          "title": "Arquitectura de IA a gran escala",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-1.html"
+        },
+        {
+          "id": "3-2",
+          "title": "Modelos personalizados y propietarios",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-2.html"
+        },
+        {
+          "id": "3-3",
+          "title": "IA multimodal avanzada",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-3.html"
+        },
+        {
+          "id": "3-4",
+          "title": "Investigación y artículos de IA",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-4.html"
+        },
+        {
+          "id": "3-5",
+          "title": "Aprendizaje por refuerzo en IA",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-5.html"
+        },
+        {
+          "id": "3-6",
+          "title": "Seguridad y red teaming",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-6.html"
+        },
+        {
+          "id": "3-7",
+          "title": "IA en producción — escala enterprise",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-7.html"
+        },
+        {
+          "id": "3-8",
+          "title": "Liderazgo y estrategia en IA",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-8.html"
+        },
+        {
+          "id": "3-9",
+          "title": "Futuro de la IA y AGI",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-9.html"
+        }
+      ]
+    }
+  ]
+}
+</script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#0c0c10', 800: '#16161e', 700: '#1e1e28', 600: '#272730', 500: '#33333f' } }, fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'], display: ['Sora', 'Inter', 'sans-serif'], mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'] } } } }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Sora:wght@600;700;800&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    h1, h2, h3, h4, .font-display { font-family: 'Sora', 'Inter', sans-serif; }
+    .dark body { background-color: #0c0c10; }
+    .dark .text-neutral-100 { color: #e9e9ee; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+    pre { white-space: pre-wrap; word-break: break-word; }
+    pre, code, .font-mono { font-family: 'JetBrains Mono', ui-monospace, monospace; }
+
+    /* Light mode — Parte 1: base */
+    html:not(.dark) body { background-color: #f6f7f9; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800\/50 { background-color: #f6f7f9; }
+    html:not(.dark) .bg-dark-700 { background-color: #eceef2; }
+    html:not(.dark) .bg-dark-700\/50 { background-color: #f1f2f5; }
+    html:not(.dark) .bg-dark-700\/30 { background-color: #f4f5f7; }
+    html:not(.dark) .bg-dark-600 { background-color: #e1e3ea; }
+    html:not(.dark) .hover\:bg-dark-600:hover { background-color: #d6d9e1; }
+    html:not(.dark) .hover\:bg-dark-700\/50:hover { background-color: #eceef2; }
+    html:not(.dark) .text-neutral-100 { color: #1a1a22; }
+    html:not(.dark) .text-neutral-200 { color: #26262f; }
+    html:not(.dark) .text-neutral-300 { color: #3f3f4a; }
+    html:not(.dark) .text-neutral-400 { color: #5b5b68; }
+    html:not(.dark) .text-neutral-500 { color: #62626e; }
+    html:not(.dark) .border-dark-600 { border-color: #e1e3ea; }
+    html:not(.dark) .border-dark-700 { border-color: #e8e9ee; }
+    html:not(.dark) .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #e1e3ea; }
+    html:not(.dark) .bg-black\/40 { background-color: #f1f2f5; }
+    html:not(.dark) pre.code-dark { background-color: #1a1a22; color: #e9e9ee; }
+
+    /* Light mode — Parte 2: acento das 3 trilhas (texto -700, nunca -400 no claro) */
+    html:not(.dark) .text-emerald-400 { color: #047857; }
+    html:not(.dark) .text-emerald-300 { color: #047857; }
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #047857; }
+    html:not(.dark) .bg-emerald-500\/20 { background-color: rgba(4,120,87,0.12); }
+    html:not(.dark) .bg-emerald-500\/10 { background-color: rgba(4,120,87,0.08); }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(4,120,87,0.08); }
+    html:not(.dark) .bg-emerald-900\/20 { background-color: rgba(4,120,87,0.07); }
+    html:not(.dark) .bg-emerald-900\/30 { background-color: rgba(4,120,87,0.08); }
+    html:not(.dark) .bg-emerald-900\/40 { background-color: rgba(4,120,87,0.09); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(4,120,87,0.28); }
+    html:not(.dark) .hover\:border-emerald-500\/30:hover { border-color: rgba(4,120,87,0.4); }
+    html:not(.dark) .text-blue-400 { color: #1d4ed8; }
+    html:not(.dark) .text-blue-300 { color: #1d4ed8; }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #1d4ed8; }
+    html:not(.dark) .bg-blue-500\/20 { background-color: rgba(29,78,216,0.12); }
+    html:not(.dark) .bg-blue-500\/10 { background-color: rgba(29,78,216,0.08); }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(29,78,216,0.08); }
+    html:not(.dark) .bg-blue-900\/20 { background-color: rgba(29,78,216,0.07); }
+    html:not(.dark) .bg-blue-900\/30 { background-color: rgba(29,78,216,0.08); }
+    html:not(.dark) .bg-blue-900\/40 { background-color: rgba(29,78,216,0.09); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(29,78,216,0.28); }
+    html:not(.dark) .hover\:border-blue-500\/30:hover { border-color: rgba(29,78,216,0.4); }
+    html:not(.dark) .text-purple-400 { color: #6d28d9; }
+    html:not(.dark) .text-purple-300 { color: #6d28d9; }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #6d28d9; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(109,40,217,0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(109,40,217,0.08); }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(109,40,217,0.08); }
+    html:not(.dark) .bg-purple-900\/20 { background-color: rgba(109,40,217,0.07); }
+    html:not(.dark) .bg-purple-900\/30 { background-color: rgba(109,40,217,0.08); }
+    html:not(.dark) .bg-purple-900\/40 { background-color: rgba(109,40,217,0.09); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(109,40,217,0.28); }
+    html:not(.dark) .hover\:border-purple-500\/30:hover { border-color: rgba(109,40,217,0.4); }
+
+    /* Light mode — Parte 3: gradientes + especiais */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #854d0e; }
+    html:not(.dark) .text-yellow-400 { color: #854d0e; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #713f12; }
+    html:not(.dark) .bg-primary\/10 { background-color: #FEF9C3; }
+    html:not(.dark) .border-primary\/30 { border-color: #EAB308; }
+    html:not(.dark) .text-red-400 { color: #b91c1c; }
+    html:not(.dark) .bg-red-900\/20 { background-color: rgba(185,28,28,0.07); }
+    html:not(.dark) .border-red-500\/30 { border-color: rgba(185,28,28,0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #075985; }
+    html:not(.dark) .bg-sky-900\/20 { background-color: rgba(3,105,161,0.07); }
+    html:not(.dark) .border-sky-500\/30 { border-color: rgba(3,105,161,0.25); }
+
+    /* Light mode — Parte 4: nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255,255,255,0.95); }
+
+    /* Parte 5: bordas suavizadas no DARK (Erro #15) */
+    .dark .border-dark-600 { border-color: #2a2a35; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #2a2a35; }
+
+    /* SVG: no claro, um fundo escuro emoldurado mantém o contraste do desenho */
+    html:not(.dark) .svg-frame { background-color: #12121a; }
+    @media (prefers-reduced-motion: reduce) { svg * { animation: none !important; transition: none !important; } }
+  </style>
+<link href="../../../assets/learn.css" rel="stylesheet"/>
+<link href="https://inematds.github.io/FTD/FTD-v2/curso/trilha3/modulo-3-7.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/FTD/FTD-v2/en/curso/trilha3/modulo-3-7.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/FTD/FTD-v2/es/curso/trilha3/modulo-3-7.html" hreflang="es" rel="alternate"/><link href="https://inematds.github.io/FTD/FTD-v2/curso/trilha3/modulo-3-7.html" hreflang="x-default" rel="alternate"/><link href="https://inematds.github.io/FTD/FTD-v2/es/curso/trilha3/modulo-3-7.html" rel="canonical"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(250,204,21,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha3/modulo-3-7.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="../../../en/curso/trilha3/modulo-3-7.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">EN</a><a href="modulo-3-7.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#FACC15">ES</a></div>
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14 gap-2">
+<!-- Logo + INEMA.CLUB -->
+<div class="flex items-center space-x-3 flex-shrink-0">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🚀</span>
+<span class="font-display font-bold text-lg hidden sm:inline">FTD</span>
+</a>
+<span class="text-neutral-600 hidden sm:inline">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium hidden sm:inline" href="https://inema.club" rel="noopener" target="_blank">INEMA.CLUB</a>
+<span class="text-neutral-600 hidden sm:inline">-</span>
+<a class="text-amber-700 dark:text-slate-300 hover:underline text-sm font-medium hidden sm:inline" href="https://inema.pro" rel="noopener" target="_blank">PRO</a>
+</div>
+<!-- Trilhas + controles de aprendizagem + theme toggle -->
+<div class="flex items-center gap-1 sm:gap-1.5">
+<a class="px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors whitespace-nowrap" href="../trilha1/index.html">
+<span class="lg:hidden">T1</span><span class="hidden lg:inline">Principiante</span>
+</a>
+<a class="px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors whitespace-nowrap" href="../trilha2/index.html">
+<span class="lg:hidden">T2</span><span class="hidden lg:inline">Técnico</span>
+</a>
+<a class="px-2.5 py-1.5 rounded-lg text-sm font-semibold text-purple-400 bg-purple-500/10 whitespace-nowrap" href="index.html">
+<span class="lg:hidden">T3</span><span class="hidden lg:inline">Masterclass</span>
+</a>
+<span class="w-px h-6 bg-dark-600 mx-1 hidden sm:inline-block"></span>
+<!-- Minha jornada (abre o painel global; badge = % do curso) -->
+<button class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-300 hover:text-neutral-100 hover:bg-dark-700 transition-colors" data-inema-journey-open="" type="button">
+<svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="16"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+<span class="hidden md:inline">Mi recorrido</span>
+<span class="inema-journey-badge" data-count="0" data-inema-journey-badge=""></span>
+</button>
+<!-- Aparência (gatilho + painel obrigatório) -->
+<div class="relative">
+<button aria-expanded="false" class="inema-appearance-trigger inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-300 hover:text-neutral-100 transition-colors" data-inema-appearance-toggle="#inema-appearance-panel" type="button">
+<svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="16"><circle cx="12" cy="12" r="9"></circle><path d="M12 3v18"></path><path d="M12 3a9 9 0 0 1 0 18" fill="currentColor"></path></svg>
+<span class="hidden md:inline">Apariencia</span>
+</button>
+<div class="inema-appearance-pop right-0" data-inema-appearance="" id="inema-appearance-panel">
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Tema</span>
+<div class="inema-segment">
+<button data-inema-set-theme="inema-dark" type="button">Oscuro</button>
+<button data-inema-set-theme="claro" type="button">Claro</button>
+<button data-inema-set-theme="sepia" type="button">Sepia</button>
+</div>
+<div class="inema-segment">
+<button data-inema-set-theme="foco" type="button">Enfoque</button>
+<button data-inema-set-theme="contraste" type="button">Alto contraste</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Fuente</span>
+<div class="inema-segment">
+<button data-inema-set-font="inter" type="button">Inter</button>
+<button data-inema-set-font="system" type="button">Sistema</button>
+<button data-inema-set-font="leitura" type="button">Lectura</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Tamaño</span>
+<div class="inema-segment">
+<button data-inema-set-fontscale="100" type="button">A</button>
+<button data-inema-set-fontscale="112" type="button">A+</button>
+<button data-inema-set-fontscale="125" type="button">A++</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Ancho</span>
+<div class="inema-segment">
+<button data-inema-set-linewidth="60" type="button">Estrecho</button>
+<button data-inema-set-linewidth="68" type="button">Mediano</button>
+<button data-inema-set-linewidth="75" type="button">Ancho</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Interlineado</span>
+<div class="inema-segment">
+<button data-inema-set-leading="1.45" type="button">Compacto</button>
+<button data-inema-set-leading="1.7" type="button">Cómodo</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Acento</span>
+<div class="inema-accent-grid">
+<button aria-label="Acento esmeralda" data-inema-set-accent="emerald" type="button"></button>
+<button aria-label="Acento azul" data-inema-set-accent="blue" type="button"></button>
+<button aria-label="Acento violeta" data-inema-set-accent="purple" type="button"></button>
+<button aria-label="Acento ámbar" data-inema-set-accent="amber" type="button"></button>
+<button aria-label="Acento verde azulado" data-inema-set-accent="teal" type="button"></button>
+<button aria-label="Acento rosa" data-inema-set-accent="rose" type="button"></button>
+</div>
+</div>
+</div>
+</div>
+<!-- Theme toggle sol/lua (núcleo v1; o JS o mantém coerente com o tema) -->
+<button aria-label="Alternar tema claro/oscuro" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20">
+<path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+</svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20">
+<path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path>
+</svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<main data-inema-module="3-7" data-inema-track="3" id="conteudo">
+<!-- BREADCRUMB -->
+<nav aria-label="Ruta de navegación" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-purple-400" href="../../index.html">Inicio</a><span>/</span>
+<a class="hover:text-purple-400" href="index.html">Ruta 3</a><span>/</span>
+<span class="text-purple-400">Módulo 3.7</span>
+</div>
+</nav>
+<!-- HEADER do módulo -->
+<header class="bg-gradient-to-br from-purple-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-purple-500/20 text-purple-400 text-xs font-semibold rounded-full mb-4">MÓDULO 3.7</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🏢 IA en producción — Escala empresarial</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">Cuando diez equipos usan IA, cada uno con su propia clave, su propio prompt y su propia cuenta, la empresa no tiene IA: tiene diez riesgos. Este módulo muestra cómo transformar proyectos aislados en una <strong class="text-purple-400">plataforma interna</strong> —gateway, identidad, auditoría, SLA, FinOps y adopción— con configuraciones y listas de verificación que puedes llevar a la próxima reunión de arquitectura.</p>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">7</div><div class="text-xs text-neutral-400">Temas</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">~55</div><div class="text-xs text-neutral-400">Minutos</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">Avanzado</div><div class="text-xs text-neutral-400">Nivel</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">Arquitectura</div><div class="text-xs text-neutral-400">Tipo</div></div>
+</div>
+<div class="flex items-center gap-3 mt-8">
+<div aria-label="Progreso del módulo 3.7" class="inema-ring" data-inema-meter="modulo:3-7"><span class="inema-ring__value" data-inema-meter-pct="">0%</span></div>
+<div class="inema-meter-label" data-inema-meter="modulo:3-7"><strong data-inema-meter-frac="">0 de 0</strong> temas leídos · <span data-inema-section-counter="">Sección 1 de 7</span></div>
+</div>
+</div>
+</header>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+<div class="lg:flex lg:gap-10">
+<!-- TOC sticky + scrollspy -->
+<aside class="hidden lg:block lg:w-56 flex-shrink-0">
+<nav aria-label="Índice de la página" class="sticky top-20 self-start" data-inema-toc="">
+<p class="text-xs font-semibold uppercase tracking-wide text-neutral-500 mb-3">En este módulo</p>
+<ol class="space-y-1 text-sm">
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-purple-400" href="#topico-1">1. Plataforma interna</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-purple-400" href="#topico-2">2. Gateway de modelos</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-purple-400" href="#topico-3">3. Identidad y acceso</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-purple-400" href="#topico-4">4. Auditoría</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-purple-400" href="#topico-5">5. SLA y confiabilidad</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-purple-400" href="#topico-6">6. FinOps de IA</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-purple-400" href="#topico-7">7. Adopción en la empresa</a></li>
+</ol>
+</nav>
+</aside>
+<!-- ARTIGO -->
+<article class="inema-prose flex-1 min-w-0">
+<h2 class="text-2xl font-bold mb-8">Contenido detallado</h2>
+<!-- TÓPICO 1 -->
+<section class="mb-16" data-inema-topic="modulo-3-7#topico-1" id="topico-1" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="plataforma, não projeto">🏗️ Plataforma interna de IA</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-7-t1-p1">El primer año de IA en una empresa suele ser una colección de pilotos: el equipo de atención al cliente prueba un asistente, el área legal resume contratos y el equipo de ingeniería usa un agente de código. Cada piloto resuelve su propio problema y vuelve a crear los mismos cinco problemas: <strong class="text-neutral-100">claves dispersas, ningún registro central, costos invisibles, datos personales sin control y ninguna forma de cambiar de modelo</strong> sin reescribir la aplicación. La solución es tratar la IA como una <strong class="text-purple-400">plataforma</strong>: un conjunto de servicios compartidos que todos los proyectos usan, en lugar de que cada proyecto reinvente la rueda.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-7-t1-p2"><strong class="text-neutral-100">Plataforma interna</strong> aquí significa lo mismo que en ingeniería de software: un producto mantenido por un equipo, cuyos clientes son los demás equipos. Ofrece un «camino pavimentado» (<em>paved road</em>) —la forma fácil de hacer las cosas bien. Si el camino correcto es más difícil que el atajo, los equipos toman el atajo y la plataforma se convierte en otra regla que nadie respeta.</p>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">Una plataforma interna de IA es la capa común entre las aplicaciones y los modelos: un gateway por el que pasan todas las llamadas, servicios compartidos (contexto, evaluación, herramientas) y tres controles transversales: identidad, auditoría y costos.</p>
+</div>
+<!-- SVG 1: camadas da plataforma -->
+<figure class="svg-frame rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="Capas de una plataforma interna de IA: arriba, las aplicaciones de las áreas; debajo, el gateway de modelos; luego, los servicios compartidos de contexto, evaluación y herramientas; en la base, los modelos externos y locales. A la derecha, tres controles que atraviesan todas las capas: identidad, auditoría y FinOps." class="w-full h-auto" role="img" viewbox="0 0 900 340">
+<defs>
+<filter height="160%" id="m37-glow" width="160%" x="-30%" y="-30%"><fegaussianblur result="b" stddeviation="2"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="28" id="m37-grid" patternunits="userSpaceOnUse" width="28"><circle cx="1.2" cy="1.2" fill="#a855f7" opacity="0.14" r="1.2"></circle></pattern>
+<style>@keyframes m37dash{to{stroke-dashoffset:-24}} .m37-flow{stroke-dasharray:6 6;animation:m37dash 1.6s linear infinite}</style>
+</defs>
+<rect fill="url(#m37-grid)" height="340" width="900"></rect>
+<g font-family="Inter,sans-serif">
+<g filter="url(#m37-glow)">
+<rect fill="#1a1030" height="44" rx="10" stroke="#c084fc" stroke-width="2" width="150" x="40" y="20"></rect>
+<rect fill="#1a1030" height="44" rx="10" stroke="#c084fc" stroke-width="2" width="150" x="210" y="20"></rect>
+<rect fill="#1a1030" height="44" rx="10" stroke="#c084fc" stroke-width="2" width="150" x="380" y="20"></rect>
+<rect fill="#1a1030" height="44" rx="10" stroke="#c084fc" stroke-width="2" width="150" x="550" y="20"></rect>
+</g>
+<text fill="#f3e8ff" font-size="14" font-weight="700" text-anchor="middle" x="115" y="47">Atención al cliente</text>
+<text fill="#f3e8ff" font-size="14" font-weight="700" text-anchor="middle" x="285" y="47">Área legal</text>
+<text fill="#f3e8ff" font-size="14" font-weight="700" text-anchor="middle" x="455" y="47">Ventas</text>
+<text fill="#f3e8ff" font-size="14" font-weight="700" text-anchor="middle" x="625" y="47">Ingeniería</text>
+<path class="m37-flow" d="M115,66 L115,88 M285,66 L285,88 M455,66 L455,88 M625,66 L625,88" fill="none" stroke="#c084fc" stroke-width="2"></path>
+<rect fill="#0e1b26" height="54" rx="12" stroke="#38bdf8" stroke-width="2.5" width="660" x="40" y="90"></rect>
+<text fill="#e0f2fe" font-size="16" font-weight="700" text-anchor="middle" x="370" y="113">Gateway de modelos</text>
+<text fill="#bae6fd" font-size="12" text-anchor="middle" x="370" y="132">enrutamiento · límites · caché · alternativa · registro</text>
+<path class="m37-flow" d="M145,146 L145,168 M370,146 L370,168 M595,146 L595,168" fill="none" stroke="#38bdf8" stroke-width="2"></path>
+<rect fill="#1a1030" height="62" rx="10" stroke="#a855f7" stroke-width="2" width="210" x="40" y="170"></rect>
+<rect fill="#1a1030" height="62" rx="10" stroke="#a855f7" stroke-width="2" width="210" x="265" y="170"></rect>
+<rect fill="#1a1030" height="62" rx="10" stroke="#a855f7" stroke-width="2" width="210" x="490" y="170"></rect>
+<text fill="#f3e8ff" font-size="14" font-weight="700" text-anchor="middle" x="145" y="196">Contexto y RAG</text>
+<text fill="#d8b4fe" font-size="12" text-anchor="middle" x="145" y="215">documentos con permisos</text>
+<text fill="#f3e8ff" font-size="14" font-weight="700" text-anchor="middle" x="370" y="196">Evaluación continua</text>
+<text fill="#d8b4fe" font-size="12" text-anchor="middle" x="370" y="215">pruebas antes y después</text>
+<text fill="#f3e8ff" font-size="14" font-weight="700" text-anchor="middle" x="595" y="196">Herramientas (MCP)</text>
+<text fill="#d8b4fe" font-size="12" text-anchor="middle" x="595" y="215">acceso a sistemas internos</text>
+<path class="m37-flow" d="M200,234 L200,256 M540,234 L540,256" fill="none" stroke="#a855f7" stroke-width="2"></path>
+<rect fill="#0e1b26" height="60" rx="10" stroke="#38bdf8" stroke-width="2" width="320" x="40" y="258"></rect>
+<rect fill="#0e1b26" height="60" rx="10" stroke="#38bdf8" stroke-width="2" width="320" x="380" y="258"></rect>
+<text fill="#e0f2fe" font-size="14" font-weight="700" text-anchor="middle" x="200" y="283">Modelos externos</text>
+<text fill="#bae6fd" font-size="12" text-anchor="middle" x="200" y="302">bajo contrato y condiciones de uso de datos</text>
+<text fill="#e0f2fe" font-size="14" font-weight="700" text-anchor="middle" x="540" y="283">Modelos locales / nube privada</text>
+<text fill="#bae6fd" font-size="12" text-anchor="middle" x="540" y="302">los datos sensibles se quedan dentro</text>
+<rect fill="#1a1030" height="90" rx="10" stroke="#c084fc" stroke-dasharray="5 4" stroke-width="2" width="150" x="730" y="20"></rect>
+<rect fill="#1a1030" height="90" rx="10" stroke="#c084fc" stroke-dasharray="5 4" stroke-width="2" width="150" x="730" y="125"></rect>
+<rect fill="#1a1030" height="90" rx="10" stroke="#c084fc" stroke-dasharray="5 4" stroke-width="2" width="150" x="730" y="230"></rect>
+<text fill="#f3e8ff" font-size="15" font-weight="700" text-anchor="middle" x="805" y="60">Identidad</text>
+<text fill="#d8b4fe" font-size="12" text-anchor="middle" x="805" y="80">SSO · roles</text>
+<text fill="#f3e8ff" font-size="15" font-weight="700" text-anchor="middle" x="805" y="165">Auditoría</text>
+<text fill="#d8b4fe" font-size="12" text-anchor="middle" x="805" y="185">registros · trazas</text>
+<text fill="#f3e8ff" font-size="15" font-weight="700" text-anchor="middle" x="805" y="270">FinOps</text>
+<text fill="#d8b4fe" font-size="12" text-anchor="middle" x="805" y="290">costo por equipo</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-purple-400">Cómo leer:</strong> lee de arriba hacia abajo. Las aplicaciones de las áreas nunca se comunican directamente con un modelo: todo pasa por el gateway (azul). Las cajas punteadas de la derecha no son una capa: atraviesan todas. Si un proyecto se salta el gateway, queda fuera de los tres controles a la vez.</figcaption>
+</figure>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6">
+<h4 class="font-bold text-purple-400 mb-4">✓ Señales de una plataforma</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-purple-400">✓</span><span>Una aplicación nueva entra en producción en días, reutilizando el gateway, los registros y la evaluación.</span></li>
+<li class="flex items-start gap-2"><span class="text-purple-400">✓</span><span>Cambiar de modelo es cambiar una ruta en el gateway, no reescribir código.</span></li>
+<li class="flex items-start gap-2"><span class="text-purple-400">✓</span><span>Hay un equipo responsable de la plataforma, con una hoja de ruta y un canal de soporte.</span></li>
+<li class="flex items-start gap-2"><span class="text-purple-400">✓</span><span>Cualquier gerente puede ver los costos y el uso de su propia área sin pedirle a nadie.</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Señales de proyectos aislados</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Claves de API en las variables de entorno de cada equipo, sin rotación.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Nadie sabe decir qué modelos usa actualmente la empresa.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Llega la factura y la pregunta es «¿quién gastó esto?».</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Cada equipo tiene su propia regla para enmascarar datos personales, o no tiene ninguna.</span></li>
+</ul>
+</div>
+</div>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-7-t1-p3" data-sum="porque">El costo de una plataforma se paga una sola vez; el costo de no tenerla se paga con cada proyecto nuevo, en retrabajo, incidentes y auditorías. Para quien diseña la arquitectura, la pregunta deja de ser «¿qué modelo usar?» y pasa a ser «¿cómo puede cualquier equipo usar cualquier modelo de forma segura y sin pedirme permiso cada vez?».</p>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Plataforma interna</div><div class="text-xs text-neutral-400">producto cuyos clientes son los equipos</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Camino pavimentado</div><div class="text-xs text-neutral-400">hacer lo correcto es lo más fácil</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Servicio compartido</div><div class="text-xs text-neutral-400">se hace una vez, todos lo usan</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Control transversal</div><div class="text-xs text-neutral-400">identidad, auditoría, costos</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 2 -->
+<section class="mb-16" data-inema-topic="modulo-3-7#topico-2" id="topico-2" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="uma porta para todos os modelos">🚪 Gateway de modelos</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-7-t2-p1">O <strong class="text-purple-400">gateway de modelos</strong> es un proxy: las aplicaciones llaman a una dirección interna con una clave de la plataforma, y el gateway decide a qué modelo se dirige la llamada. Como casi todos los proveedores y servidores locales aceptan el formato de API tipo «chat completions» compatible con OpenAI, la aplicación escribe el código una sola vez y el gateway lo traduce. Herramientas abiertas como <strong class="text-neutral-100">LiteLLM</strong> cumplen ese papel; los proveedores de nube y los proveedores de gestión de API tienen sus propias versiones.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-7-t2-p2">Cada llamada pasa por cinco etapas: <strong class="text-neutral-100">autenticar</strong> la clave, aplicar el <strong class="text-neutral-100">límite</strong> del equipo, consultar la <strong class="text-neutral-100">caché</strong>, elegir la <strong class="text-neutral-100">ruta</strong> (y el respaldo, si falla el modelo principal) y <strong class="text-neutral-100">registrar</strong> todo. Ruta es el nombre lógico ("interno-rapido", "externo-fuerte") que solicita la app; el modelo real que está detrás puede cambiar sin que la app lo sepa.</p>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">Un único punto de entrada para todos los modelos de la empresa, que separa el nombre lógico que solicita la app del modelo físico que responde, y aplica autenticación, límites, caché, respaldo y registro en cada llamada.</p>
+</div>
+<!-- SVG 2: fluxo do gateway -->
+<figure class="svg-frame rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="Flujo de una llamada a través del gateway: la solicitud de la app llega con la clave del equipo, pasa por cinco etapas —autenticar, limitar, usar la caché, elegir la ruta y registrar— y se dirige a un modelo local para tareas sencillas, a un modelo externo para tareas complejas o a la alternativa de respaldo si falla el principal." class="w-full h-auto" role="img" viewbox="0 0 760 280">
+<defs>
+<marker id="m37-ah" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#c084fc"></path></marker>
+<marker id="m37-ahc" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#38bdf8"></path></marker>
+</defs>
+<rect fill="url(#m37-grid)" height="280" width="760"></rect>
+<g font-family="Inter,sans-serif">
+<rect fill="#1a1030" height="64" rx="12" stroke="#c084fc" stroke-width="2" width="150" x="20" y="108"></rect>
+<text fill="#f3e8ff" font-size="14" font-weight="700" text-anchor="middle" x="95" y="135">Solicitud de la app</text>
+<text fill="#d8b4fe" font-size="12" text-anchor="middle" x="95" y="154">clave del equipo</text>
+<path class="m37-flow" d="M172,140 L206,140" fill="none" marker-end="url(#m37-ah)" stroke="#c084fc" stroke-width="2.5"></path>
+<rect fill="#0e1b26" filter="url(#m37-glow)" height="190" rx="16" stroke="#38bdf8" stroke-width="2.5" width="220" x="212" y="45"></rect>
+<text fill="#7dd3fc" font-size="17" font-weight="700" text-anchor="middle" x="322" y="76">Gateway</text>
+<text fill="#e0f2fe" font-size="13" x="236" y="108">1 · autenticar</text>
+<text fill="#e0f2fe" font-size="13" x="236" y="132">2 · aplicar límite</text>
+<text fill="#e0f2fe" font-size="13" x="236" y="156">3 · consultar caché</text>
+<text fill="#e0f2fe" font-size="13" x="236" y="180">4 · elegir ruta</text>
+<text fill="#e0f2fe" font-size="13" x="236" y="204">5 · registrar</text>
+<path class="m37-flow" d="M434,90 L512,58" fill="none" marker-end="url(#m37-ahc)" stroke="#38bdf8" stroke-width="2"></path>
+<path class="m37-flow" d="M434,140 L512,140" fill="none" marker-end="url(#m37-ahc)" stroke="#38bdf8" stroke-width="2"></path>
+<path class="m37-flow" d="M434,190 L512,222" fill="none" marker-end="url(#m37-ah)" stroke="#c084fc" stroke-opacity="0.8" stroke-width="2"></path>
+<rect fill="#0e1b26" height="52" rx="10" stroke="#38bdf8" stroke-width="2" width="220" x="518" y="30"></rect>
+<text fill="#e0f2fe" font-size="14" font-weight="700" x="534" y="52">Modelo local</text>
+<text fill="#bae6fd" font-size="12" x="534" y="70">tarea sencilla, dato sensible</text>
+<rect fill="#0e1b26" height="52" rx="10" stroke="#38bdf8" stroke-width="2" width="220" x="518" y="114"></rect>
+<text fill="#e0f2fe" font-size="14" font-weight="700" x="534" y="136">Modelo externo</text>
+<text fill="#bae6fd" font-size="12" x="534" y="154">tarea compleja</text>
+<rect fill="#1a1030" height="52" rx="10" stroke="#c084fc" stroke-dasharray="5 4" stroke-width="2" width="220" x="518" y="198"></rect>
+<text fill="#f3e8ff" font-size="14" font-weight="700" x="534" y="220">Respaldo</text>
+<text fill="#d8b4fe" font-size="12" x="534" y="238">si falla el principal</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-purple-400">Cómo leer:</strong> la app solo conoce la caja de la izquierda y el nombre de la ruta. Toda la inteligencia de "a dónde va" queda en el gateway. Observa que el respaldo (línea discontinua) es una decisión de arquitectura: definir de antemano qué modelo toma el relevo cuando cae el principal evita improvisar durante el incidente.</figcaption>
+</figure>
+<div class="bg-dark-800 border border-purple-500/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-purple-400 font-semibold mb-1">Término nuevo</p>
+<p class="text-sm text-neutral-300" data-inema-block="m3-7-t2-p3"><strong>Proxy</strong> es un servidor intermediario que recibe la llamada en lugar del destino y la reenvía. <strong>Respaldo</strong> es la alternativa automática cuando falla la primera opción. <strong>Caché semántico</strong> devuelve una respuesta ya calculada para preguntas parecidas; es útil en las preguntas frecuentes y peligroso cuando la respuesta depende del usuario.</p>
+</div>
+<!-- COPY: config do gateway -->
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-purple-400">Prueba:</strong> <span class="text-neutral-300">un gateway local con dos rutas y respaldo (proxy de LiteLLM).</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copiar</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900"># config.yaml — instale con: pip install 'litellm[proxy]'
+# ejecute con:  litellm --config config.yaml --port 4000
+model_list:
+  - model_name: interno-rapido          # nombre lógico que solicita la app
+    litellm_params:
+      model: ollama/llama3.2            # modelo local, gratuito
+      api_base: http://localhost:11434
+      rpm: 120                          # límite de llamadas por minuto en esta ruta
+  - model_name: externo-fuerte
+    litellm_params:
+      model: anthropic/claude-sonnet-5-5
+      api_key: os.environ/ANTHROPIC_API_KEY
+      rpm: 30
+
+router_settings:
+  fallbacks:
+    - externo-fuerte: ["interno-rapido"] # si falla el externo, pasa al local
+  num_retries: 2
+
+general_settings:
+  master_key: os.environ/LITELLM_MASTER_KEY  # la clave que usan las apps
+
+# Prueba (la app solo conoce la ruta, nunca el modelo real):
+# curl http://localhost:4000/v1/chat/completions \
+#   -H "Authorization: Bearer $LITELLM_MASTER_KEY" -H "Content-Type: application/json" \
+#   -d '{"model":"interno-rapido","messages":[{"role":"user","content":"diga ok"}]}'</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">Cómo verificar:</strong> con Ollama en ejecución, la prueba con curl debe responder a través de la ruta <code>interno-rapido</code>. Después, sin la variable <code>ANTHROPIC_API_KEY</code>, llama a <code>externo-fuerte</code>: la respuesta debe venir del modelo local (respaldo) y el registro del proxy debe mostrar el fallo y el desvío. Los nombres de las claves de configuración cambian entre versiones; consulta la documentación de la versión que instalaste.</p>
+</div>
+<div class="bg-primary/10 border border-primary/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-primary font-semibold mb-1">💡 Consejo</p>
+<p class="text-sm text-neutral-300" data-inema-block="m3-7-t2-p4">Dales a las rutas nombres de <strong>capacidad</strong> ("rapido", "forte", "visao", "sensivel"), nunca de proveedor. El día que cambies el modelo detrás de "forte", ninguna app tendrá que enterarse, y la negociación con los proveedores será más equilibrada.</p>
+</div>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-7-t2-p5" data-sum="porque">Los modelos cambian cada pocos meses y los precios también. Sin gateway, cada cambio es un proyecto de migración en diez apps. Con gateway, es una línea de configuración probada en un solo lugar, y ese mismo punto se convierte en la base para la auditoría, los límites y los costos que vienen a continuación.</p>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Ruta lógica</div><div class="text-xs text-neutral-400">nombre de capacidad, no de proveedor</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Respaldo</div><div class="text-xs text-neutral-400">plan B automático</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Límite por equipo</div><div class="text-xs text-neutral-400">llamadas y tokens por minuto</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">API compatible</div><div class="text-xs text-neutral-400">un formato, muchos modelos</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 3 -->
+<section class="mb-16" data-inema-topic="modulo-3-7#topico-3" id="topico-3" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="quem pode o quê, inclusive o agente">🔐 Identidad y acceso</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-7-t3-p1">A gran escala, la pregunta de seguridad no es "¿el modelo es seguro?", sino <strong class="text-neutral-100">"¿en nombre de quién se hace esta llamada y qué puede ver esa persona?"</strong>. Un asistente de RR. HH. que busca documentos no puede devolver el recibo de sueldo de otro empleado solo porque el texto estaba en el índice. La IA hereda los permisos de quien hace la solicitud, o debería hacerlo.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-7-t3-p2">Con los agentes, aparece un segundo tipo de identidad: la del propio agente. Un agente que lee el CRM, abre tickets y envía correos electrónicos necesita una <strong class="text-purple-400">identidad de servicio</strong> propia, con permisos mínimos, credenciales que caducan y una persona responsable. Nunca la clave personal de quien lo creó.</p>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">Es el conjunto de reglas que vincula cada llamada de IA con una persona o un agente identificado, aplica el rol de esa identidad a los datos y herramientas a los que accede, y mantiene solo los privilegios mínimos necesarios para la tarea.</p>
+</div>
+<div class="bg-dark-800 border border-purple-500/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-purple-400 font-semibold mb-1">Término nuevo</p>
+<p class="text-sm text-neutral-300" data-inema-block="m3-7-t3-p3"><strong>SSO</strong> (inicio de sesión único) significa iniciar sesión una vez con la cuenta corporativa y acceder a varios sistemas. <strong>RBAC</strong> es el control de acceso basado en roles: "analista de RR. HH." ve X, "gerente" ve Y. <strong>Menor privilegio</strong> es conceder solo el acceso necesario para la tarea, y nada más.</p>
+</div>
+<div class="overflow-x-auto mb-6">
+<table class="w-full text-sm border border-dark-600 rounded-xl overflow-hidden">
+<thead><tr class="bg-dark-700"><th class="text-left p-3 text-purple-400">Identidad</th><th class="text-left p-3 text-purple-400">Cómo se autentica</th><th class="text-left p-3 text-purple-400">Regla de oro</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr><td class="p-3 font-semibold">Persona en el chat interno</td><td class="p-3 text-neutral-300">SSO corporativo</td><td class="p-3 text-neutral-300">La búsqueda en documentos respeta los permisos del usuario; estos se aplican antes de que la información llegue al modelo.</td></tr>
+<tr><td class="p-3 font-semibold">App de un equipo</td><td class="p-3 text-neutral-300">Clave del gateway por app</td><td class="p-3 text-neutral-300">Una clave por app y entorno; rotación programada; revocación en minutos.</td></tr>
+<tr><td class="p-3 font-semibold">Agente autónomo</td><td class="p-3 text-neutral-300">Cuenta de servicio con credencial de corta duración</td><td class="p-3 text-neutral-300">Alcance mínimo por herramienta; las acciones irreversibles requieren aprobación humana.</td></tr>
+<tr><td class="p-3 font-semibold">Proveedor del modelo</td><td class="p-3 text-neutral-300">Contrato y clave guardados en el gateway</td><td class="p-3 text-neutral-300">Términos de uso de datos revisados por el equipo legal; la clave nunca sale de la bóveda.</td></tr>
+</tbody>
+</table>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6">
+<h4 class="font-bold text-purple-400 mb-4">✓ Hazlo</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-purple-400">✓</span><span>Filtra los documentos según los permisos del usuario antes de la búsqueda, no después de la respuesta.</span></li>
+<li class="flex items-start gap-2"><span class="text-purple-400">✓</span><span>Enmascara los datos personales en el gateway cuando la finalidad no requiera el dato (principio de necesidad de la LGPD).</span></li>
+<li class="flex items-start gap-2"><span class="text-purple-400">✓</span><span>Registra a una persona responsable para cada agente y cada clave.</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Evita</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Confiar en el prompt ("no muestres salarios") como control de acceso.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Un índice único con todos los documentos de la empresa sin metadatos de permisos.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Agentes que se ejecutan con credenciales de administrador "para que no haya errores".</span></li>
+</ul>
+</div>
+</div>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-7-t3-p4" data-sum="porque">Las filtraciones más probables en la IA corporativa no son ataques sofisticados al modelo: son permisos heredados incorrectamente. Se puede eludir un prompt; un filtro de permisos aplicado antes de la búsqueda, no. Quien diseña correctamente la identidad desde el inicio evita tener que rehacer todo el índice después del primer incidente.</p>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">SSO</div><div class="text-xs text-neutral-400">una cuenta corporativa</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">RBAC</div><div class="text-xs text-neutral-400">acceso según el rol</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Identidad de servicio</div><div class="text-xs text-neutral-400">el agente tiene su propia cuenta</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Menor privilegio</div><div class="text-xs text-neutral-400">solo lo necesario</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 4 -->
+<section class="mb-16" data-inema-topic="modulo-3-7#topico-4" id="topico-4" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="reconstruir qualquer resposta depois">📜 Auditoría y trazabilidad</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-7-t4-p1">Un cliente se queja de que el asistente prometió un descuento que no existe. La pregunta de la auditoría es sencilla: <strong class="text-neutral-100">¿qué versión del prompt, con qué modelo, qué documentos y qué herramientas produjeron esa respuesta?</strong> Si la plataforma no puede responder en minutos, no está lista para producción.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-7-t4-p2">La pieza central es el <strong class="text-purple-400">trace</strong>: un identificador único que acompaña la solicitud en todas las etapas —gateway, búsqueda, modelo, herramientas, filtro de salida—. Cada etapa se convierte en un <strong class="text-neutral-100">span</strong> con inicio, fin y atributos. El estándar abierto OpenTelemetry ya tiene convenciones para llamadas de IA generativa, y herramientas como Langfuse y Arize Phoenix te ofrecen esta vista.</p>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">La trazabilidad es la capacidad de reconstruir cualquier respuesta: quién la solicitó, con qué configuración, qué datos se incluyeron, qué hicieron el modelo y las herramientas, y cuánto costó, guardando solo lo necesario y durante el tiempo necesario.</p>
+</div>
+<!-- SVG 3: trace -->
+<figure class="svg-frame rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="Línea de tiempo de una traza: la barra de la solicitud completa contiene barras más pequeñas para el gateway, la búsqueda de documentos, la llamada al modelo, una herramienta de CRM llamada durante la ejecución del modelo y el filtro de salida. Cada barra es un registro con duración y atributos." class="w-full h-auto" role="img" viewbox="0 0 900 270">
+<rect fill="url(#m37-grid)" height="270" width="900"></rect>
+<g font-family="Inter,sans-serif">
+<text fill="#f3e8ff" font-size="13" font-weight="700" x="20" y="45">solicitud (trace_id)</text>
+<text fill="#d8b4fe" font-size="13" x="20" y="83">gateway</text>
+<text fill="#d8b4fe" font-size="13" x="20" y="121">búsqueda de documentos</text>
+<text fill="#d8b4fe" font-size="13" x="20" y="159">llamada al modelo</text>
+<text fill="#bae6fd" font-size="13" x="20" y="197">herramienta: CRM</text>
+<text fill="#d8b4fe" font-size="13" x="20" y="235">filtro de salida</text>
+<path d="M200,20 L200,250" stroke="#c084fc" stroke-dasharray="3 5" stroke-opacity="0.4"></path>
+<rect fill="#a855f7" fill-opacity="0.85" filter="url(#m37-glow)" height="20" rx="4" width="670" x="210" y="30"></rect>
+<rect fill="#a855f7" fill-opacity="0.55" height="20" rx="4" width="60" x="210" y="68"></rect>
+<rect fill="#a855f7" fill-opacity="0.55" height="20" rx="4" width="150" x="270" y="106"></rect>
+<rect fill="#a855f7" fill-opacity="0.55" height="20" rx="4" width="350" x="420" y="144"></rect>
+<rect fill="#38bdf8" fill-opacity="0.7" height="20" rx="4" width="90" x="560" y="182"></rect>
+<rect fill="#a855f7" fill-opacity="0.55" height="20" rx="4" width="110" x="770" y="220"></rect>
+<path d="M605,166 L605,180" stroke="#38bdf8" stroke-width="2"></path>
+<text fill="#f3e8ff" font-size="12" x="430" y="198">el modelo llamó a</text>
+<text fill="#f3e8ff" font-size="12" x="660" y="198">una herramienta</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-purple-400">Cómo leer:</strong> El eje horizontal representa el tiempo. La barra superior es la solicitud completa; las de abajo son las etapas, cada una un span. La herramienta (cian) ocurre dentro de la llamada al modelo: ahí es donde un agente actúa en el mundo, y ese es el span que más busca la auditoría. Cuando la respuesta tarda, la barra más larga muestra dónde está el cuello de botella.</figcaption>
+</figure>
+<!-- COPY: registro de auditoria -->
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-purple-400">Objetivo:</strong> <span class="text-neutral-300">un formato mínimo de registro de auditoría por llamada (una línea JSONL).</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copiar</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900">{
+  "ts": "2026-10-16T14:03:22Z",
+  "trace_id": "&lt;id generado por el gateway&gt;",
+  "equipe": "atendimento",
+  "caso_de_uso": "resposta-sac",
+  "usuario_hash": "&lt;hash del id del empleado, nunca el nombre&gt;",
+  "rota": "externo-forte",
+  "modelo_real": "&lt;modelo que respondió, incluso si fue un fallback&gt;",
+  "versao_prompt": "sac-v14",
+  "documentos": ["&lt;ids de los fragmentos usados en el contexto&gt;"],
+  "ferramentas": ["crm.consultar_pedido"],
+  "tokens_entrada": 1830,
+  "tokens_saida": 412,
+  "latencia_ms": 2240,
+  "cache_hit": false,
+  "dados_pessoais": "mascarados",
+  "resultado": "aceito",
+  "retencao_dias": &lt;plazo definido con el DPO&gt;
+}</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">Cómo verificar:</strong> Elige una respuesta real de ayer e intenta reconstruirla solo con este registro: ¿puedes encontrar la versión del prompt, los documentos y la herramienta utilizada? Si falta un campo para responder, inclúyelo en el formato. Si un campo guarda texto libre del usuario, pregunta al responsable de protección de datos (DPO) si la finalidad lo justifica y durante cuánto tiempo.</p>
+</div>
+<div class="bg-primary/10 border border-primary/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-primary font-semibold mb-1">💡 Consejo</p>
+<p class="text-sm text-neutral-300" data-inema-block="m3-7-t4-p3">La auditoría y la LGPD apuntan en direcciones opuestas: una quiere guardarlo todo y la otra quiere guardar lo mínimo. Resuélvelo separando dos niveles: metadatos (quién, cuándo, qué versión, costo), con un período de conservación más largo; y contenido (el texto del prompt y de la respuesta), con un período de conservación breve, acceso restringido y enmascaramiento.</p>
+</div>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-7-t4-p4" data-sum="porque">Sin trazabilidad, cada incidente se convierte en una discusión de opiniones y la única respuesta segura es apagar el sistema. Con ella, encuentras la causa, corriges la versión del prompt o el documento equivocado y muestras al área legal y al cliente exactamente qué pasó.</p>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Trace</div><div class="text-xs text-neutral-400">la solicitud de principio a fin</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Span</div><div class="text-xs text-neutral-400">una etapa con duración y atributos</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Versión del prompt</div><div class="text-xs text-neutral-400">el prompt es código con control de versiones</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Período de conservación</div><div class="text-xs text-neutral-400">durante cuánto tiempo guardar y por qué</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 5 -->
+<section class="mb-16" data-inema-topic="modulo-3-7#topico-5" id="topico-5" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="latência, erro e qualidade com meta">📈 SLA y confiabilidad</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-7-t5-p1">Un sistema de IA puede estar "en línea" y aun así estar fallando: responde rápido, sin errores HTTP, pero sus respuestas son peores desde el cambio de modelo de ayer. Por eso, la confiabilidad en IA tiene <strong class="text-neutral-100">tres ejes</strong>, no dos: disponibilidad, latencia y <strong class="text-purple-400">calidad</strong>. El tercero solo se mide si tienes un conjunto de evaluación que se ejecuta de forma continua: preguntas reales con respuestas de referencia, que se vuelven a ejecutar con cada cambio.</p>
+<div class="bg-dark-800 border border-purple-500/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-purple-400 font-semibold mb-1">Término nuevo</p>
+<p class="text-sm text-neutral-300" data-inema-block="m3-7-t5-p2"><strong>SLI</strong> es el indicador medido (p. ej., latencia en el percentil 95). <strong>SLO</strong> es la meta interna para ese indicador. <strong>SLA</strong> es el compromiso contractual con el cliente, con consecuencias si no se cumple; por eso, el SLA debe ser más holgado que el SLO. <strong>Percentil 95 (p95)</strong> es el tiempo por debajo del cual se encuentran el 95 % de las respuestas.</p>
+</div>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">Consiste en definir metas medibles de disponibilidad, latencia y calidad para cada caso de uso, medirlas continuamente y cambiar las versiones (modelo, prompt, índice) solo por etapas con controles que verifiquen esas metas.</p>
+</div>
+<div class="overflow-x-auto mb-6">
+<table class="w-full text-sm border border-dark-600 rounded-xl overflow-hidden">
+<thead><tr class="bg-dark-700"><th class="text-left p-3 text-purple-400">Eje</th><th class="text-left p-3 text-purple-400">SLI típico</th><th class="text-left p-3 text-purple-400">Cómo proteger</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr><td class="p-3 font-semibold">Disponibilidad</td><td class="p-3 text-neutral-300">Proporción de llamadas sin errores</td><td class="p-3 text-neutral-300">Fallback entre proveedores; colas con reintentos; modo degradado.</td></tr>
+<tr><td class="p-3 font-semibold">Latencia</td><td class="p-3 text-neutral-300">p95 del tiempo hasta el primer token y hasta la respuesta completa</td><td class="p-3 text-neutral-300">Streaming, ruta más ligera para tareas sencillas, caché.</td></tr>
+<tr><td class="p-3 font-semibold">Calidad</td><td class="p-3 text-neutral-300">Puntuación en el conjunto de evaluación; tasa de respuestas aceptadas</td><td class="p-3 text-neutral-300">Evaluación antes de cada cambio; muestreo diario en producción.</td></tr>
+<tr><td class="p-3 font-semibold">Seguridad</td><td class="p-3 text-neutral-300">Respuestas bloqueadas por el filtro; intentos de inyección detectados</td><td class="p-3 text-neutral-300">Filtros de entrada y salida; alerta cuando la tasa cambia de nivel.</td></tr>
+</tbody>
+</table>
+</div>
+<!-- SVG 4: rollout em etapas -->
+<figure class="svg-frame rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="Implementación en cuatro etapas: sombra, canario, ampliación y todos. Entre cada etapa hay una puerta de control que verifica los SLO. Si una puerta falla, una ruta de regreso lleva a la versión anterior (rollback)." class="w-full h-auto" role="img" viewbox="0 0 900 250">
+<rect fill="url(#m37-grid)" height="250" width="900"></rect>
+<g font-family="Inter,sans-serif">
+<rect fill="#1a1030" height="70" rx="12" stroke="#c084fc" stroke-width="2" width="160" x="20" y="60"></rect>
+<rect fill="#1a1030" height="70" rx="12" stroke="#c084fc" stroke-width="2" width="160" x="250" y="60"></rect>
+<rect fill="#1a1030" height="70" rx="12" stroke="#c084fc" stroke-width="2" width="160" x="480" y="60"></rect>
+<rect fill="#0e1b26" filter="url(#m37-glow)" height="70" rx="12" stroke="#38bdf8" stroke-width="2.5" width="160" x="710" y="60"></rect>
+<text fill="#f3e8ff" font-size="14" font-weight="700" text-anchor="middle" x="100" y="90">1 · Sombra</text>
+<text fill="#d8b4fe" font-size="12" text-anchor="middle" x="100" y="110">se ejecuta en paralelo</text>
+<text fill="#f3e8ff" font-size="14" font-weight="700" text-anchor="middle" x="330" y="90">2 · Canario</text>
+<text fill="#d8b4fe" font-size="12" text-anchor="middle" x="330" y="110">porción pequeña</text>
+<text fill="#f3e8ff" font-size="14" font-weight="700" text-anchor="middle" x="560" y="90">3 · Ampliación</text>
+<text fill="#d8b4fe" font-size="12" text-anchor="middle" x="560" y="110">porción mayor</text>
+<text fill="#e0f2fe" font-size="14" font-weight="700" text-anchor="middle" x="790" y="90">4 · Todos</text>
+<text fill="#bae6fd" font-size="12" text-anchor="middle" x="790" y="110">nueva versión predeterminada</text>
+<path class="m37-flow" d="M182,95 L244,95 M412,95 L474,95 M642,95 L704,95" fill="none" stroke="#c084fc" stroke-width="2"></path>
+<path d="M215,87 L223,95 L215,103 L207,95 Z M445,87 L453,95 L445,103 L437,95 Z M675,87 L683,95 L675,103 L667,95 Z" fill="#38bdf8"></path>
+<text fill="#7dd3fc" font-size="11" text-anchor="middle" x="215" y="76">¿SLO?</text>
+<text fill="#7dd3fc" font-size="11" text-anchor="middle" x="445" y="76">¿SLO?</text>
+<text fill="#7dd3fc" font-size="11" text-anchor="middle" x="675" y="76">¿SLO?</text>
+<path d="M790,132 C790,205 100,205 100,134" fill="none" marker-end="url(#m37-ah)" stroke="#f87171" stroke-dasharray="5 5" stroke-width="2"></path>
+<text fill="#fecaca" font-size="12" text-anchor="middle" x="450" y="232">puerta reprobada en cualquier etapa → vuelve a la versión anterior (rollback)</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-purple-400">Cómo leer:</strong> una versión nueva (modelo, prompt o índice) avanza de izquierda a derecha solo si pasa por la puerta (rombo). En la etapa sombra, responde en paralelo sin que el usuario la vea, lo que permite comparar la calidad sin riesgos. El tamaño de las porciones es una decisión tuya; lo importante es que el camino de regreso (rojo) esté probado antes de empezar.</figcaption>
+</figure>
+<div class="bg-primary/10 border border-primary/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-primary font-semibold mb-1">💡 Consejo</p>
+<p class="text-sm text-neutral-300" data-inema-block="m3-7-t5-p3">Fija la versión del modelo en el gateway siempre que el proveedor lo permita. Una ruta que apunta a un alias del tipo "más reciente" significa que el proveedor puede cambiar el modelo sin que te des cuenta —y tu SLO de calidad cambia sin que hagas ningún despliegue.</p>
+</div>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-7-t5-p4" data-sum="porque">Prometer un SLA sin medir la calidad es prometer algo que no controlas. Los equipos que definen SLO para los tres ejes y hacen cambios por etapas pueden actualizar modelos con frecuencia sin temor, y quienes no lo hacen terminan congelando la versión por miedo y se quedan atrás.</p>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">SLI · SLO · SLA</div><div class="text-xs text-neutral-400">medida, meta, contrato</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">p95</div><div class="text-xs text-neutral-400">el tiempo de cola, no el promedio</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Canario</div><div class="text-xs text-neutral-400">versión nueva en una porción</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Rollback</div><div class="text-xs text-neutral-400">regreso probado de antemano</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 6 -->
+<section class="mb-16" data-inema-topic="modulo-3-7#topico-6" id="topico-6" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="custo por tarefa resolvida">💰 FinOps de IA</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-7-t6-p1"><strong class="text-purple-400">FinOps</strong> es la práctica de hacer visible el costo de la tecnología para quienes toman decisiones y hacer responsables a quienes la consumen. En IA, el costo es variable por naturaleza: cada llamada consume tokens, y un agente que entra en un bucle puede gastar en una tarde el presupuesto del mes. El costo por token es la métrica del proveedor; la métrica del negocio es <strong class="text-neutral-100">el costo por tarea resuelta</strong>.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-7-t6-p2">Las palancas son conocidas: dirigir las tareas simples a modelos más pequeños o locales, usar caché (incluida la caché de prompts que varios proveedores ofrecen para el contexto repetido), eliminar el contexto innecesario, procesar por lotes lo que no sea urgente y establecer límites de pasos y de gasto para cada agente. Sin embargo, antes de optimizar, es necesario <strong class="text-neutral-100">atribuir</strong>: saber qué equipo y qué caso de uso generó cada real.</p>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">FinOps de IA consiste en medir el costo de cada llamada, atribuirlo a un equipo y a un caso de uso, mostrarlo a quienes toman decisiones (showback) o cobrarlo internamente (chargeback), y optimizar según el costo por resultado, no según el costo por token.</p>
+</div>
+<!-- COPY: script FinOps -->
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-purple-400">Prueba:</strong> <span class="text-neutral-300">costo por equipo y por tarea aceptada, a partir del registro de auditoría del tema 4.</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copiar</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900">#!/usr/bin/env python3
+"""finops_ia.py — showback por equipo y caso de uso.
+Uso: python3 finops_ia.py auditoria.jsonl"""
+import json, sys
+from collections import defaultdict
+
+# Precio por 1 millón de tokens, en la moneda de tu contrato.
+# Cambia los 0.0 por la tabla vigente; un modelo local cuesta infraestructura, no tokens.
+PRECO = {
+    "interno-rapido": {"entrada": 0.0, "saida": 0.0},
+    "externo-forte":  {"entrada": 0.0, "saida": 0.0},  # &lt;precio del contrato&gt;
+}
+
+agg = defaultdict(lambda: {"chamadas": 0, "custo": 0.0, "aceitas": 0, "cache": 0})
+with open(sys.argv[1], encoding="utf-8") as f:
+    for linha in f:
+        r = json.loads(linha)
+        p = PRECO.get(r["rota"], {"entrada": 0.0, "saida": 0.0})
+        custo = (r["tokens_entrada"] * p["entrada"] + r["tokens_saida"] * p["saida"]) / 1e6
+        a = agg[(r["equipe"], r["caso_de_uso"])]
+        a["chamadas"] += 1
+        a["custo"] += custo
+        a["aceitas"] += r.get("resultado") == "aceito"
+        a["cache"] += bool(r.get("cache_hit"))
+
+print(f"{'equipe':14} {'caso de uso':18} {'chamadas':&gt;8} {'custo':&gt;10} {'custo/aceita':&gt;12} {'cache':&gt;6}")
+for (equipe, caso), a in sorted(agg.items(), key=lambda kv: -kv[1]["custo"]):
+    por_aceita = a["custo"] / a["aceitas"] if a["aceitas"] else float("nan")
+    taxa_cache = a["cache"] / a["chamadas"]
+    print(f"{equipe:14} {caso:18} {a['chamadas']:8} {a['custo']:10.2f} {por_aceita:12.4f} {taxa_cache:6.0%}")</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">Cómo verificar:</strong> crea un archivo con tres líneas en el formato del tema 4 (dos del mismo equipo, una aceptada y otra no), completa un precio cualquiera y haz el cálculo a mano. El costo por tarea aceptada debe ser el costo total de la línea dividido entre 1. Un caso de uso cuyo costo por tarea aceptada esté muy por encima de los demás es el primer candidato para revisar la ruta, el contexto o el prompt.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6">
+<h4 class="font-bold text-purple-400 mb-4">✓ Palancas que suelen funcionar</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-purple-400">✓</span><span>Enrutamiento según la complejidad: usa el modelo más potente solo cuando la tarea lo requiera.</span></li>
+<li class="flex items-start gap-2"><span class="text-purple-400">✓</span><span>Caché de prompts para instrucciones y documentos que se repiten.</span></li>
+<li class="flex items-start gap-2"><span class="text-purple-400">✓</span><span>Procesamiento por lotes para lo que puede esperar horas.</span></li>
+<li class="flex items-start gap-2"><span class="text-purple-400">✓</span><span>Límite de pasos y de gasto por ejecución del agente, con alerta.</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Trampas</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Reducir costos cambiando de modelo sin ejecutar la evaluación de calidad.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Mirar solo la factura del proveedor y olvidar la GPU inactiva, la ingeniería y la revisión humana.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Presupuesto anual fijo para un consumo que varía con la adopción.</span></li>
+</ul>
+</div>
+</div>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-7-t6-p3" data-sum="porque">El primer recorte del presupuesto de IA casi nunca se debe a un caso que salió mal: se debe a una factura que nadie pudo explicar. Con el costo asignado y medido por resultado, defiendes los casos que justifican el gasto y cierras los que no lo justifican, con los números a la vista.</p>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Showback</div><div class="text-xs text-neutral-400">mostrar el costo a quienes lo consumen</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Chargeback</div><div class="text-xs text-neutral-400">cobrar internamente</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Costo por resultado</div><div class="text-xs text-neutral-400">la métrica que importa</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Límite por agente</div><div class="text-xs text-neutral-400">límite de pasos y gasto</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 7 -->
+<section class="mb-16" data-inema-topic="modulo-3-7#topico-7" id="topico-7" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">7</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="da plataforma pronta ao uso diário">🌱 Adopción en toda la empresa</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-7-t7-p1">Una plataforma técnicamente impecable que nadie usa es un costo sin retorno. Y cuando la plataforma oficial tarda en dar acceso, las personas usan lo que tienen a mano: cuentas personales, extensiones de navegador, herramientas gratuitas con términos de uso desconocidos. Eso tiene un nombre: <strong class="text-purple-400">shadow AI</strong>, la IA que se usa fuera del control de la empresa. Prohibirla no lo resuelve; ofrecer una mejor alternativa sí.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-7-t7-p2">La adopción se organiza en tres frentes: <strong class="text-neutral-100">acceso</strong> (un asistente seguro disponible para todos, con reglas claras sobre qué se puede pegar en él), <strong class="text-neutral-100">capacitación</strong> (rutas cortas por función y «referentes» en cada área que ayudan a sus colegas) y <strong class="text-neutral-100">catálogo</strong> (casos de uso aprobados, con responsable, métrica y estado, para que nadie reinvente lo que otro equipo ya hizo).</p>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">Es el trabajo de llevar la plataforma al uso real: dar acceso seguro, formar a las personas según su función, mantener un catálogo de casos de uso y medir el uso, los resultados y la satisfacción, reduciendo la IA en la sombra al ofrecer una alternativa mejor, no mediante prohibiciones.</p>
+</div>
+<!-- TIMELINE: 90 dias -->
+<div class="relative border-l-2 border-purple-500/30 ml-3 pl-6 space-y-5 mb-6">
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-purple-500/20 border-2 border-purple-400"></span><p class="text-sm text-neutral-300"><strong class="text-purple-400">Semanas 1–2 · Línea de base.</strong> Identifica qué herramientas de IA ya se usan (una encuesta anónima funciona mejor que una auditoría) y mide los indicadores actuales de los procesos candidatos.</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-purple-500/20 border-2 border-purple-400"></span><p class="text-sm text-neutral-300"><strong class="text-purple-400">Semanas 3–4 · Acceso seguro.</strong> Habilita el asistente corporativo mediante el gateway, con una política de uso de una página (qué se puede pegar y qué no).</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-purple-500/20 border-2 border-purple-400"></span><p class="text-sm text-neutral-300"><strong class="text-purple-400">Semanas 5–8 · Referentes y rutas.</strong> Uno o dos referentes por área, una ruta corta por función y un horario fijo para resolver dudas.</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-sky-500/20 border-2 border-sky-400"></span><p class="text-sm text-neutral-300"><strong class="text-sky-400">Semanas 9–12 · Catálogo y primera revisión.</strong> Publica los casos que funcionaron, con responsable y métrica; compáralos con la línea de base; decide qué se amplía y qué se detiene.</p></div>
+</div>
+<!-- COPY: prompt de análise de prontidão -->
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-purple-400">Objetivo:</strong> <span class="text-neutral-300">diagnóstico de preparación de la plataforma y plan de adopción de 90 días.</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copiar</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900">Actúa como arquitecto de plataformas de IA y revisor crítico.
+Empresa: &lt;sector, tamaño, número aproximado de áreas&gt;
+Lo que ya existe: &lt;¿gateway? ¿SSO? ¿registros? ¿evaluación? ¿costo por equipo?&gt;
+Herramientas de IA que se usan hoy (oficiales y no oficiales): &lt;lista&gt;
+Casos de uso piloto: &lt;nombre · área · estado · métrica actual&gt;
+Restricciones: &lt;LGPD, sector regulado, datos que no pueden salir del país, presupuesto&gt;
+
+Entrega, en este orden:
+1. Una tabla de preparación con las filas Gateway, Identidad, Auditoría,
+   SLO, FinOps, Adopción; columnas: estado actual | brecha | riesgo si sigue así | próxima acción.
+2. Los 3 mayores riesgos de IA en la sombra en mi escenario y la alternativa oficial para cada uno.
+3. Un plan de 90 días en 4 fases, con entregable y criterio de «listo» para cada fase.
+4. Las métricas de adopción que debo medir. No inventes valores de referencia:
+   donde haga falta un valor, escribe «medir línea de base».
+5. Lo que asumiste por falta de información, en una lista aparte.</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">Cómo verificar:</strong> cada fila de la tabla debe incluir una próxima acción con posible responsable y plazo; si aparece «implementar gobernanza» sin especificar qué, pide detalles. Revisa la lista de suposiciones: todo lo que esté mal allí invalida la parte del plan que depende de ello. No pegues nombres de clientes ni datos personales en el prompt.</p>
+</div>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-7-t7-p3" data-sum="porque">El valor de la IA en una empresa proviene de muchas personas que la usan bien en tareas pequeñas, más que de un proyecto heroico. La plataforma aporta seguridad; la adopción genera el retorno. Quien lidera ambas a la vez evita tanto el riesgo de la IA en la sombra como el desperdicio de una infraestructura vacía.</p>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Shadow AI</div><div class="text-xs text-neutral-400">IA fuera de control</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Referentes</div><div class="text-xs text-neutral-400">referente en cada área</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Catálogo de casos</div><div class="text-xs text-neutral-400">responsable, métrica, estado</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Línea de base</div><div class="text-xs text-neutral-400">medir antes de comparar</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- RESUMO -->
+<section class="mb-8">
+<div class="bg-gradient-to-br from-purple-900/40 via-dark-800 to-dark-800 rounded-xl border border-purple-500/30 p-6 sm:p-8">
+<h2 class="text-2xl font-bold mb-6">✅ Resumen del módulo</h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start gap-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">Una plataforma, no un proyecto</strong><span class="text-neutral-400"> — servicios compartidos y un camino allanado para todos los equipos.</span></div></div>
+<div class="flex items-start gap-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">Todo pasa por el gateway</strong><span class="text-neutral-400"> — rutas lógicas, límites, alternativas de respaldo y registro en un solo punto.</span></div></div>
+<div class="flex items-start gap-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">Identidad antes de la búsqueda, traza en cada respuesta</strong><span class="text-neutral-400"> — permisos heredados y reconstrucción de cualquier respuesta, con retención alineada con la LGPD.</span></div></div>
+<div class="flex items-start gap-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">SLO en tres ejes y costo por resultado</strong><span class="text-neutral-400"> — disponibilidad, latencia y calidad; FinOps asignado por equipo.</span></div></div>
+<div class="flex items-start gap-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">La adopción es parte de la arquitectura</strong><span class="text-neutral-400"> — el acceso seguro, los referentes y el catálogo superan a la IA en la sombra.</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-purple-400 mb-2">Siguiente módulo:</h3>
+<p class="text-neutral-300">3.8 — Liderazgo y Estrategia en IA 🧭</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="index.html">← Volver a la Ruta</a>
+<a class="flex-1 text-center px-6 py-3 bg-purple-700 text-white rounded-lg font-semibold hover:bg-purple-600 transition-colors" href="modulo-3-8.html">Siguiente módulo →</a>
+</div>
+</div>
+</section>
+</article>
+</div>
+</div>
+</main>
+<footer class="border-t border-dark-600 py-8 mt-8">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>FTD — Formación en Transformación Digital · contenido abierto y gratuito · 2026 · <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" rel="noopener" target="_blank">INEMA.CLUB</a> - <a class="text-amber-700 dark:text-slate-300 hover:underline" href="https://inema.pro" rel="noopener" target="_blank">PRO</a></p>
+</div>
+</footer>
+<!-- SCRIPTS NÚCLEO v1 -->
+<script>
+    function toggleTopic(button) {
+      var topicItem = button.closest('.topic-item');
+      if (!topicItem) return;
+      var explanation = topicItem.querySelector('.topic-explanation');
+      var willOpen = !explanation.classList.contains('active');
+      explanation.classList.toggle('active');
+      button.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+    }
+    function openModal(id) { var m = document.getElementById(id); if (m) { m.classList.remove('hidden'); document.body.style.overflow = 'hidden'; } }
+    function closeModal() { document.querySelectorAll('.modal').forEach(function (m) { m.classList.add('hidden'); }); document.body.style.overflow = 'auto'; }
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
+    function copyCode(btn) {
+      var pre = btn.closest('[data-copy-box]').querySelector('pre');
+      var txt = pre ? pre.innerText : '';
+      var done = function () { var o = btn.getAttribute('data-label-ok') || 'Copiado'; var t = btn.textContent; btn.textContent = o; setTimeout(function () { btn.textContent = t; }, 1500); };
+      try { navigator.clipboard.writeText(txt).then(done, done); } catch (e) { done(); }
+    }
+    (function () {
+      var themeToggle = document.getElementById('theme-toggle');
+      var darkIcon = document.getElementById('theme-toggle-dark-icon');
+      var lightIcon = document.getElementById('theme-toggle-light-icon');
+      var html = document.documentElement;
+      function sync() { var isDark = html.classList.contains('dark'); if (darkIcon) darkIcon.classList.toggle('hidden', isDark); if (lightIcon) lightIcon.classList.toggle('hidden', !isDark); }
+      sync();
+      if (themeToggle) themeToggle.addEventListener('click', function () {
+        html.classList.toggle('dark'); var nowDark = html.classList.contains('dark'); html.style.colorScheme = nowDark ? 'dark' : 'light';
+        try { localStorage.setItem('theme', nowDark ? 'dark' : 'light'); } catch (e) {}
+        try { var p = JSON.parse(localStorage.getItem('inema.prefs') || '{}'); p.theme = nowDark ? 'inema-dark' : 'claro'; localStorage.setItem('inema.prefs', JSON.stringify(p)); } catch (e) {}
+        sync();
+      });
+    })();
+  </script>
+<!-- learn.js + INEMA.init() POR ÚLTIMO -->
+<script src="../../assets/learn.js"></script>
+<script>
+    if (window.INEMA && typeof window.INEMA.init === 'function') { window.INEMA.init({ autoResume: true }); }
+  </script>
+</body>
+</html>

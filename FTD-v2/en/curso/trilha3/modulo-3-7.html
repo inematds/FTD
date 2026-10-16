@@ -1,0 +1,1214 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="ftd-v2-en" name="inema-course"/>
+<title>Module 3.7 · AI in Production — Enterprise Scale | FTD v2</title>
+<meta content="Internal AI platform, gateway, identity, auditing, SLAs, FinOps, and adoption across the company." name="description"/>
+<meta content="Module 3.7 · AI in Production — Enterprise Scale | FTD v2" property="og:title"/>
+<meta content="Internal AI platform, gateway, identity, auditing, SLAs, FinOps, and adoption across the company." property="og:description"/>
+<!-- ANTI-FOUC (Erro #18) — primeiro script do head -->
+<script>
+(function () {
+  try {
+    var html = document.documentElement;
+    var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+    function clone(o) { var r = {}; for (var x in o) r[x] = o[x]; return r; }
+    var p = clone(DEF);
+    try {
+      var raw = localStorage.getItem('inema.prefs');
+      if (raw) {
+        var parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === 'object') {
+          for (var k in DEF) if (parsed[k] != null) p[k] = parsed[k];
+        }
+      } else {
+        var legacy = localStorage.getItem('theme');
+        if (legacy === 'light') p.theme = 'claro';
+        else if (legacy === 'dark') p.theme = 'inema-dark';
+      }
+    } catch (e) { p = clone(DEF); }
+
+    var THEMES = {
+      'inema-dark': { dark: true,  attr: null,        cs: 'dark'  },
+      'claro':      { dark: false, attr: null,        cs: 'light' },
+      'sepia':      { dark: false, attr: 'sepia',     cs: 'light' },
+      'foco':       { dark: null,  attr: 'foco',      cs: null    },
+      'contraste':  { dark: true,  attr: 'contraste', cs: 'dark'  }
+    };
+    var t = THEMES[p.theme] || THEMES['inema-dark'];
+
+    if (t.dark === true) html.classList.add('dark');
+    else if (t.dark === false) html.classList.remove('dark');
+
+    if (t.attr) html.setAttribute('data-theme', t.attr);
+    else html.removeAttribute('data-theme');
+
+    html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark') ? 'dark' : 'light'));
+
+    html.setAttribute('data-font', p.font || 'inter');
+    html.setAttribute('data-accent', p.accent || 'emerald');
+
+    var s = html.style;
+    var scale = (+p.fontScale || 100);
+    s.setProperty('--inema-font-scale', (scale / 100).toString());
+    s.setProperty('font-size', scale + '%');
+    s.setProperty('--measure', (+p.lineWidth || 68) + 'ch');
+    s.setProperty('--lh-body', (+p.leading || 1.7).toString());
+    var fam = p.font === 'system'
+      ? 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif'
+      : (p.font === 'leitura'
+        ? '"Atkinson Hyperlegible", "Inter", system-ui, sans-serif'
+        : '"Inter", system-ui, sans-serif');
+    s.setProperty('--font-body', fam);
+
+    var ACC = {
+      emerald: [152, 76, 45], blue: [217, 91, 60], purple: [258, 90, 66],
+      amber: [38, 92, 50], teal: [174, 72, 41], rose: [350, 89, 60]
+    };
+    var a = ACC[p.accent] || ACC.emerald;
+    s.setProperty('--accent-h', a[0] + '');
+    s.setProperty('--accent-s', a[1] + '%');
+    s.setProperty('--accent-l', a[2] + '%');
+    s.setProperty('--accent', 'hsl(' + a[0] + ' ' + a[1] + '% ' + a[2] + '%)');
+  } catch (err) {
+    try { document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme = 'dark'; } catch (e) {}
+  }
+})();
+</script>
+<!-- MANIFESTO do curso (Erro #28) — idêntico em todas as páginas -->
+<script data-inema-manifest="" type="application/json">
+{
+  "course": "ftd-v2-en",
+  "tracks": [
+    {
+      "n": "1",
+      "title": "Beginner",
+      "modules": [
+        {
+          "id": "1-1",
+          "title": "The Impact of AI",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-1.html"
+        },
+        {
+          "id": "1-2",
+          "title": "Navigating the Digital World",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-2.html"
+        },
+        {
+          "id": "1-3",
+          "title": "Prompt Engineering",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-3.html"
+        },
+        {
+          "id": "1-4",
+          "title": "AI Assistants and Agents",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-4.html"
+        },
+        {
+          "id": "1-5",
+          "title": "Visual Creativity with AI",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-5.html"
+        },
+        {
+          "id": "1-6",
+          "title": "Marketing and Sales with AI",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-6.html"
+        },
+        {
+          "id": "1-7",
+          "title": "Process Automation",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-7.html"
+        },
+        {
+          "id": "1-8",
+          "title": "Advanced Artificial Intelligence",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-8.html"
+        },
+        {
+          "id": "1-9",
+          "title": "Business and Monetization with AI",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-9.html"
+        }
+      ]
+    },
+    {
+      "n": "2",
+      "title": "Technical",
+      "modules": [
+        {
+          "id": "2-1",
+          "title": "Developing with AI APIs",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-1.html"
+        },
+        {
+          "id": "2-2",
+          "title": "AI Application Architecture",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-2.html"
+        },
+        {
+          "id": "2-3",
+          "title": "RAG and Knowledge Bases",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-3.html"
+        },
+        {
+          "id": "2-4",
+          "title": "Fine-Tuning and Customization",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-4.html"
+        },
+        {
+          "id": "2-5",
+          "title": "Agents and Complex Workflows",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-5.html"
+        },
+        {
+          "id": "2-6",
+          "title": "Advanced Computer Vision",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-6.html"
+        },
+        {
+          "id": "2-7",
+          "title": "NLP and Text Processing",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-7.html"
+        },
+        {
+          "id": "2-8",
+          "title": "MLOps and Production",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-8.html"
+        },
+        {
+          "id": "2-9",
+          "title": "AI Ethics and Governance",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-9.html"
+        }
+      ]
+    },
+    {
+      "n": "3",
+      "title": "Masterclass",
+      "modules": [
+        {
+          "id": "3-1",
+          "title": "Large-Scale AI Architecture",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-1.html"
+        },
+        {
+          "id": "3-2",
+          "title": "Custom and Proprietary Models",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-2.html"
+        },
+        {
+          "id": "3-3",
+          "title": "Advanced Multimodal AI",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-3.html"
+        },
+        {
+          "id": "3-4",
+          "title": "AI Research and Papers",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-4.html"
+        },
+        {
+          "id": "3-5",
+          "title": "Reinforcement Learning for AI",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-5.html"
+        },
+        {
+          "id": "3-6",
+          "title": "Security and Red Teaming",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-6.html"
+        },
+        {
+          "id": "3-7",
+          "title": "AI in Production — Enterprise Scale",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-7.html"
+        },
+        {
+          "id": "3-8",
+          "title": "AI Leadership and Strategy",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-8.html"
+        },
+        {
+          "id": "3-9",
+          "title": "The Future of AI and AGI",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-9.html"
+        }
+      ]
+    }
+  ]
+}
+</script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#0c0c10', 800: '#16161e', 700: '#1e1e28', 600: '#272730', 500: '#33333f' } }, fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'], display: ['Sora', 'Inter', 'sans-serif'], mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'] } } } }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Sora:wght@600;700;800&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    h1, h2, h3, h4, .font-display { font-family: 'Sora', 'Inter', sans-serif; }
+    .dark body { background-color: #0c0c10; }
+    .dark .text-neutral-100 { color: #e9e9ee; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+    pre { white-space: pre-wrap; word-break: break-word; }
+    pre, code, .font-mono { font-family: 'JetBrains Mono', ui-monospace, monospace; }
+
+    /* Light mode — Parte 1: base */
+    html:not(.dark) body { background-color: #f6f7f9; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800\/50 { background-color: #f6f7f9; }
+    html:not(.dark) .bg-dark-700 { background-color: #eceef2; }
+    html:not(.dark) .bg-dark-700\/50 { background-color: #f1f2f5; }
+    html:not(.dark) .bg-dark-700\/30 { background-color: #f4f5f7; }
+    html:not(.dark) .bg-dark-600 { background-color: #e1e3ea; }
+    html:not(.dark) .hover\:bg-dark-600:hover { background-color: #d6d9e1; }
+    html:not(.dark) .hover\:bg-dark-700\/50:hover { background-color: #eceef2; }
+    html:not(.dark) .text-neutral-100 { color: #1a1a22; }
+    html:not(.dark) .text-neutral-200 { color: #26262f; }
+    html:not(.dark) .text-neutral-300 { color: #3f3f4a; }
+    html:not(.dark) .text-neutral-400 { color: #5b5b68; }
+    html:not(.dark) .text-neutral-500 { color: #62626e; }
+    html:not(.dark) .border-dark-600 { border-color: #e1e3ea; }
+    html:not(.dark) .border-dark-700 { border-color: #e8e9ee; }
+    html:not(.dark) .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #e1e3ea; }
+    html:not(.dark) .bg-black\/40 { background-color: #f1f2f5; }
+    html:not(.dark) pre.code-dark { background-color: #1a1a22; color: #e9e9ee; }
+
+    /* Light mode — Parte 2: acento das 3 trilhas (texto -700, nunca -400 no claro) */
+    html:not(.dark) .text-emerald-400 { color: #047857; }
+    html:not(.dark) .text-emerald-300 { color: #047857; }
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #047857; }
+    html:not(.dark) .bg-emerald-500\/20 { background-color: rgba(4,120,87,0.12); }
+    html:not(.dark) .bg-emerald-500\/10 { background-color: rgba(4,120,87,0.08); }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(4,120,87,0.08); }
+    html:not(.dark) .bg-emerald-900\/20 { background-color: rgba(4,120,87,0.07); }
+    html:not(.dark) .bg-emerald-900\/30 { background-color: rgba(4,120,87,0.08); }
+    html:not(.dark) .bg-emerald-900\/40 { background-color: rgba(4,120,87,0.09); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(4,120,87,0.28); }
+    html:not(.dark) .hover\:border-emerald-500\/30:hover { border-color: rgba(4,120,87,0.4); }
+    html:not(.dark) .text-blue-400 { color: #1d4ed8; }
+    html:not(.dark) .text-blue-300 { color: #1d4ed8; }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #1d4ed8; }
+    html:not(.dark) .bg-blue-500\/20 { background-color: rgba(29,78,216,0.12); }
+    html:not(.dark) .bg-blue-500\/10 { background-color: rgba(29,78,216,0.08); }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(29,78,216,0.08); }
+    html:not(.dark) .bg-blue-900\/20 { background-color: rgba(29,78,216,0.07); }
+    html:not(.dark) .bg-blue-900\/30 { background-color: rgba(29,78,216,0.08); }
+    html:not(.dark) .bg-blue-900\/40 { background-color: rgba(29,78,216,0.09); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(29,78,216,0.28); }
+    html:not(.dark) .hover\:border-blue-500\/30:hover { border-color: rgba(29,78,216,0.4); }
+    html:not(.dark) .text-purple-400 { color: #6d28d9; }
+    html:not(.dark) .text-purple-300 { color: #6d28d9; }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #6d28d9; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(109,40,217,0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(109,40,217,0.08); }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(109,40,217,0.08); }
+    html:not(.dark) .bg-purple-900\/20 { background-color: rgba(109,40,217,0.07); }
+    html:not(.dark) .bg-purple-900\/30 { background-color: rgba(109,40,217,0.08); }
+    html:not(.dark) .bg-purple-900\/40 { background-color: rgba(109,40,217,0.09); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(109,40,217,0.28); }
+    html:not(.dark) .hover\:border-purple-500\/30:hover { border-color: rgba(109,40,217,0.4); }
+
+    /* Light mode — Parte 3: gradientes + especiais */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #854d0e; }
+    html:not(.dark) .text-yellow-400 { color: #854d0e; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #713f12; }
+    html:not(.dark) .bg-primary\/10 { background-color: #FEF9C3; }
+    html:not(.dark) .border-primary\/30 { border-color: #EAB308; }
+    html:not(.dark) .text-red-400 { color: #b91c1c; }
+    html:not(.dark) .bg-red-900\/20 { background-color: rgba(185,28,28,0.07); }
+    html:not(.dark) .border-red-500\/30 { border-color: rgba(185,28,28,0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #075985; }
+    html:not(.dark) .bg-sky-900\/20 { background-color: rgba(3,105,161,0.07); }
+    html:not(.dark) .border-sky-500\/30 { border-color: rgba(3,105,161,0.25); }
+
+    /* Light mode — Parte 4: nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255,255,255,0.95); }
+
+    /* Parte 5: bordas suavizadas no DARK (Erro #15) */
+    .dark .border-dark-600 { border-color: #2a2a35; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #2a2a35; }
+
+    /* SVG: no claro, um fundo escuro emoldurado mantém o contraste do desenho */
+    html:not(.dark) .svg-frame { background-color: #12121a; }
+    @media (prefers-reduced-motion: reduce) { svg * { animation: none !important; transition: none !important; } }
+  </style>
+<link href="../../../assets/learn.css" rel="stylesheet"/>
+<link href="https://inematds.github.io/FTD/FTD-v2/curso/trilha3/modulo-3-7.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/FTD/FTD-v2/en/curso/trilha3/modulo-3-7.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/FTD/FTD-v2/es/curso/trilha3/modulo-3-7.html" hreflang="es" rel="alternate"/><link href="https://inematds.github.io/FTD/FTD-v2/curso/trilha3/modulo-3-7.html" hreflang="x-default" rel="alternate"/><link href="https://inematds.github.io/FTD/FTD-v2/en/curso/trilha3/modulo-3-7.html" rel="canonical"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(250,204,21,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha3/modulo-3-7.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="modulo-3-7.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#FACC15">EN</a><a href="../../../es/curso/trilha3/modulo-3-7.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14 gap-2">
+<!-- Logo + INEMA.CLUB -->
+<div class="flex items-center space-x-3 flex-shrink-0">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🚀</span>
+<span class="font-display font-bold text-lg hidden sm:inline">FTD</span>
+</a>
+<span class="text-neutral-600 hidden sm:inline">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium hidden sm:inline" href="https://inema.club" rel="noopener" target="_blank">INEMA.CLUB</a>
+<span class="text-neutral-600 hidden sm:inline">-</span>
+<a class="text-amber-700 dark:text-slate-300 hover:underline text-sm font-medium hidden sm:inline" href="https://inema.pro" rel="noopener" target="_blank">PRO</a>
+</div>
+<!-- Trilhas + controles de aprendizagem + theme toggle -->
+<div class="flex items-center gap-1 sm:gap-1.5">
+<a class="px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors whitespace-nowrap" href="../trilha1/index.html">
+<span class="lg:hidden">T1</span><span class="hidden lg:inline">Beginner</span>
+</a>
+<a class="px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors whitespace-nowrap" href="../trilha2/index.html">
+<span class="lg:hidden">T2</span><span class="hidden lg:inline">Technical</span>
+</a>
+<a class="px-2.5 py-1.5 rounded-lg text-sm font-semibold text-purple-400 bg-purple-500/10 whitespace-nowrap" href="index.html">
+<span class="lg:hidden">T3</span><span class="hidden lg:inline">Masterclass</span>
+</a>
+<span class="w-px h-6 bg-dark-600 mx-1 hidden sm:inline-block"></span>
+<!-- Minha jornada (abre o painel global; badge = % do curso) -->
+<button class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-300 hover:text-neutral-100 hover:bg-dark-700 transition-colors" data-inema-journey-open="" type="button">
+<svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="16"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+<span class="hidden md:inline">My journey</span>
+<span class="inema-journey-badge" data-count="0" data-inema-journey-badge=""></span>
+</button>
+<!-- Aparência (gatilho + painel obrigatório) -->
+<div class="relative">
+<button aria-expanded="false" class="inema-appearance-trigger inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-300 hover:text-neutral-100 transition-colors" data-inema-appearance-toggle="#inema-appearance-panel" type="button">
+<svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="16"><circle cx="12" cy="12" r="9"></circle><path d="M12 3v18"></path><path d="M12 3a9 9 0 0 1 0 18" fill="currentColor"></path></svg>
+<span class="hidden md:inline">Appearance</span>
+</button>
+<div class="inema-appearance-pop right-0" data-inema-appearance="" id="inema-appearance-panel">
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Theme</span>
+<div class="inema-segment">
+<button data-inema-set-theme="inema-dark" type="button">Dark</button>
+<button data-inema-set-theme="claro" type="button">Light</button>
+<button data-inema-set-theme="sepia" type="button">Sepia</button>
+</div>
+<div class="inema-segment">
+<button data-inema-set-theme="foco" type="button">Focus</button>
+<button data-inema-set-theme="contraste" type="button">High contrast</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Font</span>
+<div class="inema-segment">
+<button data-inema-set-font="inter" type="button">Inter</button>
+<button data-inema-set-font="system" type="button">System</button>
+<button data-inema-set-font="leitura" type="button">Reading</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Size</span>
+<div class="inema-segment">
+<button data-inema-set-fontscale="100" type="button">A</button>
+<button data-inema-set-fontscale="112" type="button">A+</button>
+<button data-inema-set-fontscale="125" type="button">A++</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Width</span>
+<div class="inema-segment">
+<button data-inema-set-linewidth="60" type="button">Narrow</button>
+<button data-inema-set-linewidth="68" type="button">Medium</button>
+<button data-inema-set-linewidth="75" type="button">Wide</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Line spacing</span>
+<div class="inema-segment">
+<button data-inema-set-leading="1.45" type="button">Compact</button>
+<button data-inema-set-leading="1.7" type="button">Comfortable</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Accent</span>
+<div class="inema-accent-grid">
+<button aria-label="Emerald accent" data-inema-set-accent="emerald" type="button"></button>
+<button aria-label="Blue accent" data-inema-set-accent="blue" type="button"></button>
+<button aria-label="Purple accent" data-inema-set-accent="purple" type="button"></button>
+<button aria-label="Amber accent" data-inema-set-accent="amber" type="button"></button>
+<button aria-label="Teal accent" data-inema-set-accent="teal" type="button"></button>
+<button aria-label="Pink accent" data-inema-set-accent="rose" type="button"></button>
+</div>
+</div>
+</div>
+</div>
+<!-- Theme toggle sol/lua (núcleo v1; o JS o mantém coerente com o tema) -->
+<button aria-label="Toggle light/dark theme" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20">
+<path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+</svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20">
+<path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path>
+</svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<main data-inema-module="3-7" data-inema-track="3" id="conteudo">
+<!-- BREADCRUMB -->
+<nav aria-label="Navigation track" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-purple-400" href="../../index.html">Home</a><span>/</span>
+<a class="hover:text-purple-400" href="index.html">Track 3</a><span>/</span>
+<span class="text-purple-400">Module 3.7</span>
+</div>
+</nav>
+<!-- HEADER do módulo -->
+<header class="bg-gradient-to-br from-purple-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-purple-500/20 text-purple-400 text-xs font-semibold rounded-full mb-4">MODULE 3.7</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🏢 AI in Production — Enterprise Scale</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">When ten teams use AI, each with its own key, prompt, and account, the company doesn’t have AI: it has ten risks. This module shows you how to turn scattered projects into an <strong class="text-purple-400">internal platform</strong> — gateway, identity, auditing, SLAs, FinOps, and adoption — with configurations and checklists you can take to your next architecture meeting.</p>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">7</div><div class="text-xs text-neutral-400">Topics</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">~55</div><div class="text-xs text-neutral-400">Minutes</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">Advanced</div><div class="text-xs text-neutral-400">Level</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">Architecture</div><div class="text-xs text-neutral-400">Type</div></div>
+</div>
+<div class="flex items-center gap-3 mt-8">
+<div aria-label="Module 3.7 progress" class="inema-ring" data-inema-meter="modulo:3-7"><span class="inema-ring__value" data-inema-meter-pct="">0%</span></div>
+<div class="inema-meter-label" data-inema-meter="modulo:3-7"><strong data-inema-meter-frac="">0 of 0</strong> topics read · <span data-inema-section-counter="">Section 1 of 7</span></div>
+</div>
+</div>
+</header>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+<div class="lg:flex lg:gap-10">
+<!-- TOC sticky + scrollspy -->
+<aside class="hidden lg:block lg:w-56 flex-shrink-0">
+<nav aria-label="Page index" class="sticky top-20 self-start" data-inema-toc="">
+<p class="text-xs font-semibold uppercase tracking-wide text-neutral-500 mb-3">In this module</p>
+<ol class="space-y-1 text-sm">
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-purple-400" href="#topico-1">1. Internal platform</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-purple-400" href="#topico-2">2. Model gateway</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-purple-400" href="#topico-3">3. Identity and access</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-purple-400" href="#topico-4">4. Auditing</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-purple-400" href="#topico-5">5. SLAs and reliability</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-purple-400" href="#topico-6">6. AI FinOps</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-purple-400" href="#topico-7">7. Company-wide adoption</a></li>
+</ol>
+</nav>
+</aside>
+<!-- ARTIGO -->
+<article class="inema-prose flex-1 min-w-0">
+<h2 class="text-2xl font-bold mb-8">Detailed content</h2>
+<!-- TÓPICO 1 -->
+<section class="mb-16" data-inema-topic="modulo-3-7#topico-1" id="topico-1" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="plataforma, não projeto">🏗️ Internal AI Platform</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Mark this topic as a question" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-7-t1-p1">A company’s first year with AI is usually a collection of pilots: customer support tests an assistant, legal summarizes contracts, and engineering uses a coding agent. Each pilot solves its own problem and creates the same five problems all over again: <strong class="text-neutral-100">scattered keys, no central record, invisible costs, uncontrolled personal data, and no way to switch models</strong> without rewriting the app. The solution is to treat AI as a <strong class="text-purple-400">platform</strong>: a set of shared services that every project uses, instead of each project reinventing them.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-7-t1-p2"><strong class="text-neutral-100">Internal platform</strong> here means the same thing it does in software engineering: a product maintained by one team for other teams. It provides a “paved road” (<em>paved road</em>) — the easy way to do things right. If the right path is harder than the shortcut, teams take the shortcut, and the platform becomes just another ignored rule.</p>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-purple-400 mb-3">What it is</h3>
+<p class="text-neutral-300">An internal AI platform is the shared layer between applications and models: a gateway that handles all calls, shared services (context, evaluation, tools), and three cross-cutting controls — identity, auditing, and cost.</p>
+</div>
+<!-- SVG 1: camadas da plataforma -->
+<figure class="svg-frame rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="Layers of an internal AI platform: at the top are department applications; below them is the model gateway; then shared context, evaluation, and tool services; at the base are external and local models. On the right are three controls that span every layer: identity, auditing, and FinOps." class="w-full h-auto" role="img" viewbox="0 0 900 340">
+<defs>
+<filter height="160%" id="m37-glow" width="160%" x="-30%" y="-30%"><fegaussianblur result="b" stddeviation="2"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="28" id="m37-grid" patternunits="userSpaceOnUse" width="28"><circle cx="1.2" cy="1.2" fill="#a855f7" opacity="0.14" r="1.2"></circle></pattern>
+<style>@keyframes m37dash{to{stroke-dashoffset:-24}} .m37-flow{stroke-dasharray:6 6;animation:m37dash 1.6s linear infinite}</style>
+</defs>
+<rect fill="url(#m37-grid)" height="340" width="900"></rect>
+<g font-family="Inter,sans-serif">
+<g filter="url(#m37-glow)">
+<rect fill="#1a1030" height="44" rx="10" stroke="#c084fc" stroke-width="2" width="150" x="40" y="20"></rect>
+<rect fill="#1a1030" height="44" rx="10" stroke="#c084fc" stroke-width="2" width="150" x="210" y="20"></rect>
+<rect fill="#1a1030" height="44" rx="10" stroke="#c084fc" stroke-width="2" width="150" x="380" y="20"></rect>
+<rect fill="#1a1030" height="44" rx="10" stroke="#c084fc" stroke-width="2" width="150" x="550" y="20"></rect>
+</g>
+<text fill="#f3e8ff" font-size="14" font-weight="700" text-anchor="middle" x="115" y="47">Customer support</text>
+<text fill="#f3e8ff" font-size="14" font-weight="700" text-anchor="middle" x="285" y="47">Legal</text>
+<text fill="#f3e8ff" font-size="14" font-weight="700" text-anchor="middle" x="455" y="47">Sales</text>
+<text fill="#f3e8ff" font-size="14" font-weight="700" text-anchor="middle" x="625" y="47">Engineering</text>
+<path class="m37-flow" d="M115,66 L115,88 M285,66 L285,88 M455,66 L455,88 M625,66 L625,88" fill="none" stroke="#c084fc" stroke-width="2"></path>
+<rect fill="#0e1b26" height="54" rx="12" stroke="#38bdf8" stroke-width="2.5" width="660" x="40" y="90"></rect>
+<text fill="#e0f2fe" font-size="16" font-weight="700" text-anchor="middle" x="370" y="113">Model gateway</text>
+<text fill="#bae6fd" font-size="12" text-anchor="middle" x="370" y="132">routing · limits · cache · fallback · logging</text>
+<path class="m37-flow" d="M145,146 L145,168 M370,146 L370,168 M595,146 L595,168" fill="none" stroke="#38bdf8" stroke-width="2"></path>
+<rect fill="#1a1030" height="62" rx="10" stroke="#a855f7" stroke-width="2" width="210" x="40" y="170"></rect>
+<rect fill="#1a1030" height="62" rx="10" stroke="#a855f7" stroke-width="2" width="210" x="265" y="170"></rect>
+<rect fill="#1a1030" height="62" rx="10" stroke="#a855f7" stroke-width="2" width="210" x="490" y="170"></rect>
+<text fill="#f3e8ff" font-size="14" font-weight="700" text-anchor="middle" x="145" y="196">Context and RAG</text>
+<text fill="#d8b4fe" font-size="12" text-anchor="middle" x="145" y="215">permissioned documents</text>
+<text fill="#f3e8ff" font-size="14" font-weight="700" text-anchor="middle" x="370" y="196">Continuous evaluation</text>
+<text fill="#d8b4fe" font-size="12" text-anchor="middle" x="370" y="215">before-and-after tests</text>
+<text fill="#f3e8ff" font-size="14" font-weight="700" text-anchor="middle" x="595" y="196">Tools (MCP)</text>
+<text fill="#d8b4fe" font-size="12" text-anchor="middle" x="595" y="215">access to internal systems</text>
+<path class="m37-flow" d="M200,234 L200,256 M540,234 L540,256" fill="none" stroke="#a855f7" stroke-width="2"></path>
+<rect fill="#0e1b26" height="60" rx="10" stroke="#38bdf8" stroke-width="2" width="320" x="40" y="258"></rect>
+<rect fill="#0e1b26" height="60" rx="10" stroke="#38bdf8" stroke-width="2" width="320" x="380" y="258"></rect>
+<text fill="#e0f2fe" font-size="14" font-weight="700" text-anchor="middle" x="200" y="283">External models</text>
+<text fill="#bae6fd" font-size="12" text-anchor="middle" x="200" y="302">under contract and data terms</text>
+<text fill="#e0f2fe" font-size="14" font-weight="700" text-anchor="middle" x="540" y="283">Local models / private cloud</text>
+<text fill="#bae6fd" font-size="12" text-anchor="middle" x="540" y="302">sensitive data stays inside</text>
+<rect fill="#1a1030" height="90" rx="10" stroke="#c084fc" stroke-dasharray="5 4" stroke-width="2" width="150" x="730" y="20"></rect>
+<rect fill="#1a1030" height="90" rx="10" stroke="#c084fc" stroke-dasharray="5 4" stroke-width="2" width="150" x="730" y="125"></rect>
+<rect fill="#1a1030" height="90" rx="10" stroke="#c084fc" stroke-dasharray="5 4" stroke-width="2" width="150" x="730" y="230"></rect>
+<text fill="#f3e8ff" font-size="15" font-weight="700" text-anchor="middle" x="805" y="60">Identity</text>
+<text fill="#d8b4fe" font-size="12" text-anchor="middle" x="805" y="80">SSO · roles</text>
+<text fill="#f3e8ff" font-size="15" font-weight="700" text-anchor="middle" x="805" y="165">Auditing</text>
+<text fill="#d8b4fe" font-size="12" text-anchor="middle" x="805" y="185">logs · traces</text>
+<text fill="#f3e8ff" font-size="15" font-weight="700" text-anchor="middle" x="805" y="270">FinOps</text>
+<text fill="#d8b4fe" font-size="12" text-anchor="middle" x="805" y="290">cost by team</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-purple-400">How to read:</strong> read from top to bottom. Department apps never talk directly to a model: everything goes through the gateway (blue). The dashed boxes on the right aren’t a layer — they span all of them. If a project bypasses the gateway, it slips out from under all three controls at once.</figcaption>
+</figure>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6">
+<h4 class="font-bold text-purple-400 mb-4">✓ Signs of a platform</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-purple-400">✓</span><span>A new app goes into production in days, reusing the gateway, logs, and evaluation.</span></li>
+<li class="flex items-start gap-2"><span class="text-purple-400">✓</span><span>Switching models means changing a route in the gateway, not rewriting code.</span></li>
+<li class="flex items-start gap-2"><span class="text-purple-400">✓</span><span>A team owns the platform, with a roadmap and support channel.</span></li>
+<li class="flex items-start gap-2"><span class="text-purple-400">✓</span><span>Any manager can see their own department’s costs and usage without asking anyone.</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Signs of scattered projects</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>API keys in each team’s environment variables, with no rotation.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>No one can say which models the company uses today.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>The bill arrives, and the question is, “Who spent this?”</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Each team has its own rule for masking personal data — or none at all.</span></li>
+</ul>
+</div>
+</div>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Why learn</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-7-t1-p3" data-sum="porque">A platform’s cost is paid once; the cost of not having one is paid with every new project, in rework, incidents, and audits. For an architect, the question is no longer “which model should we use?” but “how can every team use any model safely without asking me for permission every time?”</p>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Key concepts</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Internal platform</div><div class="text-xs text-neutral-400">a product for which the teams are the customers</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Paved road</div><div class="text-xs text-neutral-400">the right way is the easiest way</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Shared service</div><div class="text-xs text-neutral-400">built once, used by everyone</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Cross-cutting control</div><div class="text-xs text-neutral-400">identity, auditing, cost</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Mark as read</span>
+<span class="inema-label-done">Read</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 2 -->
+<section class="mb-16" data-inema-topic="modulo-3-7#topico-2" id="topico-2" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="uma porta para todos os modelos">🚪 Model gateway</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Mark this topic as a question" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-7-t2-p1">O <strong class="text-purple-400">model gateway</strong> is a proxy: apps call an internal address using a platform key, and the gateway decides which model gets the call. Since almost all providers and local servers accept an OpenAI-compatible “chat completions” API format, the app’s code is written once and the gateway translates it. Open-source tools like <strong class="text-neutral-100">LiteLLM</strong> play this role; cloud providers and API management vendors have their own versions.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-7-t2-p2">Each call goes through five steps: <strong class="text-neutral-100">authenticate</strong> the key, apply the <strong class="text-neutral-100">limit</strong> for the team, check the <strong class="text-neutral-100">cache</strong>, choose the <strong class="text-neutral-100">route</strong> (and the fallback, if the primary model fails) and <strong class="text-neutral-100">log</strong> everything. A route is the logical name ("internal-fast," "external-powerful") the app requests; the actual model behind it can change without the app knowing.</p>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-purple-400 mb-3">What it is</h3>
+<p class="text-neutral-300">A single entry point for all the company’s models. It separates the logical name the app requests from the physical model that responds, and applies authentication, limits, caching, fallback, and logging to every call.</p>
+</div>
+<!-- SVG 2: fluxo do gateway -->
+<figure class="svg-frame rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="Flow of a request through the gateway: the app’s request arrives with the team key, passes through five steps—authenticate, limit, cache, choose a route, and log—and goes to a local model for simple tasks, an external model for complex tasks, or the fallback if the primary fails." class="w-full h-auto" role="img" viewbox="0 0 760 280">
+<defs>
+<marker id="m37-ah" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#c084fc"></path></marker>
+<marker id="m37-ahc" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#38bdf8"></path></marker>
+</defs>
+<rect fill="url(#m37-grid)" height="280" width="760"></rect>
+<g font-family="Inter,sans-serif">
+<rect fill="#1a1030" height="64" rx="12" stroke="#c084fc" stroke-width="2" width="150" x="20" y="108"></rect>
+<text fill="#f3e8ff" font-size="14" font-weight="700" text-anchor="middle" x="95" y="135">App request</text>
+<text fill="#d8b4fe" font-size="12" text-anchor="middle" x="95" y="154">team key</text>
+<path class="m37-flow" d="M172,140 L206,140" fill="none" marker-end="url(#m37-ah)" stroke="#c084fc" stroke-width="2.5"></path>
+<rect fill="#0e1b26" filter="url(#m37-glow)" height="190" rx="16" stroke="#38bdf8" stroke-width="2.5" width="220" x="212" y="45"></rect>
+<text fill="#7dd3fc" font-size="17" font-weight="700" text-anchor="middle" x="322" y="76">Gateway</text>
+<text fill="#e0f2fe" font-size="13" x="236" y="108">1 · authenticate</text>
+<text fill="#e0f2fe" font-size="13" x="236" y="132">2 · apply limit</text>
+<text fill="#e0f2fe" font-size="13" x="236" y="156">3 · check cache</text>
+<text fill="#e0f2fe" font-size="13" x="236" y="180">4 · choose route</text>
+<text fill="#e0f2fe" font-size="13" x="236" y="204">5 · log</text>
+<path class="m37-flow" d="M434,90 L512,58" fill="none" marker-end="url(#m37-ahc)" stroke="#38bdf8" stroke-width="2"></path>
+<path class="m37-flow" d="M434,140 L512,140" fill="none" marker-end="url(#m37-ahc)" stroke="#38bdf8" stroke-width="2"></path>
+<path class="m37-flow" d="M434,190 L512,222" fill="none" marker-end="url(#m37-ah)" stroke="#c084fc" stroke-opacity="0.8" stroke-width="2"></path>
+<rect fill="#0e1b26" height="52" rx="10" stroke="#38bdf8" stroke-width="2" width="220" x="518" y="30"></rect>
+<text fill="#e0f2fe" font-size="14" font-weight="700" x="534" y="52">Local model</text>
+<text fill="#bae6fd" font-size="12" x="534" y="70">simple task, sensitive data</text>
+<rect fill="#0e1b26" height="52" rx="10" stroke="#38bdf8" stroke-width="2" width="220" x="518" y="114"></rect>
+<text fill="#e0f2fe" font-size="14" font-weight="700" x="534" y="136">External model</text>
+<text fill="#bae6fd" font-size="12" x="534" y="154">complex task</text>
+<rect fill="#1a1030" height="52" rx="10" stroke="#c084fc" stroke-dasharray="5 4" stroke-width="2" width="220" x="518" y="198"></rect>
+<text fill="#f3e8ff" font-size="14" font-weight="700" x="534" y="220">Fallback</text>
+<text fill="#d8b4fe" font-size="12" x="534" y="238">if the primary fails</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-purple-400">How to read:</strong> the app only knows the box on the left and the route name. All the intelligence about "where it goes" lives in the gateway. Notice that the fallback (dashed line) is an architecture decision: deciding in advance which model takes over when the primary goes down avoids improvising during an incident.</figcaption>
+</figure>
+<div class="bg-dark-800 border border-purple-500/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-purple-400 font-semibold mb-1">New term</p>
+<p class="text-sm text-neutral-300" data-inema-block="m3-7-t2-p3"><strong>Proxy</strong> is an intermediary server that receives a call in place of its destination and forwards it. <strong>Fallback</strong> is the automatic alternative when the first option fails. <strong>Semantic cache</strong> returns an already calculated answer to similar questions—useful for FAQs, risky when the answer depends on the user.</p>
+</div>
+<!-- COPY: config do gateway -->
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-purple-400">Try this:</strong> <span class="text-neutral-300">a local gateway with two routes and a fallback (LiteLLM proxy).</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copy</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900"># config.yaml — install with: pip install 'litellm[proxy]'
+# run with:  litellm --config config.yaml --port 4000
+model_list:
+  - model_name: interno-rapido          # logical name the app requests
+    litellm_params:
+      model: ollama/llama3.2            # local, free model
+      api_base: http://localhost:11434
+      rpm: 120                          # call limit per minute on this route
+  - model_name: externo-forte
+    litellm_params:
+      model: anthropic/claude-sonnet-5-5
+      api_key: os.environ/ANTHROPIC_API_KEY
+      rpm: 30
+
+router_settings:
+  fallbacks:
+    - externo-forte: ["interno-rapido"] # if the external model fails, fall back to the local one
+  num_retries: 2
+
+general_settings:
+  master_key: os.environ/LITELLM_MASTER_KEY  # the key apps use
+
+# Test (the app only knows the route, never the actual model):
+# curl http://localhost:4000/v1/chat/completions \
+#   -H "Authorization: Bearer $LITELLM_MASTER_KEY" -H "Content-Type: application/json" \
+#   -d '{"model":"interno-rapido","messages":[{"role":"user","content":"say ok"}]}'</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">How to check:</strong> with Ollama running, the test curl should return a response through the route <code>interno-rapido</code>. Then, without the variable <code>ANTHROPIC_API_KEY</code>, call <code>externo-forte</code>: the response should come from the local model (fallback), and the proxy log should show the failure and the switch. Configuration key names change between versions; check the documentation for the version you installed.</p>
+</div>
+<div class="bg-primary/10 border border-primary/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-primary font-semibold mb-1">💡 Tip</p>
+<p class="text-sm text-neutral-300" data-inema-block="m3-7-t2-p4">Give routes names based on <strong>capability</strong> ("fast," "powerful," "vision," "sensitive"), never the provider. When you replace the model behind "powerful," no app needs to know—and you can negotiate with providers on more equal terms.</p>
+</div>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Why learn</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-7-t2-p5" data-sum="porque">Models change every few months, and so do prices. Without a gateway, every switch becomes a migration project across ten apps. With a gateway, it’s one configuration line tested in one place—and that same point becomes the foundation for auditing, limits, and cost tracking, which come next.</p>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Key concepts</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Logical route</div><div class="text-xs text-neutral-400">capability name, not provider name</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Fallback</div><div class="text-xs text-neutral-400">automatic plan B</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Limit per team</div><div class="text-xs text-neutral-400">calls and tokens per minute</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Compatible API</div><div class="text-xs text-neutral-400">one format, many models</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Mark as read</span>
+<span class="inema-label-done">Read</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 3 -->
+<section class="mb-16" data-inema-topic="modulo-3-7#topico-3" id="topico-3" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="quem pode o quê, inclusive o agente">🔐 Identity and access</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Mark this topic as a question" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-7-t3-p1">At scale, the security question isn’t "is the model secure?" It’s <strong class="text-neutral-100">"on whose behalf is this call being made, and what can that person see?"</strong>. An HR assistant that searches documents must not return another employee’s pay stub just because it was in the index. AI inherits the permissions of whoever makes the request—or it should.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-7-t3-p2">With agents, a second kind of identity comes into play: the agent’s own. An agent that reads the CRM, opens tickets, and sends emails needs its own <strong class="text-purple-400">service identity</strong> with minimum permissions, credentials that expire, and a human responsible for it. Never use the personal key of whoever created it.</p>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-purple-400 mb-3">What it is</h3>
+<p class="text-neutral-300">It’s the set of rules that ties each AI call to an identified person or agent, applies that identity’s role to the data and tools accessed, and maintains the minimum privileges needed for the task.</p>
+</div>
+<div class="bg-dark-800 border border-purple-500/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-purple-400 font-semibold mb-1">New term</p>
+<p class="text-sm text-neutral-300" data-inema-block="m3-7-t3-p3"><strong>SSO</strong> (single sign-on) means signing in once with your corporate account to access multiple systems. <strong>RBAC</strong> is role-based access control: an "HR analyst" can see X, a "manager" can see Y. <strong>Least privilege</strong> means giving only the access needed for the task, and nothing more.</p>
+</div>
+<div class="overflow-x-auto mb-6">
+<table class="w-full text-sm border border-dark-600 rounded-xl overflow-hidden">
+<thead><tr class="bg-dark-700"><th class="text-left p-3 text-purple-400">Identity</th><th class="text-left p-3 text-purple-400">How it authenticates</th><th class="text-left p-3 text-purple-400">Golden rule</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr><td class="p-3 font-semibold">Person in internal chat</td><td class="p-3 text-neutral-300">Corporate SSO</td><td class="p-3 text-neutral-300">Document searches respect the user’s permissions, which are applied before results reach the model.</td></tr>
+<tr><td class="p-3 font-semibold">Team app</td><td class="p-3 text-neutral-300">Gateway key per app</td><td class="p-3 text-neutral-300">One key per app and environment; scheduled rotation; revocation within minutes.</td></tr>
+<tr><td class="p-3 font-semibold">Autonomous agent</td><td class="p-3 text-neutral-300">Service account with short-lived credentials</td><td class="p-3 text-neutral-300">Minimum scope for each tool; irreversible actions require human approval.</td></tr>
+<tr><td class="p-3 font-semibold">Model provider</td><td class="p-3 text-neutral-300">Contract and key stored in the gateway</td><td class="p-3 text-neutral-300">Data usage terms reviewed by legal; the key never leaves the vault.</td></tr>
+</tbody>
+</table>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6">
+<h4 class="font-bold text-purple-400 mb-4">✓ Do</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-purple-400">✓</span><span>Filter documents by the user’s permissions before retrieval, not after the response.</span></li>
+<li class="flex items-start gap-2"><span class="text-purple-400">✓</span><span>Mask personal data at the gateway when the purpose doesn’t require it (the LGPD (Brazil’s data protection law) necessity principle).</span></li>
+<li class="flex items-start gap-2"><span class="text-purple-400">✓</span><span>Assign a human owner to every agent and every key.</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Avoid</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Relying on the prompt (“don’t show salaries”) as an access control.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>A single index with all company documents and no permission metadata.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Agents running with administrator credentials “to avoid errors.”</span></li>
+</ul>
+</div>
+</div>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Why learn</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-7-t3-p4" data-sum="porque">The most likely leaks in corporate AI don’t come from sophisticated attacks on the model: they come from poorly inherited permissions. A prompt can be bypassed; a permission filter applied before retrieval can’t. Getting identity design right from the start prevents you from rebuilding the entire index after the first incident.</p>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Key concepts</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">SSO</div><div class="text-xs text-neutral-400">a corporate account</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">RBAC</div><div class="text-xs text-neutral-400">role-based access</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Service identity</div><div class="text-xs text-neutral-400">the agent has its own account</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Least privilege</div><div class="text-xs text-neutral-400">only what’s necessary</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Mark as read</span>
+<span class="inema-label-done">Read</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 4 -->
+<section class="mb-16" data-inema-topic="modulo-3-7#topico-4" id="topico-4" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="reconstruir qualquer resposta depois">📜 Auditing and traceability</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Mark this topic as a question" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-7-t4-p1">A customer complains that the assistant promised a discount that doesn’t exist. The audit question is simple: <strong class="text-neutral-100">which prompt version, with which model, documents, and tools, produced that response?</strong> If the platform can’t answer within minutes, it isn’t ready for production.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-7-t4-p2">The central piece is the <strong class="text-purple-400">trace</strong>: a unique identifier that follows the request through every stage — gateway, retrieval, model, tools, output filter. Each stage becomes a <strong class="text-neutral-100">span</strong> with a start time, end time, and attributes. The open standard OpenTelemetry already has conventions for generative AI calls, and tools like Langfuse and Arize Phoenix build this view for you.</p>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-purple-400 mb-3">What it is</h3>
+<p class="text-neutral-300">Traceability is the ability to reconstruct any response: who requested it, with which configuration, what data went in, what the model and tools did, and how much it cost — while keeping only what’s necessary for only as long as necessary.</p>
+</div>
+<!-- SVG 3: trace -->
+<figure class="svg-frame rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="Timeline of a trace: the bar for the entire request contains smaller bars for the gateway, document search, model call, a CRM tool called during the model call, and the output filter. Each bar is a record with a duration and attributes." class="w-full h-auto" role="img" viewbox="0 0 900 270">
+<rect fill="url(#m37-grid)" height="270" width="900"></rect>
+<g font-family="Inter,sans-serif">
+<text fill="#f3e8ff" font-size="13" font-weight="700" x="20" y="45">request (trace_id)</text>
+<text fill="#d8b4fe" font-size="13" x="20" y="83">gateway</text>
+<text fill="#d8b4fe" font-size="13" x="20" y="121">document retrieval</text>
+<text fill="#d8b4fe" font-size="13" x="20" y="159">model call</text>
+<text fill="#bae6fd" font-size="13" x="20" y="197">tool: CRM</text>
+<text fill="#d8b4fe" font-size="13" x="20" y="235">output filter</text>
+<path d="M200,20 L200,250" stroke="#c084fc" stroke-dasharray="3 5" stroke-opacity="0.4"></path>
+<rect fill="#a855f7" fill-opacity="0.85" filter="url(#m37-glow)" height="20" rx="4" width="670" x="210" y="30"></rect>
+<rect fill="#a855f7" fill-opacity="0.55" height="20" rx="4" width="60" x="210" y="68"></rect>
+<rect fill="#a855f7" fill-opacity="0.55" height="20" rx="4" width="150" x="270" y="106"></rect>
+<rect fill="#a855f7" fill-opacity="0.55" height="20" rx="4" width="350" x="420" y="144"></rect>
+<rect fill="#38bdf8" fill-opacity="0.7" height="20" rx="4" width="90" x="560" y="182"></rect>
+<rect fill="#a855f7" fill-opacity="0.55" height="20" rx="4" width="110" x="770" y="220"></rect>
+<path d="M605,166 L605,180" stroke="#38bdf8" stroke-width="2"></path>
+<text fill="#f3e8ff" font-size="12" x="430" y="198">the model called</text>
+<text fill="#f3e8ff" font-size="12" x="660" y="198">a tool</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-purple-400">How to read:</strong> The horizontal axis represents time. The top bar is the entire request; the bars below are the stages, each one a span. The tool (cyan) runs within the model call — that’s where an agent acts in the world, and it’s the span auditors look for most. When a response is slow, the longest bar shows where the bottleneck is.</figcaption>
+</figure>
+<!-- COPY: registro de auditoria -->
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-purple-400">Goal:</strong> <span class="text-neutral-300">a minimal audit log format for each call (one JSONL line).</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copy</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900">{
+  "ts": "2026-10-16T14:03:22Z",
+  "trace_id": "&lt;ID generated by the gateway&gt;",
+  "equipe": "customer support",
+  "caso_de_uso": "support-response",
+  "usuario_hash": "&lt;hash of the employee ID, never the name&gt;",
+  "rota": "strong-external",
+  "modelo_real": "&lt;model that responded, including if it was a fallback&gt;",
+  "versao_prompt": "sac-v14",
+  "documentos": ["&lt;IDs of the passages used in the context&gt;"],
+  "ferramentas": ["crm.consultar_pedido"],
+  "tokens_entrada": 1830,
+  "tokens_saida": 412,
+  "latencia_ms": 2240,
+  "cache_hit": false,
+  "dados_pessoais": "masked",
+  "resultado": "accepted",
+  "retencao_dias": &lt;period defined with the DPO&gt;
+}</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">How to check:</strong> Choose a real response from yesterday and try to reconstruct it using only this log: can you find the prompt version, the documents, and the tool used? If you’re missing a field needed to answer, add it to the format. If a field stores free-form user text, ask the data protection officer (DPO) whether the purpose justifies it and for how long.</p>
+</div>
+<div class="bg-primary/10 border border-primary/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-primary font-semibold mb-1">💡 Tip</p>
+<p class="text-sm text-neutral-300" data-inema-block="m3-7-t4-p3">Auditing and the LGPD pull in opposite directions: one calls for keeping everything, the other for keeping as little as possible. Resolve this by separating two levels — metadata (who, when, which version, cost) with longer retention, and content (the prompt and response text) with short retention, restricted access, and masking.</p>
+</div>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Why learn</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-7-t4-p4" data-sum="porque">Without traceability, every incident becomes one person’s word against another’s, and the only safe response is to shut the system down. With it, you can find the cause, fix the prompt version or the incorrect document, and show legal and the customer exactly what happened.</p>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Key concepts</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Trace</div><div class="text-xs text-neutral-400">the end-to-end request</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Span</div><div class="text-xs text-neutral-400">a stage with timing and attributes</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Prompt version</div><div class="text-xs text-neutral-400">a prompt is version-controlled code</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Retention</div><div class="text-xs text-neutral-400">how long to keep it and why</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Mark as read</span>
+<span class="inema-label-done">Read</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 5 -->
+<section class="mb-16" data-inema-topic="modulo-3-7#topico-5" id="topico-5" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="latência, erro e qualidade com meta">📈 SLAs and reliability</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Mark this topic as a question" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-7-t5-p1">An AI system can be “up” and still be broken: it responds quickly, with no HTTP errors, but its responses have gotten worse since yesterday’s model switch. That’s why AI reliability has <strong class="text-neutral-100">three dimensions</strong>, not two: availability, latency, and <strong class="text-purple-400">quality</strong>. You can measure the third only if you continuously run an evaluation set — real questions with reference answers, rerun after every change.</p>
+<div class="bg-dark-800 border border-purple-500/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-purple-400 font-semibold mb-1">New term</p>
+<p class="text-sm text-neutral-300" data-inema-block="m3-7-t5-p2"><strong>SLI</strong> is the measured indicator (e.g., latency at the 95th percentile). <strong>SLO</strong> is the internal target for it. <strong>SLA</strong> is the contractual commitment to the customer, with consequences if it’s missed — so the SLA should allow more room than the SLO. <strong>95th percentile (p95)</strong> is the time within which 95% of responses are completed.</p>
+</div>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-purple-400 mb-3">What it is</h3>
+<p class="text-neutral-300">It means setting measurable targets for availability, latency, and quality for each use case, measuring continuously, and changing versions (model, prompt, index) only in stages with gates that check those targets.</p>
+</div>
+<div class="overflow-x-auto mb-6">
+<table class="w-full text-sm border border-dark-600 rounded-xl overflow-hidden">
+<thead><tr class="bg-dark-700"><th class="text-left p-3 text-purple-400">Dimension</th><th class="text-left p-3 text-purple-400">Typical SLI</th><th class="text-left p-3 text-purple-400">How to protect</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr><td class="p-3 font-semibold">Availability</td><td class="p-3 text-neutral-300">Proportion of calls without errors</td><td class="p-3 text-neutral-300">Fallback between providers; queues with retries; degraded mode.</td></tr>
+<tr><td class="p-3 font-semibold">Latency</td><td class="p-3 text-neutral-300">p95 time to the first token and to the complete response</td><td class="p-3 text-neutral-300">Streaming, a lighter route for simple tasks, cache.</td></tr>
+<tr><td class="p-3 font-semibold">Quality</td><td class="p-3 text-neutral-300">Evaluation set score; rate of accepted responses</td><td class="p-3 text-neutral-300">Evaluation before each change; daily sampling in production.</td></tr>
+<tr><td class="p-3 font-semibold">Security</td><td class="p-3 text-neutral-300">Responses blocked by the filter; injection attempts detected</td><td class="p-3 text-neutral-300">Input and output filters; alert when the rate shifts to a new level.</td></tr>
+</tbody>
+</table>
+</div>
+<!-- SVG 4: rollout em etapas -->
+<figure class="svg-frame rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="Four-stage deployment: shadow, canary, expansion, and everyone. Between each stage is a gate that checks the SLOs. If a gate fails, a path back leads to the previous version (rollback)." class="w-full h-auto" role="img" viewbox="0 0 900 250">
+<rect fill="url(#m37-grid)" height="250" width="900"></rect>
+<g font-family="Inter,sans-serif">
+<rect fill="#1a1030" height="70" rx="12" stroke="#c084fc" stroke-width="2" width="160" x="20" y="60"></rect>
+<rect fill="#1a1030" height="70" rx="12" stroke="#c084fc" stroke-width="2" width="160" x="250" y="60"></rect>
+<rect fill="#1a1030" height="70" rx="12" stroke="#c084fc" stroke-width="2" width="160" x="480" y="60"></rect>
+<rect fill="#0e1b26" filter="url(#m37-glow)" height="70" rx="12" stroke="#38bdf8" stroke-width="2.5" width="160" x="710" y="60"></rect>
+<text fill="#f3e8ff" font-size="14" font-weight="700" text-anchor="middle" x="100" y="90">1 · Shadow</text>
+<text fill="#d8b4fe" font-size="12" text-anchor="middle" x="100" y="110">runs in parallel</text>
+<text fill="#f3e8ff" font-size="14" font-weight="700" text-anchor="middle" x="330" y="90">2 · Canary</text>
+<text fill="#d8b4fe" font-size="12" text-anchor="middle" x="330" y="110">small slice</text>
+<text fill="#f3e8ff" font-size="14" font-weight="700" text-anchor="middle" x="560" y="90">3 · Expansion</text>
+<text fill="#d8b4fe" font-size="12" text-anchor="middle" x="560" y="110">larger slice</text>
+<text fill="#e0f2fe" font-size="14" font-weight="700" text-anchor="middle" x="790" y="90">4 · Everyone</text>
+<text fill="#bae6fd" font-size="12" text-anchor="middle" x="790" y="110">new default version</text>
+<path class="m37-flow" d="M182,95 L244,95 M412,95 L474,95 M642,95 L704,95" fill="none" stroke="#c084fc" stroke-width="2"></path>
+<path d="M215,87 L223,95 L215,103 L207,95 Z M445,87 L453,95 L445,103 L437,95 Z M675,87 L683,95 L675,103 L667,95 Z" fill="#38bdf8"></path>
+<text fill="#7dd3fc" font-size="11" text-anchor="middle" x="215" y="76">SLO?</text>
+<text fill="#7dd3fc" font-size="11" text-anchor="middle" x="445" y="76">SLO?</text>
+<text fill="#7dd3fc" font-size="11" text-anchor="middle" x="675" y="76">SLO?</text>
+<path d="M790,132 C790,205 100,205 100,134" fill="none" marker-end="url(#m37-ah)" stroke="#f87171" stroke-dasharray="5 5" stroke-width="2"></path>
+<text fill="#fecaca" font-size="12" text-anchor="middle" x="450" y="232">gate fails at any stage → return to the previous version (rollback)</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-purple-400">How to read:</strong> A new version (model, prompt, or index) moves from left to right only if it passes the gate (diamond). In the shadow stage, it responds in parallel without the user seeing it, which lets you compare quality without risk. You decide the slice sizes; what matters is testing the way back (red) before you start.</figcaption>
+</figure>
+<div class="bg-primary/10 border border-primary/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-primary font-semibold mb-1">💡 Tip</p>
+<p class="text-sm text-neutral-300" data-inema-block="m3-7-t5-p3">Pin the model version in the gateway whenever the provider allows it. A route pointing to an alias such as “latest” means the provider can swap out the model behind your back—and your quality SLO can change without any deployment on your part.</p>
+</div>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Why learn</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-7-t5-p4" data-sum="porque">Promising an SLA without measuring quality means promising something you don’t control. Teams that set SLOs across all three areas and make changes through gates can update models often without fear—and teams that don’t end up freezing the version out of concern and falling behind.</p>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Key concepts</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">SLI · SLO · SLA</div><div class="text-xs text-neutral-400">measurement, target, contract</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">p95</div><div class="text-xs text-neutral-400">tail latency, not the average</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Canary</div><div class="text-xs text-neutral-400">new version on a slice</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Rollback</div><div class="text-xs text-neutral-400">rollback tested beforehand</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Mark as read</span>
+<span class="inema-label-done">Read</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 6 -->
+<section class="mb-16" data-inema-topic="modulo-3-7#topico-6" id="topico-6" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="custo por tarefa resolvida">💰 AI FinOps</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Mark this topic as a question" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-7-t6-p1"><strong class="text-purple-400">FinOps</strong> is the practice of making technology costs visible to decision makers and ensuring those who consume it are accountable for them. In AI, costs are variable by nature: each call consumes tokens, and an agent stuck in a loop can spend a month’s budget in one afternoon. Cost per token is the provider’s metric; the business metric is <strong class="text-neutral-100">cost per task resolved</strong>.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-7-t6-p2">The levers are well known: route simple tasks to smaller or local models, use caching (including prompt caching, which several providers offer for repeated context), cut unnecessary context, batch work that isn’t urgent, and set step and spending limits for each agent. Before optimizing, though, you need to <strong class="text-neutral-100">attribute</strong>: know which team and use case generated each dollar.</p>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-purple-400 mb-3">What it is</h3>
+<p class="text-neutral-300">AI FinOps means measuring the cost of each call, attributing it to a team and use case, showing it to decision makers (showback) or charging it internally (chargeback), and optimizing for cost per outcome—not cost per token.</p>
+</div>
+<!-- COPY: script FinOps -->
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-purple-400">Try this:</strong> <span class="text-neutral-300">cost per team and per accepted task, based on the audit log from Topic 4.</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copy</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900">#!/usr/bin/env python3
+"""finops_ia.py — showback by team and use case.
+Usage: python3 finops_ia.py auditoria.jsonl"""
+import json, sys
+from collections import defaultdict
+
+# Price per 1 million tokens, in your contract currency.
+# Replace the 0.0 values with the current pricing table; local models have infrastructure costs, not token costs.
+PRECO = {
+    "interno-rapido": {"entrada": 0.0, "saida": 0.0},
+    "externo-forte":  {"entrada": 0.0, "saida": 0.0},  # &lt;contract price&gt;
+}
+
+agg = defaultdict(lambda: {"chamadas": 0, "custo": 0.0, "aceitas": 0, "cache": 0})
+with open(sys.argv[1], encoding="utf-8") as f:
+    for linha in f:
+        r = json.loads(linha)
+        p = PRECO.get(r["rota"], {"entrada": 0.0, "saida": 0.0})
+        custo = (r["tokens_entrada"] * p["entrada"] + r["tokens_saida"] * p["saida"]) / 1e6
+        a = agg[(r["equipe"], r["caso_de_uso"])]
+        a["chamadas"] += 1
+        a["custo"] += custo
+        a["aceitas"] += r.get("resultado") == "aceito"
+        a["cache"] += bool(r.get("cache_hit"))
+
+print(f"{'equipe':14} {'caso de uso':18} {'chamadas':&gt;8} {'custo':&gt;10} {'custo/aceita':&gt;12} {'cache':&gt;6}")
+for (equipe, caso), a in sorted(agg.items(), key=lambda kv: -kv[1]["custo"]):
+    por_aceita = a["custo"] / a["aceitas"] if a["aceitas"] else float("nan")
+    taxa_cache = a["cache"] / a["chamadas"]
+    print(f"{equipe:14} {caso:18} {a['chamadas']:8} {a['custo']:10.2f} {por_aceita:12.4f} {taxa_cache:6.0%}")</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">How to check:</strong> Create a file with three lines in the format from Topic 4 (two from the same team, one accepted and one not), enter any price, and calculate it by hand. Cost per accepted task should be the line’s total cost divided by 1. A use case with a cost per accepted task far above the others is the first candidate for reviewing the route, context, or prompt.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6">
+<h4 class="font-bold text-purple-400 mb-4">✓ Levers that usually work</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-purple-400">✓</span><span>Route by complexity: use the stronger model only when the task calls for it.</span></li>
+<li class="flex items-start gap-2"><span class="text-purple-400">✓</span><span>Prompt caching for instructions and documents that repeat.</span></li>
+<li class="flex items-start gap-2"><span class="text-purple-400">✓</span><span>Batch processing for work that can wait a few hours.</span></li>
+<li class="flex items-start gap-2"><span class="text-purple-400">✓</span><span>Step and spending limits per agent run, with an alert.</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Pitfalls</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Cut costs by switching models without running the quality evaluation.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Look only at the provider’s bill and forget idle GPUs, engineering, and human review.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>A fixed annual budget for usage that varies with adoption.</span></li>
+</ul>
+</div>
+</div>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Why learn</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-7-t6-p3" data-sum="porque">The first AI budget cut almost never comes from a use case that failed; it comes from a bill nobody could explain. When you assign costs and measure them by outcome, you can defend the use cases that pay for themselves and end the ones that don’t, with the numbers in hand.</p>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Key concepts</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Showback</div><div class="text-xs text-neutral-400">show costs to those who consume the service</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Chargeback</div><div class="text-xs text-neutral-400">charge internally</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Cost per outcome</div><div class="text-xs text-neutral-400">the metric that matters</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Per-agent limit</div><div class="text-xs text-neutral-400">step and spending limit</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Mark as read</span>
+<span class="inema-label-done">Read</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 7 -->
+<section class="mb-16" data-inema-topic="modulo-3-7#topico-7" id="topico-7" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">7</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="da plataforma pronta ao uso diário">🌱 Company-wide adoption</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Mark this topic as a question" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-7-t7-p1">A technically flawless platform that nobody uses is a cost with no return. And when the official platform is slow to grant access, people use whatever is at hand—personal accounts, browser extensions, free tools with unknown terms of use. This has a name: <strong class="text-purple-400">shadow AI</strong>, AI used outside the company’s control. Banning it doesn’t solve the problem; offering a better path does.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-7-t7-p2">Adoption has three fronts: <strong class="text-neutral-100">access</strong> (a secure assistant available to everyone, with clear rules about what can be pasted into it), <strong class="text-neutral-100">training</strong> (short tracks by role and “champions” in each area who help their colleagues) and <strong class="text-neutral-100">catalog</strong> (approved use cases, each with an owner, metric, and status, so no one reinvents what another team has already done).</p>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-purple-400 mb-3">What it is</h3>
+<p class="text-neutral-300">It’s the work of bringing the platform into real-world use: providing secure access, training people by role, maintaining a catalog of use cases, and measuring usage, results, and satisfaction—reducing shadow AI by offering a better alternative, not through prohibition.</p>
+</div>
+<!-- TIMELINE: 90 dias -->
+<div class="relative border-l-2 border-purple-500/30 ml-3 pl-6 space-y-5 mb-6">
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-purple-500/20 border-2 border-purple-400"></span><p class="text-sm text-neutral-300"><strong class="text-purple-400">Weeks 1–2 · Baseline.</strong> Find out which AI tools are already being used (an anonymous survey works better than an audit) and measure the current metrics for candidate processes.</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-purple-500/20 border-2 border-purple-400"></span><p class="text-sm text-neutral-300"><strong class="text-purple-400">Weeks 3–4 · Secure access.</strong> Make the corporate assistant available through the gateway, with a one-page usage policy (what can and cannot be pasted).</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-purple-500/20 border-2 border-purple-400"></span><p class="text-sm text-neutral-300"><strong class="text-purple-400">Weeks 5–8 · Champions and tracks.</strong> One or two champions per area, a short track by role, and a regular time for questions.</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-sky-500/20 border-2 border-sky-400"></span><p class="text-sm text-neutral-300"><strong class="text-sky-400">Weeks 9–12 · Catalog and first review.</strong> Publish the use cases that worked, with an owner and a metric; compare them with the baseline; decide what to scale and what to stop.</p></div>
+</div>
+<!-- COPY: prompt de análise de prontidão -->
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-purple-400">Goal:</strong> <span class="text-neutral-300">platform readiness assessment and 90-day adoption plan.</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copy</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900">Act as an AI platform architect and critical reviewer.
+Company: &lt;industry, size, approximate number of departments&gt;
+What’s already in place: &lt;gateway? SSO? logs? evaluation? cost by team?&gt;
+AI tools currently in use (official and unofficial): &lt;list&gt;
+Pilot use cases: &lt;name · area · status · current metric&gt;
+Constraints: &lt;LGPD, regulated industry, data that cannot leave the country, budget&gt;
+
+Deliver, in this order:
+1. A readiness table with the rows Gateway, Identity, Auditing,
+   SLOs, FinOps, Adoption—and the columns: current state | gap | risk if left as is | next action.
+2. The 3 biggest shadow AI risks in my situation and the official alternative for each.
+3. A 90-day plan in 4 phases, with a deliverable and a “done” criterion for each phase.
+4. The adoption metrics I should measure. Don’t invent benchmark numbers:
+   wherever a value is needed, write “measure baseline.”
+5. What you assumed due to missing information, in a separate list.</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">How to check:</strong> Each table row must have a next action with a possible owner and deadline; if “implement governance” appears without saying what that means, ask for details. Check the list of assumptions: anything incorrect there invalidates the parts of the plan that depend on it. Don’t paste client names or personal data into the prompt.</p>
+</div>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Why learn</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-7-t7-p3" data-sum="porque">The value of AI in a company comes from many people using it well for small tasks, more than from one heroic project. The platform provides security; adoption delivers returns. Leaders who bring both together avoid the risks of shadow AI and the waste of an empty infrastructure.</p>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Key concepts</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Shadow AI</div><div class="text-xs text-neutral-400">Uncontrolled AI</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Champions</div><div class="text-xs text-neutral-400">a point person in each area</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Use case catalog</div><div class="text-xs text-neutral-400">owner, metric, status</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Baseline</div><div class="text-xs text-neutral-400">measure before comparing</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Mark as read</span>
+<span class="inema-label-done">Read</span>
+</button>
+</div>
+</div>
+</section>
+<!-- RESUMO -->
+<section class="mb-8">
+<div class="bg-gradient-to-br from-purple-900/40 via-dark-800 to-dark-800 rounded-xl border border-purple-500/30 p-6 sm:p-8">
+<h2 class="text-2xl font-bold mb-6">✅ Module summary</h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start gap-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">A platform, not a project</strong><span class="text-neutral-400"> — shared services and a paved path for every team.</span></div></div>
+<div class="flex items-start gap-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">Everything goes through the gateway</strong><span class="text-neutral-400"> — logical routes, limits, fallback, and logging in one place.</span></div></div>
+<div class="flex items-start gap-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">Identity before search, a trace for every response</strong><span class="text-neutral-400"> — inherited permissions and the ability to reconstruct any response, with retention aligned with the LGPD.</span></div></div>
+<div class="flex items-start gap-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">SLOs across three dimensions and cost per result</strong><span class="text-neutral-400"> — availability, latency, and quality; FinOps costs attributed by team.</span></div></div>
+<div class="flex items-start gap-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">Adoption is part of the architecture</strong><span class="text-neutral-400"> — secure access, champions, and a catalog beat shadow AI.</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-purple-400 mb-2">Next module:</h3>
+<p class="text-neutral-300">3.8 — AI Leadership and Strategy 🧭</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="index.html">← Back to Track</a>
+<a class="flex-1 text-center px-6 py-3 bg-purple-700 text-white rounded-lg font-semibold hover:bg-purple-600 transition-colors" href="modulo-3-8.html">Next module →</a>
+</div>
+</div>
+</section>
+</article>
+</div>
+</div>
+</main>
+<footer class="border-t border-dark-600 py-8 mt-8">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>FTD — Digital Transformation Training · open and free content · 2026 · <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" rel="noopener" target="_blank">INEMA.CLUB</a> - <a class="text-amber-700 dark:text-slate-300 hover:underline" href="https://inema.pro" rel="noopener" target="_blank">PRO</a></p>
+</div>
+</footer>
+<!-- SCRIPTS NÚCLEO v1 -->
+<script>
+    function toggleTopic(button) {
+      var topicItem = button.closest('.topic-item');
+      if (!topicItem) return;
+      var explanation = topicItem.querySelector('.topic-explanation');
+      var willOpen = !explanation.classList.contains('active');
+      explanation.classList.toggle('active');
+      button.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+    }
+    function openModal(id) { var m = document.getElementById(id); if (m) { m.classList.remove('hidden'); document.body.style.overflow = 'hidden'; } }
+    function closeModal() { document.querySelectorAll('.modal').forEach(function (m) { m.classList.add('hidden'); }); document.body.style.overflow = 'auto'; }
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
+    function copyCode(btn) {
+      var pre = btn.closest('[data-copy-box]').querySelector('pre');
+      var txt = pre ? pre.innerText : '';
+      var done = function () { var o = btn.getAttribute('data-label-ok') || 'Copiado'; var t = btn.textContent; btn.textContent = o; setTimeout(function () { btn.textContent = t; }, 1500); };
+      try { navigator.clipboard.writeText(txt).then(done, done); } catch (e) { done(); }
+    }
+    (function () {
+      var themeToggle = document.getElementById('theme-toggle');
+      var darkIcon = document.getElementById('theme-toggle-dark-icon');
+      var lightIcon = document.getElementById('theme-toggle-light-icon');
+      var html = document.documentElement;
+      function sync() { var isDark = html.classList.contains('dark'); if (darkIcon) darkIcon.classList.toggle('hidden', isDark); if (lightIcon) lightIcon.classList.toggle('hidden', !isDark); }
+      sync();
+      if (themeToggle) themeToggle.addEventListener('click', function () {
+        html.classList.toggle('dark'); var nowDark = html.classList.contains('dark'); html.style.colorScheme = nowDark ? 'dark' : 'light';
+        try { localStorage.setItem('theme', nowDark ? 'dark' : 'light'); } catch (e) {}
+        try { var p = JSON.parse(localStorage.getItem('inema.prefs') || '{}'); p.theme = nowDark ? 'inema-dark' : 'claro'; localStorage.setItem('inema.prefs', JSON.stringify(p)); } catch (e) {}
+        sync();
+      });
+    })();
+  </script>
+<!-- learn.js + INEMA.init() POR ÚLTIMO -->
+<script src="../../assets/learn.js"></script>
+<script>
+    if (window.INEMA && typeof window.INEMA.init === 'function') { window.INEMA.init({ autoResume: true }); }
+  </script>
+</body>
+</html>

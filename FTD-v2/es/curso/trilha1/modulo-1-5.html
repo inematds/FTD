@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="ftd-v2-es" name="inema-course"/>
+<title>Módulo 1.5 · Creatividad visual con IA | FTD v2</title>
+<meta content="Generar y editar imágenes y videos con intención: composición, estilo, consistencia y derechos de uso." name="description"/>
+<meta content="Módulo 1.5 · Creatividad visual con IA | FTD v2" property="og:title"/>
+<meta content="Generar y editar imágenes y videos con intención: composición, estilo, consistencia y derechos de uso." property="og:description"/>
+<!-- ANTI-FOUC (Erro #18) — primeiro script do head -->
+<script>
+(function () {
+  try {
+    var html = document.documentElement;
+    var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+    function clone(o) { var r = {}; for (var x in o) r[x] = o[x]; return r; }
+    var p = clone(DEF);
+    try {
+      var raw = localStorage.getItem('inema.prefs');
+      if (raw) {
+        var parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === 'object') {
+          for (var k in DEF) if (parsed[k] != null) p[k] = parsed[k];
+        }
+      } else {
+        var legacy = localStorage.getItem('theme');
+        if (legacy === 'light') p.theme = 'claro';
+        else if (legacy === 'dark') p.theme = 'inema-dark';
+      }
+    } catch (e) { p = clone(DEF); }
+
+    var THEMES = {
+      'inema-dark': { dark: true,  attr: null,        cs: 'dark'  },
+      'claro':      { dark: false, attr: null,        cs: 'light' },
+      'sepia':      { dark: false, attr: 'sepia',     cs: 'light' },
+      'foco':       { dark: null,  attr: 'foco',      cs: null    },
+      'contraste':  { dark: true,  attr: 'contraste', cs: 'dark'  }
+    };
+    var t = THEMES[p.theme] || THEMES['inema-dark'];
+
+    if (t.dark === true) html.classList.add('dark');
+    else if (t.dark === false) html.classList.remove('dark');
+
+    if (t.attr) html.setAttribute('data-theme', t.attr);
+    else html.removeAttribute('data-theme');
+
+    html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark') ? 'dark' : 'light'));
+
+    html.setAttribute('data-font', p.font || 'inter');
+    html.setAttribute('data-accent', p.accent || 'emerald');
+
+    var s = html.style;
+    var scale = (+p.fontScale || 100);
+    s.setProperty('--inema-font-scale', (scale / 100).toString());
+    s.setProperty('font-size', scale + '%');
+    s.setProperty('--measure', (+p.lineWidth || 68) + 'ch');
+    s.setProperty('--lh-body', (+p.leading || 1.7).toString());
+    var fam = p.font === 'system'
+      ? 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif'
+      : (p.font === 'leitura'
+        ? '"Atkinson Hyperlegible", "Inter", system-ui, sans-serif'
+        : '"Inter", system-ui, sans-serif');
+    s.setProperty('--font-body', fam);
+
+    var ACC = {
+      emerald: [152, 76, 45], blue: [217, 91, 60], purple: [258, 90, 66],
+      amber: [38, 92, 50], teal: [174, 72, 41], rose: [350, 89, 60]
+    };
+    var a = ACC[p.accent] || ACC.emerald;
+    s.setProperty('--accent-h', a[0] + '');
+    s.setProperty('--accent-s', a[1] + '%');
+    s.setProperty('--accent-l', a[2] + '%');
+    s.setProperty('--accent', 'hsl(' + a[0] + ' ' + a[1] + '% ' + a[2] + '%)');
+  } catch (err) {
+    try { document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme = 'dark'; } catch (e) {}
+  }
+})();
+</script>
+<!-- MANIFESTO do curso (Erro #28) — idêntico em todas as páginas -->
+<script data-inema-manifest="" type="application/json">
+{
+  "course": "ftd-v2-es",
+  "tracks": [
+    {
+      "n": "1",
+      "title": "Principiante",
+      "modules": [
+        {
+          "id": "1-1",
+          "title": "Impacto de la IA",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-1.html"
+        },
+        {
+          "id": "1-2",
+          "title": "Navegar el mundo digital",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-2.html"
+        },
+        {
+          "id": "1-3",
+          "title": "Ingeniería de prompts",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-3.html"
+        },
+        {
+          "id": "1-4",
+          "title": "Asistentes y agentes de IA",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-4.html"
+        },
+        {
+          "id": "1-5",
+          "title": "Creatividad visual con IA",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-5.html"
+        },
+        {
+          "id": "1-6",
+          "title": "Marketing y ventas con IA",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-6.html"
+        },
+        {
+          "id": "1-7",
+          "title": "Automatización de procesos",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-7.html"
+        },
+        {
+          "id": "1-8",
+          "title": "Inteligencia artificial avanzada",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-8.html"
+        },
+        {
+          "id": "1-9",
+          "title": "Negocios y monetización con IA",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-9.html"
+        }
+      ]
+    },
+    {
+      "n": "2",
+      "title": "Técnico",
+      "modules": [
+        {
+          "id": "2-1",
+          "title": "Desarrollo con APIs de IA",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-1.html"
+        },
+        {
+          "id": "2-2",
+          "title": "Arquitectura de aplicaciones con IA",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-2.html"
+        },
+        {
+          "id": "2-3",
+          "title": "RAG y bases de conocimiento",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-3.html"
+        },
+        {
+          "id": "2-4",
+          "title": "Fine-tuning y personalización",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-4.html"
+        },
+        {
+          "id": "2-5",
+          "title": "Agentes y flujos de trabajo complejos",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-5.html"
+        },
+        {
+          "id": "2-6",
+          "title": "Visión artificial avanzada",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-6.html"
+        },
+        {
+          "id": "2-7",
+          "title": "NLP y procesamiento de texto",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-7.html"
+        },
+        {
+          "id": "2-8",
+          "title": "MLOps y producción",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-8.html"
+        },
+        {
+          "id": "2-9",
+          "title": "Ética y gobernanza de IA",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-9.html"
+        }
+      ]
+    },
+    {
+      "n": "3",
+      "title": "Masterclass",
+      "modules": [
+        {
+          "id": "3-1",
+          "title": "Arquitectura de IA a gran escala",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-1.html"
+        },
+        {
+          "id": "3-2",
+          "title": "Modelos personalizados y propietarios",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-2.html"
+        },
+        {
+          "id": "3-3",
+          "title": "IA multimodal avanzada",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-3.html"
+        },
+        {
+          "id": "3-4",
+          "title": "Investigación y artículos de IA",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-4.html"
+        },
+        {
+          "id": "3-5",
+          "title": "Aprendizaje por refuerzo en IA",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-5.html"
+        },
+        {
+          "id": "3-6",
+          "title": "Seguridad y red teaming",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-6.html"
+        },
+        {
+          "id": "3-7",
+          "title": "IA en producción — escala enterprise",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-7.html"
+        },
+        {
+          "id": "3-8",
+          "title": "Liderazgo y estrategia en IA",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-8.html"
+        },
+        {
+          "id": "3-9",
+          "title": "Futuro de la IA y AGI",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-9.html"
+        }
+      ]
+    }
+  ]
+}
+</script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#0c0c10', 800: '#16161e', 700: '#1e1e28', 600: '#272730', 500: '#33333f' } }, fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'], display: ['Sora', 'Inter', 'sans-serif'], mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'] } } } }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Sora:wght@600;700;800&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    h1, h2, h3, h4, .font-display { font-family: 'Sora', 'Inter', sans-serif; }
+    .dark body { background-color: #0c0c10; }
+    .dark .text-neutral-100 { color: #e9e9ee; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+    pre { white-space: pre-wrap; word-break: break-word; }
+    pre, code, .font-mono { font-family: 'JetBrains Mono', ui-monospace, monospace; }
+
+    /* Light mode — Parte 1: base */
+    html:not(.dark) body { background-color: #f6f7f9; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800\/50 { background-color: #f6f7f9; }
+    html:not(.dark) .bg-dark-700 { background-color: #eceef2; }
+    html:not(.dark) .bg-dark-700\/50 { background-color: #f1f2f5; }
+    html:not(.dark) .bg-dark-700\/30 { background-color: #f4f5f7; }
+    html:not(.dark) .bg-dark-600 { background-color: #e1e3ea; }
+    html:not(.dark) .hover\:bg-dark-600:hover { background-color: #d6d9e1; }
+    html:not(.dark) .hover\:bg-dark-700\/50:hover { background-color: #eceef2; }
+    html:not(.dark) .text-neutral-100 { color: #1a1a22; }
+    html:not(.dark) .text-neutral-200 { color: #26262f; }
+    html:not(.dark) .text-neutral-300 { color: #3f3f4a; }
+    html:not(.dark) .text-neutral-400 { color: #5b5b68; }
+    html:not(.dark) .text-neutral-500 { color: #62626e; }
+    html:not(.dark) .border-dark-600 { border-color: #e1e3ea; }
+    html:not(.dark) .border-dark-700 { border-color: #e8e9ee; }
+    html:not(.dark) .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #e1e3ea; }
+    html:not(.dark) .bg-black\/40 { background-color: #f1f2f5; }
+    html:not(.dark) pre.code-dark { background-color: #1a1a22; color: #e9e9ee; }
+
+    /* Light mode — Parte 2: acento das 3 trilhas (texto -700, nunca -400 no claro) */
+    html:not(.dark) .text-emerald-400 { color: #047857; }
+    html:not(.dark) .text-emerald-300 { color: #047857; }
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #047857; }
+    html:not(.dark) .bg-emerald-500\/20 { background-color: rgba(4,120,87,0.12); }
+    html:not(.dark) .bg-emerald-500\/10 { background-color: rgba(4,120,87,0.08); }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(4,120,87,0.08); }
+    html:not(.dark) .bg-emerald-900\/20 { background-color: rgba(4,120,87,0.07); }
+    html:not(.dark) .bg-emerald-900\/30 { background-color: rgba(4,120,87,0.08); }
+    html:not(.dark) .bg-emerald-900\/40 { background-color: rgba(4,120,87,0.09); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(4,120,87,0.28); }
+    html:not(.dark) .hover\:border-emerald-500\/30:hover { border-color: rgba(4,120,87,0.4); }
+    html:not(.dark) .text-blue-400 { color: #1d4ed8; }
+    html:not(.dark) .text-blue-300 { color: #1d4ed8; }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #1d4ed8; }
+    html:not(.dark) .bg-blue-500\/20 { background-color: rgba(29,78,216,0.12); }
+    html:not(.dark) .bg-blue-500\/10 { background-color: rgba(29,78,216,0.08); }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(29,78,216,0.08); }
+    html:not(.dark) .bg-blue-900\/20 { background-color: rgba(29,78,216,0.07); }
+    html:not(.dark) .bg-blue-900\/30 { background-color: rgba(29,78,216,0.08); }
+    html:not(.dark) .bg-blue-900\/40 { background-color: rgba(29,78,216,0.09); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(29,78,216,0.28); }
+    html:not(.dark) .hover\:border-blue-500\/30:hover { border-color: rgba(29,78,216,0.4); }
+    html:not(.dark) .text-purple-400 { color: #6d28d9; }
+    html:not(.dark) .text-purple-300 { color: #6d28d9; }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #6d28d9; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(109,40,217,0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(109,40,217,0.08); }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(109,40,217,0.08); }
+    html:not(.dark) .bg-purple-900\/20 { background-color: rgba(109,40,217,0.07); }
+    html:not(.dark) .bg-purple-900\/30 { background-color: rgba(109,40,217,0.08); }
+    html:not(.dark) .bg-purple-900\/40 { background-color: rgba(109,40,217,0.09); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(109,40,217,0.28); }
+    html:not(.dark) .hover\:border-purple-500\/30:hover { border-color: rgba(109,40,217,0.4); }
+
+    /* Light mode — Parte 3: gradientes + especiais */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #854d0e; }
+    html:not(.dark) .text-yellow-400 { color: #854d0e; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #713f12; }
+    html:not(.dark) .bg-primary\/10 { background-color: #FEF9C3; }
+    html:not(.dark) .border-primary\/30 { border-color: #EAB308; }
+    html:not(.dark) .text-red-400 { color: #b91c1c; }
+    html:not(.dark) .bg-red-900\/20 { background-color: rgba(185,28,28,0.07); }
+    html:not(.dark) .border-red-500\/30 { border-color: rgba(185,28,28,0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #075985; }
+    html:not(.dark) .bg-sky-900\/20 { background-color: rgba(3,105,161,0.07); }
+    html:not(.dark) .border-sky-500\/30 { border-color: rgba(3,105,161,0.25); }
+
+    /* Light mode — Parte 4: nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255,255,255,0.95); }
+
+    /* Parte 5: bordas suavizadas no DARK (Erro #15) */
+    .dark .border-dark-600 { border-color: #2a2a35; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #2a2a35; }
+
+    /* SVG: no claro, um fundo escuro emoldurado mantém o contraste do desenho */
+    html:not(.dark) .svg-frame { background-color: #12121a; }
+    @media (prefers-reduced-motion: reduce) { svg * { animation: none !important; transition: none !important; } }
+  </style>
+<link href="../../../assets/learn.css" rel="stylesheet"/>
+<link href="https://inematds.github.io/FTD/FTD-v2/curso/trilha1/modulo-1-5.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/FTD/FTD-v2/en/curso/trilha1/modulo-1-5.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/FTD/FTD-v2/es/curso/trilha1/modulo-1-5.html" hreflang="es" rel="alternate"/><link href="https://inematds.github.io/FTD/FTD-v2/curso/trilha1/modulo-1-5.html" hreflang="x-default" rel="alternate"/><link href="https://inematds.github.io/FTD/FTD-v2/es/curso/trilha1/modulo-1-5.html" rel="canonical"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(250,204,21,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha1/modulo-1-5.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="../../../en/curso/trilha1/modulo-1-5.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">EN</a><a href="modulo-1-5.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#FACC15">ES</a></div>
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14 gap-2">
+<!-- Logo + INEMA.CLUB -->
+<div class="flex items-center space-x-3 flex-shrink-0">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🚀</span>
+<span class="font-display font-bold text-lg hidden sm:inline">FTD</span>
+</a>
+<span class="text-neutral-600 hidden sm:inline">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium hidden sm:inline" href="https://inema.club" rel="noopener" target="_blank">INEMA.CLUB</a>
+<span class="text-neutral-600 hidden sm:inline">-</span>
+<a class="text-amber-700 dark:text-slate-300 hover:underline text-sm font-medium hidden sm:inline" href="https://inema.pro" rel="noopener" target="_blank">PRO</a>
+</div>
+<!-- Trilhas + controles de aprendizagem + theme toggle -->
+<div class="flex items-center gap-1 sm:gap-1.5">
+<a class="px-2.5 py-1.5 rounded-lg text-sm font-semibold text-emerald-400 bg-emerald-500/10 whitespace-nowrap" href="index.html">
+<span class="lg:hidden">T1</span><span class="hidden lg:inline">Principiante</span>
+</a>
+<a class="px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors whitespace-nowrap" href="../trilha2/index.html">
+<span class="lg:hidden">T2</span><span class="hidden lg:inline">Técnico</span>
+</a>
+<a class="px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors whitespace-nowrap" href="../trilha3/index.html">
+<span class="lg:hidden">T3</span><span class="hidden lg:inline">Masterclass</span>
+</a>
+<span class="w-px h-6 bg-dark-600 mx-1 hidden sm:inline-block"></span>
+<!-- Minha jornada (abre o painel global; badge = % do curso) -->
+<button class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-300 hover:text-neutral-100 hover:bg-dark-700 transition-colors" data-inema-journey-open="" type="button">
+<svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="16"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+<span class="hidden md:inline">Mi recorrido</span>
+<span class="inema-journey-badge" data-count="0" data-inema-journey-badge=""></span>
+</button>
+<!-- Aparência (gatilho + painel obrigatório) -->
+<div class="relative">
+<button aria-expanded="false" class="inema-appearance-trigger inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-300 hover:text-neutral-100 transition-colors" data-inema-appearance-toggle="#inema-appearance-panel" type="button">
+<svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="16"><circle cx="12" cy="12" r="9"></circle><path d="M12 3v18"></path><path d="M12 3a9 9 0 0 1 0 18" fill="currentColor"></path></svg>
+<span class="hidden md:inline">Apariencia</span>
+</button>
+<div class="inema-appearance-pop right-0" data-inema-appearance="" id="inema-appearance-panel">
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Tema</span>
+<div class="inema-segment">
+<button data-inema-set-theme="inema-dark" type="button">Oscuro</button>
+<button data-inema-set-theme="claro" type="button">Claro</button>
+<button data-inema-set-theme="sepia" type="button">Sepia</button>
+</div>
+<div class="inema-segment">
+<button data-inema-set-theme="foco" type="button">Enfoque</button>
+<button data-inema-set-theme="contraste" type="button">Alto contraste</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Fuente</span>
+<div class="inema-segment">
+<button data-inema-set-font="inter" type="button">Inter</button>
+<button data-inema-set-font="system" type="button">Sistema</button>
+<button data-inema-set-font="leitura" type="button">Lectura</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Tamaño</span>
+<div class="inema-segment">
+<button data-inema-set-fontscale="100" type="button">A</button>
+<button data-inema-set-fontscale="112" type="button">A+</button>
+<button data-inema-set-fontscale="125" type="button">A++</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Ancho</span>
+<div class="inema-segment">
+<button data-inema-set-linewidth="60" type="button">Estrecho</button>
+<button data-inema-set-linewidth="68" type="button">Mediano</button>
+<button data-inema-set-linewidth="75" type="button">Ancho</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Interlineado</span>
+<div class="inema-segment">
+<button data-inema-set-leading="1.45" type="button">Compacto</button>
+<button data-inema-set-leading="1.7" type="button">Cómodo</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Acento</span>
+<div class="inema-accent-grid">
+<button aria-label="Acento esmeralda" data-inema-set-accent="emerald" type="button"></button>
+<button aria-label="Acento azul" data-inema-set-accent="blue" type="button"></button>
+<button aria-label="Acento violeta" data-inema-set-accent="purple" type="button"></button>
+<button aria-label="Acento ámbar" data-inema-set-accent="amber" type="button"></button>
+<button aria-label="Acento verde azulado" data-inema-set-accent="teal" type="button"></button>
+<button aria-label="Acento rosa" data-inema-set-accent="rose" type="button"></button>
+</div>
+</div>
+</div>
+</div>
+<!-- Theme toggle sol/lua (núcleo v1; o JS o mantém coerente com o tema) -->
+<button aria-label="Alternar tema claro/oscuro" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20">
+<path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+</svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20">
+<path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path>
+</svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<main data-inema-module="1-5" data-inema-track="1" id="conteudo">
+<!-- BREADCRUMB -->
+<nav aria-label="Ruta de navegación" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-emerald-400" href="../../index.html">Inicio</a><span>/</span>
+<a class="hover:text-emerald-400" href="index.html">Ruta 1</a><span>/</span>
+<span class="text-emerald-400">Módulo 1.5</span>
+</div>
+</nav>
+<!-- HEADER do módulo -->
+<header class="bg-gradient-to-br from-emerald-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-emerald-500/20 text-emerald-400 text-xs font-semibold rounded-full mb-4">MÓDULO 1.5</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🎨 Creatividad visual con IA</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">Cómo la IA transforma una frase en una imagen, cómo escribir una solicitud visual para obtener lo que imaginaste, cómo mantener igual a un personaje de una pieza a otra, cómo hacer videos cortos y —antes de publicar— <strong class="text-emerald-400">qué puedes usar y qué no</strong>. Al final, llevarás un brief hasta tener la pieza lista.</p>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">7</div><div class="text-xs text-neutral-400">Temas</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">~45</div><div class="text-xs text-neutral-400">Minutos</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">Inicial</div><div class="text-xs text-neutral-400">Nivel</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">Práctica</div><div class="text-xs text-neutral-400">Tipo</div></div>
+</div>
+<div class="flex items-center gap-3 mt-8">
+<div aria-label="Progreso del módulo 1.5" class="inema-ring" data-inema-meter="modulo:1-5"><span class="inema-ring__value" data-inema-meter-pct="">0%</span></div>
+<div class="inema-meter-label" data-inema-meter="modulo:1-5"><strong data-inema-meter-frac="">0 de 0</strong> temas leídos · <span data-inema-section-counter="">Sección 1 de 7</span></div>
+</div>
+</div>
+</header>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+<div class="lg:flex lg:gap-10">
+<!-- TOC sticky + scrollspy -->
+<aside class="hidden lg:block lg:w-56 flex-shrink-0">
+<nav aria-label="Índice de la página" class="sticky top-20 self-start" data-inema-toc="">
+<p class="text-xs font-semibold uppercase tracking-wide text-neutral-500 mb-3">En este módulo</p>
+<ol class="space-y-1 text-sm">
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-emerald-400" href="#topico-1">1. Del ruido a la imagen</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-emerald-400" href="#topico-2">2. Anatomía de la solicitud</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-emerald-400" href="#topico-3">3. Herramientas según la tarea</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-emerald-400" href="#topico-4">4. Consistencia y edición</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-emerald-400" href="#topico-5">5. Video y sonido</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-emerald-400" href="#topico-6">6. Derechos y etiquetas</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-emerald-400" href="#topico-7">7. Del brief a la pieza</a></li>
+</ol>
+</nav>
+</aside>
+<!-- ARTIGO -->
+<article class="inema-prose flex-1 min-w-0">
+<h2 class="text-2xl font-bold mb-8">Contenido detallado</h2>
+<!-- TÓPICO 1 -->
+<section class="mb-16" data-inema-topic="modulo-1-5#topico-1" id="topico-1" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="como uma frase vira imagem">🖼️ Del ruido a la imagen</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m1-5-t1-p1">Cuando escribes «montañas al atardecer, estilo de póster» y recibes una imagen segundos después, parece que la IA buscó la imagen en algún lugar. No la buscó. La <strong class="text-neutral-100">dibujó desde cero</strong>. La mayoría de los generadores de imágenes actuales empiezan con una pantalla llena de puntos aleatorios —como la estática de un televisor antiguo— y van limpiando ese desorden, paso a paso, en la dirección de lo que describe tu texto.</p>
+<div class="bg-dark-800 border border-emerald-500/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-emerald-400 font-semibold mb-1">🌱 ¿Nuevo aquí?</p>
+<p class="text-sm text-neutral-300" data-inema-block="m1-5-t1-p2"><strong>Modelo de difusión</strong> es el tipo de IA que aprendió a quitar el ruido de las imágenes. Durante el entrenamiento, vio millones de fotos y dibujos con descripciones y aprendió el camino de regreso: de la mancha a la imagen nítida. <strong>Ruido</strong> es ese granulado aleatorio del comienzo. <strong>Prompt visual</strong> es la descripción que escribes: guía cada paso de la limpieza.</p>
+</div>
+<div class="bg-gradient-to-br from-emerald-900/30 to-dark-800 rounded-xl border border-emerald-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">La generación de imágenes con IA consiste en crear una imagen nueva a partir de un texto (o de una imagen de referencia). El modelo no copia una foto ya hecha: construye píxeles que encajan con los patrones que aprendió y con lo que pediste.</p>
+</div>
+<!-- SVG 1: difusão -->
+<figure class="svg-frame rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="Cuatro cuadros secuenciales muestran la difusión: primero, solo ruido; después, manchas de color; luego, formas de sol y montañas todavía borrosas; y, por último, la imagen nítida. Una barra con el prompt en la parte superior guía todas las etapas." class="w-full h-auto" role="img" viewbox="0 0 900 270">
+<defs>
+<filter height="160%" id="m15-glow" width="160%" x="-30%" y="-30%"><fegaussianblur result="b" stddeviation="2"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<filter height="200%" id="m15-blur" width="200%" x="-50%" y="-50%"><fegaussianblur stddeviation="9"></fegaussianblur></filter>
+<pattern height="28" id="m15-grid" patternunits="userSpaceOnUse" width="28"><circle cx="1.2" cy="1.2" fill="#10b981" opacity="0.13" r="1.2"></circle></pattern>
+<marker id="m15-ah" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#34d399"></path></marker>
+<marker id="m15-ahc" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#38bdf8"></path></marker>
+<style>@keyframes m15dash{to{stroke-dashoffset:-24}} .m15-flow{stroke-dasharray:6 6;animation:m15dash 1.6s linear infinite}</style>
+</defs>
+<rect fill="url(#m15-grid)" height="270" width="900"></rect>
+<g font-family="Inter,sans-serif">
+<rect fill="#0e1b26" height="34" rx="10" stroke="#38bdf8" stroke-width="2" width="840" x="30" y="12"></rect>
+<text fill="#e0f2fe" font-size="14" text-anchor="middle" x="450" y="34">prompt: «montañas al atardecer, estilo de póster, colores cálidos»</text>
+<path d="M110,46 L110,64 M330,46 L330,64 M550,46 L550,64 M770,46 L770,64" stroke="#38bdf8" stroke-dasharray="3 4" stroke-opacity="0.6" stroke-width="1.5"></path>
+<!-- quadro 1: ruído -->
+<rect fill="#0b1410" height="140" rx="10" stroke="#34d399" stroke-width="2" width="160" x="30" y="66"></rect>
+<g fill="#a7f3d0" fill-opacity="0.55">
+<rect height="6" width="6" x="44" y="80"></rect><rect height="6" width="6" x="70" y="96"></rect><rect height="6" width="6" x="98" y="78"></rect><rect height="6" width="6" x="126" y="104"></rect><rect height="6" width="6" x="160" y="86"></rect>
+<rect height="6" width="6" x="52" y="122"></rect><rect height="6" width="6" x="84" y="140"></rect><rect height="6" width="6" x="114" y="128"></rect><rect height="6" width="6" x="146" y="150"></rect><rect height="6" width="6" x="172" y="126"></rect>
+<rect height="6" width="6" x="40" y="168"></rect><rect height="6" width="6" x="72" y="184"></rect><rect height="6" width="6" x="104" y="170"></rect><rect height="6" width="6" x="136" y="188"></rect><rect height="6" width="6" x="166" y="176"></rect>
+</g>
+<g fill="#38bdf8" fill-opacity="0.5">
+<rect height="5" width="5" x="60" y="108"></rect><rect height="5" width="5" x="132" y="82"></rect><rect height="5" width="5" x="94" y="158"></rect><rect height="5" width="5" x="154" y="114"></rect><rect height="5" width="5" x="48" y="146"></rect><rect height="5" width="5" x="120" y="192"></rect>
+</g>
+<path class="m15-flow" d="M194,136 L244,136" fill="none" marker-end="url(#m15-ah)" stroke="#34d399" stroke-width="2.5"></path>
+<!-- quadro 2: manchas -->
+<rect fill="#0b1410" height="140" rx="10" stroke="#34d399" stroke-width="2" width="160" x="250" y="66"></rect>
+<g filter="url(#m15-blur)">
+<circle cx="360" cy="110" fill="#fbbf24" fill-opacity="0.5" r="22"></circle>
+<ellipse cx="310" cy="170" fill="#34d399" fill-opacity="0.45" rx="50" ry="22"></ellipse>
+<ellipse cx="370" cy="175" fill="#38bdf8" fill-opacity="0.4" rx="34" ry="18"></ellipse>
+</g>
+<path class="m15-flow" d="M414,136 L464,136" fill="none" marker-end="url(#m15-ah)" stroke="#34d399" stroke-width="2.5"></path>
+<!-- quadro 3: formas -->
+<rect fill="#0b1410" height="140" rx="10" stroke="#38bdf8" stroke-width="2" width="160" x="470" y="66"></rect>
+<circle cx="582" cy="108" fill="#fbbf24" fill-opacity="0.55" r="18"></circle>
+<polygon fill="#34d399" fill-opacity="0.45" points="480,196 530,130 570,176 600,146 622,196"></polygon>
+<g fill="#a7f3d0" fill-opacity="0.35"><rect height="4" width="4" x="490" y="90"></rect><rect height="4" width="4" x="540" y="100"></rect><rect height="4" width="4" x="610" y="170"></rect><rect height="4" width="4" x="500" y="150"></rect></g>
+<path class="m15-flow" d="M634,136 L684,136" fill="none" marker-end="url(#m15-ahc)" stroke="#38bdf8" stroke-width="2.5"></path>
+<!-- quadro 4: imagem -->
+<rect fill="#1a1020" filter="url(#m15-glow)" height="140" rx="10" stroke="#38bdf8" stroke-width="2.5" width="160" x="690" y="66"></rect>
+<circle cx="800" cy="110" fill="#fbbf24" r="18"></circle>
+<polygon fill="#10b981" points="700,196 748,124 786,172 816,140 842,196"></polygon>
+<polygon fill="#ecfdf5" fill-opacity="0.85" points="740,136 748,124 756,136"></polygon>
+<line stroke="#38bdf8" stroke-width="2" x1="700" x2="842" y1="196" y2="196"></line>
+<text fill="#a7f3d0" font-size="13" font-weight="700" text-anchor="middle" x="110" y="230">1 · solo ruido</text>
+<text fill="#a7f3d0" font-size="13" font-weight="700" text-anchor="middle" x="330" y="230">2 · manchas de color</text>
+<text fill="#bae6fd" font-size="13" font-weight="700" text-anchor="middle" x="550" y="230">3 · aparecen las formas</text>
+<text fill="#e0f2fe" font-size="13" font-weight="700" text-anchor="middle" x="770" y="230">4 · imagen nítida</text>
+<text fill="#7dd3fc" font-size="12" text-anchor="middle" x="450" y="258">en cada paso, el modelo quita un poco de ruido, siempre mirando el prompt</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-emerald-400">Cómo leer:</strong> sigue de izquierda a derecha. El prompt de arriba es la única «brújula» del modelo durante toda la limpieza. Si la solicitud es vaga, el modelo completa los vacíos con lo más común en los datos; por eso, las imágenes de solicitudes genéricas parecen todas iguales.</figcaption>
+</figure>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ El generador hace bien</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-emerald-400">✓</span><span>Ilustraciones, escenarios y conceptos visuales para publicaciones y presentaciones.</span></li>
+<li class="flex items-start gap-2"><span class="text-emerald-400">✓</span><span>Variaciones rápidas de una idea para que elijas.</span></li>
+<li class="flex items-start gap-2"><span class="text-emerald-400">✓</span><span>Fondos, texturas y escenas de productos para probar diseños.</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Aún requieren cuidado</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Manos, letras pequeñas y objetos con muchas partes repetidas.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Productos reales con detalles exactos (etiqueta, logotipo, medidas).</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Cualquier cosa que deba ser verdadera, como una foto de un evento.</span></li>
+</ul>
+</div>
+</div>
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m1-5-t1-p3" data-sum="porque">Saber que la imagen nace del ruido guiado por el texto explica por qué la misma frase genera resultados diferentes, por qué fallan los detalles finos y por qué una solicitud bien descrita ahorra intentos. Dejas de «jugar a la suerte» y empiezas a dirigir.</p>
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Difusión</div><div class="text-xs text-neutral-400">limpiar el ruido hasta obtener la imagen</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Prompt visual</div><div class="text-xs text-neutral-400">la descripción que guía</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Generación</div><div class="text-xs text-neutral-400">imagen nueva, no una búsqueda</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Vacío</div><div class="text-xs text-neutral-400">lo que no dices, el modelo lo inventa</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 2 -->
+<section class="mb-16" data-inema-topic="modulo-1-5#topico-2" id="topico-2" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="seis camadas de um bom pedido visual">🧱 Anatomía de la solicitud visual</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m1-5-t2-p1">Hay listas con decenas de «categorías» de prompts visuales. No necesitas memorizar ninguna. En la práctica, una solicitud que funciona responde a <strong class="text-neutral-100">seis preguntas</strong>, en orden de importancia: qué aparece, dónde, con qué estilo, con qué luz, desde qué ángulo y en qué formato. Piensa como un director de fotografía que explica la escena al equipo.</p>
+<div class="bg-gradient-to-br from-emerald-900/30 to-dark-800 rounded-xl border border-emerald-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">La anatomía de la solicitud visual sigue un orden fijo de seis capas —tema, escenario, estilo, luz, composición y formato con límites— que cubre lo que el modelo necesita saber para no completar los vacíos por su cuenta.</p>
+</div>
+<!-- SVG 2: camadas do prompt -->
+<figure class="svg-frame rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="Seis capas apiladas de un prompt visual, cada una con un ejemplo: tema, escenario, estilo y medio, luz, composición, formato y límites. La flecha lateral indica que las primeras capas son las más importantes." class="w-full h-auto" role="img" viewbox="0 0 900 350">
+<rect fill="url(#m15-grid)" height="350" width="900"></rect>
+<g font-family="Inter,sans-serif">
+<path d="M40,22 L40,316" fill="none" marker-end="url(#m15-ahc)" stroke="#38bdf8" stroke-width="2"></path>
+<text fill="#7dd3fc" font-size="12" text-anchor="middle" transform="rotate(-90 26 170)" x="26" y="170">de lo esencial al acabado</text>
+<rect fill="#0f1f18" height="38" rx="8" stroke="#34d399" stroke-width="2" width="190" x="62" y="16"></rect><text fill="#ecfdf5" font-size="14" font-weight="700" x="76" y="40">1 · Tema</text>
+<text fill="#d1fae5" font-size="13" x="272" y="40">una ceramista de 60 años moldeando un cuenco de barro</text>
+<rect fill="#0f1f18" height="38" rx="8" stroke="#34d399" stroke-width="2" width="190" x="62" y="66"></rect><text fill="#ecfdf5" font-size="14" font-weight="700" x="76" y="90">2 · Escenario</text>
+<text fill="#d1fae5" font-size="13" x="272" y="90">taller pequeño, estantes de madera con piezas secándose</text>
+<rect fill="#0f1f18" height="38" rx="8" stroke="#34d399" stroke-width="2" width="190" x="62" y="116"></rect><text fill="#ecfdf5" font-size="14" font-weight="700" x="76" y="140">3 · Estilo y medio</text>
+<text fill="#d1fae5" font-size="13" x="272" y="140">fotografía documental, colores naturales, grano ligero</text>
+<rect fill="#0e1b26" height="38" rx="8" stroke="#38bdf8" stroke-width="2" width="190" x="62" y="166"></rect><text fill="#e0f2fe" font-size="14" font-weight="700" x="76" y="190">4 · Luz</text>
+<text fill="#e0f2fe" font-size="13" x="272" y="190">luz suave de la mañana entrando por una ventana a la izquierda</text>
+<rect fill="#0e1b26" height="38" rx="8" stroke="#38bdf8" stroke-width="2" width="190" x="62" y="216"></rect><text fill="#e0f2fe" font-size="14" font-weight="700" x="76" y="240">5 · Composición</text>
+<text fill="#e0f2fe" font-size="13" x="272" y="240">plano medio, cámara a la altura de las manos, fondo desenfocado</text>
+<rect fill="#0e1b26" height="38" rx="8" stroke="#38bdf8" stroke-width="2.5" width="190" x="62" y="266"></rect><text fill="#e0f2fe" font-size="14" font-weight="700" x="76" y="290">6 · Formato y límites</text>
+<text fill="#e0f2fe" font-size="13" x="272" y="290">proporción 4:5, sin texto, sin logotipos, sin marca de agua</text>
+<text fill="#a7f3d0" font-size="12" x="272" y="334">Consejo: escribe con frases simples; las comas separan bien las capas</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-emerald-400">Cómo leer:</strong> lee de arriba hacia abajo. Si solo tienes tiempo para dos capas, escribe el tema y el escenario. Las capas inferiores refinan el resultado; la última dice lo que tú <em>no</em> quieres, y eso evita buena parte del retrabajo.</figcaption>
+</figure>
+<div class="overflow-x-auto mb-6">
+<table class="w-full text-sm border border-dark-600 rounded-xl overflow-hidden">
+<thead><tr class="bg-dark-700"><th class="text-left p-3 text-emerald-400">Pedido vago</th><th class="text-left p-3 text-emerald-400">Lo que inventa el modelo</th><th class="text-left p-3 text-emerald-400">Pedido dirigido</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr><td class="p-3 font-semibold">«una panadería»</td><td class="p-3 text-neutral-300">Ángulo, época, estilo, personas, ambiente.</td><td class="p-3 text-neutral-300">«mostrador de una panadería de barrio a las 6 h, panes en la vitrina, foto realista, luz cálida, plano abierto, 16:9»</td></tr>
+<tr><td class="p-3 font-semibold">«logo moderno»</td><td class="p-3 text-neutral-300">Colores, forma, tipo de letra, ícono.</td><td class="p-3 text-neutral-300">«ícono simple de una hoja estilizada, trazo único, verde y blanco, fondo liso, sin texto»</td></tr>
+<tr><td class="p-3 font-semibold">«persona feliz»</td><td class="p-3 text-neutral-300">Edad, ropa, lugar, expresión exagerada.</td><td class="p-3 text-neutral-300">«mujer de 40 años riéndose de una conversación en un café, foto espontánea, luz de ventana»</td></tr>
+</tbody>
+</table>
+</div>
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-emerald-400">Objetivo:</strong> <span class="text-neutral-300">transformar una idea suelta en un prompt visual con las seis capas.</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copiar</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900">Eres director de arte. Quiero una imagen para &lt;dónde se usará: publicación, portada, presentación&gt;.
+Mi idea, tal como se me ocurrió: &lt;descríbela en una o dos frases&gt;
+
+1. Hazme hasta 3 preguntas sobre lo que quedó poco claro.
+2. Después, escribe el prompt final en español, en un párrafo, en este orden:
+   tema, escenario, estilo y medio, luz, composición, formato y límites.
+3. Escribe también una versión corta (hasta 25 palabras) del mismo prompt.
+4. Enumera 2 variaciones de estilo diferentes para que las compare.</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">Cómo verificar:</strong> el prompt final debe tener las seis capas: señálalas con el dedo. Genera la imagen con la versión larga y con la corta; si la corta queda casi igual, las capas adicionales sobraban. Si queda muy diferente, ahí estaba tu intención.</p>
+</div>
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m1-5-t2-p2" data-sum="porque">Un guion fijo de seis capas sirve para cualquier herramienta, hoy y en la próxima versión. Reduce los intentos, hace que el resultado sea predecible y también sirve para explicarle la idea a un diseñador humano.</p>
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Tema</div><div class="text-xs text-neutral-400">quién o qué aparece</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Composición</div><div class="text-xs text-neutral-400">ángulo y encuadre</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Proporción</div><div class="text-xs text-neutral-400">1:1, 4:5, 9:16, 16:9</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Límites</div><div class="text-xs text-neutral-400">lo que no debe aparecer</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 3 -->
+<section class="mb-16" data-inema-topic="modulo-1-5#topico-3" id="topico-3" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="escolha pela tarefa, não pela moda">🧰 Herramientas según la tarea</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m1-5-t3-p1">La lista de herramientas de imagen cambia todos los meses, y el nombre del «mejor generador» cambia con la misma frecuencia. En vez de perseguir la novedad, empieza por la pregunta correcta: <strong class="text-neutral-100">¿cuál es la tarea?</strong> Crear desde cero, modificar una foto que ya tienes, poner texto legible en la imagen o ejecutar todo en tu propio computador son trabajos diferentes, y hay herramientas que funcionan mejor para cada uno.</p>
+<div class="bg-gradient-to-br from-emerald-900/30 to-dark-800 rounded-xl border border-emerald-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">Es un mapa de cuatro tareas visuales —crear desde cero, editar mediante instrucciones, transformar una imagen en otra y generar localmente— con ejemplos de herramientas conocidas para cada una. Los nombres y los precios cambian; las tareas permanecen.</p>
+</div>
+<div class="overflow-x-auto mb-6">
+<table class="w-full text-sm border border-dark-600 rounded-xl overflow-hidden">
+<thead><tr class="bg-dark-700"><th class="text-left p-3 text-emerald-400">Tarea</th><th class="text-left p-3 text-emerald-400">Ejemplos de herramientas</th><th class="text-left p-3 text-emerald-400">Cuándo usarla</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr><td class="p-3 font-semibold">Crear desde cero (texto → imagen)</td><td class="p-3 text-neutral-300">ChatGPT, Gemini, Midjourney, Ideogram, FLUX</td><td class="p-3 text-neutral-300">Ilustración, concepto, escena para una publicación o diapositiva.</td></tr>
+<tr><td class="p-3 font-semibold">Editar mediante instrucciones</td><td class="p-3 text-neutral-300">ChatGPT, Gemini, editores de fotos con IA (como Photoshop con relleno generativo)</td><td class="p-3 text-neutral-300">«Cambia el fondo por una playa», «elimina a la persona del fondo».</td></tr>
+<tr><td class="p-3 font-semibold">Imagen → imagen</td><td class="p-3 text-neutral-300">Los mismos generadores, enviando una foto de referencia</td><td class="p-3 text-neutral-300">Mantener la pose, el producto o el personaje y cambiar el estilo.</td></tr>
+<tr><td class="p-3 font-semibold">Generar en tu computador</td><td class="p-3 text-neutral-300">Stable Diffusion y FLUX en programas como ComfyUI</td><td class="p-3 text-neutral-300">Gran volumen, privacidad, control preciso: requiere una buena tarjeta gráfica.</td></tr>
+</tbody>
+</table>
+</div>
+<div class="bg-dark-800 border border-emerald-500/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-emerald-400 font-semibold mb-1">🌱 ¿Nuevo aquí?</p>
+<p class="text-sm text-neutral-300" data-inema-block="m1-5-t3-p2"><strong>Modelo abierto</strong> es un modelo cuyo archivo se puede descargar y ejecutar en tu computador, como varias versiones de Stable Diffusion y FLUX. <strong>Tarjeta gráfica</strong> (GPU) es el componente del computador que realiza los cálculos pesados de la generación. <strong>Licencia</strong> es el documento que indica qué puedes hacer con el modelo y con las imágenes: léelo antes de usarlo para trabajar.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-4"><p class="text-emerald-400 font-semibold text-sm mb-1">💬 Dentro del chat</p><p class="text-xs text-neutral-300" data-inema-block="m1-5-t3-p3">La forma más fácil de empezar: conversas, pides ajustes en español y la imagen cambia. Es una buena opción para quienes ya usan ChatGPT o Gemini en su día a día.</p></div>
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-4"><p class="text-emerald-400 font-semibold text-sm mb-1">🎛️ Generador especializado</p><p class="text-xs text-neutral-300" data-inema-block="m1-5-t3-p4">Más control sobre el estilo, la proporción y las variaciones. Conviene cuando la imagen es una parte importante de tu trabajo.</p></div>
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-4"><p class="text-emerald-400 font-semibold text-sm mb-1">🖥️ Local</p><p class="text-xs text-neutral-300" data-inema-block="m1-5-t3-p5">Sin enviar archivos a otros lugares y sin límite por mensaje. Requiere instalación y una máquina potente; es el siguiente paso, no el primero.</p></div>
+</div>
+<div class="bg-primary/10 border border-primary/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-primary font-semibold mb-1">💡 Consejo</p>
+<p class="text-sm text-neutral-300" data-inema-block="m1-5-t3-p6">Prueba el mismo prompt en dos herramientas antes de elegir una. Guarda las dos imágenes una al lado de la otra con el nombre de la herramienta. En diez minutos descubrirás cuál se adapta a tu tipo de pieza, sin confiar en rankings de terceros.</p>
+</div>
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m1-5-t3-p7" data-sum="porque">Elegir según la tarea evita suscribirte a tres servicios que hacen lo mismo y evita forzar una herramienta a hacer algo que hace mal. Cuando aparezca un generador nuevo, sabrás en qué fila de la tabla encaja.</p>
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Texto → imagen</div><div class="text-xs text-neutral-400">crear desde cero</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Edición mediante instrucciones</div><div class="text-xs text-neutral-400">cambiar con una frase</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Modelo abierto</div><div class="text-xs text-neutral-400">se ejecuta en tu computador</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Licencia</div><div class="text-xs text-neutral-400">lo que está permitido</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 4 -->
+<section class="mb-16" data-inema-topic="modulo-1-5#topico-4" id="topico-4" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="o mesmo personagem em todas as peças">🔁 Consistencia y edición</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m1-5-t4-p1">Una imagen bonita por sí sola es fácil. Lo difícil es la <strong class="text-neutral-100">segunda</strong>: el mismo personaje en otra pose, la misma paleta en la siguiente publicación, el mismo producto en otro escenario. Como cada generación empieza con un ruido nuevo, sin cuidado cada imagen queda «emparentada» con la anterior, pero no es igual. Para una marca o una serie, eso no sirve.</p>
+<div class="bg-gradient-to-br from-emerald-900/30 to-dark-800 rounded-xl border border-emerald-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">La consistencia consiste en mantener iguales el personaje, el producto, el estilo y la paleta en varias imágenes. Puedes lograrlo con una imagen de referencia fija, un texto base que repitas y ediciones puntuales en vez de volver a generar todo.</p>
+</div>
+<!-- SVG 3: ciclo de consistência -->
+<figure class="svg-frame rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="Ciclo de cuatro etapas alrededor de una referencia fija: generar variaciones, elegir la mejor, editar solo la región necesaria y aumentar la resolución. En el centro, la referencia fija con el personaje, la paleta y el estilo." class="w-full h-auto" role="img" viewbox="0 0 800 300">
+<rect fill="url(#m15-grid)" height="300" width="800"></rect>
+<g font-family="Inter,sans-serif">
+<path class="m15-flow" d="M492,52 Q620,60 650,122" fill="none" marker-end="url(#m15-ah)" stroke="#34d399" stroke-width="2"></path>
+<path class="m15-flow" d="M650,178 Q620,248 494,252" fill="none" marker-end="url(#m15-ah)" stroke="#34d399" stroke-width="2"></path>
+<path class="m15-flow" d="M306,252 Q180,248 150,178" fill="none" marker-end="url(#m15-ahc)" stroke="#38bdf8" stroke-width="2"></path>
+<path class="m15-flow" d="M150,122 Q180,60 306,52" fill="none" marker-end="url(#m15-ahc)" stroke="#38bdf8" stroke-width="2"></path>
+<rect fill="#0f1f18" height="50" rx="10" stroke="#34d399" stroke-width="2" width="180" x="310" y="26"></rect>
+<text fill="#ecfdf5" font-size="14" font-weight="700" text-anchor="middle" x="400" y="48">1 · Generar variaciones</text>
+<text fill="#a7f3d0" font-size="11" text-anchor="middle" x="400" y="65">4 opciones del mismo pedido</text>
+<rect fill="#0f1f18" height="50" rx="10" stroke="#34d399" stroke-width="2" width="180" x="560" y="125"></rect>
+<text fill="#ecfdf5" font-size="14" font-weight="700" text-anchor="middle" x="650" y="147">2 · Elegir</text>
+<text fill="#a7f3d0" font-size="11" text-anchor="middle" x="650" y="164">la más cercana a la idea</text>
+<rect fill="#0e1b26" height="50" rx="10" stroke="#38bdf8" stroke-width="2" width="180" x="310" y="226"></rect>
+<text fill="#e0f2fe" font-size="14" font-weight="700" text-anchor="middle" x="400" y="248">3 · Editar la región</text>
+<text fill="#bae6fd" font-size="11" text-anchor="middle" x="400" y="265">solo lo que está mal</text>
+<rect fill="#0e1b26" height="50" rx="10" stroke="#38bdf8" stroke-width="2" width="180" x="60" y="125"></rect>
+<text fill="#e0f2fe" font-size="14" font-weight="700" text-anchor="middle" x="150" y="147">4 · Ampliar</text>
+<text fill="#bae6fd" font-size="11" text-anchor="middle" x="150" y="164">resolución para publicar</text>
+<circle cx="400" cy="150" fill="#0b1410" filter="url(#m15-glow)" r="62" stroke="#34d399" stroke-width="2.5"></circle>
+<text fill="#34d399" font-size="14" font-weight="700" text-anchor="middle" x="400" y="144">referencia fija</text>
+<text fill="#d1fae5" font-size="11" text-anchor="middle" x="400" y="163">personaje · paleta</text>
+<text fill="#d1fae5" font-size="11" text-anchor="middle" x="400" y="178">estilo</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-emerald-400">Cómo leer:</strong> el centro no cambia: es la imagen de referencia y el texto base que reutilizas en cada pieza. Alrededor está el ciclo de trabajo. Fíjate en el paso 3: cuando solo salió mal la mano, editas la mano; volver a generar todo descarta lo que ya estaba bien.</figcaption>
+</figure>
+<div class="relative border-l-2 border-emerald-500/30 ml-3 pl-6 space-y-5 mb-6">
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-emerald-500/20 border-2 border-emerald-400"></span><p class="text-sm text-neutral-300"><strong class="text-emerald-400">Ficha del personaje.</strong> Escribe un texto base fijo: "Lia, mascota de la tienda, zorra naranja con bufanda verde, ilustración plana, trazo grueso". Pega este fragmento en cada solicitud.</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-emerald-500/20 border-2 border-emerald-400"></span><p class="text-sm text-neutral-300"><strong class="text-emerald-400">Imagen de referencia.</strong> Elige la mejor versión y adjúntala a las siguientes solicitudes ("mantén este personaje, cambia solo la pose").</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-sky-500/20 border-2 border-sky-400"></span><p class="text-sm text-neutral-300"><strong class="text-sky-400">Edición de una región.</strong> Selecciona el área con el problema y describe solo la corrección ("mano sosteniendo la taza por el asa").</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-sky-500/20 border-2 border-sky-400"></span><p class="text-sm text-neutral-300"><strong class="text-sky-400">Ampliación.</strong> Por último, aumenta la resolución con la función de ampliación (upscale) de la herramienta para no perder nitidez al imprimir o en una pantalla grande.</p></div>
+</div>
+<div class="bg-dark-800 border border-emerald-500/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-emerald-400 font-semibold mb-1">🌱 ¿Nuevo aquí?</p>
+<p class="text-sm text-neutral-300" data-inema-block="m1-5-t4-p2"><strong>Inpainting</strong> es el nombre técnico de la edición de una región: pintas la parte que quieres cambiar y el modelo vuelve a dibujar solo esa zona. <strong>Upscale</strong> es ampliar la imagen agregando detalles, en vez de simplemente estirar los píxeles. <strong>Seed</strong> (semilla) es el número que define el ruido inicial; algunas herramientas te permiten repetir la misma seed para acercarte al mismo resultado.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ Mantiene la coherencia de la serie</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-emerald-400">✓</span><span>Texto base del personaje pegado sin cambios.</span></li>
+<li class="flex items-start gap-2"><span class="text-emerald-400">✓</span><span>La misma imagen de referencia en todas las solicitudes.</span></li>
+<li class="flex items-start gap-2"><span class="text-emerald-400">✓</span><span>Paleta descrita con nombres de colores fijos.</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Rompe la coherencia de la serie</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Describir al personaje con palabras diferentes cada vez.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Volver a generar la imagen completa por un detalle.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Mezclar diferentes herramientas en la misma serie sin una referencia.</span></li>
+</ul>
+</div>
+</div>
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m1-5-t4-p3" data-sum="porque">Una marca se reconoce por la repetición: los mismos colores, el mismo trazo, el mismo personaje. Sin consistencia, la IA genera piezas aisladas; con ella, construyes una identidad visual que perdura durante meses y que el público reconoce a la distancia.</p>
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Referencia</div><div class="text-xs text-neutral-400">imagen que fija el aspecto visual</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Texto base</div><div class="text-xs text-neutral-400">descripción repetida</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Inpainting</div><div class="text-xs text-neutral-400">editar solo una región</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Upscale</div><div class="text-xs text-neutral-400">ampliar con detalles</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 5 -->
+<section class="mb-16" data-inema-topic="modulo-1-5#topico-5" id="topico-5" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="clipes curtos, narração e trilha">🎬 Video y sonido con IA</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m1-5-t5-p1">Los generadores de video usan la misma idea que las imágenes, pero deben mantener la coherencia cuadro a cuadro. Por eso producen <strong class="text-neutral-100">clips cortos</strong>, de pocos segundos, y no una película entera de una sola vez. El video final se arma uniendo varios clips, una narración y una banda sonora, y tú sigues a cargo de la dirección.</p>
+<div class="bg-gradient-to-br from-emerald-900/30 to-dark-800 rounded-xl border border-emerald-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">Crear videos con IA consiste en generar clips a partir de texto o de una imagen inicial, crear una narración con voz sintética, una banda sonora y efectos, y montarlo todo en un editor. También incluye avatares parlantes, que leen un guion con una persona virtual.</p>
+</div>
+<!-- SVG 4: pipeline de vídeo -->
+<figure class="svg-frame rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="Línea de producción de video en cuatro recuadros: guion dividido en escenas, imagen inicial de cada escena, clip corto animado y montaje con narración y música. Debajo de cada recuadro, el momento en que revisas el resultado." class="w-full h-auto" role="img" viewbox="0 0 900 220">
+<rect fill="url(#m15-grid)" height="220" width="900"></rect>
+<g font-family="Inter,sans-serif">
+<text fill="#7dd3fc" font-size="13" text-anchor="middle" x="450" y="26">la IA acelera cada etapa; el orden y las decisiones son tuyos</text>
+<rect fill="#0f1f18" height="90" rx="12" stroke="#34d399" stroke-width="2" width="180" x="20" y="46"></rect>
+<text fill="#ecfdf5" font-size="15" font-weight="700" text-anchor="middle" x="110" y="80">1 · Guion</text>
+<text fill="#a7f3d0" font-size="12" text-anchor="middle" x="110" y="102">texto dividido</text>
+<text fill="#a7f3d0" font-size="12" text-anchor="middle" x="110" y="118">en escenas cortas</text>
+<path class="m15-flow" d="M202,91 L244,91" fill="none" marker-end="url(#m15-ah)" stroke="#34d399" stroke-width="2.5"></path>
+<rect fill="#0f1f18" height="90" rx="12" stroke="#34d399" stroke-width="2" width="180" x="250" y="46"></rect>
+<text fill="#ecfdf5" font-size="15" font-weight="700" text-anchor="middle" x="340" y="80">2 · Cuadro clave</text>
+<text fill="#a7f3d0" font-size="12" text-anchor="middle" x="340" y="102">una imagen inicial</text>
+<text fill="#a7f3d0" font-size="12" text-anchor="middle" x="340" y="118">por escena</text>
+<path class="m15-flow" d="M432,91 L474,91" fill="none" marker-end="url(#m15-ahc)" stroke="#38bdf8" stroke-width="2.5"></path>
+<rect fill="#0e1b26" height="90" rx="12" stroke="#38bdf8" stroke-width="2" width="180" x="480" y="46"></rect>
+<text fill="#e0f2fe" font-size="15" font-weight="700" text-anchor="middle" x="570" y="80">3 · Clip</text>
+<text fill="#bae6fd" font-size="12" text-anchor="middle" x="570" y="102">la imagen cobra movimiento</text>
+<text fill="#bae6fd" font-size="12" text-anchor="middle" x="570" y="118">y movimiento de cámara</text>
+<path class="m15-flow" d="M662,91 L704,91" fill="none" marker-end="url(#m15-ahc)" stroke="#38bdf8" stroke-width="2.5"></path>
+<rect fill="#0e1b26" height="90" rx="12" stroke="#38bdf8" stroke-width="2.5" width="180" x="710" y="46"></rect>
+<text fill="#e0f2fe" font-size="15" font-weight="700" text-anchor="middle" x="800" y="80">4 · Montaje</text>
+<text fill="#bae6fd" font-size="12" text-anchor="middle" x="800" y="102">narración, banda sonora</text>
+<text fill="#bae6fd" font-size="12" text-anchor="middle" x="800" y="118">y subtítulos</text>
+<g fill="#052e1c" stroke="#34d399" stroke-opacity="0.6">
+<rect height="28" rx="14" width="150" x="35" y="160"></rect><rect height="28" rx="14" width="150" x="265" y="160"></rect><rect height="28" rx="14" width="150" x="495" y="160"></rect><rect height="28" rx="14" width="150" x="725" y="160"></rect>
+</g>
+<text fill="#a7f3d0" font-size="12" text-anchor="middle" x="110" y="179">verifica el mensaje</text>
+<text fill="#a7f3d0" font-size="12" text-anchor="middle" x="340" y="179">verifica el aspecto visual</text>
+<text fill="#a7f3d0" font-size="12" text-anchor="middle" x="570" y="179">verifica el movimiento</text>
+<text fill="#a7f3d0" font-size="12" text-anchor="middle" x="800" y="179">verifica el ritmo</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-emerald-400">Cómo leer:</strong> cada recuadro de arriba es una etapa; cada cápsula de abajo es un punto de control. Empezar el clip a partir de una imagen aprobada (paso 2) te da mucho más control que pedir el video directamente a partir del texto: ya aprobaste el escenario, el personaje y el color antes de gastar en movimiento.</figcaption>
+</figure>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-4"><p class="font-semibold mb-1">🎥 Clips</p><p class="text-xs text-neutral-400">Generadores como Veo, Kling, Runway y Sora crean escenas cortas a partir de texto o de una imagen.</p></div>
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-4"><p class="font-semibold mb-1">🧑‍💼 Avatares</p><p class="text-xs text-neutral-400">Servicios como HeyGen y Synthesia hacen que una persona virtual lea tu guion.</p></div>
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-4"><p class="font-semibold mb-1">🎙️ Voz</p><p class="text-xs text-neutral-400">Narración sintética (como ElevenLabs) y transcripción automática (como Whisper) para los subtítulos.</p></div>
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-4"><p class="font-semibold mb-1">🎵 Música y efectos</p><p class="text-xs text-neutral-400">Generadores de bandas sonoras (como Suno) y bancos de efectos de sonido con licencias claras.</p></div>
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-4"><p class="font-semibold mb-1">✂️ Montaje</p><p class="text-xs text-neutral-400">Los editores habituales, como CapCut o DaVinci Resolve, ya incluyen cortes y subtítulos automáticos.</p></div>
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-4"><p class="font-semibold mb-1">📐 Formato</p><p class="text-xs text-neutral-400">Decídelo de antemano: 9:16 para Reels y Shorts, 16:9 para YouTube y presentaciones.</p></div>
+</div>
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-emerald-400">Prueba:</strong> <span class="text-neutral-300">convertir una idea para un video corto en escenas listas para generar.</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copiar</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900">Quiero un video vertical (9:16) de &lt;30 a 45&gt; segundos sobre: &lt;tu tema o producto&gt;.
+Público: &lt;quién lo verá&gt;. Tono: &lt;serio, ligero, educativo&gt;.
+
+Prepara una tabla de escenas con estas columnas:
+Escena | Duración | Narración (frase corta) | Prompt de la imagen inicial | Movimiento de cámara
+Reglas:
+- Incluye un gancho potente en la escena 1, sin exagerar.
+- Máximo 6 escenas.
+- Los prompts de imagen deben incluir el tema, el escenario, el estilo, la luz y la composición.
+- Usa siempre el mismo texto base para el personaje: &lt;descripción fija&gt;.
+Al final, sugiere una banda sonora (estilo y ritmo) que no compita con la voz.</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">Cómo verificar:</strong> Suma las duraciones: el total debe coincidir con lo que pediste. Lee en voz alta solo la columna de narración: debe tener sentido por sí sola. Comprueba que el texto base del personaje aparezca igual en todas las escenas.</p>
+</div>
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m1-5-t5-p2" data-sum="porque">El video corto es el formato que más circula en las redes, y producir uno solía requerir cámara, equipo y edición. Con el flujo guion → fotograma clave → clip → montaje, una sola persona puede hacer una pieza decente, siempre que dirija cada etapa.</p>
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Clip</div><div class="text-xs text-neutral-400">escena corta generada</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Cuadro clave</div><div class="text-xs text-neutral-400">imagen que inicia la escena</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Avatar</div><div class="text-xs text-neutral-400">persona virtual que habla</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Montaje</div><div class="text-xs text-neutral-400">unir clips, voz y banda sonora</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 6 -->
+<section class="mb-16" data-inema-topic="modulo-1-5#topico-6" id="topico-6" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="direitos, rostos, marcas e transparência">⚖️ Derechos, rostros y etiquetas</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m1-5-t6-p1">Generar es fácil; publicar exige responsabilidad. Tres preguntas resuelven la mayoría de los problemas antes de que ocurran: <strong class="text-neutral-100">¿los términos de la herramienta permiten este uso?</strong> ¿La imagen usa el rostro, la voz o la marca de alguien? ¿El público podría engañarse y creer que es real? La ley de derechos de autor y las normas sobre IA están en debate en varios países, incluido Brasil; por eso, la prudencia vale más que tomar atajos.</p>
+<div class="bg-gradient-to-br from-emerald-900/30 to-dark-800 rounded-xl border border-emerald-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">Es el conjunto de precauciones para usar imágenes y videos generados sin vulnerar los derechos de terceros: respetar los términos de uso y las licencias, no usar el rostro ni la voz de otras personas sin autorización, evitar marcas ajenas e informar cuando el contenido es sintético.</p>
+</div>
+<div class="overflow-x-auto mb-6">
+<table class="w-full text-sm border border-dark-600 rounded-xl overflow-hidden">
+<thead><tr class="bg-dark-700"><th class="text-left p-3 text-emerald-400">Situación</th><th class="text-left p-3 text-emerald-400">Riesgo</th><th class="text-left p-3 text-emerald-400">Práctica segura</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr><td class="p-3 font-semibold">Rostro de una persona real</td><td class="p-3 text-neutral-300">Derecho a la propia imagen y dato personal (LGPD).</td><td class="p-3 text-neutral-300">Solo con autorización por escrito de la persona.</td></tr>
+<tr><td class="p-3 font-semibold">Voz clonada</td><td class="p-3 text-neutral-300">Fraude y uso indebido de identidad.</td><td class="p-3 text-neutral-300">Usa solo tu voz o voces con licencia.</td></tr>
+<tr><td class="p-3 font-semibold">"Al estilo de" un artista vivo</td><td class="p-3 text-neutral-300">Conflicto ético y reclamo público.</td><td class="p-3 text-neutral-300">Describe el estilo con palabras (trazo, color, época), sin mencionar nombres.</td></tr>
+<tr><td class="p-3 font-semibold">Logotipo o personaje famoso</td><td class="p-3 text-neutral-300">Marca registrada y derechos de autor.</td><td class="p-3 text-neutral-300">Crea elementos propios.</td></tr>
+<tr><td class="p-3 font-semibold">Escena que parece noticia</td><td class="p-3 text-neutral-300">Desinformación.</td><td class="p-3 text-neutral-300">Indícala como generada por IA o no la publiques.</td></tr>
+</tbody>
+</table>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ Hazlo</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-emerald-400">✓</span><span>Lee los términos de uso comercial de la herramienta que utilizas.</span></li>
+<li class="flex items-start gap-2"><span class="text-emerald-400">✓</span><span>Guarda el prompt y la fecha de cada imagen publicada.</span></li>
+<li class="flex items-start gap-2"><span class="text-emerald-400">✓</span><span>Indica que el contenido es sintético cuando pueda confundir a alguien.</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ No lo hagas</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Incluir a un cliente, colega o celebridad en una escena sin permiso.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Vender como «foto real» de un producto una imagen generada.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Quitar la marca de agua o la etiqueta de contenido generado.</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-primary/10 border border-primary/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-primary font-semibold mb-1">💡 Consejo</p>
+<p class="text-sm text-neutral-300" data-inema-block="m1-5-t6-p2">Varias plataformas ya te piden que indiques al publicar si el contenido se hizo con IA, y algunas herramientas graban una etiqueta invisible en el archivo. En vez de verlo como un obstáculo, usa la transparencia a tu favor: «ilustración hecha con IA» no le quita valor a una publicación bien pensada.</p>
+</div>
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m1-5-t6-p3" data-sum="porque">Una pieza que vulnera el derecho a la propia imagen o engaña al público puede costar mucho más de lo que ahorraste: que la retiren, una demanda y la pérdida de confianza. Tomar precauciones lleva minutos y te protege a ti y a tu marca.</p>
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Términos de uso</div><div class="text-xs text-neutral-400">lo que permite la herramienta</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Derecho a la imagen</div><div class="text-xs text-neutral-400">el rostro y la voz requieren permiso</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Etiqueta</div><div class="text-xs text-neutral-400">avisar que es generado</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">LGPD</div><div class="text-xs text-neutral-400">el rostro también es un dato personal</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 7 -->
+<section class="mb-16" data-inema-topic="modulo-1-5#topico-7" id="topico-7" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">7</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="uma peça real, com revisão">🛠️ Del brief a la pieza final</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m1-5-t7-p1">Ahora reúne todo en una pieza real. El secreto de quienes trabajan bien con IA visual no es el prompt mágico: es tener un <strong class="text-neutral-100">brief</strong> antes de generar y una <strong class="text-neutral-100">revisión</strong> antes de publicar. La IA interviene en el proceso y acelera los intentos.</p>
+<div class="bg-gradient-to-br from-emerald-900/30 to-dark-800 rounded-xl border border-emerald-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">Un ejercicio completo: escribes un brief corto, le pides al asistente tres prompts visuales diferentes, generas las imágenes, eliges una, corriges lo necesario y revisas una lista antes de publicar.</p>
+</div>
+<div class="relative border-l-2 border-emerald-500/30 ml-3 pl-6 space-y-5 mb-6">
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-emerald-500/20 border-2 border-emerald-400"></span><p class="text-sm text-neutral-300"><strong class="text-emerald-400">Paso 1 · Brief.</strong> Responde en pocas líneas: para quién, dónde se usará, cuál es el mensaje, qué sensación quieres transmitir y qué formato necesitas.</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-emerald-500/20 border-2 border-emerald-400"></span><p class="text-sm text-neutral-300"><strong class="text-emerald-400">Paso 2 · Tres opciones.</strong> Usa el prompt de abajo para obtener tres direcciones visuales diferentes.</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-emerald-500/20 border-2 border-emerald-400"></span><p class="text-sm text-neutral-300"><strong class="text-emerald-400">Paso 3 · Generar y elegir.</strong> Genera cada prompt una o dos veces y elige la imagen que mejor transmita el mensaje, no la más bonita.</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-sky-500/20 border-2 border-sky-400"></span><p class="text-sm text-neutral-300"><strong class="text-sky-400">Paso 4 · Corregir.</strong> Edita solo la región problemática y aumenta la resolución.</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-sky-500/20 border-2 border-sky-400"></span><p class="text-sm text-neutral-300"><strong class="text-sky-400">Paso 5 · Revisar.</strong> Revisa la lista del segundo bloque antes de publicar.</p></div>
+</div>
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-emerald-400">Objetivo:</strong> <span class="text-neutral-300">salir del brief con tres direcciones visuales listas para generar.</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copiar</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900">Eres director de arte de una agencia pequeña.
+Brief:
+- Para quién: &lt;público&gt;
+- Dónde se usará: &lt;publicación de Instagram, portada de presentación, banner del sitio web&gt;
+- Mensaje principal: &lt;una frase&gt;
+- Sensación deseada: &lt;confianza, alegría, urgencia, calma&gt;
+- Formato: &lt;1:1, 4:5, 9:16 o 16:9&gt;
+- Colores de la marca: &lt;si los hay&gt;
+
+Crea 3 direcciones visuales muy diferentes entre sí (por ejemplo: foto realista, ilustración, composición gráfica).
+Para cada una: nombre de la dirección, por qué transmite el mensaje y el prompt completo
+(tema, escenario, estilo y medio, luz, composición, formato y límites).
+No incluyas texto escrito dentro de la imagen; yo agregaré el texto después.</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">Cómo verificar:</strong> las tres direcciones deben ser realmente diferentes; si dos parecen la misma idea con otro color, pide «rehaz la dirección 2 con otro concepto». Cada prompt debe tener las seis capas y repetir el formato que pediste.</p>
+</div>
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-emerald-400">Prueba:</strong> <span class="text-neutral-300">pedir una revisión crítica de la imagen elegida antes de publicar.</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copiar</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900">[adjunta la imagen elegida]
+Esta imagen se usará en &lt;dónde&gt; para &lt;público&gt;, con el mensaje &lt;mensaje&gt;.
+Revísala como un director de arte exigente y responde en una lista:
+1. Defectos visibles (manos, rostros, objetos deformados, letras sin sentido).
+2. Si la imagen transmite el mensaje en 3 segundos. ¿Por qué?
+3. Algo que pueda parecer una foto real de una persona, marca o evento existente.
+4. Dónde colocaré el texto sin cubrir lo principal.
+5. Una sola corrección que más mejoraría la pieza.</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">Cómo verificar:</strong> revisa también cada defecto señalado en el punto 1; la IA puede pasar algo por alto o señalar algo que no existe. Si el punto 3 genera alguna duda, vuelve al tema 6 antes de publicar.</p>
+</div>
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m1-5-t7-p2" data-sum="porque">El briefing y la revisión son lo que distingue una imagen genérica de una pieza que comunica. Hacer el ciclo completo una vez con una pieza tuya fija el método y sirve de modelo para todas las siguientes.</p>
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Brief</div><div class="text-xs text-neutral-400">el pedido antes del prompt</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Dirección visual</div><div class="text-xs text-neutral-400">un camino de estilo</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Revisión</div><div class="text-xs text-neutral-400">mirada crítica antes de publicar</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Mensaje</div><div class="text-xs text-neutral-400">entendido en 3 segundos</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- RESUMO -->
+<section class="mb-8">
+<div class="bg-gradient-to-br from-emerald-900/40 via-dark-800 to-dark-800 rounded-xl border border-emerald-500/30 p-6 sm:p-8">
+<h2 class="text-2xl font-bold mb-6">✅ Resumen del módulo</h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start gap-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-neutral-100">La imagen nace del ruido guiado por el texto</strong><span class="text-neutral-400"> — lo que no describes, el modelo lo inventa.</span></div></div>
+<div class="flex items-start gap-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-neutral-100">Seis capas forman un buen pedido</strong><span class="text-neutral-400"> — tema, escenario, estilo, luz, composición, formato y límites.</span></div></div>
+<div class="flex items-start gap-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-neutral-100">La consistencia viene de una referencia fija y de la edición puntual</strong><span class="text-neutral-400"> — el video se crea con clips cortos que tú montas.</span></div></div>
+<div class="flex items-start gap-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-neutral-100">El rostro, la voz y la marca de terceros requieren permiso</strong><span class="text-neutral-400"> — y el contenido que pueda engañar lleva una etiqueta.</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-emerald-400 mb-2">Siguiente módulo:</h3>
+<p class="text-neutral-300">1.6 — Marketing y Ventas con IA 📣</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="index.html">← Volver a la Ruta</a>
+<a class="flex-1 text-center px-6 py-3 bg-emerald-700 text-white rounded-lg font-semibold hover:bg-emerald-600 transition-colors" href="modulo-1-6.html">Siguiente módulo →</a>
+</div>
+</div>
+</section>
+</article>
+</div>
+</div>
+</main>
+<footer class="border-t border-dark-600 py-8 mt-8">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>FTD — Formación en Transformación Digital · contenido abierto y gratuito · 2026 · <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" rel="noopener" target="_blank">INEMA.CLUB</a> - <a class="text-amber-700 dark:text-slate-300 hover:underline" href="https://inema.pro" rel="noopener" target="_blank">PRO</a></p>
+</div>
+</footer>
+<!-- SCRIPTS NÚCLEO v1 -->
+<script>
+    function toggleTopic(button) {
+      var topicItem = button.closest('.topic-item');
+      if (!topicItem) return;
+      var explanation = topicItem.querySelector('.topic-explanation');
+      var willOpen = !explanation.classList.contains('active');
+      explanation.classList.toggle('active');
+      button.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+    }
+    function openModal(id) { var m = document.getElementById(id); if (m) { m.classList.remove('hidden'); document.body.style.overflow = 'hidden'; } }
+    function closeModal() { document.querySelectorAll('.modal').forEach(function (m) { m.classList.add('hidden'); }); document.body.style.overflow = 'auto'; }
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
+    function copyCode(btn) {
+      var pre = btn.closest('[data-copy-box]').querySelector('pre');
+      var txt = pre ? pre.innerText : '';
+      var done = function () { var o = btn.getAttribute('data-label-ok') || 'Copiado'; var t = btn.textContent; btn.textContent = o; setTimeout(function () { btn.textContent = t; }, 1500); };
+      try { navigator.clipboard.writeText(txt).then(done, done); } catch (e) { done(); }
+    }
+    (function () {
+      var themeToggle = document.getElementById('theme-toggle');
+      var darkIcon = document.getElementById('theme-toggle-dark-icon');
+      var lightIcon = document.getElementById('theme-toggle-light-icon');
+      var html = document.documentElement;
+      function sync() { var isDark = html.classList.contains('dark'); if (darkIcon) darkIcon.classList.toggle('hidden', isDark); if (lightIcon) lightIcon.classList.toggle('hidden', !isDark); }
+      sync();
+      if (themeToggle) themeToggle.addEventListener('click', function () {
+        html.classList.toggle('dark'); var nowDark = html.classList.contains('dark'); html.style.colorScheme = nowDark ? 'dark' : 'light';
+        try { localStorage.setItem('theme', nowDark ? 'dark' : 'light'); } catch (e) {}
+        try { var p = JSON.parse(localStorage.getItem('inema.prefs') || '{}'); p.theme = nowDark ? 'inema-dark' : 'claro'; localStorage.setItem('inema.prefs', JSON.stringify(p)); } catch (e) {}
+        sync();
+      });
+    })();
+  </script>
+<!-- learn.js + INEMA.init() POR ÚLTIMO -->
+<script src="../../assets/learn.js"></script>
+<script>
+    if (window.INEMA && typeof window.INEMA.init === 'function') { window.INEMA.init({ autoResume: true }); }
+  </script>
+</body>
+</html>

@@ -1,0 +1,1263 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="ftd-v2-en" name="inema-course"/>
+<title>Module 2.7 · NLP and Text Processing | FTD v2</title>
+<meta content="Tokenization, classification, entity extraction, summarization, semantic search, and text pipelines with LLMs." name="description"/>
+<meta content="Module 2.7 · NLP and Text Processing | FTD v2" property="og:title"/>
+<meta content="Tokenization, classification, entity extraction, summarization, semantic search, and text pipelines with LLMs." property="og:description"/>
+<!-- ANTI-FOUC (Erro #18) — primeiro script do head -->
+<script>
+(function () {
+  try {
+    var html = document.documentElement;
+    var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+    function clone(o) { var r = {}; for (var x in o) r[x] = o[x]; return r; }
+    var p = clone(DEF);
+    try {
+      var raw = localStorage.getItem('inema.prefs');
+      if (raw) {
+        var parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === 'object') {
+          for (var k in DEF) if (parsed[k] != null) p[k] = parsed[k];
+        }
+      } else {
+        var legacy = localStorage.getItem('theme');
+        if (legacy === 'light') p.theme = 'claro';
+        else if (legacy === 'dark') p.theme = 'inema-dark';
+      }
+    } catch (e) { p = clone(DEF); }
+
+    var THEMES = {
+      'inema-dark': { dark: true,  attr: null,        cs: 'dark'  },
+      'claro':      { dark: false, attr: null,        cs: 'light' },
+      'sepia':      { dark: false, attr: 'sepia',     cs: 'light' },
+      'foco':       { dark: null,  attr: 'foco',      cs: null    },
+      'contraste':  { dark: true,  attr: 'contraste', cs: 'dark'  }
+    };
+    var t = THEMES[p.theme] || THEMES['inema-dark'];
+
+    if (t.dark === true) html.classList.add('dark');
+    else if (t.dark === false) html.classList.remove('dark');
+
+    if (t.attr) html.setAttribute('data-theme', t.attr);
+    else html.removeAttribute('data-theme');
+
+    html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark') ? 'dark' : 'light'));
+
+    html.setAttribute('data-font', p.font || 'inter');
+    html.setAttribute('data-accent', p.accent || 'emerald');
+
+    var s = html.style;
+    var scale = (+p.fontScale || 100);
+    s.setProperty('--inema-font-scale', (scale / 100).toString());
+    s.setProperty('font-size', scale + '%');
+    s.setProperty('--measure', (+p.lineWidth || 68) + 'ch');
+    s.setProperty('--lh-body', (+p.leading || 1.7).toString());
+    var fam = p.font === 'system'
+      ? 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif'
+      : (p.font === 'leitura'
+        ? '"Atkinson Hyperlegible", "Inter", system-ui, sans-serif'
+        : '"Inter", system-ui, sans-serif');
+    s.setProperty('--font-body', fam);
+
+    var ACC = {
+      emerald: [152, 76, 45], blue: [217, 91, 60], purple: [258, 90, 66],
+      amber: [38, 92, 50], teal: [174, 72, 41], rose: [350, 89, 60]
+    };
+    var a = ACC[p.accent] || ACC.emerald;
+    s.setProperty('--accent-h', a[0] + '');
+    s.setProperty('--accent-s', a[1] + '%');
+    s.setProperty('--accent-l', a[2] + '%');
+    s.setProperty('--accent', 'hsl(' + a[0] + ' ' + a[1] + '% ' + a[2] + '%)');
+  } catch (err) {
+    try { document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme = 'dark'; } catch (e) {}
+  }
+})();
+</script>
+<!-- MANIFESTO do curso (Erro #28) — idêntico em todas as páginas -->
+<script data-inema-manifest="" type="application/json">
+{
+  "course": "ftd-v2-en",
+  "tracks": [
+    {
+      "n": "1",
+      "title": "Beginner",
+      "modules": [
+        {
+          "id": "1-1",
+          "title": "The Impact of AI",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-1.html"
+        },
+        {
+          "id": "1-2",
+          "title": "Navigating the Digital World",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-2.html"
+        },
+        {
+          "id": "1-3",
+          "title": "Prompt Engineering",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-3.html"
+        },
+        {
+          "id": "1-4",
+          "title": "AI Assistants and Agents",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-4.html"
+        },
+        {
+          "id": "1-5",
+          "title": "Visual Creativity with AI",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-5.html"
+        },
+        {
+          "id": "1-6",
+          "title": "Marketing and Sales with AI",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-6.html"
+        },
+        {
+          "id": "1-7",
+          "title": "Process Automation",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-7.html"
+        },
+        {
+          "id": "1-8",
+          "title": "Advanced Artificial Intelligence",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-8.html"
+        },
+        {
+          "id": "1-9",
+          "title": "Business and Monetization with AI",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-9.html"
+        }
+      ]
+    },
+    {
+      "n": "2",
+      "title": "Technical",
+      "modules": [
+        {
+          "id": "2-1",
+          "title": "Developing with AI APIs",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-1.html"
+        },
+        {
+          "id": "2-2",
+          "title": "AI Application Architecture",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-2.html"
+        },
+        {
+          "id": "2-3",
+          "title": "RAG and Knowledge Bases",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-3.html"
+        },
+        {
+          "id": "2-4",
+          "title": "Fine-Tuning and Customization",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-4.html"
+        },
+        {
+          "id": "2-5",
+          "title": "Agents and Complex Workflows",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-5.html"
+        },
+        {
+          "id": "2-6",
+          "title": "Advanced Computer Vision",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-6.html"
+        },
+        {
+          "id": "2-7",
+          "title": "NLP and Text Processing",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-7.html"
+        },
+        {
+          "id": "2-8",
+          "title": "MLOps and Production",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-8.html"
+        },
+        {
+          "id": "2-9",
+          "title": "AI Ethics and Governance",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-9.html"
+        }
+      ]
+    },
+    {
+      "n": "3",
+      "title": "Masterclass",
+      "modules": [
+        {
+          "id": "3-1",
+          "title": "Large-Scale AI Architecture",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-1.html"
+        },
+        {
+          "id": "3-2",
+          "title": "Custom and Proprietary Models",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-2.html"
+        },
+        {
+          "id": "3-3",
+          "title": "Advanced Multimodal AI",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-3.html"
+        },
+        {
+          "id": "3-4",
+          "title": "AI Research and Papers",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-4.html"
+        },
+        {
+          "id": "3-5",
+          "title": "Reinforcement Learning for AI",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-5.html"
+        },
+        {
+          "id": "3-6",
+          "title": "Security and Red Teaming",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-6.html"
+        },
+        {
+          "id": "3-7",
+          "title": "AI in Production — Enterprise Scale",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-7.html"
+        },
+        {
+          "id": "3-8",
+          "title": "AI Leadership and Strategy",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-8.html"
+        },
+        {
+          "id": "3-9",
+          "title": "The Future of AI and AGI",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-9.html"
+        }
+      ]
+    }
+  ]
+}
+</script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#0c0c10', 800: '#16161e', 700: '#1e1e28', 600: '#272730', 500: '#33333f' } }, fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'], display: ['Sora', 'Inter', 'sans-serif'], mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'] } } } }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Sora:wght@600;700;800&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    h1, h2, h3, h4, .font-display { font-family: 'Sora', 'Inter', sans-serif; }
+    .dark body { background-color: #0c0c10; }
+    .dark .text-neutral-100 { color: #e9e9ee; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+    pre { white-space: pre-wrap; word-break: break-word; }
+    pre, code, .font-mono { font-family: 'JetBrains Mono', ui-monospace, monospace; }
+
+    /* Light mode — Parte 1: base */
+    html:not(.dark) body { background-color: #f6f7f9; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800\/50 { background-color: #f6f7f9; }
+    html:not(.dark) .bg-dark-700 { background-color: #eceef2; }
+    html:not(.dark) .bg-dark-700\/50 { background-color: #f1f2f5; }
+    html:not(.dark) .bg-dark-700\/30 { background-color: #f4f5f7; }
+    html:not(.dark) .bg-dark-600 { background-color: #e1e3ea; }
+    html:not(.dark) .hover\:bg-dark-600:hover { background-color: #d6d9e1; }
+    html:not(.dark) .hover\:bg-dark-700\/50:hover { background-color: #eceef2; }
+    html:not(.dark) .text-neutral-100 { color: #1a1a22; }
+    html:not(.dark) .text-neutral-200 { color: #26262f; }
+    html:not(.dark) .text-neutral-300 { color: #3f3f4a; }
+    html:not(.dark) .text-neutral-400 { color: #5b5b68; }
+    html:not(.dark) .text-neutral-500 { color: #62626e; }
+    html:not(.dark) .border-dark-600 { border-color: #e1e3ea; }
+    html:not(.dark) .border-dark-700 { border-color: #e8e9ee; }
+    html:not(.dark) .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #e1e3ea; }
+    html:not(.dark) .bg-black\/40 { background-color: #f1f2f5; }
+    html:not(.dark) pre.code-dark { background-color: #1a1a22; color: #e9e9ee; }
+
+    /* Light mode — Parte 2: acento das 3 trilhas (texto -700, nunca -400 no claro) */
+    html:not(.dark) .text-emerald-400 { color: #047857; }
+    html:not(.dark) .text-emerald-300 { color: #047857; }
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #047857; }
+    html:not(.dark) .bg-emerald-500\/20 { background-color: rgba(4,120,87,0.12); }
+    html:not(.dark) .bg-emerald-500\/10 { background-color: rgba(4,120,87,0.08); }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(4,120,87,0.08); }
+    html:not(.dark) .bg-emerald-900\/20 { background-color: rgba(4,120,87,0.07); }
+    html:not(.dark) .bg-emerald-900\/30 { background-color: rgba(4,120,87,0.08); }
+    html:not(.dark) .bg-emerald-900\/40 { background-color: rgba(4,120,87,0.09); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(4,120,87,0.28); }
+    html:not(.dark) .hover\:border-emerald-500\/30:hover { border-color: rgba(4,120,87,0.4); }
+    html:not(.dark) .text-blue-400 { color: #1d4ed8; }
+    html:not(.dark) .text-blue-300 { color: #1d4ed8; }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #1d4ed8; }
+    html:not(.dark) .bg-blue-500\/20 { background-color: rgba(29,78,216,0.12); }
+    html:not(.dark) .bg-blue-500\/10 { background-color: rgba(29,78,216,0.08); }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(29,78,216,0.08); }
+    html:not(.dark) .bg-blue-900\/20 { background-color: rgba(29,78,216,0.07); }
+    html:not(.dark) .bg-blue-900\/30 { background-color: rgba(29,78,216,0.08); }
+    html:not(.dark) .bg-blue-900\/40 { background-color: rgba(29,78,216,0.09); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(29,78,216,0.28); }
+    html:not(.dark) .hover\:border-blue-500\/30:hover { border-color: rgba(29,78,216,0.4); }
+    html:not(.dark) .text-purple-400 { color: #6d28d9; }
+    html:not(.dark) .text-purple-300 { color: #6d28d9; }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #6d28d9; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(109,40,217,0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(109,40,217,0.08); }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(109,40,217,0.08); }
+    html:not(.dark) .bg-purple-900\/20 { background-color: rgba(109,40,217,0.07); }
+    html:not(.dark) .bg-purple-900\/30 { background-color: rgba(109,40,217,0.08); }
+    html:not(.dark) .bg-purple-900\/40 { background-color: rgba(109,40,217,0.09); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(109,40,217,0.28); }
+    html:not(.dark) .hover\:border-purple-500\/30:hover { border-color: rgba(109,40,217,0.4); }
+
+    /* Light mode — Parte 3: gradientes + especiais */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #854d0e; }
+    html:not(.dark) .text-yellow-400 { color: #854d0e; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #713f12; }
+    html:not(.dark) .bg-primary\/10 { background-color: #FEF9C3; }
+    html:not(.dark) .border-primary\/30 { border-color: #EAB308; }
+    html:not(.dark) .text-red-400 { color: #b91c1c; }
+    html:not(.dark) .bg-red-900\/20 { background-color: rgba(185,28,28,0.07); }
+    html:not(.dark) .border-red-500\/30 { border-color: rgba(185,28,28,0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #075985; }
+    html:not(.dark) .bg-sky-900\/20 { background-color: rgba(3,105,161,0.07); }
+    html:not(.dark) .border-sky-500\/30 { border-color: rgba(3,105,161,0.25); }
+
+    /* Light mode — Parte 4: nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255,255,255,0.95); }
+
+    /* Parte 5: bordas suavizadas no DARK (Erro #15) */
+    .dark .border-dark-600 { border-color: #2a2a35; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #2a2a35; }
+
+    /* SVG: no claro, um fundo escuro emoldurado mantém o contraste do desenho */
+    html:not(.dark) .svg-frame { background-color: #12121a; }
+    @media (prefers-reduced-motion: reduce) { svg * { animation: none !important; transition: none !important; } }
+  </style>
+<link href="../../../assets/learn.css" rel="stylesheet"/>
+<link href="https://inematds.github.io/FTD/FTD-v2/curso/trilha2/modulo-2-7.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/FTD/FTD-v2/en/curso/trilha2/modulo-2-7.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/FTD/FTD-v2/es/curso/trilha2/modulo-2-7.html" hreflang="es" rel="alternate"/><link href="https://inematds.github.io/FTD/FTD-v2/curso/trilha2/modulo-2-7.html" hreflang="x-default" rel="alternate"/><link href="https://inematds.github.io/FTD/FTD-v2/en/curso/trilha2/modulo-2-7.html" rel="canonical"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(250,204,21,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha2/modulo-2-7.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="modulo-2-7.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#FACC15">EN</a><a href="../../../es/curso/trilha2/modulo-2-7.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14 gap-2">
+<!-- Logo + INEMA.CLUB -->
+<div class="flex items-center space-x-3 flex-shrink-0">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🚀</span>
+<span class="font-display font-bold text-lg hidden sm:inline">FTD</span>
+</a>
+<span class="text-neutral-600 hidden sm:inline">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium hidden sm:inline" href="https://inema.club" rel="noopener" target="_blank">INEMA.CLUB</a>
+<span class="text-neutral-600 hidden sm:inline">-</span>
+<a class="text-amber-700 dark:text-slate-300 hover:underline text-sm font-medium hidden sm:inline" href="https://inema.pro" rel="noopener" target="_blank">PRO</a>
+</div>
+<!-- Trilhas + controles de aprendizagem + theme toggle -->
+<div class="flex items-center gap-1 sm:gap-1.5">
+<a class="px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors whitespace-nowrap" href="../trilha1/index.html">
+<span class="lg:hidden">T1</span><span class="hidden lg:inline">Beginner</span>
+</a>
+<a class="px-2.5 py-1.5 rounded-lg text-sm font-semibold text-blue-400 bg-blue-500/10 whitespace-nowrap" href="index.html">
+<span class="lg:hidden">T2</span><span class="hidden lg:inline">Technical</span>
+</a>
+<a class="px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors whitespace-nowrap" href="../trilha3/index.html">
+<span class="lg:hidden">T3</span><span class="hidden lg:inline">Masterclass</span>
+</a>
+<span class="w-px h-6 bg-dark-600 mx-1 hidden sm:inline-block"></span>
+<!-- Minha jornada (abre o painel global; badge = % do curso) -->
+<button class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-300 hover:text-neutral-100 hover:bg-dark-700 transition-colors" data-inema-journey-open="" type="button">
+<svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="16"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+<span class="hidden md:inline">My journey</span>
+<span class="inema-journey-badge" data-count="0" data-inema-journey-badge=""></span>
+</button>
+<!-- Aparência (gatilho + painel obrigatório) -->
+<div class="relative">
+<button aria-expanded="false" class="inema-appearance-trigger inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-300 hover:text-neutral-100 transition-colors" data-inema-appearance-toggle="#inema-appearance-panel" type="button">
+<svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="16"><circle cx="12" cy="12" r="9"></circle><path d="M12 3v18"></path><path d="M12 3a9 9 0 0 1 0 18" fill="currentColor"></path></svg>
+<span class="hidden md:inline">Appearance</span>
+</button>
+<div class="inema-appearance-pop right-0" data-inema-appearance="" id="inema-appearance-panel">
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Theme</span>
+<div class="inema-segment">
+<button data-inema-set-theme="inema-dark" type="button">Dark</button>
+<button data-inema-set-theme="claro" type="button">Light</button>
+<button data-inema-set-theme="sepia" type="button">Sepia</button>
+</div>
+<div class="inema-segment">
+<button data-inema-set-theme="foco" type="button">Focus</button>
+<button data-inema-set-theme="contraste" type="button">High contrast</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Font</span>
+<div class="inema-segment">
+<button data-inema-set-font="inter" type="button">Inter</button>
+<button data-inema-set-font="system" type="button">System</button>
+<button data-inema-set-font="leitura" type="button">Reading</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Size</span>
+<div class="inema-segment">
+<button data-inema-set-fontscale="100" type="button">A</button>
+<button data-inema-set-fontscale="112" type="button">A+</button>
+<button data-inema-set-fontscale="125" type="button">A++</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Width</span>
+<div class="inema-segment">
+<button data-inema-set-linewidth="60" type="button">Narrow</button>
+<button data-inema-set-linewidth="68" type="button">Medium</button>
+<button data-inema-set-linewidth="75" type="button">Wide</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Line spacing</span>
+<div class="inema-segment">
+<button data-inema-set-leading="1.45" type="button">Compact</button>
+<button data-inema-set-leading="1.7" type="button">Comfortable</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Accent</span>
+<div class="inema-accent-grid">
+<button aria-label="Emerald accent" data-inema-set-accent="emerald" type="button"></button>
+<button aria-label="Blue accent" data-inema-set-accent="blue" type="button"></button>
+<button aria-label="Purple accent" data-inema-set-accent="purple" type="button"></button>
+<button aria-label="Amber accent" data-inema-set-accent="amber" type="button"></button>
+<button aria-label="Teal accent" data-inema-set-accent="teal" type="button"></button>
+<button aria-label="Pink accent" data-inema-set-accent="rose" type="button"></button>
+</div>
+</div>
+</div>
+</div>
+<!-- Theme toggle sol/lua (núcleo v1; o JS o mantém coerente com o tema) -->
+<button aria-label="Toggle light/dark theme" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20">
+<path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+</svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20">
+<path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path>
+</svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<main data-inema-module="2-7" data-inema-track="2" id="conteudo">
+<!-- BREADCRUMB -->
+<nav aria-label="Navigation track" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-blue-400" href="../../index.html">Home</a><span>/</span>
+<a class="hover:text-blue-400" href="index.html">Track 2</a><span>/</span>
+<span class="text-blue-400">Module 2.7</span>
+</div>
+</nav>
+<!-- HEADER do módulo -->
+<header class="bg-gradient-to-br from-blue-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-blue-500/20 text-blue-400 text-xs font-semibold rounded-full mb-4">MODULE 2.7</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">📝 NLP and Text Processing</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">How to turn unstructured text—emails, support tickets, contracts, reviews—into <strong class="text-blue-400">data a program can use</strong>. You’ll tokenize, classify, extract entities, summarize, search by meaning, and, most importantly, measure how well your pipeline performs—all with Python code that runs on your machine.</p>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">7</div><div class="text-xs text-neutral-400">Topics</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">~55</div><div class="text-xs text-neutral-400">Minutes</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">Technical</div><div class="text-xs text-neutral-400">Level</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">Practical</div><div class="text-xs text-neutral-400">Type</div></div>
+</div>
+<div class="flex items-center gap-3 mt-8">
+<div aria-label="Module 2.7 progress" class="inema-ring" data-inema-meter="modulo:2-7"><span class="inema-ring__value" data-inema-meter-pct="">0%</span></div>
+<div class="inema-meter-label" data-inema-meter="modulo:2-7"><strong data-inema-meter-frac="">0 of 0</strong> topics read · <span data-inema-section-counter="">Section 1 of 7</span></div>
+</div>
+</div>
+</header>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+<div class="lg:flex lg:gap-10">
+<!-- TOC sticky + scrollspy -->
+<aside class="hidden lg:block lg:w-56 flex-shrink-0">
+<nav aria-label="Page index" class="sticky top-20 self-start" data-inema-toc="">
+<p class="text-xs font-semibold uppercase tracking-wide text-neutral-500 mb-3">In this module</p>
+<ol class="space-y-1 text-sm">
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-blue-400" href="#topico-1">1. Turn text into data</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-blue-400" href="#topico-2">2. Classify text</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-blue-400" href="#topico-3">3. Extract entities</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-blue-400" href="#topico-4">4. Summarize long texts</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-blue-400" href="#topico-5">5. Semantic search</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-blue-400" href="#topico-6">6. Portuguese and other languages</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-blue-400" href="#topico-7">7. Pipeline and evaluation</a></li>
+</ol>
+</nav>
+</aside>
+<!-- ARTIGO -->
+<article class="inema-prose flex-1 min-w-0">
+<h2 class="text-2xl font-bold mb-8">Detailed content</h2>
+<!-- TÓPICO 1 -->
+<section class="mb-16" data-inema-topic="modulo-2-7#topico-1" id="topico-1" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="tokens, normalização e vocabulário">🔤 Turn text into data</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Mark this topic as a question" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-7-t1-p1"><strong class="text-blue-400">NLP</strong> (<em>Natural Language Processing</em>, or natural language processing, is a set of techniques that lets a program read, organize, and produce human language. The starting problem is always the same: a computer only works with numbers. Before it can classify a complaint or summarize a contract, text has to become a sequence of numbers—and every choice in that conversion affects the result later on.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-7-t1-p2">Until around 2018, NLP work was dominated by rules and small models trained for a single task. Today, an LLM can do almost anything with a well-written instruction. But the fundamentals still apply: <strong class="text-neutral-100">tokens cost money and fit within a limited window</strong>, messy text produces messy answers, and the same word can mean different things depending on the context.</p>
+<div class="bg-dark-800 border border-blue-500/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-blue-400 font-semibold mb-1">📘 New terms</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-7-t1-p3"><strong>Tokenization</strong> means breaking text into pieces (tokens) from the model’s vocabulary. Today’s models use <strong>subwords</strong>, generated by algorithms such as BPE (<em>Byte Pair Encoding</em>): common words become one token; rare words are split into parts. <strong>Normalization</strong> means standardizing text before processing it—spaces, line breaks, capitalization, and invisible characters.</p>
+</div>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-blue-400 mb-3">What it is</h3>
+<p class="text-neutral-300">The path is text → tokens → numeric IDs → vectors. The vectors (embeddings) carry the meaning the model has learned; everything that comes next—classification, extraction, search—operates on them.</p>
+</div>
+<!-- SVG 1: pipeline de tokenização -->
+<figure class="svg-frame rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="A four-box pipeline: the raw text 'I didn’t like the shipping' becomes subword tokens, the tokens become numeric vocabulary IDs, and the IDs become embedding vectors that capture meaning." class="w-full h-auto" role="img" viewbox="0 0 900 240">
+<defs>
+<filter height="160%" id="m27-glow" width="160%" x="-30%" y="-30%"><fegaussianblur result="b" stddeviation="2"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="28" id="m27-grid" patternunits="userSpaceOnUse" width="28"><circle cx="1.2" cy="1.2" fill="#3b82f6" opacity="0.14" r="1.2"></circle></pattern>
+<marker id="m27-ah" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#60a5fa"></path></marker>
+<style>@keyframes m27dash{to{stroke-dashoffset:-24}} .m27-flow{stroke-dasharray:6 6;animation:m27dash 1.6s linear infinite}</style>
+</defs>
+<rect fill="url(#m27-grid)" height="240" width="900"></rect>
+<g font-family="Inter,sans-serif">
+<g filter="url(#m27-glow)">
+<rect fill="#0e1626" height="100" rx="14" stroke="#60a5fa" stroke-width="2" width="185" x="20" y="60"></rect>
+<rect fill="#0e1626" height="100" rx="14" stroke="#60a5fa" stroke-width="2" width="185" x="245" y="60"></rect>
+<rect fill="#0e1b26" height="100" rx="14" stroke="#38bdf8" stroke-width="2" width="185" x="470" y="60"></rect>
+<rect fill="#0e1b26" height="100" rx="14" stroke="#38bdf8" stroke-width="2.5" width="185" x="695" y="60"></rect>
+</g>
+<text fill="#93c5fd" font-size="12" text-anchor="middle" x="112" y="86">raw text</text>
+<text fill="#eff6ff" font-size="15" font-weight="700" text-anchor="middle" x="112" y="118">“I didn’t like</text>
+<text fill="#eff6ff" font-size="15" font-weight="700" text-anchor="middle" x="112" y="138">the shipping”</text>
+<text fill="#93c5fd" font-size="12" text-anchor="middle" x="337" y="86">tokens</text>
+<text fill="#eff6ff" font-size="14" font-weight="700" text-anchor="middle" x="337" y="118">I · didn · ’t</text>
+<text fill="#eff6ff" font-size="14" font-weight="700" text-anchor="middle" x="337" y="138">like · the · shipping</text>
+<text fill="#bae6fd" font-size="12" text-anchor="middle" x="562" y="86">IDs</text>
+<text fill="#e0f2fe" font-size="14" font-weight="700" text-anchor="middle" x="562" y="124">[812, 4471, 91, …]</text>
+<text fill="#bae6fd" font-size="12" text-anchor="middle" x="787" y="86">embeddings</text>
+<text fill="#e0f2fe" font-size="14" font-weight="700" text-anchor="middle" x="787" y="118">[0.12, −0.48,</text>
+<text fill="#e0f2fe" font-size="14" font-weight="700" text-anchor="middle" x="787" y="138">0.07, …]</text>
+<path class="m27-flow" d="M207,110 L238,110" fill="none" marker-end="url(#m27-ah)" stroke="#60a5fa" stroke-width="2.5"></path>
+<path class="m27-flow" d="M432,110 L463,110" fill="none" marker-end="url(#m27-ah)" stroke="#60a5fa" stroke-width="2.5"></path>
+<path class="m27-flow" d="M657,110 L688,110" fill="none" marker-end="url(#m27-ah)" stroke="#60a5fa" stroke-width="2.5"></path>
+<text fill="#94a3b8" font-size="12" text-anchor="middle" x="112" y="190">what you read</text>
+<text fill="#94a3b8" font-size="12" text-anchor="middle" x="337" y="190">what the model reads</text>
+<text fill="#94a3b8" font-size="12" text-anchor="middle" x="562" y="190">position in the vocabulary</text>
+<text fill="#94a3b8" font-size="12" text-anchor="middle" x="787" y="190">meaning in numbers</text>
+<text fill="#7dd3fc" font-size="12" text-anchor="middle" x="450" y="30">illustrative splits and numbers—each model has its own vocabulary</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-blue-400">How to read:</strong> follow from left to right. The first two frames are still text; the last two are numbers. Notice that “gostei” became two tokens: inflected Portuguese words often use more tokens than their English equivalents, which affects cost and the context window.</figcaption>
+</figure>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
+<h4 class="font-bold text-blue-400 mb-4">✓ Always normalize</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Unicode in NFC form (composed and decomposed accents become the same).</span></li>
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Repeated spaces, tabs, and extra line breaks.</span></li>
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Email signatures, footers, and HTML that carry no meaning.</span></li>
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Personal data that doesn’t need to go to the model (LGPD, Module 2.9).</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Don’t destroy the signal</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Removing accents: “pais” and “país” are no longer different.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Removing “não” as a stop word: the sentence reverses its meaning.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Converting everything to lowercase when acronyms and names matter.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Removing emojis from reviews: they often carry the sentiment.</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-primary/10 border border-primary/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-primary font-semibold mb-1">💡 Tip</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-7-t1-p4">With LLMs, aggressive cleaning with older techniques (stemming, removing stop words) does more harm than good. Clean up formatting noise and personal data; leave the language as it is.</p>
+</div>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Why learn</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-7-t1-p5" data-sum="porque">Understanding tokens explains the bill that arrives at the end of the month, why a document “doesn’t fit” in the context window, and why poorly cleaned text confuses the model. It’s the foundation for sizing any text pipeline before writing the first line of code.</p>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Key concepts</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Token</div><div class="text-xs text-neutral-400">piece of the vocabulary</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Subword (BPE)</div><div class="text-xs text-neutral-400">rare word becomes parts</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Normalization</div><div class="text-xs text-neutral-400">standardize without losing meaning</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Embedding</div><div class="text-xs text-neutral-400">meaning as a vector</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Mark as read</span>
+<span class="inema-label-done">Read</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 2 -->
+<section class="mb-16" data-inema-topic="modulo-2-7#topico-2" id="topico-2" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="do TF-IDF ao LLM com rótulos fixos">🏷️ Classify text</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Mark this topic as a question" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-7-t2-p1"><strong class="text-blue-400">Text classification</strong> means assigning each text a label from a closed list: the subject of a support ticket, the sentiment of a review, the urgency of an email, whether a message is spam. It’s the most common NLP task in businesses because it lets you route, count, and prioritize without anyone reading everything.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-7-t2-p2">There are three approaches. The <strong class="text-neutral-100">classic</strong> turns text into word counts (TF-IDF) and trains a simple model, such as logistic regression in scikit-learn—fast and inexpensive, but it needs hundreds of labeled examples. The <strong class="text-neutral-100">fine-tuning</strong> of a small model (from the BERT family) delivers high quality, with training costs. And <strong class="text-neutral-100">zero-shot with an LLM</strong> classifies using only the label list and an instruction, with no training at all.</p>
+<div class="bg-dark-800 border border-blue-500/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-blue-400 font-semibold mb-1">📘 New terms</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-7-t2-p3"><strong>TF-IDF</strong> weights each word by its frequency in the text and its rarity across the entire dataset. <strong>Zero-shot</strong> means doing the task without examples; <strong>few-shot</strong> means including a few examples in the prompt itself. <strong>Structured output</strong> means requiring the model to respond in a machine-readable format, such as JSON.</p>
+</div>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-blue-400 mb-3">What it is</h3>
+<p class="text-neutral-300">A function that takes text and returns a label from a list you define, preferably with a short explanation and in a format the rest of the system can validate.</p>
+</div>
+<div class="overflow-x-auto mb-6">
+<table class="w-full text-sm border border-dark-600 rounded-xl overflow-hidden">
+<thead><tr class="bg-dark-700"><th class="text-left p-3 text-blue-400">Approach</th><th class="text-left p-3 text-blue-400">Requires</th><th class="text-left p-3 text-blue-400">Best when</th><th class="text-left p-3 text-blue-400">Caution</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr><td class="p-3 font-semibold">TF-IDF + linear model</td><td class="p-3 text-neutral-300">Hundreds of labeled examples</td><td class="p-3 text-neutral-300">High volume, stable labels, minimal cost</td><td class="p-3 text-neutral-300">Doesn’t understand synonyms or irony</td></tr>
+<tr><td class="p-3 font-semibold">Fine-tuning (BERT and similar models)</td><td class="p-3 text-neutral-300">Labeled examples and a GPU</td><td class="p-3 text-neutral-300">High quality with low latency</td><td class="p-3 text-neutral-300">Retraining for every new label</td></tr>
+<tr><td class="p-3 font-semibold">Zero-shot/few-shot LLM</td><td class="p-3 text-neutral-300">A list of labels and a good instruction</td><td class="p-3 text-neutral-300">Getting started today, changing labels</td><td class="p-3 text-neutral-300">Cost and latency per item; validate the output</td></tr>
+</tbody>
+</table>
+</div>
+<!-- COPY-RUN: classificador com Ollama /v1 -->
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-blue-400">Try this:</strong> <span class="text-neutral-300">local zero-shot classifier, saved as <code>classifier.py</code>.</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copy</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900"># Installation: pip install openai   |   ollama pull qwen2.5:7b
+# classifier.py — uses Ollama's OpenAI-compatible route (local and free)
+import json
+from openai import OpenAI
+
+client = OpenAI(base_url="http://localhost:11434/v1", api_key="ollama")  # Ollama ignores the key
+LABELS = ["delivery", "payment", "product", "compliment", "other"]
+
+INSTRUCTION = (
+    "You classify messages from customers of an online store. "
+    'Respond ONLY with JSON in the format {"label": "...", "reason": "..."}. '
+    "Valid labels: " + ", ".join(LABELS) + ". "
+    "Use 'other' when none applies. The reason must be no more than 12 words."
+)
+
+def classify(text: str) -&gt; dict:
+    resp = client.chat.completions.create(
+        model="qwen2.5:7b",
+        temperature=0,                              # same input, same output (almost always)
+        response_format={"type": "json_object"},    # forces valid JSON
+        messages=[{"role": "system", "content": INSTRUCTION},
+                  {"role": "user", "content": text}],
+    )
+    data = json.loads(resp.choices[0].message.content)
+    if data.get("label") not in LABELS:           # never blindly trust the output
+        data["label"] = "other"
+    return data
+
+if __name__ == "__main__":
+    print(classify("&lt;paste a real customer message here, without personal data&gt;"))</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">How to check:</strong> run <code>python3 classificador.py</code>. The output should be a dictionary like <code>{'rotulo': 'entrega', 'motivo': '...'}</code>. Test five messages with different labels and one that has nothing to do with the store: it should be classified as "outro". To use a paid API, change only <code>base_url</code>, <code>api_key</code> e <code>model</code>.</p>
+</div>
+<div class="bg-primary/10 border border-primary/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-primary font-semibold mb-1">💡 Tip</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-7-t2-p4">Start with the LLM to identify the right labels and gather examples. As volume grows and the labels stabilize, use responses reviewed by people to train a small, inexpensive classifier. This is a common way to reduce costs without losing quality.</p>
+</div>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Why learn</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-7-t2-p5" data-sum="porque">Almost every customer support, triage, or sentiment analysis system starts with classification. Knowing how to choose between the classic approach, fine-tuning, and an LLM—and how to validate the output—helps you avoid both an overly expensive project and one that breaks on the first response in the wrong format.</p>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Key concepts</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Closed list</div><div class="text-xs text-neutral-400">labels you define</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Zero-shot</div><div class="text-xs text-neutral-400">no training examples</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">JSON output</div><div class="text-xs text-neutral-400">the system can read it</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Validation</div><div class="text-xs text-neutral-400">a label outside the list becomes "outro"</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Mark as read</span>
+<span class="inema-label-done">Read</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 3 -->
+<section class="mb-16" data-inema-topic="modulo-2-7#topico-3" id="topico-3" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="NER e saída com esquema JSON">🧾 Extract entities</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Mark this topic as a question" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-7-t3-p1"><strong class="text-blue-400">NER</strong> (<em>Named Entity Recognition</em>, finding people’s names, companies, places, dates, and amounts in text, and identifying the type of each. With this, a contract becomes a spreadsheet row: parties, amount, term, jurisdiction. A news story becomes a list of the companies mentioned.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-7-t3-p2">There are two families of tools. Libraries like <strong class="text-neutral-100">spaCy</strong> include ready-to-use models for Portuguese (<code>pt_core_news_sm</code>) that quickly identify people, places, and organizations at no cost. For fields specific to your business (order number, product name, penalty clause), an <strong class="text-neutral-100">LLM with a JSON schema</strong> is usually more flexible: you describe the fields, and the model fills them in.</p>
+<div class="bg-dark-800 border border-blue-500/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-blue-400 font-semibold mb-1">📘 New terms</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-7-t3-p3"><strong>JSON Schema</strong> is a formal description of a JSON’s fields, types, and required properties. Ollama accepts this schema in the <code>format</code> parameter and constrains generation so the response fits it. <strong>BIO tags</strong> (Begin, Inside, Outside) is the classic way to mark entities word by word when training NER models.</p>
+</div>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-blue-400 mb-3">What it is</h3>
+<p class="text-neutral-300">Information extraction: find passages with specific meanings in free-form text and return them organized by type, ready to go into a database or another pipeline step.</p>
+</div>
+<!-- SVG 2: entidades extraídas -->
+<figure class="svg-frame rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="A sentence about hiring is broken down into five entity cards: organization Loja Sol, person Ana Lima, location São Paulo, amount R$ 4,000, and date 02/03/2026, which then go into a structured JSON record." class="w-full h-auto" role="img" viewbox="0 0 900 250">
+<defs>
+<marker id="m27-ahc" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#38bdf8"></path></marker>
+</defs>
+<rect fill="url(#m27-grid)" height="250" width="900"></rect>
+<g font-family="Inter,sans-serif">
+<text fill="#94a3b8" font-size="12" text-anchor="middle" x="450" y="28">input text</text>
+<text fill="#eff6ff" font-size="16" font-weight="600" text-anchor="middle" x="450" y="54">"Loja Sol hired Ana Lima in São Paulo for R$ 4.000 on 03/02/2026."</text>
+<g filter="url(#m27-glow)">
+<rect fill="#0e1626" height="64" rx="12" stroke="#60a5fa" stroke-width="2" width="160" x="20" y="90"></rect>
+<rect fill="#0e1626" height="64" rx="12" stroke="#60a5fa" stroke-width="2" width="160" x="196" y="90"></rect>
+<rect fill="#0e1b26" height="64" rx="12" stroke="#38bdf8" stroke-width="2" width="160" x="372" y="90"></rect>
+<rect fill="#0e1b26" height="64" rx="12" stroke="#38bdf8" stroke-width="2" width="160" x="548" y="90"></rect>
+<rect fill="#0e1626" height="64" rx="12" stroke="#60a5fa" stroke-width="2" width="160" x="724" y="90"></rect>
+</g>
+<text fill="#93c5fd" font-size="11" font-weight="700" text-anchor="middle" x="100" y="112">ORGANIZATION</text>
+<text fill="#eff6ff" font-size="15" font-weight="700" text-anchor="middle" x="100" y="136">Loja Sol</text>
+<text fill="#93c5fd" font-size="11" font-weight="700" text-anchor="middle" x="276" y="112">PERSON</text>
+<text fill="#eff6ff" font-size="15" font-weight="700" text-anchor="middle" x="276" y="136">Ana Lima</text>
+<text fill="#bae6fd" font-size="11" font-weight="700" text-anchor="middle" x="452" y="112">LOCATION</text>
+<text fill="#e0f2fe" font-size="15" font-weight="700" text-anchor="middle" x="452" y="136">São Paulo</text>
+<text fill="#bae6fd" font-size="11" font-weight="700" text-anchor="middle" x="628" y="112">AMOUNT</text>
+<text fill="#e0f2fe" font-size="15" font-weight="700" text-anchor="middle" x="628" y="136">R$ 4.000</text>
+<text fill="#93c5fd" font-size="11" font-weight="700" text-anchor="middle" x="804" y="112">DATE</text>
+<text fill="#eff6ff" font-size="15" font-weight="700" text-anchor="middle" x="804" y="136">03/02/2026</text>
+<path d="M100,156 L100,176 L804,176 L804,156 M276,156 L276,176 M452,156 L452,176 M628,156 L628,176" fill="none" stroke="#60a5fa" stroke-opacity="0.6" stroke-width="1.5"></path>
+<path class="m27-flow" d="M450,176 L450,198" fill="none" marker-end="url(#m27-ahc)" stroke="#38bdf8" stroke-width="2"></path>
+<rect fill="#0e1b26" height="34" rx="10" stroke="#38bdf8" stroke-width="2" width="340" x="280" y="204"></rect>
+<text fill="#e0f2fe" font-size="13" font-weight="600" text-anchor="middle" x="450" y="226">JSON record → database or spreadsheet</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-blue-400">How to read:</strong> The sentence above is the input; each card is a passage copied from the sentence with its type. Notice that none of the cards contains information that wasn't in the text—that's what your code needs to check, because an LLM may "fill in" an empty field with something plausible.</figcaption>
+</figure>
+<!-- COPY-RUN: NER com esquema -->
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-blue-400">Goal:</strong> <span class="text-neutral-300">extract entities with a JSON schema and check that nothing was made up.</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copy</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900"># Installation: pip install requests   |   ollama pull qwen2.5:7b
+import json, requests
+
+CAMPOS = ["pessoas", "organizacoes", "locais", "datas", "valores"]
+SCHEMA = {
+    "type": "object",
+    "properties": {c: {"type": "array", "items": {"type": "string"}} for c in CAMPOS},
+    "required": CAMPOS,
+}
+
+def extrair(texto: str) -&gt; dict:
+    r = requests.post("http://localhost:11434/api/chat", json={
+        "model": "qwen2.5:7b",
+        "stream": False,
+        "format": SCHEMA,                 # the response is restricted to this schema
+        "options": {"temperature": 0},
+        "messages": [
+            {"role": "system", "content": "Extract the entities from the text. Copy each passage "
+             "exactly as it appears. Don't make anything up: use an empty list when there are none."},
+            {"role": "user", "content": texto},
+        ],
+    }, timeout=120)
+    r.raise_for_status()
+    return json.loads(r.json()["message"]["content"])
+
+texto = "&lt;paste a paragraph from a contract, news story, or email&gt;"
+ents = extrair(texto)
+print(json.dumps(ents, ensure_ascii=False, indent=2))
+
+# Anti-fabrication check: every passage must appear literally in the text
+for tipo, itens in ents.items():
+    for item in itens:
+        if item not in texto:
+            print(f"WARNING [{tipo}] is not in the text: {item!r}")</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">How to check:</strong> With the sentence from the diagram, the output should have all five lists filled and no "WARNING" line. Then paste text with no dates: <code>dates</code> it should come back empty. If a warning appears, the model rewrote or made up a passage—treat that as an error, not a success.</p>
+</div>
+<div class="bg-primary/10 border border-primary/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-primary font-semibold mb-1">💡 Tip</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-7-t3-p4">For standard entities at scale, try spaCy first: <code>pip install spacy</code> e <code>python -m spacy download pt_core_news_sm</code>. It runs on CPU, with no GPU, and serves as a baseline for comparison with the LLM.</p>
+</div>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Why learn</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-7-t3-p5" data-sum="porque">Much of the value of NLP in companies comes from extracting data from documents: receipts, contracts, medical reports, résumés, and emails. Knowing how to extract data using a schema and verify it against the original text is what separates a demo from a process you can trust.</p>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Key concepts</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">NER</div><div class="text-xs text-neutral-400">names with types</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">JSON Schema</div><div class="text-xs text-neutral-400">the required format</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Grounding</div><div class="text-xs text-neutral-400">passage appears in the text</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">spaCy</div><div class="text-xs text-neutral-400">ready-to-use NER, on CPU</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Mark as read</span>
+<span class="inema-label-done">Read</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 4 -->
+<section class="mb-16" data-inema-topic="modulo-2-7#topico-4" id="topico-4" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="dividir, resumir e juntar sem perder o fio">📄 Summarize long texts</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Mark this topic as a question" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-7-t4-p1">Summarizing seems simple until a document runs to dozens of pages. Even with large context windows, models tend to pay less attention to the middle of very long texts, and a single summary hides where each claim came from. The robust method is to <strong class="text-neutral-100">split, summarize the parts, and then combine them</strong>, keeping a reference for each passage.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-7-t4-p2">There are two types of summary. An <strong class="text-blue-400">extractive summary</strong> selects sentences from the original and copies them—safe because nothing is rewritten. An <strong class="text-blue-400">abstractive summary</strong> rewrites the text in other words—more fluent, but it can distort the meaning. For legal, medical, or financial texts, a middle ground works well: an abstractive summary with direct quotes from the passages that support each point.</p>
+<div class="bg-dark-800 border border-blue-500/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-blue-400 font-semibold mb-1">📘 New terms</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-7-t4-p3"><strong>Chunking</strong> is to divide the document into passages (chunks) of a controlled size, preferably following sections and paragraphs. <strong>Overlap</strong> (<em>overlap</em>) is repeating part of the end of one passage at the beginning of the next so an idea isn't cut in half. <strong>Map-reduce</strong> means applying the same operation to each passage (map) and then combining the results (reduce).</p>
+</div>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-blue-400 mb-3">What it is</h3>
+<p class="text-neutral-300">Summary in stages: the document is divided into passages, each passage gets a partial summary with a reference to its source, and finally a final summary combines the partial summaries in the format the reader needs.</p>
+</div>
+<!-- SVG 3: map-reduce -->
+<figure class="svg-frame rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="Map-reduce diagram: a long document is divided into four sections; each section produces a partial summary with a reference; the four partial summaries converge into a final summary." class="w-full h-auto" role="img" viewbox="0 0 900 270">
+<rect fill="url(#m27-grid)" height="270" width="900"></rect>
+<g font-family="Inter,sans-serif">
+<text fill="#93c5fd" font-size="12" font-weight="700" text-anchor="middle" x="90" y="24">INPUT</text>
+<text fill="#93c5fd" font-size="12" font-weight="700" text-anchor="middle" x="295" y="24">1 · SPLIT</text>
+<text fill="#bae6fd" font-size="12" font-weight="700" text-anchor="middle" x="525" y="24">2 · MAP</text>
+<text fill="#bae6fd" font-size="12" font-weight="700" text-anchor="middle" x="785" y="24">3 · REDUCE</text>
+<rect fill="#0e1626" filter="url(#m27-glow)" height="120" rx="12" stroke="#60a5fa" stroke-width="2" width="140" x="20" y="90"></rect>
+<text fill="#eff6ff" font-size="14" font-weight="700" text-anchor="middle" x="90" y="142">document</text>
+<text fill="#eff6ff" font-size="14" font-weight="700" text-anchor="middle" x="90" y="162">long</text>
+<g fill="#0e1626" stroke="#60a5fa" stroke-width="1.8">
+<rect height="36" rx="8" width="150" x="220" y="44"></rect>
+<rect height="36" rx="8" width="150" x="220" y="100"></rect>
+<rect height="36" rx="8" width="150" x="220" y="156"></rect>
+<rect height="36" rx="8" width="150" x="220" y="212"></rect>
+</g>
+<g fill="#dbeafe" font-size="13" text-anchor="middle">
+<text x="295" y="67">passage 1 · p. 1–8</text>
+<text x="295" y="123">passage 2 · p. 8–16</text>
+<text x="295" y="179">passage 3 · p. 16–24</text>
+<text x="295" y="235">passage 4 · p. 24–30</text>
+</g>
+<g fill="#0e1b26" stroke="#38bdf8" stroke-width="1.8">
+<rect height="36" rx="8" width="150" x="450" y="44"></rect>
+<rect height="36" rx="8" width="150" x="450" y="100"></rect>
+<rect height="36" rx="8" width="150" x="450" y="156"></rect>
+<rect height="36" rx="8" width="150" x="450" y="212"></rect>
+</g>
+<g fill="#e0f2fe" font-size="13" text-anchor="middle">
+<text x="525" y="67">summary 1 + source</text>
+<text x="525" y="123">summary 2 + source</text>
+<text x="525" y="179">summary 3 + source</text>
+<text x="525" y="235">summary 4 + source</text>
+</g>
+<g fill="none" stroke="#60a5fa" stroke-opacity="0.7" stroke-width="1.6">
+<path d="M162,150 L218,62 M162,150 L218,118 M162,150 L218,174 M162,150 L218,230"></path>
+<path class="m27-flow" d="M372,62 L446,62 M372,118 L446,118 M372,174 L446,174 M372,230 L446,230"></path>
+</g>
+<g fill="none" stroke="#38bdf8" stroke-opacity="0.8" stroke-width="1.6">
+<path d="M602,62 L688,140 M602,118 L688,145 M602,174 L688,150 M602,230 L688,155"></path>
+</g>
+<rect fill="#0e1b26" filter="url(#m27-glow)" height="80" rx="14" stroke="#38bdf8" stroke-width="2.5" width="190" x="690" y="108"></rect>
+<text fill="#e0f2fe" font-size="15" font-weight="700" text-anchor="middle" x="785" y="142">final summary</text>
+<text fill="#bae6fd" font-size="12" text-anchor="middle" x="785" y="162">in the reader's format</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-blue-400">How to read:</strong> The columns are stages. Each partial summary carries the page it came from, and the final summary can only use what's in the partial summaries. When someone asks "where did this come from?" you can follow the lines back to the passage. The map steps can run in parallel.</figcaption>
+</figure>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-4"><p class="text-blue-400 font-semibold text-sm mb-1">For decision-makers</p><p class="text-xs text-neutral-300" data-inema-block="m2-7-t4-p4">Five points, with risks first, each with its source page. End with "what remains to be decided."</p></div>
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-4"><p class="text-blue-400 font-semibold text-sm mb-1">For implementers</p><p class="text-xs text-neutral-300" data-inema-block="m2-7-t4-p5">List obligations, deadlines, and owners in a table. No long paragraphs.</p></div>
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-4"><p class="text-blue-400 font-semibold text-sm mb-1">For the system</p><p class="text-xs text-neutral-300" data-inema-block="m2-7-t4-p6">JSON with fixed fields (topic, parties, dates, amounts) for indexing and filtering later.</p></div>
+</div>
+<div class="bg-primary/10 border border-primary/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-primary font-semibold mb-1">💡 Tip</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-7-t4-p7">Split by structure (headings, clauses, sections), not by a fixed number of characters. A cut in the middle of a clause produces two incorrect partial summaries.</p>
+</div>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Why learn</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-7-t4-p8" data-sum="porque">Reports, meeting minutes, case files, and manuals are long and read in a hurry. A traceable summary saves hours of reading without hiding where each conclusion came from—and the same pattern of splitting, processing, and combining works for translation, extraction, and review of large documents.</p>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Key concepts</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Extractive</div><div class="text-xs text-neutral-400">copies sentences from the original</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Abstractive</div><div class="text-xs text-neutral-400">rewrites in different words</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Chunking</div><div class="text-xs text-neutral-400">sections by structure</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Map-reduce</div><div class="text-xs text-neutral-400">summarize sections, then combine them</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Mark as read</span>
+<span class="inema-label-done">Read</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 5 -->
+<section class="mb-16" data-inema-topic="modulo-2-7#topico-5" id="topico-5" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="embeddings e similaridade de cosseno">🔎 Semantic search</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Mark this topic as a question" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-7-t5-p1">Keyword search only finds content that uses the same word. Someone who asks “my package hasn’t arrived” won’t find the text “delivery time”—even though that’s exactly what they’re looking for.  <strong class="text-blue-400">Semantic search</strong> compares meanings: it turns the question and documents into vectors and returns the documents whose vectors are closest.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-7-t5-p2">This is the central part of RAG (retrieval-augmented generation), covered in the module on knowledge bases: before answering, the system searches for relevant passages and provides them to the LLM. In production, the vectors are stored in a dedicated database— <strong class="text-neutral-100">pgvector</strong> in Postgres, <strong class="text-neutral-100">Qdrant</strong> or <strong class="text-neutral-100">Chroma</strong>. To learn, a NumPy array is enough.</p>
+<div class="bg-dark-800 border border-blue-500/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-blue-400 font-semibold mb-1">📘 New terms</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-7-t5-p3"><strong>Cosine similarity</strong> measures the angle between two vectors: near 1, they point in the same direction (similar meanings); near 0, they’re unrelated. If the vectors are <strong>normalized</strong> (length 1), the cosine becomes a simple dot product. <strong>Hybrid search</strong> combines keywords and vectors, useful when exact codes and names matter.</p>
+</div>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-blue-400 mb-3">What it is</h3>
+<p class="text-neutral-300">Search by similarity of meaning: an embedding model converts texts into vectors, and the query returns the texts closest to the question by cosine similarity, even when they have no words in common.</p>
+</div>
+<!-- SVG 4: espaço vetorial -->
+<figure class="svg-frame rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="Two-dimensional map of embeddings with three groups of points: delivery, payment, and praise. The question “my order hasn’t arrived” appears as a star beside the delivery group, connected to the nearest point." class="w-full h-auto" role="img" viewbox="0 0 900 300">
+<rect fill="url(#m27-grid)" height="300" width="900"></rect>
+<g font-family="Inter,sans-serif">
+<path d="M60,270 L860,270 M60,270 L60,30" fill="none" stroke="#475569" stroke-width="1.5"></path>
+<text fill="#94a3b8" font-size="11" x="70" y="290">2D projection of vectors with hundreds of dimensions (for illustration)</text>
+<g fill="#60a5fa" filter="url(#m27-glow)">
+<circle cx="170" cy="90" r="7"></circle><circle cx="205" cy="70" r="7"></circle><circle cx="200" cy="115" r="7"></circle><circle cx="240" cy="95" r="7"></circle>
+</g>
+<text fill="#bfdbfe" font-size="13" font-weight="700" x="150" y="148">delivery and shipping</text>
+<g fill="#38bdf8" filter="url(#m27-glow)">
+<circle cx="520" cy="200" r="7"></circle><circle cx="555" cy="180" r="7"></circle><circle cx="560" cy="225" r="7"></circle><circle cx="595" cy="205" r="7"></circle>
+</g>
+<text fill="#bae6fd" font-size="13" font-weight="700" x="505" y="256">payments and bills</text>
+<g fill="#93c5fd" filter="url(#m27-glow)">
+<circle cx="720" cy="70" r="7"></circle><circle cx="755" cy="55" r="7"></circle><circle cx="760" cy="95" r="7"></circle><circle cx="795" cy="75" r="7"></circle>
+</g>
+<text fill="#dbeafe" font-size="13" font-weight="700" x="715" y="128">compliments</text>
+<path d="M310,150 L318,166 L336,168 L322,180 L326,198 L310,188 L294,198 L298,180 L284,168 L302,166 Z" fill="#f0f9ff" filter="url(#m27-glow)"></path>
+<path class="m27-flow" d="M300,165 L246,104" fill="none" stroke="#f0f9ff" stroke-width="2"></path>
+<text fill="#f8fafc" font-size="13" font-weight="700" x="345" y="186">question: “my package</text>
+<text fill="#f8fafc" font-size="13" font-weight="700" x="345" y="204">hasn’t arrived”</text>
+<text fill="#f0f9ff" font-size="12" x="290" y="128">closest</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-blue-400">How to read:</strong> Each point is a text; texts on the same subject cluster together, even when they use different words. The star is the question: the search returns the points in the closest cluster. The 2D projection is only for visualization—the actual distance is calculated across all dimensions.</figcaption>
+</figure>
+<!-- COPY-RUN: busca semântica -->
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-blue-400">Try this:</strong> <span class="text-neutral-300">local semantic search with <code>nomic-embed-text</code>.</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copy</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900"># Installation: pip install requests numpy   |   ollama pull nomic-embed-text
+import requests
+import numpy as np
+
+def embed(textos: list[str]) -&gt; np.ndarray:
+    r = requests.post("http://localhost:11434/api/embed",
+                      json={"model": "nomic-embed-text", "input": textos}, timeout=120)
+    r.raise_for_status()
+    v = np.array(r.json()["embeddings"], dtype=float)
+    return v / np.linalg.norm(v, axis=1, keepdims=True)   # normalize: cosine = dot product
+
+# nomic-embed-text recommends different prefixes for documents and queries
+docs = [
+    "The delivery time is 5 to 10 business days after payment is confirmed.",
+    "Expired bills can be reissued in the customer area.",
+    "Returns are accepted within 7 calendar days after receipt.",
+    "&lt;add passages from your own knowledge base here, one per item&gt;",
+]
+D = embed(["search_document: " + d for d in docs])
+
+def buscar(pergunta: str, k: int = 2) -&gt; None:
+    q = embed(["search_query: " + pergunta])[0]
+    notas = D @ q
+    for i in np.argsort(-notas)[:k]:
+        print(f"{notas[i]:.3f}  {docs[i]}")
+
+buscar("my package still hasn’t arrived")</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">How to check:</strong> The first result should be the sentence about delivery time, even though it doesn’t contain the word “package.” Change the question to “can I return the T-shirt?”—the sentence about returns should move to the top. Scores vary from model to model; compare the ranking, not the absolute value.</p>
+</div>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Why learn</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-7-t5-p4" data-sum="porque">Semantic search is the foundation of assistants that answer using company documents, ticket deduplication, and content recommendations. Understanding the vector and the metric helps you diagnose why a search fails—before blaming the LLM for a bad answer.</p>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Key concepts</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Embedding</div><div class="text-xs text-neutral-400">text as a vector</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Cosine</div><div class="text-xs text-neutral-400">similarity of meaning</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Vector database</div><div class="text-xs text-neutral-400">pgvector, Qdrant, Chroma</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Hybrid search</div><div class="text-xs text-neutral-400">keyword + vector</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Mark as read</span>
+<span class="inema-label-done">Read</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 6 -->
+<section class="mb-16" data-inema-topic="modulo-2-7#topico-6" id="topico-6" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="detecção, tradução e armadilhas do PT-BR">🌍 Portuguese and other languages</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Mark this topic as a question" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-7-t6-p1">Most of the training data for models is still in English. Today’s LLMs handle Portuguese well, but differences still arise: more tokens for the same content, slang and regional expressions being misinterpreted, confusion between Brazilian and European Portuguese, and errors with local formats—CPF, CEP, dates in day/month format, decimal commas, “R$ 1.234,56.”</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-7-t6-p2">For translation, you have open, dedicated models such as <strong class="text-neutral-100">NLLB</strong> from Meta, and general-purpose LLMs, which translate well and also follow tone and glossary instructions. For systems that receive text in multiple languages, the standard approach is to <strong class="text-neutral-100">detect the language first</strong> and decide whether to process it in the original language with a multilingual model or translate it first.</p>
+<div class="bg-dark-800 border border-blue-500/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-blue-400 font-semibold mb-1">📘 New terms</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-7-t6-p3"><strong>A multilingual model</strong> is trained on several languages at once and places equivalent sentences close together in embedding space—so a question in Portuguese can find a document in Spanish. <strong>A glossary</strong>, in translation, is a list of terms that should always be translated the same way (or left untranslated, such as product names).</p>
+</div>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-blue-400 mb-3">What it is</h3>
+<p class="text-neutral-300">It means treating language and local formats as part of the problem: detect the language, choose the right model and prompt, standardize numbers, dates, and Brazilian documents, and test with real texts from your audience.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
+<h4 class="font-bold text-blue-400 mb-4">✓ Works well</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Explicitly request “Brazilian Portuguese” in the system prompt.</span></li>
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Convert “R$ 1.234,56” and “03/02/2026” with code, not the model.</span></li>
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Validate CPF and CNPJ using the check digit after extraction.</span></li>
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Use a fixed glossary in the translation prompt for company terms.</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Common pitfalls</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Test only with English text and publish for Brazilian customers.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Let the model interpret “02/03” without knowing the date format.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Ignore text with typos and WhatsApp abbreviations.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Translate first and then extract, losing original names and values.</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-primary/10 border border-primary/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-primary font-semibold mb-1">💡 Tip</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-7-t6-p4">Build your test set with messages written the way your customers actually write—with “vc,” “pq,” typos, and transcribed audio. Models that perform well on clean text can do much worse on informal text, and only testing shows how much.</p>
+</div>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Why learn</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-7-t6-p5" data-sum="porque">Examples, tutorials, and benchmarks are often in English. Anyone building for a Brazilian audience needs to know the typical failure points in Portuguese and local formats—that’s where a system that “worked in testing” breaks with its first real customer.</p>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Key concepts</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Language detection</div><div class="text-xs text-neutral-400">first pipeline step</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Multilingual</div><div class="text-xs text-neutral-400">multiple languages in the same space</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Local format</div><div class="text-xs text-neutral-400">dates, currency, CPF</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">A glossary</div><div class="text-xs text-neutral-400">terms that are always the same</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Mark as read</span>
+<span class="inema-label-done">Read</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 7 -->
+<section class="mb-16" data-inema-topic="modulo-2-7#topico-7" id="topico-7" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">7</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="conjunto de testes antes de confiar">🧪 Pipeline and evaluation</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Mark this topic as a question" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-7-t7-p1">A <strong class="text-blue-400">text pipeline</strong> chains together the steps in this module: normalize, detect language, classify, extract, validate, and record. Each step has defined inputs and outputs, and each can fail. Without measuring, you don’t know which step failed or whether a model or prompt change improved or worsened the result.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-7-t7-p2">The tool for this is the <strong class="text-neutral-100">test set</strong>: a few dozen real, anonymized examples with the correct answer labeled by a person. Run every change against it. The resulting number doesn’t need to be perfect; it needs to be comparable across versions.</p>
+<div class="bg-dark-800 border border-blue-500/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-blue-400 font-semibold mb-1">📘 New terms</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-7-t7-p3"><strong>Accuracy</strong> is the fraction of correct predictions out of the total. <strong>Precision</strong> for a label: of the items the model assigned that label, how many were correct. <strong>Recall</strong> (<em>Recall</em>): of the items that actually belonged to that label, how many the model found. <strong>F1</strong> combines the two. With imbalanced classes, look at precision and recall for each label, not just accuracy.</p>
+</div>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-blue-400 mb-3">What it is</h3>
+<p class="text-neutral-300">A sequence of text processing steps with defined input and output contracts, tracked with a labeled test set that measures every change before it reaches users.</p>
+</div>
+<!-- PASSO A PASSO -->
+<div class="relative border-l-2 border-blue-500/30 ml-3 pl-6 space-y-5 mb-6">
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-blue-500/20 border-2 border-blue-400"></span><p class="text-sm text-neutral-300"><strong class="text-blue-400">Step 1 · Gather real examples.</strong> Start with 30 to 50 anonymized messages covering all labels and difficult cases.</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-blue-500/20 border-2 border-blue-400"></span><p class="text-sm text-neutral-300"><strong class="text-blue-400">Step 2 · Label the correct answer.</strong> Having two people label the same sample reveals where the labels themselves are ambiguous.</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-sky-500/20 border-2 border-sky-400"></span><p class="text-sm text-neutral-300"><strong class="text-sky-400">Step 3 · Measure the current version.</strong> Run the script below and save the result as your baseline.</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-sky-500/20 border-2 border-sky-400"></span><p class="text-sm text-neutral-300"><strong class="text-sky-400">Step 4 · Change one thing at a time.</strong> Prompt, model, or step. Measure again and compare with the baseline.</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-sky-500/20 border-2 border-sky-400"></span><p class="text-sm text-neutral-300"><strong class="text-sky-400">Step 5 · Review the errors.</strong> The error list teaches you more than the number: ambiguous label, informal text, missing context.</p></div>
+</div>
+<!-- COPY-RUN: avaliação -->
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-blue-400">Goal:</strong> <span class="text-neutral-300">measure the classifier from Topic 2 with a test set (<code>evaluate.py</code>).</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copy</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900"># evaluate.py — save in the same folder as classifier.py (Topic 2)
+from collections import Counter
+from classificador import classificar
+
+TESTE = [  # (text, correct label) — replace with 30+ real, anonymized examples
+    ("My order has been stuck with the carrier for a week", "entrega"),
+    ("The payment slip expired and I can't generate another one", "pagamento"),
+    ("The T-shirt arrived with an open seam", "produto"),
+    ("Excellent service, they resolved it in minutes", "elogio"),
+    ("Are you open on the holiday?", "outro"),
+    ("&lt;real text&gt;", "&lt;correct label&gt;"),
+]
+
+tp, fp, fn = Counter(), Counter(), Counter()
+erros = []
+for texto, certo in TESTE:
+    previsto = classificar(texto)["rotulo"]
+    if previsto == certo:
+        tp[certo] += 1
+    else:
+        fp[previsto] += 1
+        fn[certo] += 1
+        erros.append((texto, certo, previsto))
+
+total = len(TESTE)
+acertos = sum(tp.values())
+print(f"accuracy: {acertos}/{total} = {acertos / total:.0%}")
+for r in sorted({c for _, c in TESTE}):
+    prec = tp[r] / (tp[r] + fp[r]) if tp[r] + fp[r] else 0.0
+    rev = tp[r] / (tp[r] + fn[r]) if tp[r] + fn[r] else 0.0
+    print(f"{r:10s} precision={prec:.2f}  recall={rev:.2f}")
+for texto, certo, previsto in erros:
+    print(f"ERROR  expected={certo:10s} got={previsto:10s} | {texto}")</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">How to check:</strong> run <code>python3 avaliar.py</code> (delete the example line with &lt; &gt; first). You should see the accuracy, one line per label, and the error list. Change the prompt in <code>classifier.py</code>, run it again, and compare: if accuracy improves but one label gets worse, the change isn’t a complete win.</p>
+</div>
+<div class="bg-primary/10 border border-primary/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-primary font-semibold mb-1">💡 Tip</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-7-t7-p4">Keep the test set in the repository alongside the code. In Module 2.8, it becomes an automatic gate: no version goes to production if its result falls below the baseline.</p>
+</div>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Why learn</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-7-t7-p5" data-sum="porque">Without a test set, every prompt adjustment is a guess and every model switch is a risk. With one, you can switch to a cheaper model knowing how much quality you lose, prove the improvement to your team, and catch errors before they reach customers.</p>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Key concepts</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Test set</div><div class="text-xs text-neutral-400">examples with the correct answers</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Baseline</div><div class="text-xs text-neutral-400">the score to beat</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Precision × recall</div><div class="text-xs text-neutral-400">correct predictions by label</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Error analysis</div><div class="text-xs text-neutral-400">review what failed</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Mark as read</span>
+<span class="inema-label-done">Read</span>
+</button>
+</div>
+</div>
+</section>
+<!-- RESUMO -->
+<section class="mb-8">
+<div class="bg-gradient-to-br from-blue-900/40 via-dark-800 to-dark-800 rounded-xl border border-blue-500/30 p-6 sm:p-8">
+<h2 class="text-2xl font-bold mb-6">✅ Module summary</h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start gap-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">Text becomes tokens, IDs, and vectors</strong><span class="text-neutral-400"> — normalize the format, preserve the language.</span></div></div>
+<div class="flex items-start gap-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">Classify and extract with structured output</strong><span class="text-neutral-400"> — validate the label and check each excerpt against the text.</span></div></div>
+<div class="flex items-start gap-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">Summarize in steps and search by meaning</strong><span class="text-neutral-400"> — map-reduce with sources and normalized embeddings.</span></div></div>
+<div class="flex items-start gap-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">Test with real Portuguese and measure everything</strong><span class="text-neutral-400"> — test set, baseline, and error review.</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-blue-400 mb-2">Next module:</h3>
+<p class="text-neutral-300">2.8 — MLOps and Production 🛠️</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="index.html">← Back to Track</a>
+<a class="flex-1 text-center px-6 py-3 bg-blue-700 text-white rounded-lg font-semibold hover:bg-blue-600 transition-colors" href="modulo-2-8.html">Next module →</a>
+</div>
+</div>
+</section>
+</article>
+</div>
+</div>
+</main>
+<footer class="border-t border-dark-600 py-8 mt-8">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>FTD — Digital Transformation Training · open and free content · 2026 · <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" rel="noopener" target="_blank">INEMA.CLUB</a> - <a class="text-amber-700 dark:text-slate-300 hover:underline" href="https://inema.pro" rel="noopener" target="_blank">PRO</a></p>
+</div>
+</footer>
+<!-- SCRIPTS NÚCLEO v1 -->
+<script>
+    function toggleTopic(button) {
+      var topicItem = button.closest('.topic-item');
+      if (!topicItem) return;
+      var explanation = topicItem.querySelector('.topic-explanation');
+      var willOpen = !explanation.classList.contains('active');
+      explanation.classList.toggle('active');
+      button.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+    }
+    function openModal(id) { var m = document.getElementById(id); if (m) { m.classList.remove('hidden'); document.body.style.overflow = 'hidden'; } }
+    function closeModal() { document.querySelectorAll('.modal').forEach(function (m) { m.classList.add('hidden'); }); document.body.style.overflow = 'auto'; }
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
+    function copyCode(btn) {
+      var pre = btn.closest('[data-copy-box]').querySelector('pre');
+      var txt = pre ? pre.innerText : '';
+      var done = function () { var o = btn.getAttribute('data-label-ok') || 'Copiado'; var t = btn.textContent; btn.textContent = o; setTimeout(function () { btn.textContent = t; }, 1500); };
+      try { navigator.clipboard.writeText(txt).then(done, done); } catch (e) { done(); }
+    }
+    (function () {
+      var themeToggle = document.getElementById('theme-toggle');
+      var darkIcon = document.getElementById('theme-toggle-dark-icon');
+      var lightIcon = document.getElementById('theme-toggle-light-icon');
+      var html = document.documentElement;
+      function sync() { var isDark = html.classList.contains('dark'); if (darkIcon) darkIcon.classList.toggle('hidden', isDark); if (lightIcon) lightIcon.classList.toggle('hidden', !isDark); }
+      sync();
+      if (themeToggle) themeToggle.addEventListener('click', function () {
+        html.classList.toggle('dark'); var nowDark = html.classList.contains('dark'); html.style.colorScheme = nowDark ? 'dark' : 'light';
+        try { localStorage.setItem('theme', nowDark ? 'dark' : 'light'); } catch (e) {}
+        try { var p = JSON.parse(localStorage.getItem('inema.prefs') || '{}'); p.theme = nowDark ? 'inema-dark' : 'claro'; localStorage.setItem('inema.prefs', JSON.stringify(p)); } catch (e) {}
+        sync();
+      });
+    })();
+  </script>
+<!-- learn.js + INEMA.init() POR ÚLTIMO -->
+<script src="../../assets/learn.js"></script>
+<script>
+    if (window.INEMA && typeof window.INEMA.init === 'function') { window.INEMA.init({ autoResume: true }); }
+  </script>
+</body>
+</html>

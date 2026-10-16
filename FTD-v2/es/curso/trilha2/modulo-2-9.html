@@ -1,0 +1,1226 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="ftd-v2-es" name="inema-course"/>
+<title>Módulo 2.9 · Ética y gobernanza de IA | FTD v2</title>
+<meta content="Sesgo, privacidad, LGPD, transparencia, derechos de autor y un proceso sencillo de gobernanza." name="description"/>
+<meta content="Módulo 2.9 · Ética y gobernanza de IA | FTD v2" property="og:title"/>
+<meta content="Sesgo, privacidad, LGPD, transparencia, derechos de autor y un proceso sencillo de gobernanza." property="og:description"/>
+<!-- ANTI-FOUC (Erro #18) — primeiro script do head -->
+<script>
+(function () {
+  try {
+    var html = document.documentElement;
+    var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+    function clone(o) { var r = {}; for (var x in o) r[x] = o[x]; return r; }
+    var p = clone(DEF);
+    try {
+      var raw = localStorage.getItem('inema.prefs');
+      if (raw) {
+        var parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === 'object') {
+          for (var k in DEF) if (parsed[k] != null) p[k] = parsed[k];
+        }
+      } else {
+        var legacy = localStorage.getItem('theme');
+        if (legacy === 'light') p.theme = 'claro';
+        else if (legacy === 'dark') p.theme = 'inema-dark';
+      }
+    } catch (e) { p = clone(DEF); }
+
+    var THEMES = {
+      'inema-dark': { dark: true,  attr: null,        cs: 'dark'  },
+      'claro':      { dark: false, attr: null,        cs: 'light' },
+      'sepia':      { dark: false, attr: 'sepia',     cs: 'light' },
+      'foco':       { dark: null,  attr: 'foco',      cs: null    },
+      'contraste':  { dark: true,  attr: 'contraste', cs: 'dark'  }
+    };
+    var t = THEMES[p.theme] || THEMES['inema-dark'];
+
+    if (t.dark === true) html.classList.add('dark');
+    else if (t.dark === false) html.classList.remove('dark');
+
+    if (t.attr) html.setAttribute('data-theme', t.attr);
+    else html.removeAttribute('data-theme');
+
+    html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark') ? 'dark' : 'light'));
+
+    html.setAttribute('data-font', p.font || 'inter');
+    html.setAttribute('data-accent', p.accent || 'emerald');
+
+    var s = html.style;
+    var scale = (+p.fontScale || 100);
+    s.setProperty('--inema-font-scale', (scale / 100).toString());
+    s.setProperty('font-size', scale + '%');
+    s.setProperty('--measure', (+p.lineWidth || 68) + 'ch');
+    s.setProperty('--lh-body', (+p.leading || 1.7).toString());
+    var fam = p.font === 'system'
+      ? 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif'
+      : (p.font === 'leitura'
+        ? '"Atkinson Hyperlegible", "Inter", system-ui, sans-serif'
+        : '"Inter", system-ui, sans-serif');
+    s.setProperty('--font-body', fam);
+
+    var ACC = {
+      emerald: [152, 76, 45], blue: [217, 91, 60], purple: [258, 90, 66],
+      amber: [38, 92, 50], teal: [174, 72, 41], rose: [350, 89, 60]
+    };
+    var a = ACC[p.accent] || ACC.emerald;
+    s.setProperty('--accent-h', a[0] + '');
+    s.setProperty('--accent-s', a[1] + '%');
+    s.setProperty('--accent-l', a[2] + '%');
+    s.setProperty('--accent', 'hsl(' + a[0] + ' ' + a[1] + '% ' + a[2] + '%)');
+  } catch (err) {
+    try { document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme = 'dark'; } catch (e) {}
+  }
+})();
+</script>
+<!-- MANIFESTO do curso (Erro #28) — idêntico em todas as páginas -->
+<script data-inema-manifest="" type="application/json">
+{
+  "course": "ftd-v2-es",
+  "tracks": [
+    {
+      "n": "1",
+      "title": "Principiante",
+      "modules": [
+        {
+          "id": "1-1",
+          "title": "Impacto de la IA",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-1.html"
+        },
+        {
+          "id": "1-2",
+          "title": "Navegar el mundo digital",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-2.html"
+        },
+        {
+          "id": "1-3",
+          "title": "Ingeniería de prompts",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-3.html"
+        },
+        {
+          "id": "1-4",
+          "title": "Asistentes y agentes de IA",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-4.html"
+        },
+        {
+          "id": "1-5",
+          "title": "Creatividad visual con IA",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-5.html"
+        },
+        {
+          "id": "1-6",
+          "title": "Marketing y ventas con IA",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-6.html"
+        },
+        {
+          "id": "1-7",
+          "title": "Automatización de procesos",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-7.html"
+        },
+        {
+          "id": "1-8",
+          "title": "Inteligencia artificial avanzada",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-8.html"
+        },
+        {
+          "id": "1-9",
+          "title": "Negocios y monetización con IA",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-9.html"
+        }
+      ]
+    },
+    {
+      "n": "2",
+      "title": "Técnico",
+      "modules": [
+        {
+          "id": "2-1",
+          "title": "Desarrollo con APIs de IA",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-1.html"
+        },
+        {
+          "id": "2-2",
+          "title": "Arquitectura de aplicaciones con IA",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-2.html"
+        },
+        {
+          "id": "2-3",
+          "title": "RAG y bases de conocimiento",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-3.html"
+        },
+        {
+          "id": "2-4",
+          "title": "Fine-tuning y personalización",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-4.html"
+        },
+        {
+          "id": "2-5",
+          "title": "Agentes y flujos de trabajo complejos",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-5.html"
+        },
+        {
+          "id": "2-6",
+          "title": "Visión artificial avanzada",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-6.html"
+        },
+        {
+          "id": "2-7",
+          "title": "NLP y procesamiento de texto",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-7.html"
+        },
+        {
+          "id": "2-8",
+          "title": "MLOps y producción",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-8.html"
+        },
+        {
+          "id": "2-9",
+          "title": "Ética y gobernanza de IA",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-9.html"
+        }
+      ]
+    },
+    {
+      "n": "3",
+      "title": "Masterclass",
+      "modules": [
+        {
+          "id": "3-1",
+          "title": "Arquitectura de IA a gran escala",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-1.html"
+        },
+        {
+          "id": "3-2",
+          "title": "Modelos personalizados y propietarios",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-2.html"
+        },
+        {
+          "id": "3-3",
+          "title": "IA multimodal avanzada",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-3.html"
+        },
+        {
+          "id": "3-4",
+          "title": "Investigación y artículos de IA",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-4.html"
+        },
+        {
+          "id": "3-5",
+          "title": "Aprendizaje por refuerzo en IA",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-5.html"
+        },
+        {
+          "id": "3-6",
+          "title": "Seguridad y red teaming",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-6.html"
+        },
+        {
+          "id": "3-7",
+          "title": "IA en producción — escala enterprise",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-7.html"
+        },
+        {
+          "id": "3-8",
+          "title": "Liderazgo y estrategia en IA",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-8.html"
+        },
+        {
+          "id": "3-9",
+          "title": "Futuro de la IA y AGI",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-9.html"
+        }
+      ]
+    }
+  ]
+}
+</script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#0c0c10', 800: '#16161e', 700: '#1e1e28', 600: '#272730', 500: '#33333f' } }, fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'], display: ['Sora', 'Inter', 'sans-serif'], mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'] } } } }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Sora:wght@600;700;800&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    h1, h2, h3, h4, .font-display { font-family: 'Sora', 'Inter', sans-serif; }
+    .dark body { background-color: #0c0c10; }
+    .dark .text-neutral-100 { color: #e9e9ee; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+    pre { white-space: pre-wrap; word-break: break-word; }
+    pre, code, .font-mono { font-family: 'JetBrains Mono', ui-monospace, monospace; }
+
+    /* Light mode — Parte 1: base */
+    html:not(.dark) body { background-color: #f6f7f9; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800\/50 { background-color: #f6f7f9; }
+    html:not(.dark) .bg-dark-700 { background-color: #eceef2; }
+    html:not(.dark) .bg-dark-700\/50 { background-color: #f1f2f5; }
+    html:not(.dark) .bg-dark-700\/30 { background-color: #f4f5f7; }
+    html:not(.dark) .bg-dark-600 { background-color: #e1e3ea; }
+    html:not(.dark) .hover\:bg-dark-600:hover { background-color: #d6d9e1; }
+    html:not(.dark) .hover\:bg-dark-700\/50:hover { background-color: #eceef2; }
+    html:not(.dark) .text-neutral-100 { color: #1a1a22; }
+    html:not(.dark) .text-neutral-200 { color: #26262f; }
+    html:not(.dark) .text-neutral-300 { color: #3f3f4a; }
+    html:not(.dark) .text-neutral-400 { color: #5b5b68; }
+    html:not(.dark) .text-neutral-500 { color: #62626e; }
+    html:not(.dark) .border-dark-600 { border-color: #e1e3ea; }
+    html:not(.dark) .border-dark-700 { border-color: #e8e9ee; }
+    html:not(.dark) .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #e1e3ea; }
+    html:not(.dark) .bg-black\/40 { background-color: #f1f2f5; }
+    html:not(.dark) pre.code-dark { background-color: #1a1a22; color: #e9e9ee; }
+
+    /* Light mode — Parte 2: acento das 3 trilhas (texto -700, nunca -400 no claro) */
+    html:not(.dark) .text-emerald-400 { color: #047857; }
+    html:not(.dark) .text-emerald-300 { color: #047857; }
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #047857; }
+    html:not(.dark) .bg-emerald-500\/20 { background-color: rgba(4,120,87,0.12); }
+    html:not(.dark) .bg-emerald-500\/10 { background-color: rgba(4,120,87,0.08); }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(4,120,87,0.08); }
+    html:not(.dark) .bg-emerald-900\/20 { background-color: rgba(4,120,87,0.07); }
+    html:not(.dark) .bg-emerald-900\/30 { background-color: rgba(4,120,87,0.08); }
+    html:not(.dark) .bg-emerald-900\/40 { background-color: rgba(4,120,87,0.09); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(4,120,87,0.28); }
+    html:not(.dark) .hover\:border-emerald-500\/30:hover { border-color: rgba(4,120,87,0.4); }
+    html:not(.dark) .text-blue-400 { color: #1d4ed8; }
+    html:not(.dark) .text-blue-300 { color: #1d4ed8; }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #1d4ed8; }
+    html:not(.dark) .bg-blue-500\/20 { background-color: rgba(29,78,216,0.12); }
+    html:not(.dark) .bg-blue-500\/10 { background-color: rgba(29,78,216,0.08); }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(29,78,216,0.08); }
+    html:not(.dark) .bg-blue-900\/20 { background-color: rgba(29,78,216,0.07); }
+    html:not(.dark) .bg-blue-900\/30 { background-color: rgba(29,78,216,0.08); }
+    html:not(.dark) .bg-blue-900\/40 { background-color: rgba(29,78,216,0.09); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(29,78,216,0.28); }
+    html:not(.dark) .hover\:border-blue-500\/30:hover { border-color: rgba(29,78,216,0.4); }
+    html:not(.dark) .text-purple-400 { color: #6d28d9; }
+    html:not(.dark) .text-purple-300 { color: #6d28d9; }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #6d28d9; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(109,40,217,0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(109,40,217,0.08); }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(109,40,217,0.08); }
+    html:not(.dark) .bg-purple-900\/20 { background-color: rgba(109,40,217,0.07); }
+    html:not(.dark) .bg-purple-900\/30 { background-color: rgba(109,40,217,0.08); }
+    html:not(.dark) .bg-purple-900\/40 { background-color: rgba(109,40,217,0.09); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(109,40,217,0.28); }
+    html:not(.dark) .hover\:border-purple-500\/30:hover { border-color: rgba(109,40,217,0.4); }
+
+    /* Light mode — Parte 3: gradientes + especiais */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #854d0e; }
+    html:not(.dark) .text-yellow-400 { color: #854d0e; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #713f12; }
+    html:not(.dark) .bg-primary\/10 { background-color: #FEF9C3; }
+    html:not(.dark) .border-primary\/30 { border-color: #EAB308; }
+    html:not(.dark) .text-red-400 { color: #b91c1c; }
+    html:not(.dark) .bg-red-900\/20 { background-color: rgba(185,28,28,0.07); }
+    html:not(.dark) .border-red-500\/30 { border-color: rgba(185,28,28,0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #075985; }
+    html:not(.dark) .bg-sky-900\/20 { background-color: rgba(3,105,161,0.07); }
+    html:not(.dark) .border-sky-500\/30 { border-color: rgba(3,105,161,0.25); }
+
+    /* Light mode — Parte 4: nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255,255,255,0.95); }
+
+    /* Parte 5: bordas suavizadas no DARK (Erro #15) */
+    .dark .border-dark-600 { border-color: #2a2a35; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #2a2a35; }
+
+    /* SVG: no claro, um fundo escuro emoldurado mantém o contraste do desenho */
+    html:not(.dark) .svg-frame { background-color: #12121a; }
+    @media (prefers-reduced-motion: reduce) { svg * { animation: none !important; transition: none !important; } }
+  </style>
+<link href="../../../assets/learn.css" rel="stylesheet"/>
+<link href="https://inematds.github.io/FTD/FTD-v2/curso/trilha2/modulo-2-9.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/FTD/FTD-v2/en/curso/trilha2/modulo-2-9.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/FTD/FTD-v2/es/curso/trilha2/modulo-2-9.html" hreflang="es" rel="alternate"/><link href="https://inematds.github.io/FTD/FTD-v2/curso/trilha2/modulo-2-9.html" hreflang="x-default" rel="alternate"/><link href="https://inematds.github.io/FTD/FTD-v2/es/curso/trilha2/modulo-2-9.html" rel="canonical"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(250,204,21,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha2/modulo-2-9.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="../../../en/curso/trilha2/modulo-2-9.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">EN</a><a href="modulo-2-9.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#FACC15">ES</a></div>
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14 gap-2">
+<!-- Logo + INEMA.CLUB -->
+<div class="flex items-center space-x-3 flex-shrink-0">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🚀</span>
+<span class="font-display font-bold text-lg hidden sm:inline">FTD</span>
+</a>
+<span class="text-neutral-600 hidden sm:inline">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium hidden sm:inline" href="https://inema.club" rel="noopener" target="_blank">INEMA.CLUB</a>
+<span class="text-neutral-600 hidden sm:inline">-</span>
+<a class="text-amber-700 dark:text-slate-300 hover:underline text-sm font-medium hidden sm:inline" href="https://inema.pro" rel="noopener" target="_blank">PRO</a>
+</div>
+<!-- Trilhas + controles de aprendizagem + theme toggle -->
+<div class="flex items-center gap-1 sm:gap-1.5">
+<a class="px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors whitespace-nowrap" href="../trilha1/index.html">
+<span class="lg:hidden">T1</span><span class="hidden lg:inline">Principiante</span>
+</a>
+<a class="px-2.5 py-1.5 rounded-lg text-sm font-semibold text-blue-400 bg-blue-500/10 whitespace-nowrap" href="index.html">
+<span class="lg:hidden">T2</span><span class="hidden lg:inline">Técnico</span>
+</a>
+<a class="px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors whitespace-nowrap" href="../trilha3/index.html">
+<span class="lg:hidden">T3</span><span class="hidden lg:inline">Masterclass</span>
+</a>
+<span class="w-px h-6 bg-dark-600 mx-1 hidden sm:inline-block"></span>
+<!-- Minha jornada (abre o painel global; badge = % do curso) -->
+<button class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-300 hover:text-neutral-100 hover:bg-dark-700 transition-colors" data-inema-journey-open="" type="button">
+<svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="16"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+<span class="hidden md:inline">Mi recorrido</span>
+<span class="inema-journey-badge" data-count="0" data-inema-journey-badge=""></span>
+</button>
+<!-- Aparência (gatilho + painel obrigatório) -->
+<div class="relative">
+<button aria-expanded="false" class="inema-appearance-trigger inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-300 hover:text-neutral-100 transition-colors" data-inema-appearance-toggle="#inema-appearance-panel" type="button">
+<svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="16"><circle cx="12" cy="12" r="9"></circle><path d="M12 3v18"></path><path d="M12 3a9 9 0 0 1 0 18" fill="currentColor"></path></svg>
+<span class="hidden md:inline">Apariencia</span>
+</button>
+<div class="inema-appearance-pop right-0" data-inema-appearance="" id="inema-appearance-panel">
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Tema</span>
+<div class="inema-segment">
+<button data-inema-set-theme="inema-dark" type="button">Oscuro</button>
+<button data-inema-set-theme="claro" type="button">Claro</button>
+<button data-inema-set-theme="sepia" type="button">Sepia</button>
+</div>
+<div class="inema-segment">
+<button data-inema-set-theme="foco" type="button">Enfoque</button>
+<button data-inema-set-theme="contraste" type="button">Alto contraste</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Fuente</span>
+<div class="inema-segment">
+<button data-inema-set-font="inter" type="button">Inter</button>
+<button data-inema-set-font="system" type="button">Sistema</button>
+<button data-inema-set-font="leitura" type="button">Lectura</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Tamaño</span>
+<div class="inema-segment">
+<button data-inema-set-fontscale="100" type="button">A</button>
+<button data-inema-set-fontscale="112" type="button">A+</button>
+<button data-inema-set-fontscale="125" type="button">A++</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Ancho</span>
+<div class="inema-segment">
+<button data-inema-set-linewidth="60" type="button">Estrecho</button>
+<button data-inema-set-linewidth="68" type="button">Mediano</button>
+<button data-inema-set-linewidth="75" type="button">Ancho</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Interlineado</span>
+<div class="inema-segment">
+<button data-inema-set-leading="1.45" type="button">Compacto</button>
+<button data-inema-set-leading="1.7" type="button">Cómodo</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Acento</span>
+<div class="inema-accent-grid">
+<button aria-label="Acento esmeralda" data-inema-set-accent="emerald" type="button"></button>
+<button aria-label="Acento azul" data-inema-set-accent="blue" type="button"></button>
+<button aria-label="Acento violeta" data-inema-set-accent="purple" type="button"></button>
+<button aria-label="Acento ámbar" data-inema-set-accent="amber" type="button"></button>
+<button aria-label="Acento verde azulado" data-inema-set-accent="teal" type="button"></button>
+<button aria-label="Acento rosa" data-inema-set-accent="rose" type="button"></button>
+</div>
+</div>
+</div>
+</div>
+<!-- Theme toggle sol/lua (núcleo v1; o JS o mantém coerente com o tema) -->
+<button aria-label="Alternar tema claro/oscuro" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20">
+<path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+</svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20">
+<path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path>
+</svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<main data-inema-module="2-9" data-inema-track="2" id="conteudo">
+<!-- BREADCRUMB -->
+<nav aria-label="Ruta de navegación" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-blue-400" href="../../index.html">Inicio</a><span>/</span>
+<a class="hover:text-blue-400" href="index.html">Ruta 2</a><span>/</span>
+<span class="text-blue-400">Módulo 2.9</span>
+</div>
+</nav>
+<!-- HEADER do módulo -->
+<header class="bg-gradient-to-br from-blue-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-blue-500/20 text-blue-400 text-xs font-semibold rounded-full mb-4">MÓDULO 2.9</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">⚖️ Ética y gobernanza de la IA</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">Sesgo, privacidad y LGPD, transparencia, derechos de autor y supervisión humana: tratados como requisitos de ingeniería, con código y procesos, no como un párrafo al final del proyecto. <strong class="text-blue-400">La confianza se diseña</strong>: te llevas pruebas que puedes ejecutar y una lista de verificación de gobernanza para copiar.</p>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">7</div><div class="text-xs text-neutral-400">Temas</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">~50</div><div class="text-xs text-neutral-400">Minutos</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">Técnico</div><div class="text-xs text-neutral-400">Nivel</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">Proceso</div><div class="text-xs text-neutral-400">Tipo</div></div>
+</div>
+<div class="flex items-center gap-3 mt-8">
+<div aria-label="Progreso del módulo 2.9" class="inema-ring" data-inema-meter="modulo:2-9"><span class="inema-ring__value" data-inema-meter-pct="">0%</span></div>
+<div class="inema-meter-label" data-inema-meter="modulo:2-9"><strong data-inema-meter-frac="">0 de 0</strong> temas leídos · <span data-inema-section-counter="">Sección 1 de 7</span></div>
+</div>
+</div>
+</header>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+<div class="lg:flex lg:gap-10">
+<!-- TOC sticky + scrollspy -->
+<aside class="hidden lg:block lg:w-56 flex-shrink-0">
+<nav aria-label="Índice de la página" class="sticky top-20 self-start" data-inema-toc="">
+<p class="text-xs font-semibold uppercase tracking-wide text-neutral-500 mb-3">En este módulo</p>
+<ol class="space-y-1 text-sm">
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-blue-400" href="#topico-1">1. Por qué gobernar la IA</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-blue-400" href="#topico-2">2. Sesgo y justicia</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-blue-400" href="#topico-3">3. Privacidad y LGPD</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-blue-400" href="#topico-4">4. Transparencia</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-blue-400" href="#topico-5">5. Derechos de autor</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-blue-400" href="#topico-6">6. Riesgo y supervisión</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-blue-400" href="#topico-7">7. Proceso de gobernanza</a></li>
+</ol>
+</nav>
+</aside>
+<!-- ARTIGO -->
+<article class="inema-prose flex-1 min-w-0">
+<h2 class="text-2xl font-bold mb-8">Contenido detallado</h2>
+<!-- TÓPICO 1 -->
+<section class="mb-16" data-inema-topic="modulo-2-9#topico-1" id="topico-1" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="do princípio ao controle verificável">🧭 Por qué gobernar la IA</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-9-t1-p1">Los sistemas de IA toman decisiones sobre las personas o influyen en ellas: quién recibe crédito, qué currículum se lee, qué respuesta recibe un paciente, a qué cliente se atiende primero. Cuando fallan, lo hacen a gran escala y de forma poco visible. <strong class="text-blue-400">Gobernanza de IA</strong> es el conjunto de reglas, funciones y controles que garantizan que estos sistemas se usen de forma legal, justa, segura y explicable, y que alguien responda por ellos.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-9-t1-p2">Para quien programa, lo importante es que la ética no se quede solo en el discurso. Cada principio debe convertirse en algo que se pueda verificar: una prueba de sesgo que se ejecuta en CI, una función que elimina los datos personales antes de llamar al modelo, un registro que permite explicar una decisión, una aprobación registrada antes del despliegue. Las referencias públicas ayudan a organizar esto, como el <strong class="text-neutral-100">NIST AI Risk Management Framework</strong> (funciones Gobernar, Mapear, Medir y Gestionar) y la norma <strong class="text-neutral-100">ISO/IEC 42001</strong>, sobre sistemas de gestión de IA.</p>
+<div class="bg-dark-800 border border-blue-500/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-blue-400 font-semibold mb-1">📘 Términos nuevos</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-9-t1-p3"><strong>IA responsable</strong> es el término general para desarrollar y usar IA respetando los derechos, la seguridad y la transparencia. <strong>Accountability</strong> (rendición de cuentas) significa que hay una persona o área responsable que responde por el sistema. <strong>Control</strong>, en gobernanza, es una verificación concreta que reduce un riesgo y deja evidencia.</p>
+</div>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">Una cadena que va desde los principios (lo que promete la organización) hasta las políticas (reglas escritas), los procesos (quién hace qué y cuándo) y los controles técnicos (lo que verifica el código); cada capa deja evidencia para la anterior.</p>
+</div>
+<!-- SVG 1: camadas de governança -->
+<figure class="svg-frame rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="Cuatro capas de gobernanza apiladas, de lo abstracto a lo verificable: principios, políticas, procesos y controles técnicos, cada una con ejemplos; una flecha lateral muestra que las evidencias ascienden desde los controles hasta los principios." class="w-full h-auto" role="img" viewbox="0 0 900 290">
+<defs>
+<filter height="160%" id="m29-glow" width="160%" x="-30%" y="-30%"><fegaussianblur result="b" stddeviation="2"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="28" id="m29-grid" patternunits="userSpaceOnUse" width="28"><circle cx="1.2" cy="1.2" fill="#3b82f6" opacity="0.14" r="1.2"></circle></pattern>
+<marker id="m29-ah" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#60a5fa"></path></marker>
+<marker id="m29-ahc" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#38bdf8"></path></marker>
+<style>@keyframes m29dash{to{stroke-dashoffset:-24}} .m29-flow{stroke-dasharray:6 6;animation:m29dash 1.6s linear infinite}</style>
+</defs>
+<rect fill="url(#m29-grid)" height="290" width="900"></rect>
+<g font-family="Inter,sans-serif">
+<g filter="url(#m29-glow)" stroke-width="2">
+<rect fill="#0e1626" height="52" rx="12" stroke="#60a5fa" stroke-opacity="0.6" width="760" x="110" y="20"></rect>
+<rect fill="#0e1626" height="52" rx="12" stroke="#60a5fa" stroke-opacity="0.8" width="760" x="110" y="84"></rect>
+<rect fill="#0e1b26" height="52" rx="12" stroke="#38bdf8" stroke-opacity="0.8" width="760" x="110" y="148"></rect>
+<rect fill="#0e1b26" height="52" rx="12" stroke="#38bdf8" width="760" x="110" y="212"></rect>
+</g>
+<text fill="#bfdbfe" font-size="15" font-weight="700" x="130" y="51">Principios</text>
+<text fill="#dbeafe" font-size="13" x="330" y="51">lo que se promete: justicia, privacidad, transparencia</text>
+<text fill="#bfdbfe" font-size="15" font-weight="700" x="130" y="115">Políticas</text>
+<text fill="#dbeafe" font-size="13" x="330" y="115">reglas escritas: qué se puede hacer, qué no y quién aprueba</text>
+<text fill="#bae6fd" font-size="15" font-weight="700" x="130" y="179">Procesos</text>
+<text fill="#e0f2fe" font-size="13" x="330" y="179">inventario, evaluación de riesgos, revisión periódica</text>
+<text fill="#bae6fd" font-size="15" font-weight="700" x="130" y="243">Controles técnicos</text>
+<text fill="#e0f2fe" font-size="13" x="330" y="243">prueba de sesgo, anonimización, registros, aprobación humana</text>
+<path class="m29-flow" d="M60,262 L60,30" fill="none" marker-end="url(#m29-ahc)" stroke="#38bdf8" stroke-width="2.5"></path>
+<text fill="#7dd3fc" font-size="12" font-weight="700" text-anchor="middle" transform="rotate(-90 40 146)" x="40" y="146">la evidencia asciende</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-blue-400">Cómo leer:</strong> de arriba hacia abajo, cada capa se vuelve más concreta. La flecha muestra el camino inverso: un auditor pregunta «¿cómo garantizan la privacidad?» y la respuesta solo convence cuando señala un control técnico con un registro, no un párrafo de política.</figcaption>
+</figure>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
+<h4 class="font-bold text-blue-400 mb-4">✓ Gobernanza que funciona</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Proporcional al riesgo: más controles donde el impacto es mayor.</span></li>
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Integrada en el flujo de desarrollo, no en un comité distante.</span></li>
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Con una persona responsable asignada a cada sistema.</span></li>
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Revisada cuando cambian el sistema, el modelo o la ley.</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Gobernanza de fachada</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Un documento de principios que nadie del equipo ha leído.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>La misma burocracia para un resumen interno y para un puntaje de crédito.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Una aprobación otorgada una vez y nunca revisada.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>«La IA decidió» como respuesta al cliente.</span></li>
+</ul>
+</div>
+</div>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-9-t1-p4" data-sum="porque">Las leyes, los contratos y los clientes exigen cada vez más explicaciones sobre cómo se usa la IA. Quien programa y entiende de gobernanza convierte requisitos vagos en controles concretos y evita costosos retrabajos cuando la pregunta llega después del lanzamiento.</p>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Gobernanza</div><div class="text-xs text-neutral-400">reglas, funciones, controles</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Accountability</div><div class="text-xs text-neutral-400">alguien responde</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Control</div><div class="text-xs text-neutral-400">verificación con evidencia</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Proporcionalidad</div><div class="text-xs text-neutral-400">el esfuerzo sigue al riesgo</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 2 -->
+<section class="mb-16" data-inema-topic="modulo-2-9#topico-2" id="topico-2" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="medir diferenças entre grupos antes de publicar">⚖️ Sesgo y justicia</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-9-t2-p1"><strong class="text-blue-400">Sesgo</strong>, en IA, es un error sistemático que perjudica o favorece a grupos de personas. Rara vez se debe a alguien con malas intenciones: proviene de los datos. Si el historial de contrataciones de una empresa favoreció a cierto perfil, un modelo entrenado con ese historial aprende a repetir el patrón, y lo hace con apariencia de objetividad. Los LLM también reproducen estereotipos presentes en los textos con los que se entrenaron.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-9-t2-p2">Las fuentes más comunes son el <strong class="text-neutral-100">sesgo histórico</strong> (el pasado era desigual), el <strong class="text-neutral-100">sesgo de selección</strong> (los datos no representan a todo el público), el <strong class="text-neutral-100">sesgo de medición</strong> (la etiqueta mide otra cosa: «recibió un ascenso» en lugar de «tiene un buen desempeño») y el <strong class="text-neutral-100">sesgo de agregación</strong> (un modelo único para grupos que se comportan de forma diferente). Bibliotecas como Fairlearn ayudan a medir; sin embargo, lo esencial cabe en unas pocas líneas de pandas.</p>
+<div class="bg-dark-800 border border-blue-500/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-blue-400 font-semibold mb-1">📘 Términos nuevos</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-9-t2-p3"><strong>Paridad demográfica</strong>: la tasa de resultados positivos (por ejemplo, la aprobación) es similar entre los grupos. <strong>Igualdad de oportunidades</strong>: entre las personas que merecían un resultado positivo, la tasa de aprobación es similar entre los grupos. <strong>Atributo protegido</strong>: característica que no puede servir de base para discriminar, como raza, género, edad o discapacidad. Las métricas pueden entrar en conflicto entre sí; elegir cuál usar es una decisión del negocio que debe documentarse.</p>
+</div>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">Medir, por grupo, las tasas de resultados y errores del sistema; compararlas con un límite acordado e investigar las diferencias antes de publicar y, de nuevo, periódicamente, en producción.</p>
+</div>
+<!-- SVG 2: taxa por grupo -->
+<figure class="svg-frame rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="Gráfico de barras con datos ficticios: el grupo A tiene una tasa de aprobación del 70 por ciento y el grupo B del 30 por ciento; una línea discontinua en el 56 por ciento marca cuatro quintos de la tasa más alta, y el grupo B queda por debajo de ella, una señal para investigar." class="w-full h-auto" role="img" viewbox="0 0 900 280">
+<rect fill="url(#m29-grid)" height="280" width="900"></rect>
+<g font-family="Inter,sans-serif">
+<path d="M150,230 L860,230 M150,230 L150,30" fill="none" stroke="#475569" stroke-width="1.5"></path>
+<text fill="#94a3b8" font-size="11" text-anchor="end" x="142" y="234">0%</text>
+<text fill="#94a3b8" font-size="11" text-anchor="end" x="142" y="134">50%</text>
+<text fill="#94a3b8" font-size="11" text-anchor="end" x="142" y="34">100%</text>
+<rect fill="#3b82f6" fill-opacity="0.8" filter="url(#m29-glow)" height="140" rx="4" width="130" x="220" y="90"></rect>
+<rect fill="#38bdf8" fill-opacity="0.75" filter="url(#m29-glow)" height="60" rx="4" width="130" x="440" y="170"></rect>
+<text fill="#eff6ff" font-size="16" font-weight="700" text-anchor="middle" x="285" y="80">70%</text>
+<text fill="#e0f2fe" font-size="16" font-weight="700" text-anchor="middle" x="505" y="160">30%</text>
+<text fill="#bfdbfe" font-size="13" font-weight="700" text-anchor="middle" x="285" y="252">grupo A</text>
+<text fill="#bae6fd" font-size="13" font-weight="700" text-anchor="middle" x="505" y="252">grupo B</text>
+<path d="M150,118 L860,118" fill="none" stroke="#e0f2fe" stroke-dasharray="6 5" stroke-width="1.8"></path>
+<text fill="#e0f2fe" font-size="12" font-weight="700" x="610" y="108">4/5 de la tasa más alta = 56%</text>
+<text fill="#7dd3fc" font-size="12" x="610" y="160">B por debajo del límite:</text>
+<text fill="#7dd3fc" font-size="12" x="610" y="178">investigar antes de publicar</text>
+<text fill="#94a3b8" font-size="11" text-anchor="middle" x="505" y="272">datos ficticios, los mismos que aparecen en el código de abajo</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-blue-400">Cómo leer:</strong> compara la altura de las barras con la línea punteada. La regla de los cuatro quintos, usada como referencia en evaluaciones de contratación en Estados Unidos, considera una señal de alerta que la tasa de un grupo sea inferior al 80 % de la tasa del grupo más favorecido. Es un motivo para investigar, no una prueba de discriminación ni una garantía de justicia.</figcaption>
+</figure>
+<!-- COPY-RUN: medir viés -->
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-blue-400">Prueba:</strong> <span class="text-neutral-300">medir la paridad y la igualdad de oportunidades por grupo (<code>vies.py</code>).</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copiar</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900"># Instalación: pip install pandas
+import pandas as pd
+
+# Datos ficticios. Reemplaza con: df = pd.read_csv("&lt;decisoes.csv&gt;")
+# columnas: grupo, aprobado (0/1 = decisión del sistema), bom_pagador (0/1 = lo que sucedió en realidad)
+df = pd.DataFrame({
+    "grupo":       ["A"] * 10 + ["B"] * 10,
+    "aprovado":    [1, 1, 1, 0, 1, 1, 0, 1, 1, 0,   1, 0, 0, 1, 0, 0, 1, 0, 0, 0],
+    "bom_pagador": [1, 1, 1, 0, 1, 1, 1, 1, 1, 0,   1, 1, 0, 1, 1, 0, 1, 1, 0, 0],
+})
+
+# 1) Paridad demográfica: tasa de aprobación por grupo
+taxa = df.groupby("grupo")["aprovado"].mean()
+razao = taxa.min() / taxa.max()
+print("Tasa de aprobación:", taxa.round(2).to_dict())
+print(f"Razón menor/mayor = {razao:.2f} -&gt;", "ALERTA (por debajo de 0,8)" if razao &lt; 0.8 else "ok")
+
+# 2) Igualdad de oportunidades: entre quienes eran buenos pagadores, ¿cuántos fueron aprobados?
+oport = df[df["bom_pagador"] == 1].groupby("grupo")["aprovado"].mean()
+print("Aprobación entre buenos pagadores:", oport.round(3).to_dict())
+
+# 3) ¿Cuántos buenos pagadores rechazó cada grupo (falsos negativos)?
+fn = df[(df["bom_pagador"] == 1) &amp; (df["aprovado"] == 0)].groupby("grupo").size()
+print("Buenos pagadores rechazados:", fn.to_dict())</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">Cómo verificar:</strong> con los datos ficticios, la salida debe mostrar una tasa A = 0.7 y B = 0.3, una razón de 0.43 con ALERTA, una aprobación entre buenos pagadores de A = 0.875 y B = 0.5, y un buen pagador rechazado en A frente a tres en B. Es decir: el sistema rechaza a más buenos pagadores del grupo B. Con datos reales, guarda esa salida junto con la versión (módulo 2.8).</p>
+</div>
+<div class="bg-primary/10 border border-primary/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-primary font-semibold mb-1">💡 Consejo</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-9-t2-p4">Quitar la columna "género" o "raza" del modelo no elimina el sesgo: el código postal, la escuela, el nombre y el historial de compras pueden funcionar como sustitutos. Para medirlo, necesitas el atributo; para protegerlo, necesitas una base legal y tener cuidado: los datos sobre origen racial o étnico son sensibles según la LGPD.</p>
+</div>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-9-t2-p5" data-sum="porque">Un modelo con buena precisión general puede equivocarse mucho más con un grupo específico, y el promedio lo oculta. Medir por grupo es la única forma de descubrirlo antes de que el problema cause daños a las personas, un proceso judicial o un titular en las noticias.</p>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Sesgo histórico</div><div class="text-xs text-neutral-400">el pasado era desigual</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Paridad</div><div class="text-xs text-neutral-400">tasas similares</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Oportunidad</div><div class="text-xs text-neutral-400">errores similares</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Sustituto</div><div class="text-xs text-neutral-400">código postal en lugar de raza</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 3 -->
+<section class="mb-16" data-inema-topic="modulo-2-9#topico-3" id="topico-3" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="base legal, minimização e dado fora do prompt">🔒 Privacidad y LGPD</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-9-t3-p1">A <strong class="text-blue-400">LGPD</strong> (Ley n.º 13.709/2018) regula el tratamiento de datos personales en Brasil y está supervisada por la ANPD (Autoridad Nacional de Protección de Datos). En los sistemas de IA, tiene un peso en tres momentos: en los datos que se usan para entrenar o evaluar, en los datos que se envían al modelo en cada consulta (incluso a proveedores en el extranjero) y en las decisiones automatizadas sobre personas. Todo tratamiento necesita una <strong class="text-neutral-100">base legal</strong> y una finalidad definida.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-9-t3-p2">Dos artículos merecen especial atención. El <strong class="text-neutral-100">art. 20</strong> garantiza a la persona titular el derecho a solicitar la revisión de decisiones tomadas únicamente con base en un tratamiento automatizado que afecte sus intereses, y a recibir información clara sobre los criterios utilizados. Y el <strong class="text-neutral-100">art. 52</strong> prevé sanciones que van desde una advertencia hasta una multa de hasta el 2 % de la facturación de la empresa en Brasil, con un límite de R$ 50 millones por infracción, además del bloqueo y la eliminación de los datos.</p>
+<div class="bg-dark-800 border border-blue-500/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-blue-400 font-semibold mb-1">📘 Términos nuevos</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-9-t3-p3"><strong>Dato personal sensible</strong> incluye el origen racial o étnico, la religión, la opinión política, la afiliación sindical, la salud, la vida sexual y los datos genéticos y biométricos; tiene reglas más estrictas. <strong>Anonimización</strong> hace imposible identificar a la persona por medios razonables; los datos anonimizados dejan de ser personales. <strong>Seudonimización</strong> reemplaza los identificadores por códigos, pero quien tiene la tabla de correspondencias puede revertir el proceso; por eso sigue siendo un dato personal. <strong>Responsable de protección de datos</strong> es la persona designada para comunicarse con los titulares y con la ANPD.</p>
+</div>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">Aplica la LGPD al ciclo de la IA: identifica qué datos personales se usan, con qué base legal y finalidad; minimiza lo que se envía al modelo, protege lo que queda en los registros y garantiza la revisión humana y una explicación de las decisiones automatizadas.</p>
+</div>
+<!-- SVG 3: fluxo com anonimizador -->
+<figure class="svg-frame rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="Flujo de datos con seudonimización: el texto con CPF y correo electrónico pasa por un seudonimizador en tu servidor, que reemplaza los datos por marcadores; el proveedor externo de LLM solo ve los marcadores; la respuesta vuelve y, si hace falta, los datos se reponen localmente usando la tabla que nunca sale de tu entorno." class="w-full h-auto" role="img" viewbox="0 0 900 280">
+<rect fill="url(#m29-grid)" height="280" width="900"></rect>
+<g font-family="Inter,sans-serif">
+<rect fill="none" height="236" rx="16" stroke="#60a5fa" stroke-dasharray="6 5" stroke-opacity="0.7" stroke-width="1.5" width="520" x="14" y="28"></rect>
+<text fill="#93c5fd" font-size="12" font-weight="700" x="30" y="20">tu entorno</text>
+<rect fill="none" height="236" rx="16" stroke="#38bdf8" stroke-dasharray="6 5" stroke-opacity="0.7" stroke-width="1.5" width="330" x="556" y="28"></rect>
+<text fill="#7dd3fc" font-size="12" font-weight="700" x="572" y="20">proveedor externo (si usas una API)</text>
+<g filter="url(#m29-glow)" stroke-width="2">
+<rect fill="#0e1626" height="64" rx="12" stroke="#60a5fa" width="200" x="34" y="50"></rect>
+<rect fill="#0e1626" height="64" rx="12" stroke="#60a5fa" width="230" x="284" y="50"></rect>
+<rect fill="#0e1b26" height="64" rx="12" stroke="#38bdf8" width="270" x="586" y="50"></rect>
+<rect fill="#0e1b26" height="64" rx="12" stroke="#38bdf8" width="270" x="586" y="180"></rect>
+<rect fill="#0e1626" height="64" rx="12" stroke="#60a5fa" width="230" x="284" y="180"></rect>
+</g>
+<text fill="#eff6ff" font-size="14" font-weight="700" text-anchor="middle" x="134" y="76">texto original</text>
+<text fill="#93c5fd" font-size="12" text-anchor="middle" x="134" y="96">CPF, correo electrónico, teléfono</text>
+<text fill="#eff6ff" font-size="14" font-weight="700" text-anchor="middle" x="399" y="76">seudonimizador</text>
+<text fill="#93c5fd" font-size="12" text-anchor="middle" x="399" y="96">CPF se convierte en [CPF_1]</text>
+<text fill="#e0f2fe" font-size="14" font-weight="700" text-anchor="middle" x="721" y="76">LLM</text>
+<text fill="#bae6fd" font-size="12" text-anchor="middle" x="721" y="96">solo ve marcadores</text>
+<text fill="#e0f2fe" font-size="14" font-weight="700" text-anchor="middle" x="721" y="206">respuesta</text>
+<text fill="#bae6fd" font-size="12" text-anchor="middle" x="721" y="226">con [CPF_1], sin el CPF</text>
+<text fill="#eff6ff" font-size="14" font-weight="700" text-anchor="middle" x="399" y="206">lo repone si hace falta</text>
+<text fill="#93c5fd" font-size="12" text-anchor="middle" x="399" y="226">la tabla no sale de aquí</text>
+<path class="m29-flow" d="M236,82 L278,82" fill="none" marker-end="url(#m29-ah)" stroke="#60a5fa" stroke-width="2.5"></path>
+<path class="m29-flow" d="M516,82 L580,82" fill="none" marker-end="url(#m29-ahc)" stroke="#38bdf8" stroke-width="2.5"></path>
+<path class="m29-flow" d="M721,116 L721,174" fill="none" marker-end="url(#m29-ahc)" stroke="#38bdf8" stroke-width="2.5"></path>
+<path class="m29-flow" d="M584,212 L520,212" fill="none" marker-end="url(#m29-ah)" stroke="#60a5fa" stroke-width="2.5"></path>
+<path d="M399,116 L399,174" fill="none" stroke="#60a5fa" stroke-dasharray="3 4" stroke-opacity="0.7" stroke-width="1.5"></path>
+<text fill="#94a3b8" font-size="11" text-anchor="end" x="390" y="150">tabla de correspondencias</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-blue-400">Cómo leer:</strong> la línea punteada azul marca el límite de tu entorno; nada que contenga un CPF o correo electrónico la cruza. La tabla que relaciona [CPF_1] con el CPF real se queda de este lado. Esto es seudonimización: reduce el riesgo, pero el dato sigue siendo personal según la LGPD. Los nombres y las direcciones en texto libre requieren NER (módulo 2.7), no solo expresiones regulares.</figcaption>
+</figure>
+<!-- COPY-RUN: pseudonimizar -->
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-blue-400">Objetivo:</strong> <span class="text-neutral-300">quitar el CPF, el CNPJ, el correo electrónico, el teléfono y el código postal antes de enviar texto a un modelo (<code>privacidade.py</code>).</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copiar</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900"># Sin dependencias externas. El orden importa: CNPJ antes de CPF, teléfono antes de CEP.
+import re
+
+PADROES = {
+    "CNPJ":     r"\b\d{2}\.?\d{3}\.?\d{3}/?\d{4}-?\d{2}\b",
+    "CPF":      r"\b\d{3}\.?\d{3}\.?\d{3}-?\d{2}\b",
+    "EMAIL":    r"\b[\w.+-]+@[\w-]+(?:\.[\w-]+)+\b",
+    "TELEFONE": r"(?:\+?55\s?)?\(?\b\d{2}\)?\s?9?\d{4}-?\d{4}\b",
+    "CEP":      r"\b\d{5}-?\d{3}\b",
+}
+
+def pseudonimizar(texto: str) -&gt; tuple[str, dict]:
+    tabela = {}
+    for tipo, padrao in PADROES.items():
+        def troca(m, tipo=tipo):
+            chave = f"[{tipo}_{len(tabela) + 1}]"
+            tabela[chave] = m.group(0)
+            return chave
+        texto = re.sub(padrao, troca, texto)
+    return texto, tabela          # la tabla NUNCA va al modelo ni al registro
+
+def repor(texto: str, tabela: dict) -&gt; str:
+    for chave, valor in tabela.items():
+        texto = texto.replace(chave, valor)
+    return texto
+
+original = ("Cliente Maria Souza, CPF 123.456.789-09, e-mail maria@exemplo.com, "
+            "tel (11) 98765-4321, CEP 01310-100, pediu revisão da fatura.")
+seguro, tabela = pseudonimizar(original)
+print(seguro)
+# ... aquí 'seguro' va al LLM (clasificar, resumir) ...
+assert repor(seguro, tabela) == original</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">Cómo verificar:</strong> la salida debe ser <code>Cliente Maria Souza, CPF [CPF_1], correo [EMAIL_2], tel. [TELEFONE_3], CEP [CEP_4], pidió revisar la factura.</code> e o <code>assert</code> no debería dar problemas. Observa que el nombre "Maria Souza" pasó: las expresiones regulares no detectan nombres. Combínalo con la extracción de entidades del módulo 2.7 y pruébalo con textos reales de tu sistema antes de confiar en él.</p>
+</div>
+<div class="overflow-x-auto mb-6">
+<table class="w-full text-sm border border-dark-600 rounded-xl overflow-hidden">
+<thead><tr class="bg-dark-700"><th class="text-left p-3 text-blue-400">Pregunta</th><th class="text-left p-3 text-blue-400">Qué hacer en el sistema</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr><td class="p-3 font-semibold">¿Cuál es la base legal y la finalidad?</td><td class="p-3 text-neutral-300">Registrarlo en el inventario del sistema, junto con la persona encargada.</td></tr>
+<tr><td class="p-3 font-semibold">¿El modelo necesita este dato?</td><td class="p-3 text-neutral-300">Minimizar: seudonimizarlo o eliminarlo antes de la llamada.</td></tr>
+<tr><td class="p-3 font-semibold">¿El proveedor usa los datos para entrenar?</td><td class="p-3 text-neutral-300">Revisar el contrato y la configuración; preferir planes que no retengan los datos ni entrenen con ellos, o un modelo local.</td></tr>
+<tr><td class="p-3 font-semibold">¿Los datos salen del país?</td><td class="p-3 text-neutral-300">Las transferencias internacionales tienen reglas propias en la LGPD (ley brasileña de protección de datos); documéntalas.</td></tr>
+<tr><td class="p-3 font-semibold">¿Qué queda en los registros y durante cuánto tiempo?</td><td class="p-3 text-neutral-300">Siempre que sea posible, mantener los registros sin datos personales; definir un plazo de retención.</td></tr>
+<tr><td class="p-3 font-semibold">¿La decisión está automatizada?</td><td class="p-3 text-neutral-300">Canal de revisión (art. 20) y explicación de los criterios.</td></tr>
+</tbody>
+</table>
+</div>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-9-t3-p4" data-sum="porque">Cada llamada a un modelo implica el tratamiento de datos. Quien programa decide, línea por línea, qué sale del sistema y qué queda registrado. Entender la LGPD convierte esa decisión, que supone un riesgo jurídico invisible, en un control sencillo, comprobable y documentado.</p>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Base legal</div><div class="text-xs text-neutral-400">todo tratamiento necesita</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Minimización</div><div class="text-xs text-neutral-400">solo lo necesario</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Seudonimización</div><div class="text-xs text-neutral-400">reversible, todavía personal</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Art. 20</div><div class="text-xs text-neutral-400">revisión de decisiones automatizadas</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 4 -->
+<section class="mb-16" data-inema-topic="modulo-2-9#topico-4" id="topico-4" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="avisar, documentar e explicar decisões">🔍 Transparencia y explicabilidad</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-9-t4-p1">La transparencia tiene tres públicos. El <strong class="text-neutral-100">usuario</strong> necesita saber que está hablando con una IA y qué hacer si la respuesta no le sirve. La <strong class="text-neutral-100">persona afectada por una decisión</strong> necesita entender, en lenguaje sencillo, qué factores influyeron y cómo pedir una revisión. Y el <strong class="text-neutral-100">equipo y los auditores</strong> necesitan documentación: qué hace el sistema, con qué datos y qué límites conocidos tiene.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-9-t4-p2">Explicar cómo funciona internamente un LLM todavía es un problema de investigación. En la práctica, la explicabilidad proviene del diseño del sistema: pedirle al modelo la justificación junto con la respuesta, citar los fragmentos de la base que respaldan cada afirmación (RAG con fuentes), registrar la versión y las entradas de cada decisión y, en modelos tabulares clásicos, usar técnicas como SHAP para mostrar el peso de cada variable.</p>
+<div class="bg-dark-800 border border-blue-500/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-blue-400 font-semibold mb-1">📘 Términos nuevos</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-9-t4-p3"><strong>Ficha del modelo</strong> (<em>model card</em>) es un documento breve que describe un modelo o sistema: uso previsto, datos, métricas por grupo y limitaciones. <strong>Explicabilidad</strong> es la capacidad de explicar, de forma comprensible, por qué el sistema llegó a un resultado. <strong>Trazabilidad</strong> es poder vincular una decisión con las entradas, la versión y las fuentes utilizadas.</p>
+</div>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">Dejar claro cuándo se usa IA, documentar el sistema en una ficha, registrar lo necesario para reconstruir cada decisión y ofrecer explicaciones y revisión a las personas afectadas.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
+<h4 class="font-bold text-blue-400 mb-4">✓ Transparente en la práctica</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>«Esta respuesta fue generada por IA y puede contener errores», visible y no escondido.</span></li>
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Una forma sencilla de hablar con una persona.</span></li>
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Respuestas con la fuente de cada afirmación.</span></li>
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Imágenes y videos sintéticos identificados como tales.</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Opaco</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Asistente que se presenta con el nombre y la foto de una persona real.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Rechazo de crédito sin motivo ni canal de revisión.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Ningún registro de qué versión respondió al cliente.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Limitaciones conocidas que solo están en la cabeza del equipo.</span></li>
+</ul>
+</div>
+</div>
+<!-- COPY-RUN: ficha do sistema -->
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-blue-400">Objetivo:</strong> <span class="text-neutral-300">una ficha del sistema (<code>FICHA.md</code>) para guardar en el repositorio y actualizar con cada versión.</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copiar</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900"># Ficha del sistema — &lt;nombre&gt;   (versión &lt;x.y.z&gt;, actualizada el &lt;fecha&gt;)
+
+## Para qué sirve
+Uso previsto: &lt;ej.: clasificación de mensajes de clientes en 5 categorías&gt;
+Fuera del alcance: &lt;ej.: decidir un reembolso; responder sobre salud o cuestiones jurídicas&gt;
+Quiénes se ven afectados: &lt;clientes, empleados, terceros&gt;    Responsable: &lt;nombre/área&gt;
+
+## Cómo funciona
+Modelo: &lt;nombre + versión exacta&gt;   Local o API: &lt;qué proveedor, región&gt;
+Prompt: &lt;ruta en el repositorio&gt;   Base consultada (RAG): &lt;cuál, cuándo se actualizó&gt;
+Decisión final: &lt;automática | la IA sugiere y una persona decide&gt;
+
+## Datos personales (LGPD)
+Cuáles: &lt;...&gt;   Base legal: &lt;...&gt;   Minimización: &lt;¿seudonimización antes de la llamada?&gt;
+Retención de los registros: &lt;plazo&gt;   ¿El proveedor entrena con los datos? &lt;no / verificado el&gt;
+
+## Calidad y equidad
+Conjunto de pruebas: &lt;ruta, n.º de casos&gt;   Resultado actual: &lt;métricas&gt;
+Métricas por grupo: &lt;qué grupos, resultado, fecha&gt;
+Limitaciones conocidas: &lt;ej.: empeora con audio transcrito y expresiones regionales&gt;
+
+## Transparencia y objeciones
+Aviso al usuario: &lt;texto mostrado&gt;   Revisión humana: &lt;canal y plazo&gt;</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">Cómo verificar:</strong> entrega la ficha completa a alguien ajeno al equipo (área legal, atención al cliente) y pídele que responda, basándose solo en ella: «¿qué no debe hacer este sistema?» y «¿cómo puede un cliente impugnar una decisión?». Si la persona no puede responder, falta información en la ficha.</p>
+</div>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-9-t4-p4" data-sum="porque">La transparencia permite que los usuarios confíen en la medida adecuada, que las personas afectadas ejerzan sus derechos y que el propio equipo investigue los problemas. Sin ella, un error del sistema se convierte en una crisis de confianza difícil de revertir.</p>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Aviso de IA</div><div class="text-xs text-neutral-400">el usuario sabe</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Ficha del modelo</div><div class="text-xs text-neutral-400">uso, datos, límites</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Explicabilidad</div><div class="text-xs text-neutral-400">por qué ese resultado</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Trazabilidad</div><div class="text-xs text-neutral-400">decisión vinculada a la versión</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 5 -->
+<section class="mb-16" data-inema-topic="modulo-2-9#topico-5" id="topico-5" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="dados de treino, licenças e autoria do que a IA gera">©️ Derechos de autor</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-9-t5-p1">Los derechos de autor aparecen en tres puntos del trabajo con IA. En la <strong class="text-neutral-100">entrada</strong>: lo que usas para entrenar, ajustar o alimentar una base de RAG puede ser una obra protegida (en Brasil, por la Ley n.º 9.610/1998). En la <strong class="text-neutral-100">herramienta</strong>: los modelos abiertos tienen licencias distintas: algunas son permisivas, como Apache 2.0 y MIT; otras restringen el uso o la escala. Y en la <strong class="text-neutral-100">salida</strong>: lo que genera el modelo puede parecerse demasiado a una obra existente, y la protección del propio resultado es incierta.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-9-t5-p2">Sobre la autoría de lo que genera la IA, la tendencia en varios países es exigir una contribución humana relevante: en Estados Unidos, la Oficina de Derechos de Autor ha rechazado registrar material producido sin suficiente autoría humana. Hay procesos judiciales en curso sobre el uso de obras para entrenar modelos, y el tema forma parte del debate sobre el marco legal de la IA en Brasil (PL 2338/2023). <strong class="text-blue-400">Este panorama cambia rápido</strong>: el método consiste en documentar los orígenes, respetar las licencias y consultar al área legal en los casos de impacto.</p>
+<div class="bg-dark-800 border border-blue-500/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-blue-400 font-semibold mb-1">📘 Términos nuevos</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-9-t5-p3"><strong>Licencia del modelo</strong> es el contrato que indica cómo se pueden usar los pesos de un modelo abierto: léelo antes de incorporarlo a un producto. <strong>Procedencia</strong> es el registro de dónde proviene cada dato o contenido. <strong>Regurgitación</strong> ocurre cuando el modelo reproduce fragmentos largos y casi literales del material de entrenamiento.</p>
+</div>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">Cuidar el origen y los derechos de lo que entra en el sistema, las licencias de los modelos y herramientas utilizados y el riesgo de que el resultado copie obras de terceros, con registro de procedencia y revisión humana de lo que se publique.</p>
+</div>
+<div class="overflow-x-auto mb-6">
+<table class="w-full text-sm border border-dark-600 rounded-xl overflow-hidden">
+<thead><tr class="bg-dark-700"><th class="text-left p-3 text-blue-400">Punto</th><th class="text-left p-3 text-blue-400">Riesgo</th><th class="text-left p-3 text-blue-400">Control práctico</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr><td class="p-3 font-semibold">Base de RAG y ajuste fino</td><td class="p-3 text-neutral-300">Usar contenido sin derecho de uso (sitios web, libros, material de clientes)</td><td class="p-3 text-neutral-300">Lista de fuentes con su origen y permiso; preferir contenido propio o con licencia</td></tr>
+<tr><td class="p-3 font-semibold">Modelo abierto</td><td class="p-3 text-neutral-300">Licencia con restricciones de uso, escala o atribución</td><td class="p-3 text-neutral-300">Registrar la licencia en la ficha del sistema; revisión legal antes de incorporarlo al producto</td></tr>
+<tr><td class="p-3 font-semibold">Texto y código generados</td><td class="p-3 text-neutral-300">Fragmento copiado de una obra o de código con una licencia incompatible</td><td class="p-3 text-neutral-300">Revisión humana; herramientas para verificar similitudes y licencias de código</td></tr>
+<tr><td class="p-3 font-semibold">Imagen, voz y video</td><td class="p-3 text-neutral-300">Estilo o imagen de una persona real, marca de terceros, voz sin autorización</td><td class="p-3 text-neutral-300">Prohibir solicitudes que incluyan nombres de artistas y personas reales; autorización por escrito para usar voz e imagen</td></tr>
+</tbody>
+</table>
+</div>
+<div class="bg-primary/10 border border-primary/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-primary font-semibold mb-1">💡 Consejo</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-9-t5-p4">Lee los términos del proveedor que usas: algunos ofrecen cláusulas de protección frente a reclamos por derechos de autor sobre el resultado, con ciertas condiciones. Anota en la ficha del sistema qué cubre tu plan y qué no.</p>
+</div>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-9-t5-p5" data-sum="porque">Un modelo con una licencia incorrecta o una base de datos creada con contenido de terceros puede obligar a rehacer un producto entero. Registrar el origen y la licencia desde el principio cuesta poco y evita disputas que ninguna ventaja técnica compensa.</p>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Ley 9.610/1998</div><div class="text-xs text-neutral-400">derechos de autor en Brasil</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Licencia del modelo</div><div class="text-xs text-neutral-400">leer antes de usar</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Procedencia</div><div class="text-xs text-neutral-400">de dónde proviene cada dato</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Autoría humana</div><div class="text-xs text-neutral-400">base de la protección</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 6 -->
+<section class="mb-16" data-inema-topic="modulo-2-9#topico-6" id="topico-6" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="impacto, autonomia e quem aprova">🛡️ Riesgo y supervisión humana</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-9-t6-p1">No todos los usos de IA requieren el mismo nivel de cuidado. La regulación europea (AI Act, vigente desde 2024, con obligaciones que entran en vigor por etapas) y el proyecto brasileño siguen la misma lógica: <strong class="text-blue-400">clasificar según el riesgo</strong>. Hay usos prohibidos, usos de alto riesgo (como la selección de candidatos, el crédito y el acceso a servicios esenciales), usos que exigen transparencia (como los chatbots y el contenido sintético) y usos de riesgo mínimo. Verifica el calendario y la situación actual de las reglas antes de cada proyecto.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-9-t6-p2">Para quienes construyen sistemas, dos preguntas resuelven buena parte de la clasificación: <strong class="text-neutral-100">cuál es el impacto</strong> de un error en la vida de una persona, y <strong class="text-neutral-100">cuánta autonomía</strong> tiene la IA: solo sugiere, decide con revisión o actúa sola. Con agentes que usan herramientas, la autonomía aumenta y surgen nuevos riesgos, como la inyección de instrucciones ocultas en documentos y páginas que el agente lee.</p>
+<div class="bg-dark-800 border border-blue-500/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-blue-400 font-semibold mb-1">📘 Términos nuevos</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-9-t6-p3"><strong>Humano en el circuito</strong> (<em>human-in-the-loop</em>): una persona aprueba cada decisión antes de que entre en vigor. <strong>Humano supervisando</strong> (<em>on-the-loop</em>): el sistema actúa y una persona lo supervisa y puede intervenir. <strong>Inyección de prompt</strong>: texto malicioso dentro de los datos (un correo electrónico, un PDF, una página) que intenta cambiar las instrucciones del modelo. <strong>Menor privilegio</strong>: dale al agente solo los permisos estrictamente necesarios.</p>
+</div>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">Clasifica cada sistema según el impacto de un error y la autonomía de la IA, y elige el nivel de supervisión humana, pruebas y aprobación proporcional a esa clasificación.</p>
+</div>
+<!-- SVG 4: matriz impacto × autonomia -->
+<figure class="svg-frame rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="Matriz de riesgo con dos ejes, impacto en la persona y autonomía de la IA, que forman cuatro cuadrantes: bajo impacto y baja autonomía, uso libre con revisión; bajo impacto y alta autonomía, automatizar con límites; alto impacto y baja autonomía, la IA sugiere y una persona decide; alto impacto y alta autonomía, evitar o exigir aprobación y auditoría." class="w-full h-auto" role="img" viewbox="0 0 900 310">
+<rect fill="url(#m29-grid)" height="310" width="900"></rect>
+<g font-family="Inter,sans-serif">
+<rect fill="#0e1626" height="120" rx="10" stroke="#60a5fa" stroke-opacity="0.6" stroke-width="1.5" width="350" x="140" y="150"></rect>
+<rect fill="#0e1626" height="120" rx="10" stroke="#60a5fa" stroke-opacity="0.8" stroke-width="1.5" width="350" x="505" y="150"></rect>
+<rect fill="#0e1b26" height="120" rx="10" stroke="#38bdf8" stroke-opacity="0.8" stroke-width="1.5" width="350" x="140" y="20"></rect>
+<rect fill="#1e1530" filter="url(#m29-glow)" height="120" rx="10" stroke="#f87171" stroke-width="2" width="350" x="505" y="20"></rect>
+<text fill="#bae6fd" font-size="15" font-weight="700" x="160" y="52">La IA sugiere, la persona decide</text>
+<text fill="#e0f2fe" font-size="12" x="160" y="76">crédito, selección, salud, asuntos jurídicos</text>
+<text fill="#e0f2fe" font-size="12" x="160" y="96">humano en el circuito + explicación</text>
+<text fill="#e0f2fe" font-size="12" x="160" y="116">prueba de sesgo y revisión (art. 20)</text>
+<text fill="#fecaca" font-size="15" font-weight="700" x="525" y="52">Evítalo o exige aprobación formal</text>
+<text fill="#fee2e2" font-size="12" x="525" y="76">agente que decide sobre personas</text>
+<text fill="#fee2e2" font-size="12" x="525" y="96">o mueve dinero sin revisión</text>
+<text fill="#fee2e2" font-size="12" x="525" y="116">auditoría, límites, apagado rápido</text>
+<text fill="#bfdbfe" font-size="15" font-weight="700" x="160" y="182">Uso libre con revisión</text>
+<text fill="#dbeafe" font-size="12" x="160" y="206">borradores, resúmenes internos</text>
+<text fill="#dbeafe" font-size="12" x="160" y="226">quien lo usa revisa el resultado</text>
+<text fill="#dbeafe" font-size="12" x="160" y="246">política de uso y datos</text>
+<text fill="#bfdbfe" font-size="15" font-weight="700" x="525" y="182">Automatiza con límites</text>
+<text fill="#dbeafe" font-size="12" x="525" y="206">clasificación, organización de archivos</text>
+<text fill="#dbeafe" font-size="12" x="525" y="226">humano supervisando + registros</text>
+<text fill="#dbeafe" font-size="12" x="525" y="246">privilegio mínimo, reversión</text>
+<path d="M120,284 L120,24" fill="none" marker-end="url(#m29-ah)" stroke="#60a5fa" stroke-width="2"></path>
+<text fill="#93c5fd" font-size="12" font-weight="700" text-anchor="middle" transform="rotate(-90 100 150)" x="100" y="150">impacto en la persona</text>
+<path d="M140,288 L850,288" fill="none" marker-end="url(#m29-ahc)" stroke="#38bdf8" stroke-width="2"></path>
+<text fill="#7dd3fc" font-size="12" font-weight="700" text-anchor="middle" x="497" y="304">autonomía de la IA: sugiere → decide → actúa por su cuenta</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-blue-400">Cómo leer:</strong> ubica tu sistema en los dos ejes. Cuanto más arriba y a la derecha, más controles se suman. El cuadrante rojo no está prohibido por definición, pero exige justificación, aprobación formal y auditoría. Un mismo producto puede tener funciones en distintos cuadrantes: clasifica por función, no por producto.</figcaption>
+</figure>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-4"><p class="text-blue-400 font-semibold text-sm mb-1">Permisos mínimos</p><p class="text-xs text-neutral-300" data-inema-block="m2-9-t6-p4">El agente que lee correos electrónicos no necesita enviarlos. El que consulta la base de datos no necesita borrar datos.</p></div>
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-4"><p class="text-blue-400 font-semibold text-sm mb-1">Confirmación para acciones irreversibles</p><p class="text-xs text-neutral-300" data-inema-block="m2-9-t6-p5">Pagos, eliminaciones, envíos externos: siempre con aprobación humana explícita.</p></div>
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-4"><p class="text-blue-400 font-semibold text-sm mb-1">Un dato es un dato, no una orden</p><p class="text-xs text-neutral-300" data-inema-block="m2-9-t6-p6">El contenido leído de documentos y páginas nunca cambia las instrucciones del agente.</p></div>
+</div>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-9-t6-p7" data-sum="porque">Clasificar por riesgo evita dos errores costosos: la burocracia excesiva en usos triviales, que hace que el equipo eluda las reglas, y la automatización sin freno en decisiones que afectan la vida de las personas. Con agentes cada vez más autónomos, diseñar la supervisión es parte del código.</p>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Clase de riesgo</div><div class="text-xs text-neutral-400">impacto × autonomía</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Humano en el circuito</div><div class="text-xs text-neutral-400">aprueba antes</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Inyección de prompt</div><div class="text-xs text-neutral-400">orden oculta en el dato</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Menor privilegio</div><div class="text-xs text-neutral-400">solo lo necesario</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 7 -->
+<section class="mb-16" data-inema-topic="modulo-2-9#topico-7" id="topico-7" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">7</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="inventário, aprovação, revisão e checklist">📋 Proceso de gobernanza</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-9-t7-p1">Un proceso de gobernanza no necesita un departamento nuevo para empezar. Lo mínimo que funciona tiene cuatro piezas: un <strong class="text-neutral-100">inventario</strong> de todos los sistemas con IA (incluidas las herramientas que los empleados usan por su cuenta), una <strong class="text-neutral-100">evaluación de riesgos</strong> antes de cada lanzamiento, una <strong class="text-neutral-100">aprobación registrada</strong> por parte de quien responde por el sistema y una <strong class="text-neutral-100">revisión periódica</strong> — y cada vez que se cambie el modelo, los datos o la finalidad.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-9-t7-p2">El secreto es integrar esto en el flujo que el equipo ya usa. La lista de verificación de abajo puede convertirse en la plantilla de pull request, una etapa del pipeline del módulo 2.8 o una página en el repositorio. Lo importante es completarla antes del despliegue, con evidencias, y no reconstruirla después de un problema.</p>
+<div class="bg-dark-800 border border-blue-500/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-blue-400 font-semibold mb-1">📘 Términos nuevos</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-9-t7-p3"><strong>Inventario de IA</strong> es la lista de sistemas y herramientas con IA en uso, con responsable, finalidad y clase de riesgo. <strong>RIPD</strong> (Informe de Impacto en la Protección de Datos Personales) es el documento de la LGPD que describe los tratamientos de datos que pueden generar riesgos para los titulares, junto con las medidas de mitigación. <strong>Shadow AI</strong> es el uso de herramientas de IA sin que la organización lo sepa.</p>
+</div>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">Un ciclo ligero y repetible —registrar, evaluar, aprobar, monitorear y revisar— con una lista de verificación que acompaña cada sistema desde el primer prototipo hasta su retiro.</p>
+</div>
+<!-- PASSO A PASSO -->
+<div class="relative border-l-2 border-blue-500/30 ml-3 pl-6 space-y-5 mb-6">
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-blue-500/20 border-2 border-blue-400"></span><p class="text-sm text-neutral-300"><strong class="text-blue-400">1 · Registrar.</strong> Todo sistema se incorpora al inventario cuando se convierte en prototipo, con responsable y finalidad.</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-blue-500/20 border-2 border-blue-400"></span><p class="text-sm text-neutral-300"><strong class="text-blue-400">2 · Evaluar.</strong> Clase de riesgo (tema 6), datos personales (tema 3), sesgo (tema 2), derechos (tema 5).</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-sky-500/20 border-2 border-sky-400"></span><p class="text-sm text-neutral-300"><strong class="text-sky-400">3 · Aprobar.</strong> El responsable firma la lista de verificación; para riesgos altos, también se requiere la aprobación del área jurídica y del responsable de protección de datos.</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-sky-500/20 border-2 border-sky-400"></span><p class="text-sm text-neutral-300"><strong class="text-sky-400">4 · Monitorear.</strong> Calidad, sesgo por grupo, quejas e incidentes, con el panel del módulo 2.8.</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-sky-500/20 border-2 border-sky-400"></span><p class="text-sm text-neutral-300"><strong class="text-sky-400">5 · Revisar.</strong> En un plazo fijo y siempre que cambien el modelo, los datos, la finalidad o la ley aplicable.</p></div>
+</div>
+<!-- COPY-RUN: checklist de governança -->
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-blue-400">Objetivo:</strong> <span class="text-neutral-300">lista de verificación de gobernanza para copiar en el repositorio o en la plantilla de pull request.</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copiar</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900"># Lista de verificación de gobernanza de IA — &lt;sistema&gt; · versión &lt;x.y.z&gt; · &lt;data&gt;
+Responsable: &lt;nome/área&gt;   Clase de riesgo: &lt;mínimo | transparencia | alto&gt;
+
+## 1. Registro
+- [ ] Sistema en el inventario de IA, con finalidad y responsable
+- [ ] Ficha del sistema (FICHA.md) actualizada para esta versión
+
+## 2. Datos personales (LGPD)
+- [ ] Base legal y finalidad registradas con el responsable de protección de datos
+- [ ] Minimización: datos personales eliminados o seudonimizados antes del modelo
+- [ ] El proveedor no entrena con los datos (contrato/configuración revisados en &lt;data&gt;)
+- [ ] Transferencia internacional evaluada, si corresponde
+- [ ] Registros sin datos personales innecesarios; retención de &lt;prazo&gt;
+- [ ] RIPD realizado o actualizado, si el riesgo para los titulares es relevante
+
+## 3. Calidad y equidad
+- [ ] El conjunto de pruebas pasó el control (resultado: &lt;...&gt;)
+- [ ] Métricas por grupo medidas; diferencias explicadas o corregidas
+- [ ] Limitaciones conocidas descritas en la ficha
+
+## 4. Transparencia y derechos
+- [ ] Se informa al usuario que interactúa con IA o recibe contenido generado
+- [ ] Canal de revisión humana para decisiones automatizadas (LGPD art. 20)
+- [ ] Origen y licencia de los datos, base de RAG y modelo registrados
+
+## 5. Seguridad y supervisión
+- [ ] Nivel de supervisión humana definido según la clase de riesgo
+- [ ] Agente con permisos mínimos; las acciones irreversibles requieren confirmación
+- [ ] Probado contra inyección de prompts con documentos maliciosos de ejemplo
+- [ ] Runbook con reversión y apagado rápido (módulo 2.8)
+
+## 6. Aprobación y revisión
+- [ ] Aprobado por: &lt;dono&gt;  (+ jurídico/responsable de protección de datos si el riesgo es alto) en &lt;data&gt;
+- [ ] Próxima revisión: &lt;data&gt; o al cambiar el modelo, los datos o la finalidad</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">Cómo verificar:</strong> aplica la lista de verificación a un sistema que ya tengas: sirve el clasificador de los módulos 2.7 y 2.8. Cada elemento marcado debe apuntar a una evidencia (archivo, resultado de prueba, contrato, correo de aprobación). Un elemento marcado sin evidencia cuenta como no realizado.</p>
+</div>
+<div class="bg-primary/10 border border-primary/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-primary font-semibold mb-1">💡 Consejo</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-9-t7-p4">Empieza por el inventario. Pregunta a los equipos qué herramientas de IA usan en su día a día y con qué datos. Por lo general, la primera lista revela usos que nadie había evaluado, y ahí están los riesgos más sencillos de corregir.</p>
+</div>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-9-t7-p5" data-sum="porque">La gobernanza realizada desde el inicio cuesta algunas horas por sistema; hacerla después de un incidente o una inspección cuesta semanas y reputación. Quien domina este proceso lleva proyectos de IA a áreas sensibles de forma segura, y esa es precisamente la visión que la Ruta 3 profundiza a escala.</p>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Inventario</div><div class="text-xs text-neutral-400">qué existe y de quién</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">RIPD</div><div class="text-xs text-neutral-400">impacto en los titulares</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Aprobación registrada</div><div class="text-xs text-neutral-400">antes del despliegue</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Revisión periódica</div><div class="text-xs text-neutral-400">y con cada cambio</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- RESUMO -->
+<section class="mb-8">
+<div class="bg-gradient-to-br from-blue-900/40 via-dark-800 to-dark-800 rounded-xl border border-blue-500/30 p-6 sm:p-8">
+<h2 class="text-2xl font-bold mb-6">✅ Resumen del módulo</h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start gap-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">Un principio solo vale si tiene un control</strong><span class="text-neutral-400"> — prueba, función o aprobación que deja evidencia.</span></div></div>
+<div class="flex items-start gap-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">Mide el sesgo por grupo y protege los datos personales</strong><span class="text-neutral-400"> — paridad, oportunidad, minimización y LGPD.</span></div></div>
+<div class="flex items-start gap-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">Sé transparente y respeta los derechos</strong><span class="text-neutral-400"> — aviso sobre IA, ficha del sistema, revisión humana, licencias y origen.</span></div></div>
+<div class="flex items-start gap-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">Supervisión proporcional al riesgo</strong><span class="text-neutral-400"> — inventario, lista de verificación, aprobación y revisión periódica.</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-blue-400 mb-2">Siguiente módulo:</h3>
+<p class="text-neutral-300">Ruta 3 — Clase magistral 👑</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="index.html">← Volver a la Ruta</a>
+<a class="flex-1 text-center px-6 py-3 bg-blue-700 text-white rounded-lg font-semibold hover:bg-blue-600 transition-colors" href="../trilha3/index.html">Siguiente módulo →</a>
+</div>
+</div>
+</section>
+</article>
+</div>
+</div>
+</main>
+<footer class="border-t border-dark-600 py-8 mt-8">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>FTD — Formación en Transformación Digital · contenido abierto y gratuito · 2026 · <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" rel="noopener" target="_blank">INEMA.CLUB</a> - <a class="text-amber-700 dark:text-slate-300 hover:underline" href="https://inema.pro" rel="noopener" target="_blank">PRO</a></p>
+</div>
+</footer>
+<!-- SCRIPTS NÚCLEO v1 -->
+<script>
+    function toggleTopic(button) {
+      var topicItem = button.closest('.topic-item');
+      if (!topicItem) return;
+      var explanation = topicItem.querySelector('.topic-explanation');
+      var willOpen = !explanation.classList.contains('active');
+      explanation.classList.toggle('active');
+      button.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+    }
+    function openModal(id) { var m = document.getElementById(id); if (m) { m.classList.remove('hidden'); document.body.style.overflow = 'hidden'; } }
+    function closeModal() { document.querySelectorAll('.modal').forEach(function (m) { m.classList.add('hidden'); }); document.body.style.overflow = 'auto'; }
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
+    function copyCode(btn) {
+      var pre = btn.closest('[data-copy-box]').querySelector('pre');
+      var txt = pre ? pre.innerText : '';
+      var done = function () { var o = btn.getAttribute('data-label-ok') || 'Copiado'; var t = btn.textContent; btn.textContent = o; setTimeout(function () { btn.textContent = t; }, 1500); };
+      try { navigator.clipboard.writeText(txt).then(done, done); } catch (e) { done(); }
+    }
+    (function () {
+      var themeToggle = document.getElementById('theme-toggle');
+      var darkIcon = document.getElementById('theme-toggle-dark-icon');
+      var lightIcon = document.getElementById('theme-toggle-light-icon');
+      var html = document.documentElement;
+      function sync() { var isDark = html.classList.contains('dark'); if (darkIcon) darkIcon.classList.toggle('hidden', isDark); if (lightIcon) lightIcon.classList.toggle('hidden', !isDark); }
+      sync();
+      if (themeToggle) themeToggle.addEventListener('click', function () {
+        html.classList.toggle('dark'); var nowDark = html.classList.contains('dark'); html.style.colorScheme = nowDark ? 'dark' : 'light';
+        try { localStorage.setItem('theme', nowDark ? 'dark' : 'light'); } catch (e) {}
+        try { var p = JSON.parse(localStorage.getItem('inema.prefs') || '{}'); p.theme = nowDark ? 'inema-dark' : 'claro'; localStorage.setItem('inema.prefs', JSON.stringify(p)); } catch (e) {}
+        sync();
+      });
+    })();
+  </script>
+<!-- learn.js + INEMA.init() POR ÚLTIMO -->
+<script src="../../assets/learn.js"></script>
+<script>
+    if (window.INEMA && typeof window.INEMA.init === 'function') { window.INEMA.init({ autoResume: true }); }
+  </script>
+</body>
+</html>

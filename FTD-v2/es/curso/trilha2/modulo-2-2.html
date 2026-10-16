@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="ftd-v2-es" name="inema-course"/>
+<title>Módulo 2.2 · Arquitectura de aplicaciones con IA | FTD v2</title>
+<meta content="Capas de una aplicación con IA: orquestación, estado, caché, colas, observabilidad y degradación elegante." name="description"/>
+<meta content="Módulo 2.2 · Arquitectura de aplicaciones con IA | FTD v2" property="og:title"/>
+<meta content="Capas de una aplicación con IA: orquestación, estado, caché, colas, observabilidad y degradación elegante." property="og:description"/>
+<!-- ANTI-FOUC (Erro #18) — primeiro script do head -->
+<script>
+(function () {
+  try {
+    var html = document.documentElement;
+    var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+    function clone(o) { var r = {}; for (var x in o) r[x] = o[x]; return r; }
+    var p = clone(DEF);
+    try {
+      var raw = localStorage.getItem('inema.prefs');
+      if (raw) {
+        var parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === 'object') {
+          for (var k in DEF) if (parsed[k] != null) p[k] = parsed[k];
+        }
+      } else {
+        var legacy = localStorage.getItem('theme');
+        if (legacy === 'light') p.theme = 'claro';
+        else if (legacy === 'dark') p.theme = 'inema-dark';
+      }
+    } catch (e) { p = clone(DEF); }
+
+    var THEMES = {
+      'inema-dark': { dark: true,  attr: null,        cs: 'dark'  },
+      'claro':      { dark: false, attr: null,        cs: 'light' },
+      'sepia':      { dark: false, attr: 'sepia',     cs: 'light' },
+      'foco':       { dark: null,  attr: 'foco',      cs: null    },
+      'contraste':  { dark: true,  attr: 'contraste', cs: 'dark'  }
+    };
+    var t = THEMES[p.theme] || THEMES['inema-dark'];
+
+    if (t.dark === true) html.classList.add('dark');
+    else if (t.dark === false) html.classList.remove('dark');
+
+    if (t.attr) html.setAttribute('data-theme', t.attr);
+    else html.removeAttribute('data-theme');
+
+    html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark') ? 'dark' : 'light'));
+
+    html.setAttribute('data-font', p.font || 'inter');
+    html.setAttribute('data-accent', p.accent || 'emerald');
+
+    var s = html.style;
+    var scale = (+p.fontScale || 100);
+    s.setProperty('--inema-font-scale', (scale / 100).toString());
+    s.setProperty('font-size', scale + '%');
+    s.setProperty('--measure', (+p.lineWidth || 68) + 'ch');
+    s.setProperty('--lh-body', (+p.leading || 1.7).toString());
+    var fam = p.font === 'system'
+      ? 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif'
+      : (p.font === 'leitura'
+        ? '"Atkinson Hyperlegible", "Inter", system-ui, sans-serif'
+        : '"Inter", system-ui, sans-serif');
+    s.setProperty('--font-body', fam);
+
+    var ACC = {
+      emerald: [152, 76, 45], blue: [217, 91, 60], purple: [258, 90, 66],
+      amber: [38, 92, 50], teal: [174, 72, 41], rose: [350, 89, 60]
+    };
+    var a = ACC[p.accent] || ACC.emerald;
+    s.setProperty('--accent-h', a[0] + '');
+    s.setProperty('--accent-s', a[1] + '%');
+    s.setProperty('--accent-l', a[2] + '%');
+    s.setProperty('--accent', 'hsl(' + a[0] + ' ' + a[1] + '% ' + a[2] + '%)');
+  } catch (err) {
+    try { document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme = 'dark'; } catch (e) {}
+  }
+})();
+</script>
+<!-- MANIFESTO do curso (Erro #28) — idêntico em todas as páginas -->
+<script data-inema-manifest="" type="application/json">
+{
+  "course": "ftd-v2-es",
+  "tracks": [
+    {
+      "n": "1",
+      "title": "Principiante",
+      "modules": [
+        {
+          "id": "1-1",
+          "title": "Impacto de la IA",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-1.html"
+        },
+        {
+          "id": "1-2",
+          "title": "Navegar el mundo digital",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-2.html"
+        },
+        {
+          "id": "1-3",
+          "title": "Ingeniería de prompts",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-3.html"
+        },
+        {
+          "id": "1-4",
+          "title": "Asistentes y agentes de IA",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-4.html"
+        },
+        {
+          "id": "1-5",
+          "title": "Creatividad visual con IA",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-5.html"
+        },
+        {
+          "id": "1-6",
+          "title": "Marketing y ventas con IA",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-6.html"
+        },
+        {
+          "id": "1-7",
+          "title": "Automatización de procesos",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-7.html"
+        },
+        {
+          "id": "1-8",
+          "title": "Inteligencia artificial avanzada",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-8.html"
+        },
+        {
+          "id": "1-9",
+          "title": "Negocios y monetización con IA",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-9.html"
+        }
+      ]
+    },
+    {
+      "n": "2",
+      "title": "Técnico",
+      "modules": [
+        {
+          "id": "2-1",
+          "title": "Desarrollo con APIs de IA",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-1.html"
+        },
+        {
+          "id": "2-2",
+          "title": "Arquitectura de aplicaciones con IA",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-2.html"
+        },
+        {
+          "id": "2-3",
+          "title": "RAG y bases de conocimiento",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-3.html"
+        },
+        {
+          "id": "2-4",
+          "title": "Fine-tuning y personalización",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-4.html"
+        },
+        {
+          "id": "2-5",
+          "title": "Agentes y flujos de trabajo complejos",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-5.html"
+        },
+        {
+          "id": "2-6",
+          "title": "Visión artificial avanzada",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-6.html"
+        },
+        {
+          "id": "2-7",
+          "title": "NLP y procesamiento de texto",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-7.html"
+        },
+        {
+          "id": "2-8",
+          "title": "MLOps y producción",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-8.html"
+        },
+        {
+          "id": "2-9",
+          "title": "Ética y gobernanza de IA",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-9.html"
+        }
+      ]
+    },
+    {
+      "n": "3",
+      "title": "Masterclass",
+      "modules": [
+        {
+          "id": "3-1",
+          "title": "Arquitectura de IA a gran escala",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-1.html"
+        },
+        {
+          "id": "3-2",
+          "title": "Modelos personalizados y propietarios",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-2.html"
+        },
+        {
+          "id": "3-3",
+          "title": "IA multimodal avanzada",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-3.html"
+        },
+        {
+          "id": "3-4",
+          "title": "Investigación y artículos de IA",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-4.html"
+        },
+        {
+          "id": "3-5",
+          "title": "Aprendizaje por refuerzo en IA",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-5.html"
+        },
+        {
+          "id": "3-6",
+          "title": "Seguridad y red teaming",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-6.html"
+        },
+        {
+          "id": "3-7",
+          "title": "IA en producción — escala enterprise",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-7.html"
+        },
+        {
+          "id": "3-8",
+          "title": "Liderazgo y estrategia en IA",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-8.html"
+        },
+        {
+          "id": "3-9",
+          "title": "Futuro de la IA y AGI",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-9.html"
+        }
+      ]
+    }
+  ]
+}
+</script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#0c0c10', 800: '#16161e', 700: '#1e1e28', 600: '#272730', 500: '#33333f' } }, fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'], display: ['Sora', 'Inter', 'sans-serif'], mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'] } } } }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Sora:wght@600;700;800&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    h1, h2, h3, h4, .font-display { font-family: 'Sora', 'Inter', sans-serif; }
+    .dark body { background-color: #0c0c10; }
+    .dark .text-neutral-100 { color: #e9e9ee; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+    pre { white-space: pre-wrap; word-break: break-word; }
+    pre, code, .font-mono { font-family: 'JetBrains Mono', ui-monospace, monospace; }
+
+    /* Light mode — Parte 1: base */
+    html:not(.dark) body { background-color: #f6f7f9; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800\/50 { background-color: #f6f7f9; }
+    html:not(.dark) .bg-dark-700 { background-color: #eceef2; }
+    html:not(.dark) .bg-dark-700\/50 { background-color: #f1f2f5; }
+    html:not(.dark) .bg-dark-700\/30 { background-color: #f4f5f7; }
+    html:not(.dark) .bg-dark-600 { background-color: #e1e3ea; }
+    html:not(.dark) .hover\:bg-dark-600:hover { background-color: #d6d9e1; }
+    html:not(.dark) .hover\:bg-dark-700\/50:hover { background-color: #eceef2; }
+    html:not(.dark) .text-neutral-100 { color: #1a1a22; }
+    html:not(.dark) .text-neutral-200 { color: #26262f; }
+    html:not(.dark) .text-neutral-300 { color: #3f3f4a; }
+    html:not(.dark) .text-neutral-400 { color: #5b5b68; }
+    html:not(.dark) .text-neutral-500 { color: #62626e; }
+    html:not(.dark) .border-dark-600 { border-color: #e1e3ea; }
+    html:not(.dark) .border-dark-700 { border-color: #e8e9ee; }
+    html:not(.dark) .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #e1e3ea; }
+    html:not(.dark) .bg-black\/40 { background-color: #f1f2f5; }
+    html:not(.dark) pre.code-dark { background-color: #1a1a22; color: #e9e9ee; }
+
+    /* Light mode — Parte 2: acento das 3 trilhas (texto -700, nunca -400 no claro) */
+    html:not(.dark) .text-emerald-400 { color: #047857; }
+    html:not(.dark) .text-emerald-300 { color: #047857; }
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #047857; }
+    html:not(.dark) .bg-emerald-500\/20 { background-color: rgba(4,120,87,0.12); }
+    html:not(.dark) .bg-emerald-500\/10 { background-color: rgba(4,120,87,0.08); }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(4,120,87,0.08); }
+    html:not(.dark) .bg-emerald-900\/20 { background-color: rgba(4,120,87,0.07); }
+    html:not(.dark) .bg-emerald-900\/30 { background-color: rgba(4,120,87,0.08); }
+    html:not(.dark) .bg-emerald-900\/40 { background-color: rgba(4,120,87,0.09); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(4,120,87,0.28); }
+    html:not(.dark) .hover\:border-emerald-500\/30:hover { border-color: rgba(4,120,87,0.4); }
+    html:not(.dark) .text-blue-400 { color: #1d4ed8; }
+    html:not(.dark) .text-blue-300 { color: #1d4ed8; }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #1d4ed8; }
+    html:not(.dark) .bg-blue-500\/20 { background-color: rgba(29,78,216,0.12); }
+    html:not(.dark) .bg-blue-500\/10 { background-color: rgba(29,78,216,0.08); }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(29,78,216,0.08); }
+    html:not(.dark) .bg-blue-900\/20 { background-color: rgba(29,78,216,0.07); }
+    html:not(.dark) .bg-blue-900\/30 { background-color: rgba(29,78,216,0.08); }
+    html:not(.dark) .bg-blue-900\/40 { background-color: rgba(29,78,216,0.09); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(29,78,216,0.28); }
+    html:not(.dark) .hover\:border-blue-500\/30:hover { border-color: rgba(29,78,216,0.4); }
+    html:not(.dark) .text-purple-400 { color: #6d28d9; }
+    html:not(.dark) .text-purple-300 { color: #6d28d9; }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #6d28d9; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(109,40,217,0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(109,40,217,0.08); }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(109,40,217,0.08); }
+    html:not(.dark) .bg-purple-900\/20 { background-color: rgba(109,40,217,0.07); }
+    html:not(.dark) .bg-purple-900\/30 { background-color: rgba(109,40,217,0.08); }
+    html:not(.dark) .bg-purple-900\/40 { background-color: rgba(109,40,217,0.09); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(109,40,217,0.28); }
+    html:not(.dark) .hover\:border-purple-500\/30:hover { border-color: rgba(109,40,217,0.4); }
+
+    /* Light mode — Parte 3: gradientes + especiais */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #854d0e; }
+    html:not(.dark) .text-yellow-400 { color: #854d0e; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #713f12; }
+    html:not(.dark) .bg-primary\/10 { background-color: #FEF9C3; }
+    html:not(.dark) .border-primary\/30 { border-color: #EAB308; }
+    html:not(.dark) .text-red-400 { color: #b91c1c; }
+    html:not(.dark) .bg-red-900\/20 { background-color: rgba(185,28,28,0.07); }
+    html:not(.dark) .border-red-500\/30 { border-color: rgba(185,28,28,0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #075985; }
+    html:not(.dark) .bg-sky-900\/20 { background-color: rgba(3,105,161,0.07); }
+    html:not(.dark) .border-sky-500\/30 { border-color: rgba(3,105,161,0.25); }
+
+    /* Light mode — Parte 4: nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255,255,255,0.95); }
+
+    /* Parte 5: bordas suavizadas no DARK (Erro #15) */
+    .dark .border-dark-600 { border-color: #2a2a35; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #2a2a35; }
+
+    /* SVG: no claro, um fundo escuro emoldurado mantém o contraste do desenho */
+    html:not(.dark) .svg-frame { background-color: #12121a; }
+    @media (prefers-reduced-motion: reduce) { svg * { animation: none !important; transition: none !important; } }
+  </style>
+<link href="../../../assets/learn.css" rel="stylesheet"/>
+<link href="https://inematds.github.io/FTD/FTD-v2/curso/trilha2/modulo-2-2.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/FTD/FTD-v2/en/curso/trilha2/modulo-2-2.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/FTD/FTD-v2/es/curso/trilha2/modulo-2-2.html" hreflang="es" rel="alternate"/><link href="https://inematds.github.io/FTD/FTD-v2/curso/trilha2/modulo-2-2.html" hreflang="x-default" rel="alternate"/><link href="https://inematds.github.io/FTD/FTD-v2/es/curso/trilha2/modulo-2-2.html" rel="canonical"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(250,204,21,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha2/modulo-2-2.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="../../../en/curso/trilha2/modulo-2-2.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">EN</a><a href="modulo-2-2.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#FACC15">ES</a></div>
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14 gap-2">
+<!-- Logo + INEMA.CLUB -->
+<div class="flex items-center space-x-3 flex-shrink-0">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🚀</span>
+<span class="font-display font-bold text-lg hidden sm:inline">FTD</span>
+</a>
+<span class="text-neutral-600 hidden sm:inline">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium hidden sm:inline" href="https://inema.club" rel="noopener" target="_blank">INEMA.CLUB</a>
+<span class="text-neutral-600 hidden sm:inline">-</span>
+<a class="text-amber-700 dark:text-slate-300 hover:underline text-sm font-medium hidden sm:inline" href="https://inema.pro" rel="noopener" target="_blank">PRO</a>
+</div>
+<!-- Trilhas + controles de aprendizagem + theme toggle -->
+<div class="flex items-center gap-1 sm:gap-1.5">
+<a class="px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors whitespace-nowrap" href="../trilha1/index.html">
+<span class="lg:hidden">T1</span><span class="hidden lg:inline">Principiante</span>
+</a>
+<a class="px-2.5 py-1.5 rounded-lg text-sm font-semibold text-blue-400 bg-blue-500/10 whitespace-nowrap" href="index.html">
+<span class="lg:hidden">T2</span><span class="hidden lg:inline">Técnico</span>
+</a>
+<a class="px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors whitespace-nowrap" href="../trilha3/index.html">
+<span class="lg:hidden">T3</span><span class="hidden lg:inline">Masterclass</span>
+</a>
+<span class="w-px h-6 bg-dark-600 mx-1 hidden sm:inline-block"></span>
+<!-- Minha jornada (abre o painel global; badge = % do curso) -->
+<button class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-300 hover:text-neutral-100 hover:bg-dark-700 transition-colors" data-inema-journey-open="" type="button">
+<svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="16"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+<span class="hidden md:inline">Mi recorrido</span>
+<span class="inema-journey-badge" data-count="0" data-inema-journey-badge=""></span>
+</button>
+<!-- Aparência (gatilho + painel obrigatório) -->
+<div class="relative">
+<button aria-expanded="false" class="inema-appearance-trigger inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-300 hover:text-neutral-100 transition-colors" data-inema-appearance-toggle="#inema-appearance-panel" type="button">
+<svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="16"><circle cx="12" cy="12" r="9"></circle><path d="M12 3v18"></path><path d="M12 3a9 9 0 0 1 0 18" fill="currentColor"></path></svg>
+<span class="hidden md:inline">Apariencia</span>
+</button>
+<div class="inema-appearance-pop right-0" data-inema-appearance="" id="inema-appearance-panel">
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Tema</span>
+<div class="inema-segment">
+<button data-inema-set-theme="inema-dark" type="button">Oscuro</button>
+<button data-inema-set-theme="claro" type="button">Claro</button>
+<button data-inema-set-theme="sepia" type="button">Sepia</button>
+</div>
+<div class="inema-segment">
+<button data-inema-set-theme="foco" type="button">Enfoque</button>
+<button data-inema-set-theme="contraste" type="button">Alto contraste</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Fuente</span>
+<div class="inema-segment">
+<button data-inema-set-font="inter" type="button">Inter</button>
+<button data-inema-set-font="system" type="button">Sistema</button>
+<button data-inema-set-font="leitura" type="button">Lectura</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Tamaño</span>
+<div class="inema-segment">
+<button data-inema-set-fontscale="100" type="button">A</button>
+<button data-inema-set-fontscale="112" type="button">A+</button>
+<button data-inema-set-fontscale="125" type="button">A++</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Ancho</span>
+<div class="inema-segment">
+<button data-inema-set-linewidth="60" type="button">Estrecho</button>
+<button data-inema-set-linewidth="68" type="button">Mediano</button>
+<button data-inema-set-linewidth="75" type="button">Ancho</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Interlineado</span>
+<div class="inema-segment">
+<button data-inema-set-leading="1.45" type="button">Compacto</button>
+<button data-inema-set-leading="1.7" type="button">Cómodo</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Acento</span>
+<div class="inema-accent-grid">
+<button aria-label="Acento esmeralda" data-inema-set-accent="emerald" type="button"></button>
+<button aria-label="Acento azul" data-inema-set-accent="blue" type="button"></button>
+<button aria-label="Acento violeta" data-inema-set-accent="purple" type="button"></button>
+<button aria-label="Acento ámbar" data-inema-set-accent="amber" type="button"></button>
+<button aria-label="Acento verde azulado" data-inema-set-accent="teal" type="button"></button>
+<button aria-label="Acento rosa" data-inema-set-accent="rose" type="button"></button>
+</div>
+</div>
+</div>
+</div>
+<!-- Theme toggle sol/lua (núcleo v1; o JS o mantém coerente com o tema) -->
+<button aria-label="Alternar tema claro/oscuro" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20">
+<path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+</svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20">
+<path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path>
+</svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<main data-inema-module="2-2" data-inema-track="2" id="conteudo">
+<!-- BREADCRUMB -->
+<nav aria-label="Ruta de navegación" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-blue-400" href="../../index.html">Inicio</a><span>/</span>
+<a class="hover:text-blue-400" href="index.html">Ruta 2</a><span>/</span>
+<span class="text-blue-400">Módulo 2.2</span>
+</div>
+</nav>
+<!-- HEADER do módulo -->
+<header class="bg-gradient-to-br from-blue-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-blue-500/20 text-blue-400 text-xs font-semibold rounded-full mb-4">MÓDULO 2.2</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🏗️ Arquitectura de aplicaciones con IA</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">Una llamada a la API resuelve un script. Un producto necesita más: capas, orquestación, cambio de proveedor, memoria, caché, colas, observabilidad y un plan para cuando falle el modelo. Aquí el modelo es <strong class="text-blue-400">solo una pieza</strong> — y aprendes a construir el resto a su alrededor, con ejemplos en Python que funcionan en Ollama local.</p>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">7</div><div class="text-xs text-neutral-400">Temas</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">~60</div><div class="text-xs text-neutral-400">Minutos</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">Intermedio</div><div class="text-xs text-neutral-400">Nivel</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">Arquitectura</div><div class="text-xs text-neutral-400">Tipo</div></div>
+</div>
+<div class="flex items-center gap-3 mt-8">
+<div aria-label="Progreso del módulo 2.2" class="inema-ring" data-inema-meter="modulo:2-2"><span class="inema-ring__value" data-inema-meter-pct="">0%</span></div>
+<div class="inema-meter-label" data-inema-meter="modulo:2-2"><strong data-inema-meter-frac="">0 de 0</strong> temas leídos · <span data-inema-section-counter="">Sección 1 de 7</span></div>
+</div>
+</div>
+</header>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+<div class="lg:flex lg:gap-10">
+<!-- TOC sticky + scrollspy -->
+<aside class="hidden lg:block lg:w-56 flex-shrink-0">
+<nav aria-label="Índice de la página" class="sticky top-20 self-start" data-inema-toc="">
+<p class="text-xs font-semibold uppercase tracking-wide text-neutral-500 mb-3">En este módulo</p>
+<ol class="space-y-1 text-sm">
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-blue-400" href="#topico-1">1. Las capas</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-blue-400" href="#topico-2">2. Orquestación</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-blue-400" href="#topico-3">3. Gateway de modelos</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-blue-400" href="#topico-4">4. Estado y memoria</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-blue-400" href="#topico-5">5. Caché</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-blue-400" href="#topico-6">6. Colas</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-blue-400" href="#topico-7">7. Observar y degradar</a></li>
+</ol>
+</nav>
+</aside>
+<!-- ARTIGO -->
+<article class="inema-prose flex-1 min-w-0">
+<h2 class="text-2xl font-bold mb-8">Contenido detallado</h2>
+<!-- TÓPICO 1 -->
+<section class="mb-16" data-inema-topic="modulo-2-2#topico-1" id="topico-1" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="o modelo é só uma peça">🏗️ Las capas de una aplicación con IA</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-2-t1-p1">En el módulo 2.1 llamaste a un modelo directamente desde el script. Funciona para probar, pero falla rápidamente en un producto: el proveedor cambia el precio, el modelo se vuelve lento un viernes, mil personas lo usan al mismo tiempo, alguien pregunta «¿qué dije ayer?». La respuesta es <strong class="text-blue-400">arquitectura</strong>: separar la aplicación en capas con responsabilidades claras, para que cada problema se resuelva en un solo lugar.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-2-t1-p2">La regla de oro es la misma que en el software tradicional: <strong class="text-neutral-100">bajo acoplamiento</strong>. La interfaz no sabe qué modelo hay detrás; la lógica de negocio no sabe si la respuesta vino de la caché o de una GPU; cambiar de proveedor consiste en modificar una configuración. El acoplamiento es cuánto depende una parte de los detalles de otra: cuanto menor sea, menos cuesta cambiar.</p>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">La arquitectura de una aplicación con IA es la organización del sistema en capas —interfaz, backend, orquestación, gateway de modelos y modelos— con dos servicios transversales: estado (datos y memoria) y observabilidad (registros, métricas, costo).</p>
+</div>
+<!-- SVG 1: camadas -->
+<figure class="svg-frame rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="Pila de cinco capas: interfaz, backend, orquestación, gateway de modelos y modelos locales o en la nube. A la derecha, dos columnas que atraviesan todas las capas: estado y datos, y observabilidad." class="w-full h-auto" role="img" viewbox="0 0 900 340">
+<defs>
+<filter height="160%" id="m22-glow" width="160%" x="-30%" y="-30%"><fegaussianblur result="b" stddeviation="2"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="28" id="m22-grid" patternunits="userSpaceOnUse" width="28"><circle cx="1.2" cy="1.2" fill="#3b82f6" opacity="0.14" r="1.2"></circle></pattern>
+<marker id="m22-ah" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#60a5fa"></path></marker>
+<marker id="m22-ahr" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#f87171"></path></marker>
+<style>@keyframes m22dash{to{stroke-dashoffset:-24}} .m22-flow{stroke-dasharray:6 6;animation:m22dash 1.6s linear infinite}</style>
+</defs>
+<rect fill="url(#m22-grid)" height="340" width="900"></rect>
+<g font-family="Inter,sans-serif">
+<rect fill="#0e1726" height="50" rx="10" stroke="#93c5fd" stroke-width="1.8" width="600" x="20" y="18"></rect>
+<text fill="#eff6ff" font-size="15" font-weight="700" x="40" y="49">Interfaz</text><text fill="#bfdbfe" font-size="13" x="250" y="49">web, app, WhatsApp, integración</text>
+<rect fill="#0e1726" height="50" rx="10" stroke="#60a5fa" stroke-width="1.8" width="600" x="20" y="80"></rect>
+<text fill="#eff6ff" font-size="15" font-weight="700" x="40" y="111">Backend</text><text fill="#bfdbfe" font-size="13" x="250" y="111">inicio de sesión, reglas de negocio, límites</text>
+<rect fill="#1e3a8a" filter="url(#m22-glow)" height="50" rx="10" stroke="#60a5fa" stroke-width="2.2" width="600" x="20" y="142"></rect>
+<text fill="#eff6ff" font-size="15" font-weight="700" x="40" y="173">Orquestación</text><text fill="#dbeafe" font-size="13" x="250" y="173">prompts, herramientas, RAG, validación</text>
+<rect fill="#0e1b26" height="50" rx="10" stroke="#38bdf8" stroke-width="1.8" width="600" x="20" y="204"></rect>
+<text fill="#e0f2fe" font-size="15" font-weight="700" x="40" y="235">Gateway de modelos</text><text fill="#bae6fd" font-size="13" x="250" y="235">enrutamiento, fallback, caché, costo</text>
+<rect fill="#0e1b26" height="50" rx="10" stroke="#38bdf8" stroke-width="1.8" width="600" x="20" y="266"></rect>
+<text fill="#e0f2fe" font-size="15" font-weight="700" x="40" y="297">Modelos</text><text fill="#bae6fd" font-size="13" x="250" y="297">Ollama local · APIs en la nube</text>
+<rect fill="#0e1726" height="140" rx="12" stroke="#60a5fa" stroke-dasharray="5 4" stroke-width="1.8" width="230" x="650" y="18"></rect>
+<text fill="#eff6ff" font-size="15" font-weight="700" text-anchor="middle" x="765" y="72">Estado y datos</text>
+<text fill="#bfdbfe" font-size="13" text-anchor="middle" x="765" y="96">sesiones, memoria,</text>
+<text fill="#bfdbfe" font-size="13" text-anchor="middle" x="765" y="116">vectores, archivos</text>
+<rect fill="#0e1b26" height="140" rx="12" stroke="#38bdf8" stroke-dasharray="5 4" stroke-width="1.8" width="230" x="650" y="176"></rect>
+<text fill="#e0f2fe" font-size="15" font-weight="700" text-anchor="middle" x="765" y="230">Observabilidad</text>
+<text fill="#bae6fd" font-size="13" text-anchor="middle" x="765" y="254">registros, trazas, tokens,</text>
+<text fill="#bae6fd" font-size="13" text-anchor="middle" x="765" y="274">latencia, costo</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-blue-400">Cómo leer:</strong> la solicitud baja desde la interfaz hasta el modelo y la respuesta sube por el mismo camino. La capa destacada, la orquestación, es donde vive la «inteligencia» de tu producto. Los dos recuadros de la derecha, con línea discontinua, no son etapas: atraviesan todas las capas; cada capa lee y guarda estado, y cada capa genera registros.</figcaption>
+</figure>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
+<h4 class="font-bold text-blue-400 mb-4">✓ Señales de una buena arquitectura</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Cambiar de modelo es modificar la configuración, no el código.</span></li>
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Los prompts están en archivos versionados y cuentan con pruebas.</span></li>
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Todas las llamadas al modelo pasan por un único punto.</span></li>
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Hay una respuesta definida para cuando falla el modelo.</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Señales de alerta</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Llamadas al SDK repartidas en decenas de archivos.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>El nombre del modelo escrito a mano en varios lugares.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Nadie sabe cuánto cuesta cada funcionalidad.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Si el proveedor se cae, el cliente ve un error 500 en la pantalla.</span></li>
+</ul>
+</div>
+</div>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-2-t1-p3" data-sum="porque">Los modelos cambian rápido: el mejor de hoy queda reemplazado en unos meses, y los precios suben y bajan. Quien acopla el producto a un modelo específico reescribe el sistema cada vez que cambia. Quien separa las capas cambia una pieza y sigue adelante, y puede responder preguntas sobre costo, calidad y fallas con datos.</p>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Capa</div><div class="text-xs text-neutral-400">una responsabilidad clara</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Acoplamiento</div><div class="text-xs text-neutral-400">dependencia de detalles ajenos</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Orquestación</div><div class="text-xs text-neutral-400">dónde reside la lógica de IA</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Transversal</div><div class="text-xs text-neutral-400">estado y observabilidad</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 2 -->
+<section class="mb-16" data-inema-topic="modulo-2-2#topico-2" id="topico-2" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="pipeline fixo ou agente que decide">🧭 Orquestación</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-2-t2-p1"><strong class="text-blue-400">Orquestación</strong> es el código que decide el orden de las cosas: qué hacer antes de llamar al modelo, cuántas llamadas hacer y qué revisar después. Hay dos estilos. En el <strong class="text-neutral-100">pipeline</strong> (o <em>workflow</em>), escribes los pasos en una secuencia fija: limpiar la entrada, buscar contexto, llamar al modelo, validar y guardar. En el <strong class="text-neutral-100">agente</strong>, el modelo decide el siguiente paso en un ciclo y elige herramientas hasta terminar.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-2-t2-p2">Empieza siempre por el pipeline. Es predecible, barato de probar y fácil de depurar, porque cada etapa tiene entradas y salidas conocidas. Usa un agente solo cuando el camino realmente varía según el caso (módulo 2.5). Bibliotecas como LangGraph ayudan a diseñar ambos estilos como grafos de etapas, pero un pipeline sencillo cabe en funciones comunes de Python: no necesitas un framework para empezar.</p>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">La orquestación es la capa que encadena las etapas alrededor del modelo —preprocesamiento, llamada, validación y posprocesamiento— con controles de calidad entre ellas. Puede ser un pipeline fijo o un agente que elige el siguiente paso.</p>
+</div>
+<!-- SVG 2: pipeline com portão -->
+<figure class="svg-frame rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="Pipeline en cinco etapas: entrada, preprocesamiento, modelo, validación y salida. Si la validación falla, una flecha roja vuelve al modelo para un nuevo intento o un plan B." class="w-full h-auto" role="img" viewbox="0 0 900 270">
+<rect fill="url(#m22-grid)" height="270" width="900"></rect>
+<g font-family="Inter,sans-serif" text-anchor="middle">
+<rect fill="#0e1726" height="76" rx="12" stroke="#93c5fd" stroke-width="2" width="150" x="15" y="50"></rect>
+<text fill="#eff6ff" font-size="15" font-weight="700" x="90" y="83">Entrada</text><text fill="#bfdbfe" font-size="12" x="90" y="104">solicitud del usuario</text>
+<rect fill="#0e1726" height="76" rx="12" stroke="#60a5fa" stroke-width="2" width="150" x="195" y="50"></rect>
+<text fill="#eff6ff" font-size="15" font-weight="700" x="270" y="83">Preprocesar</text><text fill="#bfdbfe" font-size="12" x="270" y="104">limpiar, anonimizar</text>
+<rect fill="#1e3a8a" filter="url(#m22-glow)" height="76" rx="12" stroke="#60a5fa" stroke-width="2.4" width="150" x="375" y="50"></rect>
+<text fill="#eff6ff" font-size="15" font-weight="700" x="450" y="83">Modelo</text><text fill="#dbeafe" font-size="12" x="450" y="104">prompt + contexto</text>
+<rect fill="#0e1b26" height="76" rx="12" stroke="#38bdf8" stroke-width="2" width="150" x="555" y="50"></rect>
+<text fill="#e0f2fe" font-size="15" font-weight="700" x="630" y="83">Validar</text><text fill="#bae6fd" font-size="12" x="630" y="104">esquema y reglas</text>
+<rect fill="#0e1b26" height="76" rx="12" stroke="#38bdf8" stroke-width="2" width="150" x="735" y="50"></rect>
+<text fill="#e0f2fe" font-size="15" font-weight="700" x="810" y="83">Salida</text><text fill="#bae6fd" font-size="12" x="810" y="104">respuesta + registro</text>
+<path class="m22-flow" d="M167,88 L191,88 M347,88 L371,88 M527,88 L551,88 M707,88 L731,88" fill="none" marker-end="url(#m22-ah)" stroke="#60a5fa" stroke-width="2.5"></path>
+<path d="M630,128 L630,186 L450,186 L450,134" fill="none" marker-end="url(#m22-ahr)" stroke="#f87171" stroke-width="2.2"></path>
+<text fill="#fca5a5" font-size="13" x="540" y="212">si no pasa: vuelve a intentarlo o recurre al plan B</text>
+<text fill="#93c5fd" font-size="13" x="450" y="250">cada etapa tiene entradas y salidas conocidas, y puede probarse por separado</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-blue-400">Cómo leer:</strong> la flecha azul es el camino esperado. La flecha roja es el control de calidad: si la respuesta no cumple con el esquema o las reglas del negocio, nunca llega al usuario. Observa que el modelo es solo una de las cinco cajas; las otras cuatro son código común.</figcaption>
+</figure>
+<div class="relative border-l-2 border-blue-500/30 ml-3 pl-6 space-y-5 mb-6">
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-blue-500/20 border-2 border-blue-400"></span><p class="text-sm text-neutral-300"><strong class="text-blue-400">Preprocesar.</strong> Normaliza el texto, recorta lo que sea demasiado extenso, reemplaza los datos personales por marcadores (LGPD, ley brasileña de protección de datos) y detecta el idioma.</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-blue-500/20 border-2 border-blue-400"></span><p class="text-sm text-neutral-300"><strong class="text-blue-400">Armar el contexto.</strong> Combina el system, la memoria de la sesión y, si los hay, los fragmentos de documentos encontrados (RAG, módulo 2.3).</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-blue-500/20 border-2 border-blue-400"></span><p class="text-sm text-neutral-300"><strong class="text-blue-400">Llamar a través del gateway.</strong> Nunca directamente desde el SDK: el gateway elige el modelo, aplica caché y fallback.</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-sky-500/20 border-2 border-sky-400"></span><p class="text-sm text-neutral-300"><strong class="text-sky-400">Validar.</strong> Esquema, longitud, palabras prohibidas, reglas del negocio («el descuento nunca debe superar el límite permitido»).</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-sky-500/20 border-2 border-sky-400"></span><p class="text-sm text-neutral-300"><strong class="text-sky-400">Posprocesar y registrar.</strong> Dar formato para la pantalla, restaurar los marcadores, registrar tokens, latencia y resultado.</p></div>
+</div>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-2-t2-p3" data-sum="porque">La mayor parte de la calidad de un producto con IA proviene de lo que ocurre antes y después de la llamada, no del modelo. Un pipeline con controles transforma «a veces el modelo responde mal» en «cuando el modelo se equivoca, el sistema lo detecta y reacciona»: eso es algo que un cliente puede aceptar.</p>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Pipeline</div><div class="text-xs text-neutral-400">pasos fijos en secuencia</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Agente</div><div class="text-xs text-neutral-400">el modelo elige el paso</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Control de calidad</div><div class="text-xs text-neutral-400">validación entre etapas</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">LangGraph</div><div class="text-xs text-neutral-400">etapas diseñadas como un grafo</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 3 -->
+<section class="mb-16" data-inema-topic="modulo-2-2#topico-3" id="topico-3" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="um ponto único para escolher, trocar e cair para o plano B">🔀 Gateway de modelos</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-2-t3-p1">O <strong class="text-blue-400">gateway de modelos</strong> es una función (o un servicio) por la que pasa cada llamada a un modelo. El resto del sistema solicita una <strong class="text-neutral-100">tarea</strong> —«clasificar», «resumir», «responder con calidad»— y el gateway decide qué modelo usar, en qué orden probarlos y qué devolver si todo falla. Es el patrón <em>adapter</em> del software clásico aplicado a los modelos: una interfaz única frente a varios proveedores.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-2-t3-p2">La pieza más valiosa del gateway es el <strong class="text-neutral-100">fallback</strong>: una lista ordenada de alternativas. Si el primer modelo da error o se agota el tiempo de espera, prueba con el segundo; si todos fallan, devuelve una respuesta estándar honesta en lugar de una pantalla de error. Bibliotecas como LiteLLM ya hacen esto para decenas de proveedores; el ejemplo de abajo muestra el mecanismo en unas pocas líneas, para que entiendas qué hacen.</p>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">Un único punto de acceso a los modelos que dirige cada tarea al modelo adecuado, prueba alternativas en orden cuando uno falla, mide el tiempo y los tokens, y oculta al resto del sistema qué proveedor se está usando.</p>
+</div>
+<!-- COPY-RUN 1: gateway com fallback -->
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-blue-400">Prueba:</strong> <span class="text-neutral-300">un gateway con rutas por tarea y fallback.</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copiar</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900"># gateway.py  (pip install openai · ollama pull llama3.2 · ollama pull qwen2.5)
+import os, time
+from openai import OpenAI
+
+PROVEDORES = {
+    "local": OpenAI(base_url="http://localhost:11434/v1", api_key="ollama", timeout=60, max_retries=0),
+    # API de pago: misma interfaz, otra URL y clave (leída del entorno, nunca escrita aquí)
+    # "nuvem": OpenAI(base_url="https://&lt;proveedor&gt;/v1", api_key=os.environ["LLM_API_KEY"]),
+}
+
+# Cada tarea tiene una lista ordenada de (proveedor, modelo). Gana el primero que responda.
+ROTAS = {
+    "classificar": [("local", "llama3.2"), ("local", "qwen2.5")],
+    "responder":   [("local", "qwen2.5"), ("local", "llama3.2")],
+}
+
+RESPOSTA_PADRAO = "No pude responder en este momento. Tu mensaje quedó registrado y te responderemos pronto."
+
+def completar(tarefa, messages, **kw):
+    for provedor, modelo in ROTAS[tarefa]:
+        inicio = time.perf_counter()
+        try:
+            r = PROVEDORES[provedor].chat.completions.create(model=modelo, messages=messages, **kw)
+            ms = (time.perf_counter() - inicio) * 1000
+            print(f"[ok] {tarefa} via {provedor}/{modelo} en {ms:.0f} ms, {r.usage.completion_tokens} tokens")
+            return r.choices[0].message.content
+        except Exception as e:
+            print(f"[falló] {provedor}/{modelo}: {type(e).__name__}; intentando el siguiente")
+    return RESPOSTA_PADRAO
+
+if __name__ == "__main__":
+    msg = [
+        {"role": "system", "content": "Clasificas solicitudes de clientes. Categorías: "
+            "VENTAS = quiere comprar o saber el precio; SOPORTE = problema técnico o duda sobre el uso; "
+            "FINANZAS = factura, cobro, pago o reembolso. Responde solo con la categoría."},
+        {"role": "user", "content": "Solicitud: mi factura llegó duplicada"},
+    ]
+    print(completar("classificar", msg, temperature=0, max_tokens=10))</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">Cómo verificar:</strong> la salida muestra una línea <code>[ok] clasificar via local/llama3.2 …</code> y la categoría (esperada: FINANZAS). Ahora cambia <code>"llama3.2"</code> de la ruta <code>classificar</code> por <code>"nao-existe"</code>: debe aparecer <code>[falló] local/nao-existe: NotFoundError</code> y la respuesta debe venir de <code>qwen2.5</code>. Apaga Ollama: ambos fallan y aparece la respuesta predeterminada, sin traceback.</p>
+</div>
+<div class="overflow-x-auto mb-6">
+<table class="w-full text-sm border border-dark-600 rounded-xl overflow-hidden">
+<thead><tr class="bg-dark-700"><th class="text-left p-3 text-blue-400">Estrategia de ruta</th><th class="text-left p-3 text-blue-400">Cómo decide</th><th class="text-left p-3 text-blue-400">Ideal para</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr><td class="p-3 font-semibold">Por tarea</td><td class="p-3 text-neutral-300">Cada tipo de solicitud tiene su propia lista de modelos.</td><td class="p-3 text-neutral-300">Para empezar; es lo más fácil de entender.</td></tr>
+<tr><td class="p-3 font-semibold">En cascada</td><td class="p-3 text-neutral-300">Prueba el modelo barato; si la validación lo rechaza, pasa al mejor.</td><td class="p-3 text-neutral-300">Mucho volumen con pocos casos difíciles.</td></tr>
+<tr><td class="p-3 font-semibold">Por sensibilidad</td><td class="p-3 text-neutral-300">Los datos personales o confidenciales solo se envían al modelo local.</td><td class="p-3 text-neutral-300">LGPD y contratos de confidencialidad.</td></tr>
+<tr><td class="p-3 font-semibold">Respaldo</td><td class="p-3 text-neutral-300">Si falla o tarda demasiado, prueba el siguiente de la lista.</td><td class="p-3 text-neutral-300">Siempre, combinado con las demás.</td></tr>
+</tbody>
+</table>
+</div>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-2-t3-p3" data-sum="porque">Con un gateway, probar un modelo nuevo consiste en cambiar una línea de la tabla de rutas, comparar y volver atrás si no te gusta. Las caídas del proveedor se convierten en una línea de registro en lugar de un incidente. Y la pregunta "¿cuánto cuesta cada funcionalidad?" tiene respuesta, porque todas las llamadas pasan por el mismo lugar.</p>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Gateway</div><div class="text-xs text-neutral-400">punto único de llamada</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Ruta por tarea</div><div class="text-xs text-neutral-400">pedir qué, no quién</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Respaldo</div><div class="text-xs text-neutral-400">lista ordenada de alternativas</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Cascada</div><div class="text-xs text-neutral-400">primero el barato; el caro si hace falta</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 4 -->
+<section class="mb-16" data-inema-topic="modulo-2-2#topico-4" id="topico-4" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="o que guardar, o que resumir e o que esquecer">🧠 Estado y memoria</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-2-t4-p1">Como la API no tiene estado, la <strong class="text-blue-400">memoria</strong> es tuya: decides qué se incluye en cada llamada. La memoria de <strong class="text-neutral-100">corto plazo</strong> son los mensajes recientes de la sesión. La de <strong class="text-neutral-100">largo plazo</strong> son datos que siguen siendo válidos entre sesiones —el nombre del cliente, el plan contratado, sus preferencias—, guardados en una base de datos e incluidos cuando son relevantes. El historial completo puede quedar en la base de datos para auditoría; al modelo se le envía una selección.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-2-t4-p2">La técnica más usada para conversaciones largas es la <strong class="text-neutral-100">ventana deslizante con resumen</strong>: las últimas N conversaciones se envían completas; las anteriores se condensan en un resumen breve, que el propio modelo actualiza cada cierto tiempo. Así, el tamaño de la solicitud se mantiene estable, al igual que el costo, y no se pierde lo esencial. Para almacenar los datos, SQLite basta en un prototipo; en producción, usa Postgres o Redis.</p>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">Gestionar el estado consiste en decidir dónde se guarda la conversación (base de datos), qué partes vuelven al modelo (ventana reciente + resumen + datos de largo plazo) y durante cuánto tiempo se conserva cada elemento.</p>
+</div>
+<!-- SVG 3: janela + resumo -->
+<figure class="svg-frame rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="Los mensajes antiguos de la conversación, arriba y atenuados, se condensan en un resumen. La ventana de contexto que se envía al modelo contiene el system, el resumen, los cuatro mensajes más recientes y la nueva pregunta." class="w-full h-auto" role="img" viewbox="0 0 900 290">
+<rect fill="url(#m22-grid)" height="290" width="900"></rect>
+<g font-family="Inter,sans-serif" text-anchor="middle">
+<text fill="#94a3b8" font-size="13" text-anchor="start" x="30" y="30">mensajes antiguos (se quedan en la base de datos)</text>
+<g fill="#0e1726" stroke="#475569">
+<rect height="34" rx="6" width="78" x="30" y="44"></rect><rect height="34" rx="6" width="78" x="116" y="44"></rect><rect height="34" rx="6" width="78" x="202" y="44"></rect><rect height="34" rx="6" width="78" x="288" y="44"></rect>
+</g>
+<g fill="#94a3b8" font-size="12"><text x="69" y="66">mensaje 1</text><text x="155" y="66">mensaje 2</text><text x="241" y="66">mensaje 3</text><text x="327" y="66">mensaje 4</text></g>
+<path class="m22-flow" d="M200,82 C200,110 255,110 255,134" fill="none" marker-end="url(#m22-ah)" stroke="#60a5fa" stroke-width="2"></path>
+<text fill="#93c5fd" font-size="12" text-anchor="start" x="270" y="112">el modelo resume</text>
+<rect fill="none" filter="url(#m22-glow)" height="84" rx="14" stroke="#38bdf8" stroke-width="2.2" width="850" x="25" y="136"></rect>
+<rect fill="#1e3a8a" height="56" rx="8" stroke="#60a5fa" width="110" x="40" y="150"></rect><text fill="#eff6ff" font-size="13" font-weight="700" x="95" y="183">system</text>
+<rect fill="#0e1b26" height="56" rx="8" stroke="#38bdf8" width="190" x="160" y="150"></rect><text fill="#e0f2fe" font-size="13" font-weight="700" x="255" y="175">resumen</text><text fill="#bae6fd" font-size="12" x="255" y="194">5 líneas con lo importante</text>
+<g fill="#0e1726" stroke="#60a5fa"><rect height="56" rx="8" width="90" x="360" y="150"></rect><rect height="56" rx="8" width="90" x="458" y="150"></rect><rect height="56" rx="8" width="90" x="556" y="150"></rect><rect height="56" rx="8" width="90" x="654" y="150"></rect></g>
+<g fill="#eff6ff" font-size="12"><text x="405" y="183">mensaje 5</text><text x="503" y="183">mensaje 6</text><text x="601" y="183">mensaje 7</text><text x="699" y="183">mensaje 8</text></g>
+<rect fill="#1e3a8a" height="56" rx="8" stroke="#93c5fd" stroke-width="2" width="100" x="760" y="150"></rect><text fill="#eff6ff" font-size="13" font-weight="700" x="810" y="175">pregunta</text><text fill="#dbeafe" font-size="12" x="810" y="194">nueva</text>
+<text fill="#7dd3fc" font-size="13" x="450" y="246">ventana de contexto que se envía en cada llamada: tamaño estable</text>
+<text fill="#93c5fd" font-size="12" x="450" y="268">los datos de largo plazo (nombre, plan, preferencias) se incluyen en el mensaje del sistema cuando son relevantes</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-blue-400">Cómo leer:</strong> el marco cian muestra lo que recibe el modelo. Los mensajes antiguos, en gris, no desaparecen: se quedan en la base de datos, pero solo se incorporan a través del resumen. A medida que avanza la conversación, las cajas de la ventana se deslizan hacia la izquierda y se vuelve a generar el resumen, así que la solicitud nunca crece sin límite.</figcaption>
+</figure>
+<!-- COPY-RUN 2: memória SQLite -->
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-blue-400">Objetivo:</strong> <span class="text-neutral-300">un chat con memoria persistente en SQLite, ventana deslizante y resumen.</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copiar</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900"># memoria.py  (pip install openai · ollama pull llama3.2)
+import sqlite3, sys
+from openai import OpenAI
+
+client = OpenAI(base_url="http://localhost:11434/v1", api_key="ollama")
+MODELO, JANELA, RESUMIR_A_CADA = "llama3.2", 6, 6
+
+db = sqlite3.connect("conversas.db")
+db.execute("CREATE TABLE IF NOT EXISTS msgs (id INTEGER PRIMARY KEY, sessao TEXT, papel TEXT, texto TEXT)")
+db.execute("CREATE TABLE IF NOT EXISTS resumos (sessao TEXT PRIMARY KEY, texto TEXT)")
+
+def chat(messages, max_tokens=300):
+    r = client.chat.completions.create(model=MODELO, messages=messages, max_tokens=max_tokens)
+    return r.choices[0].message.content
+
+def salvar(sessao, papel, texto):
+    db.execute("INSERT INTO msgs (sessao, papel, texto) VALUES (?, ?, ?,)", (sessao, papel, texto))
+    db.commit()
+
+def recentes(sessao, n):
+    linhas = db.execute("SELECT papel, texto FROM msgs WHERE sessao = ? ORDER BY id DESC LIMIT ?", (sessao, n)).fetchall()
+    return [{"role": p, "content": t} for p, t in reversed(linhas)]
+
+def atualizar_resumo(sessao):
+    tudo = recentes(sessao, 1000)
+    texto = "\n".join(f"{m['role']}: {m['content']}" for m in tudo)
+    resumo = chat([{"role": "user", "content": "Resume en hasta 5 líneas los hechos importantes de esta conversación "
+                    "(nombres, pedidos, decisiones):\n" + texto}], max_tokens=200)
+    db.execute("INSERT OR REPLACE INTO resumos (sessao, texto) VALUES (?, ?)", (sessao, resumo))
+    db.commit()
+
+def conversar(sessao, pergunta):
+    msgs = [{"role": "system", "content": "Eres un agente de soporte. Responde brevemente, en portugués."}]
+    linha = db.execute("SELECT texto FROM resumos WHERE sessao = ?", (sessao,)).fetchone()
+    if linha:
+        msgs.append({"role": "system", "content": "Resumen de la conversación hasta aquí:\n" + linha[0]})
+    msgs += recentes(sessao, JANELA) + [{"role": "user", "content": pergunta}]
+    resposta = chat(msgs)
+    salvar(sessao, "user", pergunta)
+    salvar(sessao, "assistant", resposta)
+    total = db.execute("SELECT COUNT(*) FROM msgs WHERE sessao = ?", (sessao,)).fetchone()[0]
+    if total % RESUMIR_A_CADA == 0:
+        atualizar_resumo(sessao)
+    return resposta
+
+if __name__ == "__main__":
+    sessao = sys.argv[1] if len(sys.argv) &gt; 1 else "demo"
+    while True:
+        pergunta = input("tú: ").strip()
+        if pergunta in ("", "sair"):
+            break
+        print("ia:", conversar(sessao, pergunta))</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">Cómo verificar:</strong> ejecuta <code>python3 memoria.py ana</code>, di «me llamo Ana y mi número de pedido es el 4521», conversa unas cuatro veces más y escribe <code>salir</code>. Vuelve a ejecutar con <code>ana</code> y pregunta «¿cuál es el número de mi pedido?» — la respuesta viene de la base de datos, no de la memoria del programa. Revisa el resumen con <code>sqlite3 conversas.db "select texto from resumos"</code>. Con <code>python3 memoria.py bia</code>, la sesión empieza vacía.</p>
+</div>
+<div class="bg-primary/10 border border-primary/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-primary font-semibold mb-1">💡 Consejo</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-2-t4-p3">La memoria contiene datos personales. Define cuánto tiempo se conserva cada sesión, permite que la persona titular solicite su eliminación (LGPD) y no guardes en el resumen lo que no hace falta: nunca deberían llegar ahí números de tarjeta, contraseñas ni documentos.</p>
+</div>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-2-t4-p4" data-sum="porque">Un asistente que olvida lo que el cliente dijo hace tres mensajes irrita; uno que reenvía toda la conversación con cada pregunta resulta caro y lento. Gestionar la memoria de forma deliberada es lo que hace que un chatbot parezca atento sin que la cuenta crezca junto con la conversación.</p>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Corto plazo</div><div class="text-xs text-neutral-400">mensajes recientes</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Largo plazo</div><div class="text-xs text-neutral-400">hechos entre sesiones</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Ventana deslizante</div><div class="text-xs text-neutral-400">últimos N mensajes</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Resumen</div><div class="text-xs text-neutral-400">lo anterior en pocas líneas</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 5 -->
+<section class="mb-16" data-inema-topic="modulo-2-2#topico-5" id="topico-5" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="não pagar duas vezes pela mesma resposta">⚡ Caché</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-2-t5-p1"><strong class="text-blue-400">Caché</strong> consiste en guardar el resultado de una operación costosa para reutilizarlo cuando vuelva a aparecer la misma solicitud. En las aplicaciones con IA hay varios niveles: la <strong class="text-neutral-100">caché exacta</strong> (mismo modelo, mismos mensajes, mismos parámetros → misma respuesta), la <strong class="text-neutral-100">caché semántica</strong> (preguntas distintas con el mismo sentido, comparadas mediante embeddings — módulo 2.3), la caché de embeddings de documentos y la caché de prompts que ofrecen los propios proveedores.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-2-t5-p2">La caché tiene un costo: la respuesta puede quedar <strong class="text-neutral-100">desactualizada</strong>. Por eso, toda caché necesita una regla de validez: el <strong>TTL</strong> (<em>tiempo de vida</em>) — y una forma de invalidarla cuando cambia la fuente. Además, solo tiene sentido para respuestas que deberían ser iguales: úsala con <code>temperature=0</code> y nunca para mostrarle a una persona el contenido personalizado de otra.</p>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">La caché es una memoria de respuestas ya calculadas que se consulta antes de llamar al modelo. La clave identifica la solicitud (de forma exacta o por similitud); el TTL define cuánto tiempo es válida la respuesta.</p>
+</div>
+<div class="overflow-x-auto mb-6">
+<table class="w-full text-sm border border-dark-600 rounded-xl overflow-hidden">
+<thead><tr class="bg-dark-700"><th class="text-left p-3 text-blue-400">Tipo</th><th class="text-left p-3 text-blue-400">Clave</th><th class="text-left p-3 text-blue-400">Cuidado</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr><td class="p-3 font-semibold">Exacta</td><td class="p-3 text-neutral-300">Hash del modelo + mensajes + parámetros.</td><td class="p-3 text-neutral-300">Solo coincide con solicitudes idénticas.</td></tr>
+<tr><td class="p-3 font-semibold">Semántica</td><td class="p-3 text-neutral-300">Embedding de la pregunta, con un umbral de similitud.</td><td class="p-3 text-neutral-300">Un umbral demasiado bajo devuelve una respuesta a la pregunta equivocada.</td></tr>
+<tr><td class="p-3 font-semibold">De embeddings</td><td class="p-3 text-neutral-300">Hash del fragmento del documento.</td><td class="p-3 text-neutral-300">Recalcular todo si cambias el modelo de embeddings.</td></tr>
+<tr><td class="p-3 font-semibold">De prompt (proveedor)</td><td class="p-3 text-neutral-300">Inicio idéntico de la solicitud, almacenado por el proveedor.</td><td class="p-3 text-neutral-300">Pon lo que es fijo al inicio y lo variable al final.</td></tr>
+</tbody>
+</table>
+</div>
+<!-- COPY-RUN 3: cache exato -->
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-blue-400">Prueba:</strong> <span class="text-neutral-300">caché exacta en SQLite con TTL, delante del modelo.</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copiar</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900"># cache.py  (pip install openai · ollama pull llama3.2)
+import hashlib, json, sqlite3, time
+from openai import OpenAI
+
+client = OpenAI(base_url="http://localhost:11434/v1", api_key="ollama")
+TTL = 24 * 3600  # un día
+
+db = sqlite3.connect("cache.db")
+db.execute("CREATE TABLE IF NOT EXISTS cache (chave TEXT PRIMARY KEY, resposta TEXT, criado REAL)")
+
+def chave(modelo, messages, params):
+    bruto = json.dumps({"m": modelo, "msgs": messages, "p": params}, sort_keys=True, ensure_ascii=False)
+    return hashlib.sha256(bruto.encode()).hexdigest()
+
+def completar(messages, modelo="llama3.2", **params):
+    params.setdefault("temperature", 0)  # el caché solo tiene sentido con una salida estable
+    k = chave(modelo, messages, params)
+    linha = db.execute("SELECT resposta, criado FROM cache WHERE chave = ?", (k,)).fetchone()
+    if linha and time.time() - linha[1] &lt; TTL:
+        return linha[0], "HIT"
+    r = client.chat.completions.create(model=modelo, messages=messages, **params)
+    texto = r.choices[0].message.content
+    db.execute("INSERT OR REPLACE INTO cache VALUES (?, ?, ?)", (k, texto, time.time()))
+    db.commit()
+    return texto, "MISS"
+
+if __name__ == "__main__":
+    pergunta = [{"role": "user", "content": "En una frase: ¿qué es TTL en un caché?"}]
+    for _ in range(2):
+        t = time.perf_counter()
+        texto, status = completar(pergunta, max_tokens=80)
+        print(f"{status} en {(time.perf_counter() - t) * 1000:.0f} ms: {texto}")</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">Cómo verificar:</strong> la primera línea aparece como <code>MISS</code>, con el tiempo de generación del modelo; la segunda, como <code>HIT</code>, en unos pocos milisegundos y con el mismo texto. Ejecuta el script de nuevo: ahora las dos líneas aparecen como <code>HIT</code>, porque el caché está en el archivo <code>cache.db</code>. Cambia una coma de la pregunta y vuelve a aparecer <code>MISS</code> — ese es el límite del caché exacto.</p>
+</div>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-2-t5-p3" data-sum="porque">Muchos sistemas reciben las mismas preguntas todo el tiempo: horario de atención, política de cambios, estado del servicio. Responder desde el caché es más rápido para el usuario y no consume tokens. Saber dónde ayuda el caché —y dónde devuelve una respuesta vieja o de otra persona— forma parte del diseño, no es un ajuste final.</p>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">HIT / MISS</div><div class="text-xs text-neutral-400">si se encontró o no en el caché</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">TTL</div><div class="text-xs text-neutral-400">cuánto tiempo es válida la respuesta</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Caché semántico</div><div class="text-xs text-neutral-400">misma intención, otras palabras</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Invalidación</div><div class="text-xs text-neutral-400">borrar cuando cambia la fuente</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 6 -->
+<section class="mb-16" data-inema-topic="modulo-2-2#topico-6" id="topico-6" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="trabalho pesado fora da requisição">📬 Colas y trabajo asíncrono</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-2-t6-p1">Resumir un contrato de cien páginas, transcribir una reunión o procesar mil correos no cabe en una solicitud web: el navegador se rinde antes. La solución es la <strong class="text-blue-400">cola</strong>: la API recibe la solicitud, guarda un «trabajo» en una cola y responde de inmediato con un identificador. Procesos separados, los <strong class="text-neutral-100">workers</strong>, toman los trabajos uno por uno, llaman al modelo y guardan el resultado. El usuario consulta el estado o recibe un aviso cuando termina.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-2-t6-p2">Herramientas consolidadas para esto: Celery y RQ en Python, BullMQ en Node, casi siempre con Redis detrás; en automatizaciones, n8n y Make cumplen una función parecida. Dos conceptos evitan dolores de cabeza. <strong class="text-neutral-100">Idempotencia</strong>: ejecutar el mismo trabajo dos veces no puede generar efectos duplicados (dos correos, dos cobros). <strong class="text-neutral-100">Cola de mensajes fallidos</strong> (DLQ, <em>dead letter queue</em>): los trabajos que fallaron varias veces van a un lugar separado para que alguien los revise, en vez de bloquear la cola.</p>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">El procesamiento asíncrono consiste en separar «recibir la solicitud» de «hacer el trabajo»: una cola guarda los trabajos y workers independientes los ejecutan al ritmo que soportan el modelo y el presupuesto.</p>
+</div>
+<!-- SVG 4: fila e workers -->
+<figure class="svg-frame rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="La API recibe la solicitud y responde de inmediato con el identificador del trabajo. El trabajo entra en una cola. Tres workers toman trabajos de la cola, llaman al modelo y guardan el resultado. Los trabajos que fallan varias veces van a la cola de mensajes fallidos." class="w-full h-auto" role="img" viewbox="0 0 900 320">
+<rect fill="url(#m22-grid)" height="320" width="900"></rect>
+<g font-family="Inter,sans-serif" text-anchor="middle">
+<rect fill="#0e1726" height="80" rx="12" stroke="#93c5fd" stroke-width="2" width="160" x="20" y="70"></rect>
+<text fill="#eff6ff" font-size="15" font-weight="700" x="100" y="104">API</text><text fill="#bfdbfe" font-size="12" x="100" y="126">responde: id del trabajo</text>
+<path class="m22-flow" d="M182,110 L240,110" fill="none" marker-end="url(#m22-ah)" stroke="#60a5fa" stroke-width="2.5"></path>
+<rect fill="#0e1726" height="100" rx="12" stroke="#60a5fa" stroke-width="2.2" width="200" x="245" y="60"></rect>
+<text fill="#eff6ff" font-size="15" font-weight="700" x="345" y="86">cola</text>
+<g fill="#1e3a8a" stroke="#93c5fd"><rect height="36" rx="5" width="34" x="265" y="104"></rect><rect height="36" rx="5" width="34" x="307" y="104"></rect><rect height="36" rx="5" width="34" x="349" y="104"></rect><rect height="36" rx="5" width="34" x="391" y="104"></rect></g>
+<path class="m22-flow" d="M447,95 C500,95 500,50 550,50" fill="none" marker-end="url(#m22-ah)" stroke="#60a5fa" stroke-width="2"></path>
+<path class="m22-flow" d="M447,110 L550,110" fill="none" marker-end="url(#m22-ah)" stroke="#60a5fa" stroke-width="2"></path>
+<path class="m22-flow" d="M447,125 C500,125 500,170 550,170" fill="none" marker-end="url(#m22-ah)" stroke="#60a5fa" stroke-width="2"></path>
+<g fill="#0e1b26" stroke="#38bdf8" stroke-width="2"><rect height="40" rx="10" width="140" x="555" y="30"></rect><rect height="40" rx="10" width="140" x="555" y="90"></rect><rect height="40" rx="10" width="140" x="555" y="150"></rect></g>
+<g fill="#e0f2fe" font-size="13" font-weight="700"><text x="625" y="55">worker 1</text><text x="625" y="115">worker 2</text><text x="625" y="175">worker 3</text></g>
+<path d="M697,110 L745,110" fill="none" marker-end="url(#m22-ah)" stroke="#38bdf8" stroke-width="2"></path>
+<rect fill="#0e1726" filter="url(#m22-glow)" height="80" rx="12" stroke="#38bdf8" stroke-width="2" width="130" x="750" y="70"></rect>
+<text fill="#e0f2fe" font-size="14" font-weight="700" x="815" y="104">resultado</text><text fill="#bae6fd" font-size="12" x="815" y="126">base de datos o aviso</text>
+<path d="M625,192 L625,232 L447,232" fill="none" marker-end="url(#m22-ahr)" stroke="#f87171" stroke-width="2"></path>
+<rect fill="#2a0f12" height="56" rx="10" stroke="#f87171" stroke-width="2" width="200" x="245" y="208"></rect>
+<text fill="#fecaca" font-size="14" font-weight="700" x="345" y="232">mensajes fallidos</text><text fill="#fca5a5" font-size="12" x="345" y="252">falló N veces: revisar</text>
+<text fill="#93c5fd" font-size="13" x="450" y="300">el usuario no espera al modelo: la API responde en milisegundos</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-blue-400">Cómo leer:</strong> de izquierda a derecha va el recorrido de un trabajo. La API solo lo pone en la cola y responde. La cantidad de workers controla el ritmo: con más workers, la cola avanza más rápido, pero alcanzas antes el límite del proveedor o de la GPU. La flecha roja muestra que los fallos repetidos salen de la cola en vez de bloquearla.</figcaption>
+</figure>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
+<h4 class="font-bold text-blue-400 mb-4">✓ Usa una cola cuando</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>La tarea tarda más de unos segundos.</span></li>
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Llegan muchas solicitudes a la vez (importación, campaña).</span></li>
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Necesitas respetar un límite de tasa o de GPU.</span></li>
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>El resultado puede llegar por correo, aviso o webhook.</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ La cola no resuelve</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Un chat en el que la persona espera la respuesta (usa streaming).</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Trabajos sin idempotencia: reprocesarlos duplica los efectos.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Una cola sin monitoreo: crece en silencio hasta que alguien se queja.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Un modelo demasiado lento para el volumen: en ese caso se necesita otro modelo.</span></li>
+</ul>
+</div>
+</div>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-2-t6-p3" data-sum="porque">La cola permite procesar documentos por lotes, ejecutar el modelo local durante la madrugada y absorber picos sin derribar el sistema. También permite usar las APIs por lotes de los proveedores, que son más baratas, porque el resultado no tiene que estar listo de inmediato.</p>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Cola</div><div class="text-xs text-neutral-400">trabajos esperando su turno</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Worker</div><div class="text-xs text-neutral-400">proceso que ejecuta</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Idempotencia</div><div class="text-xs text-neutral-400">repetir sin duplicar efectos</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">DLQ</div><div class="text-xs text-neutral-400">donde van los fallos repetidos</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 7 -->
+<section class="mb-16" data-inema-topic="modulo-2-2#topico-7" id="topico-7" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">7</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="enxergar o que acontece e falhar com elegância">🔭 Observabilidad y degradación elegante</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-2-t7-p1"><strong class="text-blue-400">Observabilidad</strong> es poder responder, al revisar los registros, cualquier pregunta sobre el sistema: por qué esta respuesta salió mal, qué funcionalidad consumió más tokens ayer, cuándo empeoró la latencia. En IA, las señales esenciales de cada llamada son: modelo usado, tokens de entrada y salida, latencia, resultado de la validación, error (si lo hubo) y un identificador que conecta todas las etapas de una misma solicitud: el <strong class="text-neutral-100">trace</strong>. El estándar abierto OpenTelemetry y herramientas como Langfuse organizan esta información.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-2-t7-p2"><strong class="text-blue-400">La degradación elegante</strong> consiste en que el sistema pierda calidad poco a poco en vez de fallar de golpe. Un <strong class="text-neutral-100">circuit breaker</strong> (disyuntor) ayuda: después de varios fallos seguidos de un proveedor, el gateway deja de llamarlo por un tiempo y pasa directamente al plan B, en lugar de hacer que cada usuario espere hasta que se agote el tiempo de espera. Define por escrito los niveles de respuesta antes de necesitarlos.</p>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">La observabilidad consiste en registrar, por llamada y por solicitud, qué hizo el sistema y cuánto costó. La degradación elegante consiste en tener niveles de respuesta cada vez más simples —y honestos— para cuando fallen las piezas.</p>
+</div>
+<div class="overflow-x-auto mb-6">
+<table class="w-full text-sm border border-dark-600 rounded-xl overflow-hidden">
+<thead><tr class="bg-dark-700"><th class="text-left p-3 text-blue-400">Nivel</th><th class="text-left p-3 text-blue-400">Situación</th><th class="text-left p-3 text-blue-400">Lo que ve el usuario</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr><td class="p-3 font-semibold">1 · Normal</td><td class="p-3 text-neutral-300">El modelo principal responde.</td><td class="p-3 text-neutral-300">Respuesta completa.</td></tr>
+<tr><td class="p-3 font-semibold">2 · Alternativo</td><td class="p-3 text-neutral-300">El principal falló; se recurre a otro modelo.</td><td class="p-3 text-neutral-300">Respuesta, quizá más sencilla.</td></tr>
+<tr><td class="p-3 font-semibold">3 · Caché / FAQ</td><td class="p-3 text-neutral-300">No hay ningún modelo disponible.</td><td class="p-3 text-neutral-300">Respuesta preparada para preguntas frecuentes.</td></tr>
+<tr><td class="p-3 font-semibold">4 · Cola</td><td class="p-3 text-neutral-300">No es posible responder ahora.</td><td class="p-3 text-neutral-300">«Registramos tu solicitud; responderemos pronto.»</td></tr>
+<tr><td class="p-3 font-semibold">5 · Persona</td><td class="p-3 text-neutral-300">Tema delicado o fallo prolongado.</td><td class="p-3 text-neutral-300">Derivación a una persona.</td></tr>
+</tbody>
+</table>
+</div>
+<div class="bg-primary/10 border border-primary/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-primary font-semibold mb-1">💡 Consejo</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-2-t7-p3">Empieza de forma sencilla: en el gateway del tema 3, registra una línea JSON por llamada en un archivo (<code>{"trace": …, "tarea": …, "modelo": …, "ms": …, "tokens_in": …, "tokens_out": …, "ok": …}</code>). Con eso ya puedes crear un panel de costos y latencia. No registres el texto completo de conversaciones con datos personales; guarda lo necesario para depurar durante un tiempo definido.</p>
+</div>
+<div class="bg-dark-800 border border-blue-500/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-blue-400 font-semibold mb-1">🧩 Términos nuevos</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-2-t7-p4"><strong>Trace</strong>: el rastro de una solicitud a través de todas sus etapas, vinculado por un mismo identificador. <strong>Span</strong>: cada etapa dentro del trace (buscar contexto, llamar al modelo, validar). <strong>Eval</strong>: un conjunto fijo de preguntas con respuestas esperadas, que se ejecuta con cada cambio de prompt o modelo para comprobar si bajó la calidad.</p>
+</div>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-2-t7-p5" data-sum="porque">Los modelos se equivocan de forma silenciosa: la respuesta está bien escrita, pero es incorrecta, y no aparece ninguna excepción en el registro. Sin observabilidad, solo te enteras por el cliente. Y sin niveles de degradación, la caída de un proveedor externo se convierte en la caída de todo tu producto.</p>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Trace</div><div class="text-xs text-neutral-400">el recorrido de una solicitud</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Disyuntor</div><div class="text-xs text-neutral-400">deja de llamar al que está caído</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Nivel</div><div class="text-xs text-neutral-400">respuesta más sencilla y honesta</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Eval</div><div class="text-xs text-neutral-400">prueba de calidad repetible</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- RESUMO -->
+<section class="mb-8">
+<div class="bg-gradient-to-br from-blue-900/40 via-dark-800 to-dark-800 rounded-xl border border-blue-500/30 p-6 sm:p-8">
+<h2 class="text-2xl font-bold mb-6">✅ Resumen del módulo</h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start gap-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">Capas con bajo acoplamiento</strong><span class="text-neutral-400"> — cambiar de modelo es una configuración.</span></div></div>
+<div class="flex items-start gap-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">Pipeline antes que agente</strong><span class="text-neutral-400"> — con puntos de validación entre las etapas.</span></div></div>
+<div class="flex items-start gap-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">Gateway con fallback</strong><span class="text-neutral-400"> — todas las llamadas pasan por un solo punto, con un plan B.</span></div></div>
+<div class="flex items-start gap-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">Memoria, caché y colas</strong><span class="text-neutral-400"> — ventana + resumen, TTL y trabajo pesado fuera de la solicitud.</span></div></div>
+<div class="flex items-start gap-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">Observa y degrada con elegancia</strong><span class="text-neutral-400"> — registra tokens y latencia; define los niveles de respuesta.</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-blue-400 mb-2">Siguiente módulo:</h3>
+<p class="text-neutral-300">2.3 — RAG y bases de conocimiento 📚</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="index.html">← Volver a la Ruta</a>
+<a class="flex-1 text-center px-6 py-3 bg-blue-700 text-white rounded-lg font-semibold hover:bg-blue-600 transition-colors" href="modulo-2-3.html">Siguiente módulo →</a>
+</div>
+</div>
+</section>
+</article>
+</div>
+</div>
+</main>
+<footer class="border-t border-dark-600 py-8 mt-8">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>FTD — Formación en Transformación Digital · contenido abierto y gratuito · 2026 · <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" rel="noopener" target="_blank">INEMA.CLUB</a> - <a class="text-amber-700 dark:text-slate-300 hover:underline" href="https://inema.pro" rel="noopener" target="_blank">PRO</a></p>
+</div>
+</footer>
+<!-- SCRIPTS NÚCLEO v1 -->
+<script>
+    function toggleTopic(button) {
+      var topicItem = button.closest('.topic-item');
+      if (!topicItem) return;
+      var explanation = topicItem.querySelector('.topic-explanation');
+      var willOpen = !explanation.classList.contains('active');
+      explanation.classList.toggle('active');
+      button.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+    }
+    function openModal(id) { var m = document.getElementById(id); if (m) { m.classList.remove('hidden'); document.body.style.overflow = 'hidden'; } }
+    function closeModal() { document.querySelectorAll('.modal').forEach(function (m) { m.classList.add('hidden'); }); document.body.style.overflow = 'auto'; }
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
+    function copyCode(btn) {
+      var pre = btn.closest('[data-copy-box]').querySelector('pre');
+      var txt = pre ? pre.innerText : '';
+      var done = function () { var o = btn.getAttribute('data-label-ok') || 'Copiado'; var t = btn.textContent; btn.textContent = o; setTimeout(function () { btn.textContent = t; }, 1500); };
+      try { navigator.clipboard.writeText(txt).then(done, done); } catch (e) { done(); }
+    }
+    (function () {
+      var themeToggle = document.getElementById('theme-toggle');
+      var darkIcon = document.getElementById('theme-toggle-dark-icon');
+      var lightIcon = document.getElementById('theme-toggle-light-icon');
+      var html = document.documentElement;
+      function sync() { var isDark = html.classList.contains('dark'); if (darkIcon) darkIcon.classList.toggle('hidden', isDark); if (lightIcon) lightIcon.classList.toggle('hidden', !isDark); }
+      sync();
+      if (themeToggle) themeToggle.addEventListener('click', function () {
+        html.classList.toggle('dark'); var nowDark = html.classList.contains('dark'); html.style.colorScheme = nowDark ? 'dark' : 'light';
+        try { localStorage.setItem('theme', nowDark ? 'dark' : 'light'); } catch (e) {}
+        try { var p = JSON.parse(localStorage.getItem('inema.prefs') || '{}'); p.theme = nowDark ? 'inema-dark' : 'claro'; localStorage.setItem('inema.prefs', JSON.stringify(p)); } catch (e) {}
+        sync();
+      });
+    })();
+  </script>
+<!-- learn.js + INEMA.init() POR ÚLTIMO -->
+<script src="../../assets/learn.js"></script>
+<script>
+    if (window.INEMA && typeof window.INEMA.init === 'function') { window.INEMA.init({ autoResume: true }); }
+  </script>
+</body>
+</html>

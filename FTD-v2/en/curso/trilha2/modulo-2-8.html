@@ -1,0 +1,1296 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="ftd-v2-en" name="inema-course"/>
+<title>Module 2.8 · MLOps and Production | FTD v2</title>
+<meta content="Versioning, continuous evaluation, deployment, monitoring, cost, and incidents in AI systems." name="description"/>
+<meta content="Module 2.8 · MLOps and Production | FTD v2" property="og:title"/>
+<meta content="Versioning, continuous evaluation, deployment, monitoring, cost, and incidents in AI systems." property="og:description"/>
+<!-- ANTI-FOUC (Erro #18) — primeiro script do head -->
+<script>
+(function () {
+  try {
+    var html = document.documentElement;
+    var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+    function clone(o) { var r = {}; for (var x in o) r[x] = o[x]; return r; }
+    var p = clone(DEF);
+    try {
+      var raw = localStorage.getItem('inema.prefs');
+      if (raw) {
+        var parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === 'object') {
+          for (var k in DEF) if (parsed[k] != null) p[k] = parsed[k];
+        }
+      } else {
+        var legacy = localStorage.getItem('theme');
+        if (legacy === 'light') p.theme = 'claro';
+        else if (legacy === 'dark') p.theme = 'inema-dark';
+      }
+    } catch (e) { p = clone(DEF); }
+
+    var THEMES = {
+      'inema-dark': { dark: true,  attr: null,        cs: 'dark'  },
+      'claro':      { dark: false, attr: null,        cs: 'light' },
+      'sepia':      { dark: false, attr: 'sepia',     cs: 'light' },
+      'foco':       { dark: null,  attr: 'foco',      cs: null    },
+      'contraste':  { dark: true,  attr: 'contraste', cs: 'dark'  }
+    };
+    var t = THEMES[p.theme] || THEMES['inema-dark'];
+
+    if (t.dark === true) html.classList.add('dark');
+    else if (t.dark === false) html.classList.remove('dark');
+
+    if (t.attr) html.setAttribute('data-theme', t.attr);
+    else html.removeAttribute('data-theme');
+
+    html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark') ? 'dark' : 'light'));
+
+    html.setAttribute('data-font', p.font || 'inter');
+    html.setAttribute('data-accent', p.accent || 'emerald');
+
+    var s = html.style;
+    var scale = (+p.fontScale || 100);
+    s.setProperty('--inema-font-scale', (scale / 100).toString());
+    s.setProperty('font-size', scale + '%');
+    s.setProperty('--measure', (+p.lineWidth || 68) + 'ch');
+    s.setProperty('--lh-body', (+p.leading || 1.7).toString());
+    var fam = p.font === 'system'
+      ? 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif'
+      : (p.font === 'leitura'
+        ? '"Atkinson Hyperlegible", "Inter", system-ui, sans-serif'
+        : '"Inter", system-ui, sans-serif');
+    s.setProperty('--font-body', fam);
+
+    var ACC = {
+      emerald: [152, 76, 45], blue: [217, 91, 60], purple: [258, 90, 66],
+      amber: [38, 92, 50], teal: [174, 72, 41], rose: [350, 89, 60]
+    };
+    var a = ACC[p.accent] || ACC.emerald;
+    s.setProperty('--accent-h', a[0] + '');
+    s.setProperty('--accent-s', a[1] + '%');
+    s.setProperty('--accent-l', a[2] + '%');
+    s.setProperty('--accent', 'hsl(' + a[0] + ' ' + a[1] + '% ' + a[2] + '%)');
+  } catch (err) {
+    try { document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme = 'dark'; } catch (e) {}
+  }
+})();
+</script>
+<!-- MANIFESTO do curso (Erro #28) — idêntico em todas as páginas -->
+<script data-inema-manifest="" type="application/json">
+{
+  "course": "ftd-v2-en",
+  "tracks": [
+    {
+      "n": "1",
+      "title": "Beginner",
+      "modules": [
+        {
+          "id": "1-1",
+          "title": "The Impact of AI",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-1.html"
+        },
+        {
+          "id": "1-2",
+          "title": "Navigating the Digital World",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-2.html"
+        },
+        {
+          "id": "1-3",
+          "title": "Prompt Engineering",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-3.html"
+        },
+        {
+          "id": "1-4",
+          "title": "AI Assistants and Agents",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-4.html"
+        },
+        {
+          "id": "1-5",
+          "title": "Visual Creativity with AI",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-5.html"
+        },
+        {
+          "id": "1-6",
+          "title": "Marketing and Sales with AI",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-6.html"
+        },
+        {
+          "id": "1-7",
+          "title": "Process Automation",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-7.html"
+        },
+        {
+          "id": "1-8",
+          "title": "Advanced Artificial Intelligence",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-8.html"
+        },
+        {
+          "id": "1-9",
+          "title": "Business and Monetization with AI",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-9.html"
+        }
+      ]
+    },
+    {
+      "n": "2",
+      "title": "Technical",
+      "modules": [
+        {
+          "id": "2-1",
+          "title": "Developing with AI APIs",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-1.html"
+        },
+        {
+          "id": "2-2",
+          "title": "AI Application Architecture",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-2.html"
+        },
+        {
+          "id": "2-3",
+          "title": "RAG and Knowledge Bases",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-3.html"
+        },
+        {
+          "id": "2-4",
+          "title": "Fine-Tuning and Customization",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-4.html"
+        },
+        {
+          "id": "2-5",
+          "title": "Agents and Complex Workflows",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-5.html"
+        },
+        {
+          "id": "2-6",
+          "title": "Advanced Computer Vision",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-6.html"
+        },
+        {
+          "id": "2-7",
+          "title": "NLP and Text Processing",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-7.html"
+        },
+        {
+          "id": "2-8",
+          "title": "MLOps and Production",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-8.html"
+        },
+        {
+          "id": "2-9",
+          "title": "AI Ethics and Governance",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-9.html"
+        }
+      ]
+    },
+    {
+      "n": "3",
+      "title": "Masterclass",
+      "modules": [
+        {
+          "id": "3-1",
+          "title": "Large-Scale AI Architecture",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-1.html"
+        },
+        {
+          "id": "3-2",
+          "title": "Custom and Proprietary Models",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-2.html"
+        },
+        {
+          "id": "3-3",
+          "title": "Advanced Multimodal AI",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-3.html"
+        },
+        {
+          "id": "3-4",
+          "title": "AI Research and Papers",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-4.html"
+        },
+        {
+          "id": "3-5",
+          "title": "Reinforcement Learning for AI",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-5.html"
+        },
+        {
+          "id": "3-6",
+          "title": "Security and Red Teaming",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-6.html"
+        },
+        {
+          "id": "3-7",
+          "title": "AI in Production — Enterprise Scale",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-7.html"
+        },
+        {
+          "id": "3-8",
+          "title": "AI Leadership and Strategy",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-8.html"
+        },
+        {
+          "id": "3-9",
+          "title": "The Future of AI and AGI",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-9.html"
+        }
+      ]
+    }
+  ]
+}
+</script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#0c0c10', 800: '#16161e', 700: '#1e1e28', 600: '#272730', 500: '#33333f' } }, fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'], display: ['Sora', 'Inter', 'sans-serif'], mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'] } } } }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Sora:wght@600;700;800&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    h1, h2, h3, h4, .font-display { font-family: 'Sora', 'Inter', sans-serif; }
+    .dark body { background-color: #0c0c10; }
+    .dark .text-neutral-100 { color: #e9e9ee; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+    pre { white-space: pre-wrap; word-break: break-word; }
+    pre, code, .font-mono { font-family: 'JetBrains Mono', ui-monospace, monospace; }
+
+    /* Light mode — Parte 1: base */
+    html:not(.dark) body { background-color: #f6f7f9; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800\/50 { background-color: #f6f7f9; }
+    html:not(.dark) .bg-dark-700 { background-color: #eceef2; }
+    html:not(.dark) .bg-dark-700\/50 { background-color: #f1f2f5; }
+    html:not(.dark) .bg-dark-700\/30 { background-color: #f4f5f7; }
+    html:not(.dark) .bg-dark-600 { background-color: #e1e3ea; }
+    html:not(.dark) .hover\:bg-dark-600:hover { background-color: #d6d9e1; }
+    html:not(.dark) .hover\:bg-dark-700\/50:hover { background-color: #eceef2; }
+    html:not(.dark) .text-neutral-100 { color: #1a1a22; }
+    html:not(.dark) .text-neutral-200 { color: #26262f; }
+    html:not(.dark) .text-neutral-300 { color: #3f3f4a; }
+    html:not(.dark) .text-neutral-400 { color: #5b5b68; }
+    html:not(.dark) .text-neutral-500 { color: #62626e; }
+    html:not(.dark) .border-dark-600 { border-color: #e1e3ea; }
+    html:not(.dark) .border-dark-700 { border-color: #e8e9ee; }
+    html:not(.dark) .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #e1e3ea; }
+    html:not(.dark) .bg-black\/40 { background-color: #f1f2f5; }
+    html:not(.dark) pre.code-dark { background-color: #1a1a22; color: #e9e9ee; }
+
+    /* Light mode — Parte 2: acento das 3 trilhas (texto -700, nunca -400 no claro) */
+    html:not(.dark) .text-emerald-400 { color: #047857; }
+    html:not(.dark) .text-emerald-300 { color: #047857; }
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #047857; }
+    html:not(.dark) .bg-emerald-500\/20 { background-color: rgba(4,120,87,0.12); }
+    html:not(.dark) .bg-emerald-500\/10 { background-color: rgba(4,120,87,0.08); }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(4,120,87,0.08); }
+    html:not(.dark) .bg-emerald-900\/20 { background-color: rgba(4,120,87,0.07); }
+    html:not(.dark) .bg-emerald-900\/30 { background-color: rgba(4,120,87,0.08); }
+    html:not(.dark) .bg-emerald-900\/40 { background-color: rgba(4,120,87,0.09); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(4,120,87,0.28); }
+    html:not(.dark) .hover\:border-emerald-500\/30:hover { border-color: rgba(4,120,87,0.4); }
+    html:not(.dark) .text-blue-400 { color: #1d4ed8; }
+    html:not(.dark) .text-blue-300 { color: #1d4ed8; }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #1d4ed8; }
+    html:not(.dark) .bg-blue-500\/20 { background-color: rgba(29,78,216,0.12); }
+    html:not(.dark) .bg-blue-500\/10 { background-color: rgba(29,78,216,0.08); }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(29,78,216,0.08); }
+    html:not(.dark) .bg-blue-900\/20 { background-color: rgba(29,78,216,0.07); }
+    html:not(.dark) .bg-blue-900\/30 { background-color: rgba(29,78,216,0.08); }
+    html:not(.dark) .bg-blue-900\/40 { background-color: rgba(29,78,216,0.09); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(29,78,216,0.28); }
+    html:not(.dark) .hover\:border-blue-500\/30:hover { border-color: rgba(29,78,216,0.4); }
+    html:not(.dark) .text-purple-400 { color: #6d28d9; }
+    html:not(.dark) .text-purple-300 { color: #6d28d9; }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #6d28d9; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(109,40,217,0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(109,40,217,0.08); }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(109,40,217,0.08); }
+    html:not(.dark) .bg-purple-900\/20 { background-color: rgba(109,40,217,0.07); }
+    html:not(.dark) .bg-purple-900\/30 { background-color: rgba(109,40,217,0.08); }
+    html:not(.dark) .bg-purple-900\/40 { background-color: rgba(109,40,217,0.09); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(109,40,217,0.28); }
+    html:not(.dark) .hover\:border-purple-500\/30:hover { border-color: rgba(109,40,217,0.4); }
+
+    /* Light mode — Parte 3: gradientes + especiais */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #854d0e; }
+    html:not(.dark) .text-yellow-400 { color: #854d0e; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #713f12; }
+    html:not(.dark) .bg-primary\/10 { background-color: #FEF9C3; }
+    html:not(.dark) .border-primary\/30 { border-color: #EAB308; }
+    html:not(.dark) .text-red-400 { color: #b91c1c; }
+    html:not(.dark) .bg-red-900\/20 { background-color: rgba(185,28,28,0.07); }
+    html:not(.dark) .border-red-500\/30 { border-color: rgba(185,28,28,0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #075985; }
+    html:not(.dark) .bg-sky-900\/20 { background-color: rgba(3,105,161,0.07); }
+    html:not(.dark) .border-sky-500\/30 { border-color: rgba(3,105,161,0.25); }
+
+    /* Light mode — Parte 4: nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255,255,255,0.95); }
+
+    /* Parte 5: bordas suavizadas no DARK (Erro #15) */
+    .dark .border-dark-600 { border-color: #2a2a35; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #2a2a35; }
+
+    /* SVG: no claro, um fundo escuro emoldurado mantém o contraste do desenho */
+    html:not(.dark) .svg-frame { background-color: #12121a; }
+    @media (prefers-reduced-motion: reduce) { svg * { animation: none !important; transition: none !important; } }
+  </style>
+<link href="../../../assets/learn.css" rel="stylesheet"/>
+<link href="https://inematds.github.io/FTD/FTD-v2/curso/trilha2/modulo-2-8.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/FTD/FTD-v2/en/curso/trilha2/modulo-2-8.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/FTD/FTD-v2/es/curso/trilha2/modulo-2-8.html" hreflang="es" rel="alternate"/><link href="https://inematds.github.io/FTD/FTD-v2/curso/trilha2/modulo-2-8.html" hreflang="x-default" rel="alternate"/><link href="https://inematds.github.io/FTD/FTD-v2/en/curso/trilha2/modulo-2-8.html" rel="canonical"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(250,204,21,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha2/modulo-2-8.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="modulo-2-8.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#FACC15">EN</a><a href="../../../es/curso/trilha2/modulo-2-8.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14 gap-2">
+<!-- Logo + INEMA.CLUB -->
+<div class="flex items-center space-x-3 flex-shrink-0">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🚀</span>
+<span class="font-display font-bold text-lg hidden sm:inline">FTD</span>
+</a>
+<span class="text-neutral-600 hidden sm:inline">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium hidden sm:inline" href="https://inema.club" rel="noopener" target="_blank">INEMA.CLUB</a>
+<span class="text-neutral-600 hidden sm:inline">-</span>
+<a class="text-amber-700 dark:text-slate-300 hover:underline text-sm font-medium hidden sm:inline" href="https://inema.pro" rel="noopener" target="_blank">PRO</a>
+</div>
+<!-- Trilhas + controles de aprendizagem + theme toggle -->
+<div class="flex items-center gap-1 sm:gap-1.5">
+<a class="px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors whitespace-nowrap" href="../trilha1/index.html">
+<span class="lg:hidden">T1</span><span class="hidden lg:inline">Beginner</span>
+</a>
+<a class="px-2.5 py-1.5 rounded-lg text-sm font-semibold text-blue-400 bg-blue-500/10 whitespace-nowrap" href="index.html">
+<span class="lg:hidden">T2</span><span class="hidden lg:inline">Technical</span>
+</a>
+<a class="px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors whitespace-nowrap" href="../trilha3/index.html">
+<span class="lg:hidden">T3</span><span class="hidden lg:inline">Masterclass</span>
+</a>
+<span class="w-px h-6 bg-dark-600 mx-1 hidden sm:inline-block"></span>
+<!-- Minha jornada (abre o painel global; badge = % do curso) -->
+<button class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-300 hover:text-neutral-100 hover:bg-dark-700 transition-colors" data-inema-journey-open="" type="button">
+<svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="16"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+<span class="hidden md:inline">My journey</span>
+<span class="inema-journey-badge" data-count="0" data-inema-journey-badge=""></span>
+</button>
+<!-- Aparência (gatilho + painel obrigatório) -->
+<div class="relative">
+<button aria-expanded="false" class="inema-appearance-trigger inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-300 hover:text-neutral-100 transition-colors" data-inema-appearance-toggle="#inema-appearance-panel" type="button">
+<svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="16"><circle cx="12" cy="12" r="9"></circle><path d="M12 3v18"></path><path d="M12 3a9 9 0 0 1 0 18" fill="currentColor"></path></svg>
+<span class="hidden md:inline">Appearance</span>
+</button>
+<div class="inema-appearance-pop right-0" data-inema-appearance="" id="inema-appearance-panel">
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Theme</span>
+<div class="inema-segment">
+<button data-inema-set-theme="inema-dark" type="button">Dark</button>
+<button data-inema-set-theme="claro" type="button">Light</button>
+<button data-inema-set-theme="sepia" type="button">Sepia</button>
+</div>
+<div class="inema-segment">
+<button data-inema-set-theme="foco" type="button">Focus</button>
+<button data-inema-set-theme="contraste" type="button">High contrast</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Font</span>
+<div class="inema-segment">
+<button data-inema-set-font="inter" type="button">Inter</button>
+<button data-inema-set-font="system" type="button">System</button>
+<button data-inema-set-font="leitura" type="button">Reading</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Size</span>
+<div class="inema-segment">
+<button data-inema-set-fontscale="100" type="button">A</button>
+<button data-inema-set-fontscale="112" type="button">A+</button>
+<button data-inema-set-fontscale="125" type="button">A++</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Width</span>
+<div class="inema-segment">
+<button data-inema-set-linewidth="60" type="button">Narrow</button>
+<button data-inema-set-linewidth="68" type="button">Medium</button>
+<button data-inema-set-linewidth="75" type="button">Wide</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Line spacing</span>
+<div class="inema-segment">
+<button data-inema-set-leading="1.45" type="button">Compact</button>
+<button data-inema-set-leading="1.7" type="button">Comfortable</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Accent</span>
+<div class="inema-accent-grid">
+<button aria-label="Emerald accent" data-inema-set-accent="emerald" type="button"></button>
+<button aria-label="Blue accent" data-inema-set-accent="blue" type="button"></button>
+<button aria-label="Purple accent" data-inema-set-accent="purple" type="button"></button>
+<button aria-label="Amber accent" data-inema-set-accent="amber" type="button"></button>
+<button aria-label="Teal accent" data-inema-set-accent="teal" type="button"></button>
+<button aria-label="Pink accent" data-inema-set-accent="rose" type="button"></button>
+</div>
+</div>
+</div>
+</div>
+<!-- Theme toggle sol/lua (núcleo v1; o JS o mantém coerente com o tema) -->
+<button aria-label="Toggle light/dark theme" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20">
+<path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+</svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20">
+<path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path>
+</svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<main data-inema-module="2-8" data-inema-track="2" id="conteudo">
+<!-- BREADCRUMB -->
+<nav aria-label="Navigation track" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-blue-400" href="../../index.html">Home</a><span>/</span>
+<a class="hover:text-blue-400" href="index.html">Track 2</a><span>/</span>
+<span class="text-blue-400">Module 2.8</span>
+</div>
+</nav>
+<!-- HEADER do módulo -->
+<header class="bg-gradient-to-br from-blue-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-blue-500/20 text-blue-400 text-xs font-semibold rounded-full mb-4">MODULE 2.8</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🛠️ MLOps and Production</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">What happens after the prototype works: versioning code, prompts, and models; evaluating with every change; deploying without surprises; measuring latency, quality, and cost; and responding when something breaks. It’s the difference between <strong class="text-blue-400">a demo and a service people trust</strong>.</p>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">7</div><div class="text-xs text-neutral-400">Topics</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">~60</div><div class="text-xs text-neutral-400">Minutes</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">Technical</div><div class="text-xs text-neutral-400">Level</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">Practical</div><div class="text-xs text-neutral-400">Type</div></div>
+</div>
+<div class="flex items-center gap-3 mt-8">
+<div aria-label="Module 2.8 progress" class="inema-ring" data-inema-meter="modulo:2-8"><span class="inema-ring__value" data-inema-meter-pct="">0%</span></div>
+<div class="inema-meter-label" data-inema-meter="modulo:2-8"><strong data-inema-meter-frac="">0 of 0</strong> topics read · <span data-inema-section-counter="">Section 1 of 7</span></div>
+</div>
+</div>
+</header>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+<div class="lg:flex lg:gap-10">
+<!-- TOC sticky + scrollspy -->
+<aside class="hidden lg:block lg:w-56 flex-shrink-0">
+<nav aria-label="Page index" class="sticky top-20 self-start" data-inema-toc="">
+<p class="text-xs font-semibold uppercase tracking-wide text-neutral-500 mb-3">In this module</p>
+<ol class="space-y-1 text-sm">
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-blue-400" href="#topico-1">1. From notebook to service</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-blue-400" href="#topico-2">2. Version everything</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-blue-400" href="#topico-3">3. Continuous evaluation</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-blue-400" href="#topico-4">4. Deployment and serving</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-blue-400" href="#topico-5">5. Monitoring</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-blue-400" href="#topico-6">6. Cost and performance</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-blue-400" href="#topico-7">7. Incidents and rollback</a></li>
+</ol>
+</nav>
+</aside>
+<!-- ARTIGO -->
+<article class="inema-prose flex-1 min-w-0">
+<h2 class="text-2xl font-bold mb-8">Detailed content</h2>
+<!-- TÓPICO 1 -->
+<section class="mb-16" data-inema-topic="modulo-2-8#topico-1" id="topico-1" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="o ciclo de vida que nunca fecha">🧭 From notebook to service</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Mark this topic as a question" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-8-t1-p1"><strong class="text-blue-400">MLOps</strong> is the practice of putting machine learning systems into production and keeping them running. It combines what software development already knows (version control, testing, automated deployment, monitoring) with challenges specific to AI: behavior depends on data and models that change, and the output is nondeterministic.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-8-t1-p2">With LLMs, many people talk about <strong class="text-neutral-100">LLMOps</strong>. The center of gravity shifts: instead of training models, you usually choose a ready-made model, write prompts, and set up document retrieval and tools. But the discipline is the same—and so is the most common mistake: treating a prototype that “worked on my machine” as if it were a product.</p>
+<div class="bg-dark-800 border border-blue-500/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-blue-400 font-semibold mb-1">📘 New terms</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-8-t1-p3"><strong>Production</strong> is the environment where real users depend on the system. <strong>Inference</strong> is using the model to generate a response (the opposite of training). <strong>Nondeterministic</strong> means the same input can produce different outputs—which is why AI tests measure success rates instead of comparing a single result.</p>
+</div>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-blue-400 mb-3">What it is</h3>
+<p class="text-neutral-300">A continuous cycle: version what defines behavior, evaluate before release, deploy gradually, observe in production, respond to incidents, and turn each lesson into a new version.</p>
+</div>
+<!-- SVG 1: ciclo de vida -->
+<figure class="svg-frame rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="The lifecycle of an AI system in six stages connected in a loop: data and prompts, offline evaluation, gradual deployment, monitoring, incidents and feedback, and a new version that returns to the beginning." class="w-full h-auto" role="img" viewbox="0 0 900 290">
+<defs>
+<filter height="160%" id="m28-glow" width="160%" x="-30%" y="-30%"><fegaussianblur result="b" stddeviation="2"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="28" id="m28-grid" patternunits="userSpaceOnUse" width="28"><circle cx="1.2" cy="1.2" fill="#3b82f6" opacity="0.14" r="1.2"></circle></pattern>
+<marker id="m28-ah" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#60a5fa"></path></marker>
+<marker id="m28-ahc" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#38bdf8"></path></marker>
+<style>@keyframes m28dash{to{stroke-dashoffset:-24}} .m28-flow{stroke-dasharray:6 6;animation:m28dash 1.6s linear infinite}</style>
+</defs>
+<rect fill="url(#m28-grid)" height="290" width="900"></rect>
+<g font-family="Inter,sans-serif">
+<g filter="url(#m28-glow)">
+<rect fill="#0e1626" height="56" rx="12" stroke="#60a5fa" stroke-width="2" width="190" x="105" y="30"></rect>
+<rect fill="#0e1626" height="56" rx="12" stroke="#60a5fa" stroke-width="2" width="190" x="355" y="30"></rect>
+<rect fill="#0e1626" height="56" rx="12" stroke="#60a5fa" stroke-width="2" width="190" x="605" y="30"></rect>
+<rect fill="#0e1b26" height="56" rx="12" stroke="#38bdf8" stroke-width="2" width="190" x="605" y="204"></rect>
+<rect fill="#0e1b26" height="56" rx="12" stroke="#38bdf8" stroke-width="2" width="190" x="355" y="204"></rect>
+<rect fill="#0e1b26" height="56" rx="12" stroke="#38bdf8" stroke-width="2" width="190" x="105" y="204"></rect>
+</g>
+<text fill="#eff6ff" font-size="14" font-weight="700" text-anchor="middle" x="200" y="54">1 · Data and prompts</text>
+<text fill="#93c5fd" font-size="12" text-anchor="middle" x="200" y="73">everything versioned</text>
+<text fill="#eff6ff" font-size="14" font-weight="700" text-anchor="middle" x="450" y="54">2 · Offline evaluation</text>
+<text fill="#93c5fd" font-size="12" text-anchor="middle" x="450" y="73">test set</text>
+<text fill="#eff6ff" font-size="14" font-weight="700" text-anchor="middle" x="700" y="54">3 · Gradual deployment</text>
+<text fill="#93c5fd" font-size="12" text-anchor="middle" x="700" y="73">canary + rollback</text>
+<text fill="#e0f2fe" font-size="14" font-weight="700" text-anchor="middle" x="700" y="228">4 · Monitoring</text>
+<text fill="#bae6fd" font-size="12" text-anchor="middle" x="700" y="247">latency, cost, quality</text>
+<text fill="#e0f2fe" font-size="14" font-weight="700" text-anchor="middle" x="450" y="228">5 · Incidents</text>
+<text fill="#bae6fd" font-size="12" text-anchor="middle" x="450" y="247">runbook and postmortem</text>
+<text fill="#e0f2fe" font-size="14" font-weight="700" text-anchor="middle" x="200" y="228">6 · New version</text>
+<text fill="#bae6fd" font-size="12" text-anchor="middle" x="200" y="247">lessons become tests</text>
+<path class="m28-flow" d="M297,58 L349,58" fill="none" marker-end="url(#m28-ah)" stroke="#60a5fa" stroke-width="2.5"></path>
+<path class="m28-flow" d="M547,58 L599,58" fill="none" marker-end="url(#m28-ah)" stroke="#60a5fa" stroke-width="2.5"></path>
+<path class="m28-flow" d="M797,58 C865,58 865,232 801,232" fill="none" marker-end="url(#m28-ahc)" stroke="#38bdf8" stroke-width="2.5"></path>
+<path class="m28-flow" d="M603,232 L551,232" fill="none" marker-end="url(#m28-ahc)" stroke="#38bdf8" stroke-width="2.5"></path>
+<path class="m28-flow" d="M353,232 L301,232" fill="none" marker-end="url(#m28-ahc)" stroke="#38bdf8" stroke-width="2.5"></path>
+<path class="m28-flow" d="M103,232 C35,232 35,58 99,58" fill="none" marker-end="url(#m28-ah)" stroke="#60a5fa" stroke-width="2.5"></path>
+<text fill="#7dd3fc" font-size="14" font-weight="700" text-anchor="middle" x="450" y="138">the cycle doesn’t end at deployment</text>
+<text fill="#94a3b8" font-size="12" text-anchor="middle" x="450" y="158">each cycle adds a new test to the set</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-blue-400">How to read:</strong> the top line (blue) happens before users see the change; the bottom line (cyan), after. The arrow on the left is what real projects most often miss: what went wrong in production needs to come back as a test case, or the same error will return in the next version.</figcaption>
+</figure>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
+<h4 class="font-bold text-blue-400 mb-4">✓ Signs it’s ready</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Someone other than the author can bring up the service by following a README.</span></li>
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>There is a test set and a baseline score.</span></li>
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Every request has a log with the version, latency, and result.</span></li>
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Rolling back to the previous version takes minutes, not hours.</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Signs it’s a prototype</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>The prompt lives in a notebook cell and changes without being recorded.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>“Testing” means running three examples and deciding it looks good.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>No one knows how much the system costs per month.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>The problem only shows up when a customer complains.</span></li>
+</ul>
+</div>
+</div>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Why learn</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-8-t1-p4" data-sum="porque">Building a prototype with an LLM is easy; keeping a reliable service running is still hard. If you master the full cycle, you can put AI to real use, defend the project with numbers, and sleep soundly after deployment.</p>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Key concepts</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">MLOps / LLMOps</div><div class="text-xs text-neutral-400">AI treated as software</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Production</div><div class="text-xs text-neutral-400">users depend on it</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Inference</div><div class="text-xs text-neutral-400">model use</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Continuous cycle</div><div class="text-xs text-neutral-400">errors become tests</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Mark as read</span>
+<span class="inema-label-done">Read</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 2 -->
+<section class="mb-16" data-inema-topic="modulo-2-8#topico-2" id="topico-2" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="código, prompt, modelo, dados e configuração">🗂️ Version everything</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Mark this topic as a question" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-8-t2-p1">In ordinary software, the code defines behavior. In an AI system, behavior depends on <strong class="text-neutral-100">five things at the same time</strong>: the code, the prompt, the model, the data (for training, evaluation, and the knowledge base being queried), and the configuration (temperature, token limits, enabled tools). If any of these change without being recorded, you can’t explain why today’s response differs from yesterday’s.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-8-t2-p2">The rule of thumb: <strong class="text-blue-400">a prompt is code</strong>. Keep it in a file in the repository, review it, and give it a version. Pin the model by its exact name and version, never by a nickname like “latest” or “the newest”—providers and Ollama itself update nicknames, and behavior changes without you touching anything.</p>
+<div class="bg-dark-800 border border-blue-500/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-blue-400 font-semibold mb-1">📘 New terms</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-8-t2-p3"><strong>Model registry</strong> (<em>model registry</em>) is a catalog of model versions with metrics and status (testing, production, retired)—MLflow has one. <strong>DVC</strong> is a tool that versions large data files alongside git. <strong>Release</strong> is the uniquely named package that brings together the versions of everything going into production.</p>
+</div>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-blue-400 mb-3">What it is</h3>
+<p class="text-neutral-300">Give each production version an identifier that points to the code commit, prompt version, exact model, evaluation data version, and configuration used—so any response can be reproduced.</p>
+</div>
+<!-- SVG 2: release bundle -->
+<figure class="svg-frame rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="A central release called classifier 1.4.2 linked to five versioned items: code commit, prompt file, model with its exact version, evaluation set, and configuration with temperature and limits." class="w-full h-auto" role="img" viewbox="0 0 900 290">
+<rect fill="url(#m28-grid)" height="290" width="900"></rect>
+<g font-family="Inter,sans-serif">
+<g fill="none" stroke="#60a5fa" stroke-opacity="0.65" stroke-width="1.8">
+<path class="m28-flow" d="M450,145 L170,58"></path>
+<path class="m28-flow" d="M450,145 L730,58"></path>
+<path class="m28-flow" d="M450,145 L130,232"></path>
+<path class="m28-flow" d="M450,145 L450,240"></path>
+<path class="m28-flow" d="M450,145 L770,232"></path>
+</g>
+<rect fill="#0e1b26" filter="url(#m28-glow)" height="70" rx="35" stroke="#38bdf8" stroke-width="2.5" width="250" x="325" y="110"></rect>
+<text fill="#e0f2fe" font-size="16" font-weight="700" text-anchor="middle" x="450" y="141">release 1.4.2</text>
+<text fill="#bae6fd" font-size="12" text-anchor="middle" x="450" y="160">one name for everything</text>
+<g fill="#0e1626" stroke="#60a5fa" stroke-width="2">
+<rect height="56" rx="10" width="210" x="65" y="30"></rect>
+<rect height="56" rx="10" width="210" x="625" y="30"></rect>
+<rect height="56" rx="10" width="210" x="25" y="204"></rect>
+<rect height="40" rx="10" width="210" x="345" y="236"></rect>
+<rect height="56" rx="10" width="210" x="665" y="204"></rect>
+</g>
+<text fill="#eff6ff" font-size="14" font-weight="700" text-anchor="middle" x="170" y="54">code</text>
+<text fill="#93c5fd" font-size="12" text-anchor="middle" x="170" y="73">commit a3f9c1e (git)</text>
+<text fill="#eff6ff" font-size="14" font-weight="700" text-anchor="middle" x="730" y="54">prompt</text>
+<text fill="#93c5fd" font-size="12" text-anchor="middle" x="730" y="73">prompts/triage.v7.md</text>
+<text fill="#eff6ff" font-size="14" font-weight="700" text-anchor="middle" x="130" y="228">model</text>
+<text fill="#93c5fd" font-size="12" text-anchor="middle" x="130" y="247">exact name + version</text>
+<text fill="#eff6ff" font-size="13" font-weight="700" text-anchor="middle" x="450" y="261">evaluation · cases v3</text>
+<text fill="#eff6ff" font-size="14" font-weight="700" text-anchor="middle" x="770" y="228">configuration</text>
+<text fill="#93c5fd" font-size="12" text-anchor="middle" x="770" y="247">temperature, limits</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-blue-400">How to read:</strong> the release in the center is what you record in every log and every incident. From it, anyone can find the exact five pieces that produced a response. If one of the ends is “loose” (has no version), the release can’t be reproduced. The identifiers are examples.</figcaption>
+</figure>
+<div class="overflow-x-auto mb-6">
+<table class="w-full text-sm border border-dark-600 rounded-xl overflow-hidden">
+<thead><tr class="bg-dark-700"><th class="text-left p-3 text-blue-400">What</th><th class="text-left p-3 text-blue-400">Where to version it</th><th class="text-left p-3 text-blue-400">Common mistake</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr><td class="p-3 font-semibold">Code</td><td class="p-3 text-neutral-300">git, with a tag for each release</td><td class="p-3 text-neutral-300">Deploying something that hasn’t been committed</td></tr>
+<tr><td class="p-3 font-semibold">Prompt</td><td class="p-3 text-neutral-300">File in the repository, reviewed in a PR</td><td class="p-3 text-neutral-300">Editing the prompt directly in the provider’s dashboard</td></tr>
+<tr><td class="p-3 font-semibold">Model</td><td class="p-3 text-neutral-300">Name and version fixed in the configuration; model registry</td><td class="p-3 text-neutral-300">Use an alias that the provider updates</td></tr>
+<tr><td class="p-3 font-semibold">Data</td><td class="p-3 text-neutral-300">DVC, a versioned bucket, or a dated table</td><td class="p-3 text-neutral-300">Test set edited without history</td></tr>
+<tr><td class="p-3 font-semibold">Configuration</td><td class="p-3 text-neutral-300">Versioned config file or environment variables</td><td class="p-3 text-neutral-300">Different temperature in each environment</td></tr>
+</tbody>
+</table>
+</div>
+<div class="bg-primary/10 border border-primary/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-primary font-semibold mb-1">💡 Tip</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-8-t2-p4">In Ollama, <code>ollama show &lt;model&gt;</code> shows the details of the installed model and <code>ollama list</code> shows each model’s identifier. Record that identifier with the release: if someone runs it <code>ollama pull</code> again and the model changes, you’ll notice.</p>
+</div>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Why learn</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-8-t2-p5" data-sum="porque">Without complete versioning, you can't investigate an incident, compare two versions, or fulfill an audit request (“Which system made this decision in March?”). It's cheap to do at the start and very expensive to reconstruct later.</p>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Key concepts</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">A prompt is code</div><div class="text-xs text-neutral-400">file, revision, version</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Pinned model</div><div class="text-xs text-neutral-400">never “latest”</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Release</div><div class="text-xs text-neutral-400">one name for all five pieces</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Reproducible</div><div class="text-xs text-neutral-400">recreate the same response</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Mark as read</span>
+<span class="inema-label-done">Read</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 3 -->
+<section class="mb-16" data-inema-topic="modulo-2-8#topico-3" id="topico-3" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="o conjunto de testes vira portão automático">🧪 Continuous evaluation</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Mark this topic as a question" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-8-t3-p1">In module 2.7, you built a test set and measured a classifier by hand. Here, it becomes a <strong class="text-blue-400">quality gate</strong>: an automated test that runs whenever the prompt, model, or code changes and blocks publication if the result falls below the baseline. It’s the same principle as software tests, adapted to outputs that vary.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-8-t3-p2">There are three layers of evaluation. <strong class="text-neutral-100">Deterministic checks</strong>: the JSON is valid, the label is on the list, and the response isn’t too long. <strong class="text-neutral-100">Metrics against correct answers</strong>: accuracy, precision, recall. And, for open-ended text, <strong class="text-neutral-100">LLM as a judge</strong> with a written rubric—useful, but it needs to be checked against human scores on a sample.</p>
+<div class="bg-dark-800 border border-blue-500/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-blue-400 font-semibold mb-1">📘 New terms</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-8-t3-p3"><strong>CI</strong> (continuous integration) means running tests automatically with every commit, using services such as GitHub Actions or GitLab CI. <strong>Regression</strong> is when something that worked stops working after a change. <strong>LLM as a judge</strong> means using one model to score another model’s responses according to explicit criteria.</p>
+</div>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-blue-400 mb-3">What it is</h3>
+<p class="text-neutral-300">Run the test set automatically with every change and treat a drop in quality as a failing test: the version doesn’t go to production until someone explains or fixes it.</p>
+</div>
+<!-- COPY-RUN: portão com pytest -->
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-blue-400">Try this:</strong> <span class="text-neutral-300">quality gate with pytest, using the <code>classifier.py</code> from module 2.7.</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copy</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900"># Installation: pip install pytest openai   |   ollama pull qwen2.5:7b
+# Structure:  classificador.py   evals/casos.jsonl   test_qualidade.py
+#
+# evals/casos.jsonl — one case per line (replace with 30+ real, anonymized examples):
+# {"texto": "My order has been stuck for a week", "esperado": "entrega"}
+# {"texto": "The payment slip expired, and I can't generate another one", "esperado": "pagamento"}
+
+# test_qualidade.py
+import json
+import pathlib
+from classificador import classificar, ROTULOS
+
+CASOS = [json.loads(l) for l in
+         pathlib.Path("evals/casos.jsonl").read_text(encoding="utf-8").splitlines() if l.strip()]
+LINHA_DE_BASE = 0.80   # &lt;replace with the value measured in the current production version&gt;
+
+def test_formato_valido():
+    for caso in CASOS[:5]:
+        saida = classificar(caso["texto"])
+        assert saida["rotulo"] in ROTULOS, saida
+
+def test_acuracia_nao_cai():
+    erros = []
+    for caso in CASOS:
+        previsto = classificar(caso["texto"])["rotulo"]
+        if previsto != caso["esperado"]:
+            erros.append((caso["texto"], caso["esperado"], previsto))
+    acc = 1 - len(erros) / len(CASOS)
+    print(f"\nacurácia={acc:.0%} (linha de base {LINHA_DE_BASE:.0%})")
+    for e in erros:
+        print("  ERRO:", e)
+    assert acc &gt;= LINHA_DE_BASE, f"regressão: {acc:.0%} &lt; {LINHA_DE_BASE:.0%}"</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">How to check:</strong> run <code>pytest -q -s test_qualidade.py</code>. With the current prompt, both tests should pass and show the accuracy. Now deliberately break the prompt (change the list of labels in the instruction) and run it again: <code>test_acuracia_nao_cai</code> should fail with the message “regression.” That’s the gate working.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-4"><p class="text-blue-400 font-semibold text-sm mb-1">Deterministic</p><p class="text-xs text-neutral-300" data-inema-block="m2-8-t3-p4">Format, required fields, length, prohibited words. Cheap and fast: run it every time.</p></div>
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-4"><p class="text-blue-400 font-semibold text-sm mb-1">With an answer key</p><p class="text-xs text-neutral-300" data-inema-block="m2-8-t3-p5">Accuracy and per-label metrics against answers annotated by people. This is the main gate.</p></div>
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-4"><p class="text-blue-400 font-semibold text-sm mb-1">LLM as a judge</p><p class="text-xs text-neutral-300" data-inema-block="m2-8-t3-p6">For open-ended responses. Written rubric and periodic checks against human scores.</p></div>
+</div>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Why learn</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-8-t3-p7" data-sum="porque">Prompts and models change all the time, and an improvement in one case often makes another worse. The automated gate turns “I think it's better” into a comparable number and keeps silent regressions from reaching users.</p>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Key concepts</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Quality gate</div><div class="text-xs text-neutral-400">blocks regression</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Baseline</div><div class="text-xs text-neutral-400">today’s number</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">CI</div><div class="text-xs text-neutral-400">test with every commit</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">LLM as a judge</div><div class="text-xs text-neutral-400">score with a rubric</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Mark as read</span>
+<span class="inema-label-done">Read</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 4 -->
+<section class="mb-16" data-inema-topic="modulo-2-8#topico-4" id="topico-4" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="uma API com limites, fallback e deploy gradual">🚀 Deploy and serving</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Mark this topic as a question" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-8-t4-p1"><strong class="text-blue-400">Serving</strong> means putting the model behind a stable interface—almost always an HTTP API—that other systems call. The service needs things the notebook didn’t: input validation, a time limit for each call, a fallback response when the model fails, a health endpoint, and a log for each request.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-8-t4-p2">As for how it runs: <strong class="text-neutral-100">real time</strong> (the response comes back right away, as in a chat) or <strong class="text-neutral-100">batch</strong> (processes thousands of items overnight, at lower cost and with tolerance for delays). The model can be an external API or your own server—Ollama to get started, servers like vLLM as volume grows—packaged in a Docker container so it runs the same way on any machine.</p>
+<div class="bg-dark-800 border border-blue-500/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-blue-400 font-semibold mb-1">📘 New terms</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-8-t4-p3"><strong>Fallback</strong> is the fallback response when the main one fails (an “other” label, a standard message, an alternate model). <strong>Canary deployment</strong> means sending a small fraction of traffic to the new version and gradually increasing it if the metrics look good. <strong>Rollback</strong> means going back to the previous version.</p>
+</div>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-blue-400 mb-3">What it is</h3>
+<p class="text-neutral-300">Wrap the model in a service with a clear contract (input, output, errors), time and size limits, a fallback response, and gradual rollout with a quick way to revert.</p>
+</div>
+<!-- COPY-RUN: serviço FastAPI -->
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-blue-400">Goal:</strong> <span class="text-neutral-300">a classification service with a timeout, fallback, health check, and structured logging (<code>app.py</code>).</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copy</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900"># Installation: pip install fastapi uvicorn openai   |   ollama pull qwen2.5:7b
+import json, logging, time, uuid
+from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
+from openai import OpenAI
+
+VERSAO = "classificador-1.4.2"          # &lt;the release that's live&gt;
+MODELO = "qwen2.5:7b"
+ROTULOS = {"entrega", "pagamento", "produto", "elogio", "outro"}
+client = OpenAI(base_url="http://localhost:11434/v1", api_key="ollama",
+                timeout=20, max_retries=1)   # never wait forever
+logging.basicConfig(level=logging.INFO, format="%(message)s")
+log = logging.getLogger("servico")
+app = FastAPI()
+
+class Pedido(BaseModel):
+    texto: str
+
+@app.get("/health")
+def health():
+    return {"ok": True, "versao": VERSAO, "modelo": MODELO}
+
+@app.post("/classificar")
+def classificar(p: Pedido):
+    if not p.texto.strip() or len(p.texto) &gt; 4000:
+        raise HTTPException(422, "empty or too long text")
+    rid, t0, tokens = str(uuid.uuid4()), time.perf_counter(), 0
+    try:
+        r = client.chat.completions.create(
+            model=MODELO, temperature=0, response_format={"type": "json_object"},
+            messages=[{"role": "system", "content": "Classify as: " + ", ".join(sorted(ROTULOS))
+                       + '. Reply only with {"rotulo": "..."}'},
+                      {"role": "user", "content": p.texto}])
+        rotulo = json.loads(r.choices[0].message.content).get("rotulo")
+        tokens = r.usage.total_tokens if r.usage else 0
+        status = "ok" if rotulo in ROTULOS else "fora_da_lista"
+    except Exception as e:                     # timeout, model offline, invalid JSON
+        rotulo, status = None, f"erro:{type(e).__name__}"
+    if rotulo not in ROTULOS:
+        rotulo = "outro"                       # fallback: the system never returns junk
+    ms = round((time.perf_counter() - t0) * 1000)
+    log.info(json.dumps({"rid": rid, "versao": VERSAO, "status": status,
+                         "ms": ms, "tokens": tokens, "rotulo": rotulo}))
+    return {"rotulo": rotulo, "status": status, "versao": VERSAO, "request_id": rid}</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">How to check:</strong> run it with <code>uvicorn app:app --port 8000 2&gt;&amp;1 | tee servico.log</code>. In another terminal: <code>curl -s localhost:8000/health</code> should return the version; <code>curl -s -X POST localhost:8000/classificar -H 'Content-Type: application/json' -d '{"texto":"meu pedido não chegou"}'</code> should return <code>"rotulo":"entrega"</code>. Stop Ollama and repeat: the response should contain <code>"rotulo":"outro"</code> and an error status, without taking down the service.</p>
+</div>
+<!-- SVG 3: canário -->
+<figure class="svg-frame rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="Canary deployment: a router sends most traffic to the stable version and a small portion to the new version; if the metrics stay within limits, the portion increases in steps until it reaches one hundred percent; otherwise, all traffic returns to the stable version." class="w-full h-auto" role="img" viewbox="0 0 900 280">
+<rect fill="url(#m28-grid)" height="280" width="900"></rect>
+<g font-family="Inter,sans-serif">
+<rect fill="#0e1626" filter="url(#m28-glow)" height="70" rx="14" stroke="#60a5fa" stroke-width="2" width="150" x="20" y="95"></rect>
+<text fill="#eff6ff" font-size="15" font-weight="700" text-anchor="middle" x="95" y="126">router</text>
+<text fill="#93c5fd" font-size="12" text-anchor="middle" x="95" y="145">divides the traffic</text>
+<path class="m28-flow" d="M172,118 C230,118 230,62 290,62" fill="none" marker-end="url(#m28-ah)" stroke="#60a5fa" stroke-width="5"></path>
+<path class="m28-flow" d="M172,142 C230,142 230,200 290,200" fill="none" marker-end="url(#m28-ahc)" stroke="#38bdf8" stroke-width="1.8"></path>
+<text fill="#93c5fd" font-size="12" x="190" y="50">most</text>
+<text fill="#7dd3fc" font-size="12" x="190" y="226">small fraction</text>
+<rect fill="#0e1626" height="56" rx="12" stroke="#60a5fa" stroke-width="2" width="200" x="296" y="34"></rect>
+<text fill="#eff6ff" font-size="14" font-weight="700" text-anchor="middle" x="396" y="58">stable version 1.4.1</text>
+<text fill="#93c5fd" font-size="12" text-anchor="middle" x="396" y="77">continues serving requests</text>
+<rect fill="#0e1b26" filter="url(#m28-glow)" height="56" rx="12" stroke="#38bdf8" stroke-width="2.5" width="200" x="296" y="172"></rect>
+<text fill="#e0f2fe" font-size="14" font-weight="700" text-anchor="middle" x="396" y="196">canary 1.4.2</text>
+<text fill="#bae6fd" font-size="12" text-anchor="middle" x="396" y="215">closely monitored</text>
+<path d="M498,200 L548,200" fill="none" marker-end="url(#m28-ahc)" stroke="#38bdf8" stroke-width="2"></path>
+<rect fill="#0b1220" height="96" rx="12" stroke="#38bdf8" stroke-dasharray="5 4" stroke-width="1.8" width="320" x="556" y="150"></rect>
+<text fill="#e0f2fe" font-size="13" font-weight="700" x="572" y="174">metrics within limits?</text>
+<text fill="#bae6fd" font-size="12" x="572" y="196">yes → increase in steps up to 100%</text>
+<text fill="#bae6fd" font-size="12" x="572" y="216">no → roll back to 1.4.1</text>
+<text fill="#94a3b8" font-size="11" x="572" y="236">errors, latency, fallback, evaluation</text>
+<text fill="#bae6fd" font-size="12" font-weight="700" x="560" y="34">canary share, step by step</text>
+<g font-size="12" font-weight="700">
+<rect fill="#1e3a5f" height="24" rx="6" width="60" x="560" y="46"></rect><text fill="#e0f2fe" text-anchor="middle" x="590" y="62">small amount</text>
+<rect fill="#1d4ed8" fill-opacity="0.55" height="24" rx="6" width="70" x="630" y="46"></rect><text fill="#e0f2fe" text-anchor="middle" x="665" y="62">one quarter</text>
+<rect fill="#2563eb" fill-opacity="0.7" height="24" rx="6" width="70" x="710" y="46"></rect><text fill="#e0f2fe" text-anchor="middle" x="745" y="62">half</text>
+<rect fill="#38bdf8" height="24" rx="6" width="70" x="790" y="46"></rect><text fill="#082f49" text-anchor="middle" x="825" y="62">all</text>
+</g>
+<text fill="#94a3b8" font-size="11" x="560" y="94">example steps — define your own</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-blue-400">How to read:</strong> The thickness of the arrows shows how much traffic goes to each version. The dashed box is the decision made at each step, based on the same metrics as in Topic 5. The key point: the stable version stays online the entire time, so rolling back only requires changing how the router divides traffic.</figcaption>
+</figure>
+<div class="bg-primary/10 border border-primary/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-primary font-semibold mb-1">💡 Tip</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-8-t4-p4">Before the canary, there’s an even safer step: <strong>shadow mode</strong>. The new version receives a copy of real requests, but its response isn’t sent to the user — it goes only to the log, where you compare it with the stable version.</p>
+</div>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Why learn</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-8-t4-p5" data-sum="porque">Models slow down, go offline, and return unexpected formats. A service with a timeout, fallback, and gradual rollout turns these failures into controlled degradation instead of an error screen for the customer.</p>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Key concepts</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Timeout</div><div class="text-xs text-neutral-400">per-call limit</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Fallback</div><div class="text-xs text-neutral-400">fallback response</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Canary</div><div class="text-xs text-neutral-400">gradual traffic rollout</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Real time × batch</div><div class="text-xs text-neutral-400">urgency determines the cost</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Mark as read</span>
+<span class="inema-label-done">Read</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 5 -->
+<section class="mb-16" data-inema-topic="modulo-2-8#topico-5" id="topico-5" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="latência, erros, qualidade, custo e drift">📈 Monitoring</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Mark this topic as a question" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-8-t5-p1">An AI system can be “online” and still be wrong. The server responds on time, with no HTTP error, but quality has dropped because customers started writing about a new topic or because the provider changed the model. That’s why monitoring looks at <strong class="text-neutral-100">four groups of signals</strong>: technical, quality, cost, and data.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-8-t5-p2">The foundation is the structured log that the service in Topic 4 already records: one JSON line per request, with version, status, latency, and tokens. From there, you can build dashboards (Grafana), alerts, and tracing across services (OpenTelemetry). For LLMs, there are purpose-built observability tools, such as the open-source Langfuse, which stores the prompt, response, and evaluation for each call.</p>
+<div class="bg-dark-800 border border-blue-500/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-blue-400 font-semibold mb-1">📘 New terms</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-8-t5-p3"><strong>Percentile</strong>: p95 latency is the time below which 95% of requests fall — it shows the experience of the unluckiest users, which the average hides. <strong>Drift</strong> (drift) is a change over time in the kind of data that arrives or in the relationship between data and the correct response. <strong>Observability</strong> means being able to answer “why did this happen?” using the records.</p>
+</div>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-blue-400 mb-3">What it is</h3>
+<p class="text-neutral-300">Continuously track whether the service is fast, available, accurate, and within budget, with alerts that notify you before the user does — and enough records to investigate each case.</p>
+</div>
+<!-- SVG 4: distribuição de latência -->
+<figure class="svg-frame rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="Latency histogram of requests, with most clustered on the left and a long tail on the right; vertical lines mark the p50 median, p95, and p99, showing that the average hides slow requests." class="w-full h-auto" role="img" viewbox="0 0 900 280">
+<rect fill="url(#m28-grid)" height="280" width="900"></rect>
+<g font-family="Inter,sans-serif">
+<path d="M60,230 L860,230" fill="none" stroke="#475569" stroke-width="1.5"></path>
+<g fill="#3b82f6" fill-opacity="0.75">
+<rect height="60" width="36" x="70" y="170"></rect>
+<rect height="120" width="36" x="110" y="110"></rect>
+<rect height="150" width="36" x="150" y="80"></rect>
+<rect height="128" width="36" x="190" y="102"></rect>
+<rect height="96" width="36" x="230" y="134"></rect>
+<rect height="70" width="36" x="270" y="160"></rect>
+<rect height="50" width="36" x="310" y="180"></rect>
+</g>
+<g fill="#38bdf8" fill-opacity="0.65">
+<rect height="36" width="36" x="350" y="194"></rect>
+<rect height="26" width="36" x="390" y="204"></rect>
+<rect height="20" width="36" x="430" y="210"></rect>
+<rect height="14" width="36" x="470" y="216"></rect>
+<rect height="10" width="36" x="510" y="220"></rect>
+<rect height="8" width="36" x="550" y="222"></rect>
+<rect height="6" width="36" x="590" y="224"></rect>
+<rect height="5" width="36" x="650" y="225"></rect>
+<rect height="4" width="36" x="740" y="226"></rect>
+</g>
+<path d="M208,40 L208,232" stroke="#e0f2fe" stroke-dasharray="4 4" stroke-width="2"></path>
+<text fill="#e0f2fe" font-size="13" font-weight="700" x="216" y="54">p50</text>
+<text fill="#bae6fd" font-size="11" x="216" y="70">half are faster</text>
+<path d="M488,40 L488,232" stroke="#7dd3fc" stroke-dasharray="4 4" stroke-width="2"></path>
+<text fill="#7dd3fc" font-size="13" font-weight="700" x="496" y="54">p95</text>
+<text fill="#bae6fd" font-size="11" x="496" y="70">1 in 20 is slower</text>
+<path d="M700,40 L700,232" stroke="#93c5fd" stroke-dasharray="4 4" stroke-width="2"></path>
+<text fill="#93c5fd" font-size="13" font-weight="700" x="708" y="54">p99</text>
+<text fill="#bae6fd" font-size="11" x="708" y="70">the tail that frustrates users</text>
+<text fill="#94a3b8" font-size="12" x="70" y="252">fast</text>
+<text fill="#94a3b8" font-size="12" text-anchor="end" x="850" y="252">slow (response time →)</text>
+<text fill="#94a3b8" font-size="11" text-anchor="middle" x="450" y="272">illustrative format, not to scale</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-blue-400">How to read:</strong> Each bar shows how many requests took that long. LLM responses have a long tail (the cyan bars): long responses and GPU queues make some take much longer. Alert on p95, not the average—the average can stay steady while the tail gets worse.</figcaption>
+</figure>
+<div class="overflow-x-auto mb-6">
+<table class="w-full text-sm border border-dark-600 rounded-xl overflow-hidden">
+<thead><tr class="bg-dark-700"><th class="text-left p-3 text-blue-400">Category</th><th class="text-left p-3 text-blue-400">What to measure</th><th class="text-left p-3 text-blue-400">Typical alert</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr><td class="p-3 font-semibold">Technical</td><td class="p-3 text-neutral-300">p50/p95 latency, error rate, timeouts</td><td class="p-3 text-neutral-300">p95 stays above the agreed threshold for 10 minutes</td></tr>
+<tr><td class="p-3 font-semibold">Quality</td><td class="p-3 text-neutral-300">Fallback rate, evaluator score on a sample, user feedback</td><td class="p-3 text-neutral-300">Fallback rate doubles compared with the previous week</td></tr>
+<tr><td class="p-3 font-semibold">Cost</td><td class="p-3 text-neutral-300">Tokens per request, daily spend, and spend per customer</td><td class="p-3 text-neutral-300">Daily spend exceeds the budget</td></tr>
+<tr><td class="p-3 font-semibold">Data (drift)</td><td class="p-3 text-neutral-300">Label distribution, text length, language</td><td class="p-3 text-neutral-300">"Other" label grows without explanation</td></tr>
+</tbody>
+</table>
+</div>
+<!-- COPY-RUN: métricas a partir do log -->
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-blue-400">Try this:</strong> <span class="text-neutral-300">calculate p50, p95, errors, and label distribution from the <code>servico.log</code>.</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copy</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900"># metricas.py — no external dependencies
+import json, statistics, sys
+from collections import Counter
+
+linhas = []
+for l in open(sys.argv[1] if len(sys.argv) &gt; 1 else "servico.log", encoding="utf-8"):
+    l = l.strip()
+    if l.startswith("{"):
+        try:
+            linhas.append(json.loads(l))
+        except json.JSONDecodeError:
+            pass
+
+if len(linhas) &lt; 2:
+    sys.exit("too few requests in the log; make a few calls first")
+
+ms = [x["ms"] for x in linhas]
+q = statistics.quantiles(ms, n=100, method="inclusive")  # q[49] = p50, q[94] = p95
+status = Counter(x["status"] for x in linhas)
+rotulos = Counter(x["rotulo"] for x in linhas)
+nao_ok = sum(v for k, v in status.items() if k != "ok")
+
+print(f"requests: {len(linhas)}")
+print(f"latency p50={q[49]:.0f} ms  p95={q[94]:.0f} ms  max={max(ms)} ms")
+print(f"non-ok: {nao_ok / len(linhas):.1%}  {dict(status)}")
+print(f"tokens/req (average): {statistics.mean(x['tokens'] for x in linhas):.0f}")
+print("labels:", {k: f"{v / len(linhas):.0%}" for k, v in rotulos.most_common()})</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">How to check:</strong> with the service from topic 4 running, make about 20 calls with varied text and run <code>python3 metricas.py servico.log</code>. You should see p50 lower than p95, the fraction of non-ok responses, and the label distribution. Stop Ollama, make more calls, and run it again: the fraction of non-ok responses should rise. That’s the number an alert monitors.</p>
+</div>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Why learn</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-8-t5-p4" data-sum="porque">AI systems degrade silently. If you measure latency, quality, cost, and drift, you can spot the problem on Monday morning by checking a dashboard—instead of hearing about it from an important customer on Friday night.</p>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Key concepts</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">95th percentile</div><div class="text-xs text-neutral-400">the typical worst case</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Structured log</div><div class="text-xs text-neutral-400">one JSON line per call</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Drift</div><div class="text-xs text-neutral-400">the data has changed</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Alert</div><div class="text-xs text-neutral-400">warns you before the customer does</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Mark as read</span>
+<span class="inema-label-done">Read</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 6 -->
+<section class="mb-16" data-inema-topic="modulo-2-8#topico-6" id="topico-6" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="tokens, cache, modelo certo para cada tarefa">💰 Cost and performance</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Mark this topic as a question" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-8-t6-p1">With paid APIs, costs are proportional to tokens: input tokens (prompts, documents, history) and output tokens (the response), usually at different rates. With local models, the costs are hardware, energy, and maintenance. In both cases, the same levers work: <strong class="text-neutral-100">send less text, generate less text, use the smallest model that gets the job done, and don’t repeat work</strong>.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-8-t6-p2">Performance and cost go hand in hand: fewer tokens also mean faster responses. The order that usually gets the best results is to measure first (how much each type of request costs), cut obvious waste (resending the entire history, including documents that weren’t needed), and only then consider switching models.</p>
+<div class="bg-dark-800 border border-blue-500/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-blue-400 font-semibold mb-1">📘 New terms</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-8-t6-p3"><strong>Prompt caching</strong>: several providers charge less when the beginning of the prompt repeats across calls—so put fixed instructions at the beginning and variable content at the end. <strong>Model routing</strong>: a small model handles simple cases, and only the difficult ones go to the large model. <strong>Quantization</strong>: store the model weights using fewer bits so they take up less memory, with some loss in quality.</p>
+</div>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-blue-400 mb-3">What it is</h3>
+<p class="text-neutral-300">Measure cost and latency by request type and apply the levers—leaner prompts, output limits, caching, batching, routing, and smaller models—then check the test set to make sure quality hasn’t dropped.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
+<h4 class="font-bold text-blue-400 mb-4">✓ Levers that work</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Set an output token limit and use a short format (JSON instead of a paragraph).</span></li>
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Put fixed instructions at the beginning of the prompt to take advantage of caching.</span></li>
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Batch work that doesn’t need an immediate response.</span></li>
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Cache answers to identical, repeated questions.</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Savings that cost you</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Switch models without running the test set.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Cut context until the model starts making things up.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Cache responses that depend on the user or the moment.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Remove timeouts and retries to “gain speed.”</span></li>
+</ul>
+</div>
+</div>
+<!-- COPY-RUN: estimativa de custo -->
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-blue-400">Goal:</strong> <span class="text-neutral-300">estimate the monthly cost of a paid API workflow from measured token usage.</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copy</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900"># custo.py — fill in with YOUR numbers (prices change; check the provider’s page)
+PRECO_ENTRADA_POR_MILHAO = 0.0   # &lt;US$ per 1 million input tokens&gt;
+PRECO_SAIDA_POR_MILHAO = 0.0     # &lt;US$ per 1 million output tokens&gt;
+COTACAO_DOLAR = 0.0              # &lt;R$ per US$ on the day&gt;
+
+FLUXOS = {  # name: (requests per day, input tokens, output tokens) — measured averages
+    "triagem":  (2000, 350, 20),
+    "resumo":   (150, 6000, 400),
+    "&lt;outro&gt;": (0, 0, 0),
+}
+
+total = 0.0
+for nome, (req, t_in, t_out) in FLUXOS.items():
+    dia = req * (t_in * PRECO_ENTRADA_POR_MILHAO + t_out * PRECO_SAIDA_POR_MILHAO) / 1_000_000
+    mes = dia * 30 * COTACAO_DOLAR
+    total += mes
+    print(f"{nome:10s} R$ {mes:10.2f}/month   ({req} req/day, {t_in}+{t_out} tokens)")
+print(f"{'TOTAL':10s} R$ {total:10.2f}/month")
+# Simulate: what happens if the summary cuts input in half? And with half the requests?</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">How to check:</strong> use the average token counts from <code>metricas.py</code> (Topic 5) and the provider’s current prices. Run <code>python3 custo.py</code> and check one workflow by hand with the calculator. Start optimizing the workflow with the highest monthly cost—often it isn’t the one with the most requests.</p>
+</div>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Why learn</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-8-t6-p4" data-sum="porque">AI projects are canceled because of unpredictable costs more often than because of poor quality. Knowing how to estimate, measure, and reduce spending without losing accuracy is what lets you take a pilot to the whole company.</p>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Key concepts</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Input × output</div><div class="text-xs text-neutral-400">different prices</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Prompt caching</div><div class="text-xs text-neutral-400">fixed at the beginning</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Routing</div><div class="text-xs text-neutral-400">small first</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Quantization</div><div class="text-xs text-neutral-400">less memory, some loss</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Mark as read</span>
+<span class="inema-label-done">Read</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 7 -->
+<section class="mb-16" data-inema-topic="modulo-2-8#topico-7" id="topico-7" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">7</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="detectar, conter, corrigir e aprender">🚨 Incidents and rollback</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Mark this topic as a question" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-8-t7-p1">An incident in an AI system doesn’t always mean “it’s down.” The assistant might respond in an inappropriate tone, a classifier might send everything to “other,” an agent might take an action it shouldn’t, or costs might triple overnight. The response follows the same order: <strong class="text-blue-400">contain the damage first, then understand the cause</strong>.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-8-t7-p2">Containment usually means one of three actions: return to the previous release (rollback), turn off the feature with a configuration flag, or activate degraded mode (fallback to a simple rule or human support). All of this needs to be ready and tested before an incident—in a <strong class="text-neutral-100">runbook</strong>, not in someone’s head.</p>
+<div class="bg-dark-800 border border-blue-500/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-blue-400 font-semibold mb-1">📘 New terms</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-8-t7-p3"><strong>Runbook</strong> is the written set of steps for handling each type of problem, with commands ready to run. <strong>Feature flag</strong> is a configuration switch that turns a feature on or off without a new deploy. <strong>Blameless postmortem</strong> is an incident review focused on causes and safeguards, not blame—so people can share what really happened.</p>
+</div>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-blue-400 mb-3">What it is</h3>
+<p class="text-neutral-300">A process agreed on in advance for detecting, containing, communicating, fixing, and learning from failures, always ending with a new safeguard—usually one more case in the test suite or one more alert.</p>
+</div>
+<!-- TIMELINE -->
+<div class="relative border-l-2 border-blue-500/30 ml-3 pl-6 space-y-5 mb-6">
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-blue-500/20 border-2 border-blue-400"></span><p class="text-sm text-neutral-300"><strong class="text-blue-400">1 · Detect.</strong> A monitoring alert or user report. Record the time and the release currently running.</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-blue-500/20 border-2 border-blue-400"></span><p class="text-sm text-neutral-300"><strong class="text-blue-400">2 · Contain.</strong> Rollback, feature flag, or degraded mode. Investigate afterward.</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-sky-500/20 border-2 border-sky-400"></span><p class="text-sm text-neutral-300"><strong class="text-sky-400">3 · Communicate.</strong> Who is affected, what has been done, and when the next update will be.</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-sky-500/20 border-2 border-sky-400"></span><p class="text-sm text-neutral-300"><strong class="text-sky-400">4 · Fix.</strong> Reproduce it using the release and request log; fix it; pass the quality gate.</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-sky-500/20 border-2 border-sky-400"></span><p class="text-sm text-neutral-300"><strong class="text-sky-400">5 · Learn.</strong> Blameless postmortem and one new safeguard: a test case, alert, or limit.</p></div>
+</div>
+<!-- COPY-RUN: runbook -->
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-blue-400">Goal:</strong> <span class="text-neutral-300">a minimal runbook (<code>RUNBOOK.md</code>) to keep in the service repository.</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copy</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900"># RUNBOOK — &lt;service name&gt;
+On-call owner: &lt;name / channel&gt;     Dashboard: &lt;dashboard link&gt;
+Current release: &lt;e.g., classifier-1.4.2&gt;  Previous stable release: &lt;1.4.1&gt;
+
+## Symptom A — fallback or error rate rises
+1. Check /health and whether the model responds (ollama ps / provider status).
+2. If it started after a deploy: ROLLBACK -&gt; &lt;exact command or step&gt;.
+3. If the model is down: activate degraded mode -&gt; &lt;flag/variable and value&gt;.
+
+## Symptom B — inappropriate responses (tone, content, wrong action)
+1. Turn off the feature: &lt;feature flag&gt; = off.
+2. Save 5 examples (request_id) to reproduce the issue, without personal data.
+3. Notify &lt;responsible team&gt; and the data protection officer if personal data is involved.
+
+## Symptom C — daily cost exceeds &lt;limit&gt;
+1. Check tokens by workflow (metricas.py) and which workflow changed.
+2. Lower the request limit: &lt;config&gt;.  3. Investigate loops or abuse.
+
+## After every incident
+- [ ] Blameless postmortem within &lt;N&gt; business days (timeline, cause, safeguards)
+- [ ] New case in evals/casos.jsonl reproducing the problem
+- [ ] New alert or limit if the problem was discovered late</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">How to check:</strong> Run a drill. Ask someone on the team who didn’t write the service to handle Symptom A using only the runbook, with Ollama deliberately stopped. If they need to ask anything, add the answer to the runbook.</p>
+</div>
+<div class="bg-primary/10 border border-primary/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-primary font-semibold mb-1">💡 Tip</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-8-t7-p4">Keep a one-line record for each failure: date, what broke, the smallest possible fix, and whether the cause was a prompt or infrastructure issue. After a few entries, the pattern emerges, and you stop rebuilding what only needed a safeguard.</p>
+</div>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Why learn</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-8-t7-p5" data-sum="porque">Every system in production will fail at some point. The difference between a five-minute incident and a five-hour one is having the recovery path ready and rehearsed—and the difference between a team that repeats mistakes and one that improves is a postmortem that leads to a safeguard.</p>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Key concepts</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Contain first</div><div class="text-xs text-neutral-400">investigate afterward</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Runbook</div><div class="text-xs text-neutral-400">steps with commands</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Feature flag</div><div class="text-xs text-neutral-400">turns off without a deploy</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Postmortem</div><div class="text-xs text-neutral-400">blameless, with safeguards</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Mark as read</span>
+<span class="inema-label-done">Read</span>
+</button>
+</div>
+</div>
+</section>
+<!-- RESUMO -->
+<section class="mb-8">
+<div class="bg-gradient-to-br from-blue-900/40 via-dark-800 to-dark-800 rounded-xl border border-blue-500/30 p-6 sm:p-8">
+<h2 class="text-2xl font-bold mb-6">✅ Module summary</h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start gap-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">Version all five pieces</strong><span class="text-neutral-400"> — code, prompt, model, data, and configuration under one release.</span></div></div>
+<div class="flex items-start gap-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">The test suite is the gate</strong><span class="text-neutral-400"> — no version passes if it falls below the baseline.</span></div></div>
+<div class="flex items-start gap-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">Serve with limits and roll out gradually</strong><span class="text-neutral-400"> — timeout, fallback, canary, and rollback.</span></div></div>
+<div class="flex items-start gap-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">Measure, spend thoughtfully, and learn from failures</strong><span class="text-neutral-400"> — p95, cost per workflow, runbook, and postmortem.</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-blue-400 mb-2">Next module:</h3>
+<p class="text-neutral-300">2.9 — AI Ethics and Governance ⚖️</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="index.html">← Back to Track</a>
+<a class="flex-1 text-center px-6 py-3 bg-blue-700 text-white rounded-lg font-semibold hover:bg-blue-600 transition-colors" href="modulo-2-9.html">Next module →</a>
+</div>
+</div>
+</section>
+</article>
+</div>
+</div>
+</main>
+<footer class="border-t border-dark-600 py-8 mt-8">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>FTD — Digital Transformation Training · open and free content · 2026 · <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" rel="noopener" target="_blank">INEMA.CLUB</a> - <a class="text-amber-700 dark:text-slate-300 hover:underline" href="https://inema.pro" rel="noopener" target="_blank">PRO</a></p>
+</div>
+</footer>
+<!-- SCRIPTS NÚCLEO v1 -->
+<script>
+    function toggleTopic(button) {
+      var topicItem = button.closest('.topic-item');
+      if (!topicItem) return;
+      var explanation = topicItem.querySelector('.topic-explanation');
+      var willOpen = !explanation.classList.contains('active');
+      explanation.classList.toggle('active');
+      button.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+    }
+    function openModal(id) { var m = document.getElementById(id); if (m) { m.classList.remove('hidden'); document.body.style.overflow = 'hidden'; } }
+    function closeModal() { document.querySelectorAll('.modal').forEach(function (m) { m.classList.add('hidden'); }); document.body.style.overflow = 'auto'; }
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
+    function copyCode(btn) {
+      var pre = btn.closest('[data-copy-box]').querySelector('pre');
+      var txt = pre ? pre.innerText : '';
+      var done = function () { var o = btn.getAttribute('data-label-ok') || 'Copiado'; var t = btn.textContent; btn.textContent = o; setTimeout(function () { btn.textContent = t; }, 1500); };
+      try { navigator.clipboard.writeText(txt).then(done, done); } catch (e) { done(); }
+    }
+    (function () {
+      var themeToggle = document.getElementById('theme-toggle');
+      var darkIcon = document.getElementById('theme-toggle-dark-icon');
+      var lightIcon = document.getElementById('theme-toggle-light-icon');
+      var html = document.documentElement;
+      function sync() { var isDark = html.classList.contains('dark'); if (darkIcon) darkIcon.classList.toggle('hidden', isDark); if (lightIcon) lightIcon.classList.toggle('hidden', !isDark); }
+      sync();
+      if (themeToggle) themeToggle.addEventListener('click', function () {
+        html.classList.toggle('dark'); var nowDark = html.classList.contains('dark'); html.style.colorScheme = nowDark ? 'dark' : 'light';
+        try { localStorage.setItem('theme', nowDark ? 'dark' : 'light'); } catch (e) {}
+        try { var p = JSON.parse(localStorage.getItem('inema.prefs') || '{}'); p.theme = nowDark ? 'inema-dark' : 'claro'; localStorage.setItem('inema.prefs', JSON.stringify(p)); } catch (e) {}
+        sync();
+      });
+    })();
+  </script>
+<!-- learn.js + INEMA.init() POR ÚLTIMO -->
+<script src="../../assets/learn.js"></script>
+<script>
+    if (window.INEMA && typeof window.INEMA.init === 'function') { window.INEMA.init({ autoResume: true }); }
+  </script>
+</body>
+</html>

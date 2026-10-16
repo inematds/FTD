@@ -1,0 +1,1208 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="ftd-v2-es" name="inema-course"/>
+<title>Módulo 1.8 · Inteligencia artificial avanzada | FTD v2</title>
+<meta content="Ventana de contexto, documentos propios, modelos que razonan, multimodalidad e IA local, explicados sin jerga." name="description"/>
+<meta content="Módulo 1.8 · Inteligencia artificial avanzada | FTD v2" property="og:title"/>
+<meta content="Ventana de contexto, documentos propios, modelos que razonan, multimodalidad e IA local, explicados sin jerga." property="og:description"/>
+<!-- ANTI-FOUC (Erro #18) — primeiro script do head -->
+<script>
+(function () {
+  try {
+    var html = document.documentElement;
+    var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+    function clone(o) { var r = {}; for (var x in o) r[x] = o[x]; return r; }
+    var p = clone(DEF);
+    try {
+      var raw = localStorage.getItem('inema.prefs');
+      if (raw) {
+        var parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === 'object') {
+          for (var k in DEF) if (parsed[k] != null) p[k] = parsed[k];
+        }
+      } else {
+        var legacy = localStorage.getItem('theme');
+        if (legacy === 'light') p.theme = 'claro';
+        else if (legacy === 'dark') p.theme = 'inema-dark';
+      }
+    } catch (e) { p = clone(DEF); }
+
+    var THEMES = {
+      'inema-dark': { dark: true,  attr: null,        cs: 'dark'  },
+      'claro':      { dark: false, attr: null,        cs: 'light' },
+      'sepia':      { dark: false, attr: 'sepia',     cs: 'light' },
+      'foco':       { dark: null,  attr: 'foco',      cs: null    },
+      'contraste':  { dark: true,  attr: 'contraste', cs: 'dark'  }
+    };
+    var t = THEMES[p.theme] || THEMES['inema-dark'];
+
+    if (t.dark === true) html.classList.add('dark');
+    else if (t.dark === false) html.classList.remove('dark');
+
+    if (t.attr) html.setAttribute('data-theme', t.attr);
+    else html.removeAttribute('data-theme');
+
+    html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark') ? 'dark' : 'light'));
+
+    html.setAttribute('data-font', p.font || 'inter');
+    html.setAttribute('data-accent', p.accent || 'emerald');
+
+    var s = html.style;
+    var scale = (+p.fontScale || 100);
+    s.setProperty('--inema-font-scale', (scale / 100).toString());
+    s.setProperty('font-size', scale + '%');
+    s.setProperty('--measure', (+p.lineWidth || 68) + 'ch');
+    s.setProperty('--lh-body', (+p.leading || 1.7).toString());
+    var fam = p.font === 'system'
+      ? 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif'
+      : (p.font === 'leitura'
+        ? '"Atkinson Hyperlegible", "Inter", system-ui, sans-serif'
+        : '"Inter", system-ui, sans-serif');
+    s.setProperty('--font-body', fam);
+
+    var ACC = {
+      emerald: [152, 76, 45], blue: [217, 91, 60], purple: [258, 90, 66],
+      amber: [38, 92, 50], teal: [174, 72, 41], rose: [350, 89, 60]
+    };
+    var a = ACC[p.accent] || ACC.emerald;
+    s.setProperty('--accent-h', a[0] + '');
+    s.setProperty('--accent-s', a[1] + '%');
+    s.setProperty('--accent-l', a[2] + '%');
+    s.setProperty('--accent', 'hsl(' + a[0] + ' ' + a[1] + '% ' + a[2] + '%)');
+  } catch (err) {
+    try { document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme = 'dark'; } catch (e) {}
+  }
+})();
+</script>
+<!-- MANIFESTO do curso (Erro #28) — idêntico em todas as páginas -->
+<script data-inema-manifest="" type="application/json">
+{
+  "course": "ftd-v2-es",
+  "tracks": [
+    {
+      "n": "1",
+      "title": "Principiante",
+      "modules": [
+        {
+          "id": "1-1",
+          "title": "Impacto de la IA",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-1.html"
+        },
+        {
+          "id": "1-2",
+          "title": "Navegar el mundo digital",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-2.html"
+        },
+        {
+          "id": "1-3",
+          "title": "Ingeniería de prompts",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-3.html"
+        },
+        {
+          "id": "1-4",
+          "title": "Asistentes y agentes de IA",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-4.html"
+        },
+        {
+          "id": "1-5",
+          "title": "Creatividad visual con IA",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-5.html"
+        },
+        {
+          "id": "1-6",
+          "title": "Marketing y ventas con IA",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-6.html"
+        },
+        {
+          "id": "1-7",
+          "title": "Automatización de procesos",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-7.html"
+        },
+        {
+          "id": "1-8",
+          "title": "Inteligencia artificial avanzada",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-8.html"
+        },
+        {
+          "id": "1-9",
+          "title": "Negocios y monetización con IA",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-9.html"
+        }
+      ]
+    },
+    {
+      "n": "2",
+      "title": "Técnico",
+      "modules": [
+        {
+          "id": "2-1",
+          "title": "Desarrollo con APIs de IA",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-1.html"
+        },
+        {
+          "id": "2-2",
+          "title": "Arquitectura de aplicaciones con IA",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-2.html"
+        },
+        {
+          "id": "2-3",
+          "title": "RAG y bases de conocimiento",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-3.html"
+        },
+        {
+          "id": "2-4",
+          "title": "Fine-tuning y personalización",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-4.html"
+        },
+        {
+          "id": "2-5",
+          "title": "Agentes y flujos de trabajo complejos",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-5.html"
+        },
+        {
+          "id": "2-6",
+          "title": "Visión artificial avanzada",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-6.html"
+        },
+        {
+          "id": "2-7",
+          "title": "NLP y procesamiento de texto",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-7.html"
+        },
+        {
+          "id": "2-8",
+          "title": "MLOps y producción",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-8.html"
+        },
+        {
+          "id": "2-9",
+          "title": "Ética y gobernanza de IA",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-9.html"
+        }
+      ]
+    },
+    {
+      "n": "3",
+      "title": "Masterclass",
+      "modules": [
+        {
+          "id": "3-1",
+          "title": "Arquitectura de IA a gran escala",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-1.html"
+        },
+        {
+          "id": "3-2",
+          "title": "Modelos personalizados y propietarios",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-2.html"
+        },
+        {
+          "id": "3-3",
+          "title": "IA multimodal avanzada",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-3.html"
+        },
+        {
+          "id": "3-4",
+          "title": "Investigación y artículos de IA",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-4.html"
+        },
+        {
+          "id": "3-5",
+          "title": "Aprendizaje por refuerzo en IA",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-5.html"
+        },
+        {
+          "id": "3-6",
+          "title": "Seguridad y red teaming",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-6.html"
+        },
+        {
+          "id": "3-7",
+          "title": "IA en producción — escala enterprise",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-7.html"
+        },
+        {
+          "id": "3-8",
+          "title": "Liderazgo y estrategia en IA",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-8.html"
+        },
+        {
+          "id": "3-9",
+          "title": "Futuro de la IA y AGI",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-9.html"
+        }
+      ]
+    }
+  ]
+}
+</script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#0c0c10', 800: '#16161e', 700: '#1e1e28', 600: '#272730', 500: '#33333f' } }, fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'], display: ['Sora', 'Inter', 'sans-serif'], mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'] } } } }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Sora:wght@600;700;800&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    h1, h2, h3, h4, .font-display { font-family: 'Sora', 'Inter', sans-serif; }
+    .dark body { background-color: #0c0c10; }
+    .dark .text-neutral-100 { color: #e9e9ee; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+    pre { white-space: pre-wrap; word-break: break-word; }
+    pre, code, .font-mono { font-family: 'JetBrains Mono', ui-monospace, monospace; }
+
+    /* Light mode — Parte 1: base */
+    html:not(.dark) body { background-color: #f6f7f9; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800\/50 { background-color: #f6f7f9; }
+    html:not(.dark) .bg-dark-700 { background-color: #eceef2; }
+    html:not(.dark) .bg-dark-700\/50 { background-color: #f1f2f5; }
+    html:not(.dark) .bg-dark-700\/30 { background-color: #f4f5f7; }
+    html:not(.dark) .bg-dark-600 { background-color: #e1e3ea; }
+    html:not(.dark) .hover\:bg-dark-600:hover { background-color: #d6d9e1; }
+    html:not(.dark) .hover\:bg-dark-700\/50:hover { background-color: #eceef2; }
+    html:not(.dark) .text-neutral-100 { color: #1a1a22; }
+    html:not(.dark) .text-neutral-200 { color: #26262f; }
+    html:not(.dark) .text-neutral-300 { color: #3f3f4a; }
+    html:not(.dark) .text-neutral-400 { color: #5b5b68; }
+    html:not(.dark) .text-neutral-500 { color: #62626e; }
+    html:not(.dark) .border-dark-600 { border-color: #e1e3ea; }
+    html:not(.dark) .border-dark-700 { border-color: #e8e9ee; }
+    html:not(.dark) .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #e1e3ea; }
+    html:not(.dark) .bg-black\/40 { background-color: #f1f2f5; }
+    html:not(.dark) pre.code-dark { background-color: #1a1a22; color: #e9e9ee; }
+
+    /* Light mode — Parte 2: acento das 3 trilhas (texto -700, nunca -400 no claro) */
+    html:not(.dark) .text-emerald-400 { color: #047857; }
+    html:not(.dark) .text-emerald-300 { color: #047857; }
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #047857; }
+    html:not(.dark) .bg-emerald-500\/20 { background-color: rgba(4,120,87,0.12); }
+    html:not(.dark) .bg-emerald-500\/10 { background-color: rgba(4,120,87,0.08); }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(4,120,87,0.08); }
+    html:not(.dark) .bg-emerald-900\/20 { background-color: rgba(4,120,87,0.07); }
+    html:not(.dark) .bg-emerald-900\/30 { background-color: rgba(4,120,87,0.08); }
+    html:not(.dark) .bg-emerald-900\/40 { background-color: rgba(4,120,87,0.09); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(4,120,87,0.28); }
+    html:not(.dark) .hover\:border-emerald-500\/30:hover { border-color: rgba(4,120,87,0.4); }
+    html:not(.dark) .text-blue-400 { color: #1d4ed8; }
+    html:not(.dark) .text-blue-300 { color: #1d4ed8; }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #1d4ed8; }
+    html:not(.dark) .bg-blue-500\/20 { background-color: rgba(29,78,216,0.12); }
+    html:not(.dark) .bg-blue-500\/10 { background-color: rgba(29,78,216,0.08); }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(29,78,216,0.08); }
+    html:not(.dark) .bg-blue-900\/20 { background-color: rgba(29,78,216,0.07); }
+    html:not(.dark) .bg-blue-900\/30 { background-color: rgba(29,78,216,0.08); }
+    html:not(.dark) .bg-blue-900\/40 { background-color: rgba(29,78,216,0.09); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(29,78,216,0.28); }
+    html:not(.dark) .hover\:border-blue-500\/30:hover { border-color: rgba(29,78,216,0.4); }
+    html:not(.dark) .text-purple-400 { color: #6d28d9; }
+    html:not(.dark) .text-purple-300 { color: #6d28d9; }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #6d28d9; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(109,40,217,0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(109,40,217,0.08); }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(109,40,217,0.08); }
+    html:not(.dark) .bg-purple-900\/20 { background-color: rgba(109,40,217,0.07); }
+    html:not(.dark) .bg-purple-900\/30 { background-color: rgba(109,40,217,0.08); }
+    html:not(.dark) .bg-purple-900\/40 { background-color: rgba(109,40,217,0.09); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(109,40,217,0.28); }
+    html:not(.dark) .hover\:border-purple-500\/30:hover { border-color: rgba(109,40,217,0.4); }
+
+    /* Light mode — Parte 3: gradientes + especiais */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #854d0e; }
+    html:not(.dark) .text-yellow-400 { color: #854d0e; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #713f12; }
+    html:not(.dark) .bg-primary\/10 { background-color: #FEF9C3; }
+    html:not(.dark) .border-primary\/30 { border-color: #EAB308; }
+    html:not(.dark) .text-red-400 { color: #b91c1c; }
+    html:not(.dark) .bg-red-900\/20 { background-color: rgba(185,28,28,0.07); }
+    html:not(.dark) .border-red-500\/30 { border-color: rgba(185,28,28,0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #075985; }
+    html:not(.dark) .bg-sky-900\/20 { background-color: rgba(3,105,161,0.07); }
+    html:not(.dark) .border-sky-500\/30 { border-color: rgba(3,105,161,0.25); }
+
+    /* Light mode — Parte 4: nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255,255,255,0.95); }
+
+    /* Parte 5: bordas suavizadas no DARK (Erro #15) */
+    .dark .border-dark-600 { border-color: #2a2a35; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #2a2a35; }
+
+    /* SVG: no claro, um fundo escuro emoldurado mantém o contraste do desenho */
+    html:not(.dark) .svg-frame { background-color: #12121a; }
+    @media (prefers-reduced-motion: reduce) { svg * { animation: none !important; transition: none !important; } }
+  </style>
+<link href="../../../assets/learn.css" rel="stylesheet"/>
+<link href="https://inematds.github.io/FTD/FTD-v2/curso/trilha1/modulo-1-8.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/FTD/FTD-v2/en/curso/trilha1/modulo-1-8.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/FTD/FTD-v2/es/curso/trilha1/modulo-1-8.html" hreflang="es" rel="alternate"/><link href="https://inematds.github.io/FTD/FTD-v2/curso/trilha1/modulo-1-8.html" hreflang="x-default" rel="alternate"/><link href="https://inematds.github.io/FTD/FTD-v2/es/curso/trilha1/modulo-1-8.html" rel="canonical"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(250,204,21,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha1/modulo-1-8.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="../../../en/curso/trilha1/modulo-1-8.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">EN</a><a href="modulo-1-8.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#FACC15">ES</a></div>
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14 gap-2">
+<!-- Logo + INEMA.CLUB -->
+<div class="flex items-center space-x-3 flex-shrink-0">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🚀</span>
+<span class="font-display font-bold text-lg hidden sm:inline">FTD</span>
+</a>
+<span class="text-neutral-600 hidden sm:inline">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium hidden sm:inline" href="https://inema.club" rel="noopener" target="_blank">INEMA.CLUB</a>
+<span class="text-neutral-600 hidden sm:inline">-</span>
+<a class="text-amber-700 dark:text-slate-300 hover:underline text-sm font-medium hidden sm:inline" href="https://inema.pro" rel="noopener" target="_blank">PRO</a>
+</div>
+<!-- Trilhas + controles de aprendizagem + theme toggle -->
+<div class="flex items-center gap-1 sm:gap-1.5">
+<a class="px-2.5 py-1.5 rounded-lg text-sm font-semibold text-emerald-400 bg-emerald-500/10 whitespace-nowrap" href="index.html">
+<span class="lg:hidden">T1</span><span class="hidden lg:inline">Principiante</span>
+</a>
+<a class="px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors whitespace-nowrap" href="../trilha2/index.html">
+<span class="lg:hidden">T2</span><span class="hidden lg:inline">Técnico</span>
+</a>
+<a class="px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors whitespace-nowrap" href="../trilha3/index.html">
+<span class="lg:hidden">T3</span><span class="hidden lg:inline">Masterclass</span>
+</a>
+<span class="w-px h-6 bg-dark-600 mx-1 hidden sm:inline-block"></span>
+<!-- Minha jornada (abre o painel global; badge = % do curso) -->
+<button class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-300 hover:text-neutral-100 hover:bg-dark-700 transition-colors" data-inema-journey-open="" type="button">
+<svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="16"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+<span class="hidden md:inline">Mi recorrido</span>
+<span class="inema-journey-badge" data-count="0" data-inema-journey-badge=""></span>
+</button>
+<!-- Aparência (gatilho + painel obrigatório) -->
+<div class="relative">
+<button aria-expanded="false" class="inema-appearance-trigger inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-300 hover:text-neutral-100 transition-colors" data-inema-appearance-toggle="#inema-appearance-panel" type="button">
+<svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="16"><circle cx="12" cy="12" r="9"></circle><path d="M12 3v18"></path><path d="M12 3a9 9 0 0 1 0 18" fill="currentColor"></path></svg>
+<span class="hidden md:inline">Apariencia</span>
+</button>
+<div class="inema-appearance-pop right-0" data-inema-appearance="" id="inema-appearance-panel">
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Tema</span>
+<div class="inema-segment">
+<button data-inema-set-theme="inema-dark" type="button">Oscuro</button>
+<button data-inema-set-theme="claro" type="button">Claro</button>
+<button data-inema-set-theme="sepia" type="button">Sepia</button>
+</div>
+<div class="inema-segment">
+<button data-inema-set-theme="foco" type="button">Enfoque</button>
+<button data-inema-set-theme="contraste" type="button">Alto contraste</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Fuente</span>
+<div class="inema-segment">
+<button data-inema-set-font="inter" type="button">Inter</button>
+<button data-inema-set-font="system" type="button">Sistema</button>
+<button data-inema-set-font="leitura" type="button">Lectura</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Tamaño</span>
+<div class="inema-segment">
+<button data-inema-set-fontscale="100" type="button">A</button>
+<button data-inema-set-fontscale="112" type="button">A+</button>
+<button data-inema-set-fontscale="125" type="button">A++</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Ancho</span>
+<div class="inema-segment">
+<button data-inema-set-linewidth="60" type="button">Estrecho</button>
+<button data-inema-set-linewidth="68" type="button">Mediano</button>
+<button data-inema-set-linewidth="75" type="button">Ancho</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Interlineado</span>
+<div class="inema-segment">
+<button data-inema-set-leading="1.45" type="button">Compacto</button>
+<button data-inema-set-leading="1.7" type="button">Cómodo</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Acento</span>
+<div class="inema-accent-grid">
+<button aria-label="Acento esmeralda" data-inema-set-accent="emerald" type="button"></button>
+<button aria-label="Acento azul" data-inema-set-accent="blue" type="button"></button>
+<button aria-label="Acento violeta" data-inema-set-accent="purple" type="button"></button>
+<button aria-label="Acento ámbar" data-inema-set-accent="amber" type="button"></button>
+<button aria-label="Acento verde azulado" data-inema-set-accent="teal" type="button"></button>
+<button aria-label="Acento rosa" data-inema-set-accent="rose" type="button"></button>
+</div>
+</div>
+</div>
+</div>
+<!-- Theme toggle sol/lua (núcleo v1; o JS o mantém coerente com o tema) -->
+<button aria-label="Alternar tema claro/oscuro" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20">
+<path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+</svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20">
+<path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path>
+</svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<main data-inema-module="1-8" data-inema-track="1" id="conteudo">
+<!-- BREADCRUMB -->
+<nav aria-label="Ruta de navegación" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-emerald-400" href="../../index.html">Inicio</a><span>/</span>
+<a class="hover:text-emerald-400" href="index.html">Ruta 1</a><span>/</span>
+<span class="text-emerald-400">Módulo 1.8</span>
+</div>
+</nav>
+<!-- HEADER do módulo -->
+<header class="bg-gradient-to-br from-emerald-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-emerald-500/20 text-emerald-400 text-xs font-semibold rounded-full mb-4">MÓDULO 1.8</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🚀 Inteligencia artificial avanzada</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">Los recursos que distinguen a quien «conversa con la IA» de quien <strong class="text-emerald-400">trabaja con ella</strong>: cuánto puede leer de una vez, cómo hacerle preguntas sobre tus propios documentos, cuándo usar un modelo que piensa antes de responder, cómo mostrarle fotos y hablar con ella, y cómo ejecutar una IA en tu propia computadora. Todo sin jerga.</p>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">7</div><div class="text-xs text-neutral-400">Temas</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">~50</div><div class="text-xs text-neutral-400">Minutos</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">Inicial</div><div class="text-xs text-neutral-400">Nivel</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">Práctico</div><div class="text-xs text-neutral-400">Tipo</div></div>
+</div>
+<div class="flex items-center gap-3 mt-8">
+<div aria-label="Progreso del módulo 1.8" class="inema-ring" data-inema-meter="modulo:1-8"><span class="inema-ring__value" data-inema-meter-pct="">0%</span></div>
+<div class="inema-meter-label" data-inema-meter="modulo:1-8"><strong data-inema-meter-frac="">0 de 0</strong> temas leídos · <span data-inema-section-counter="">Sección 1 de 7</span></div>
+</div>
+</div>
+</header>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+<div class="lg:flex lg:gap-10">
+<!-- TOC sticky + scrollspy -->
+<aside class="hidden lg:block lg:w-56 flex-shrink-0">
+<nav aria-label="Índice de la página" class="sticky top-20 self-start" data-inema-toc="">
+<p class="text-xs font-semibold uppercase tracking-wide text-neutral-500 mb-3">En este módulo</p>
+<ol class="space-y-1 text-sm">
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-emerald-400" href="#topico-1">1. Ventana de contexto</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-emerald-400" href="#topico-2">2. Tus documentos</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-emerald-400" href="#topico-3">3. Búsqueda por significado</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-emerald-400" href="#topico-4">4. Modelos que razonan</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-emerald-400" href="#topico-5">5. Ver, escuchar y hablar</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-emerald-400" href="#topico-6">6. IA en tu computadora</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-emerald-400" href="#topico-7">7. Qué recurso usar</a></li>
+</ol>
+</nav>
+</aside>
+<!-- ARTIGO -->
+<article class="inema-prose flex-1 min-w-0">
+<h2 class="text-2xl font-bold mb-8">Contenido detallado</h2>
+<!-- TÓPICO 1 -->
+<section class="mb-16" data-inema-topic="modulo-1-8#topico-1" id="topico-1" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="a memória de trabalho da IA">🪟 Ventana de contexto</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m1-8-t1-p1">Cada vez que envías un mensaje, el modelo vuelve a leer <strong class="text-neutral-100">todo lo que está en la conversación</strong>: las instrucciones, los archivos que adjuntaste, los mensajes anteriores y la nueva pregunta. Todo eso tiene un límite de tamaño. Es la <strong class="text-emerald-400">ventana de contexto</strong>. Lo que cabe en ella, el modelo lo ve. Lo que queda fuera, para él no existe.</p>
+<div class="bg-dark-800 border border-emerald-500/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-emerald-400 font-semibold mb-1">🌱 ¿Nuevo aquí?</p>
+<p class="text-sm text-neutral-300" data-inema-block="m1-8-t1-p2">Recuerda el módulo 1.1: el modelo lee el texto en <strong>tokens</strong>, fragmentos de palabras. La ventana se mide en tokens, no en páginas. En portugués, una palabra suele convertirse en uno o dos tokens. Los modelos grandes de 2026 aceptan cientos de miles de tokens, y algunos superan el millón: suficiente para varios libros. La cifra exacta cambia con cada lanzamiento; el concepto se mantiene.</p>
+</div>
+<div class="bg-gradient-to-br from-emerald-900/30 to-dark-800 rounded-xl border border-emerald-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">La ventana de contexto es la cantidad máxima de texto que el modelo considera de una vez en una conversación: la pregunta, el historial, los archivos y la propia respuesta, sumados. Funciona como la memoria de trabajo de una persona: es amplia, pero finita.</p>
+</div>
+<!-- SVG 1: janela de contexto -->
+<figure class="svg-frame rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="Una cinta con ocho bloques de una conversación larga. Un marco azul, la ventana de contexto, cubre los seis bloques más recientes: el PDF, los mensajes, las reglas, la pregunta y la respuesta. Los dos primeros bloques quedaron fuera de la ventana y aparecen atenuados porque el modelo ya no puede verlos." class="w-full h-auto" role="img" viewbox="0 0 900 260">
+<defs>
+<filter height="160%" id="m18-glow" width="160%" x="-30%" y="-30%"><fegaussianblur result="b" stddeviation="2.5"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="28" id="m18-grid" patternunits="userSpaceOnUse" width="28"><circle cx="1.2" cy="1.2" fill="#10b981" opacity="0.13" r="1.2"></circle></pattern>
+<marker id="m18-ah" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#34d399"></path></marker>
+<marker id="m18-ahc" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#38bdf8"></path></marker>
+<style>@keyframes m18pulse{0%,100%{stroke-opacity:.55}50%{stroke-opacity:1}} .m18-win{animation:m18pulse 2.4s ease-in-out infinite} @keyframes m18dash{to{stroke-dashoffset:-24}} .m18-flow{stroke-dasharray:6 6;animation:m18dash 1.6s linear infinite}</style>
+</defs>
+<rect fill="url(#m18-grid)" height="260" width="900"></rect>
+<g font-family="Inter,sans-serif">
+<rect fill="#111a17" height="56" opacity="0.45" rx="8" stroke="#475569" stroke-width="1.5" width="95" x="20" y="112"></rect>
+<text fill="#94a3b8" font-size="13" text-anchor="middle" x="67" y="145">mensaje 1</text>
+<rect fill="#111a17" height="56" opacity="0.45" rx="8" stroke="#475569" stroke-width="1.5" width="95" x="125" y="112"></rect>
+<text fill="#94a3b8" font-size="13" text-anchor="middle" x="172" y="145">mensaje 2</text>
+<rect fill="#0f1f18" height="56" rx="8" stroke="#34d399" stroke-width="1.5" width="95" x="235" y="112"></rect>
+<text fill="#ecfdf5" font-size="13" font-weight="700" text-anchor="middle" x="282" y="145">tu PDF</text>
+<rect fill="#0f1f18" height="56" rx="8" stroke="#34d399" stroke-width="1.5" width="95" x="340" y="112"></rect>
+<text fill="#ecfdf5" font-size="13" text-anchor="middle" x="387" y="145">mensaje 3</text>
+<rect fill="#0f1f18" height="56" rx="8" stroke="#34d399" stroke-width="1.5" width="95" x="445" y="112"></rect>
+<text fill="#ecfdf5" font-size="13" text-anchor="middle" x="492" y="145">mensaje 4</text>
+<rect fill="#0f1f18" height="56" rx="8" stroke="#34d399" stroke-width="1.5" width="95" x="550" y="112"></rect>
+<text fill="#ecfdf5" font-size="13" text-anchor="middle" x="597" y="145">reglas</text>
+<rect fill="#0e1b26" height="56" rx="8" stroke="#38bdf8" stroke-width="1.5" width="95" x="655" y="112"></rect>
+<text fill="#e0f2fe" font-size="13" font-weight="700" text-anchor="middle" x="702" y="145">pregunta</text>
+<rect fill="#0e1b26" height="56" rx="8" stroke="#38bdf8" stroke-width="1.5" width="95" x="760" y="112"></rect>
+<text fill="#e0f2fe" font-size="13" font-weight="700" text-anchor="middle" x="807" y="145">respuesta</text>
+<rect class="m18-win" fill="none" filter="url(#m18-glow)" height="84" rx="14" stroke="#38bdf8" stroke-width="3" width="636" x="226" y="98"></rect>
+<text fill="#7dd3fc" font-size="15" font-weight="700" text-anchor="middle" x="544" y="84">ventana de contexto: lo que el modelo ve ahora</text>
+<text fill="#fca5a5" font-size="13" text-anchor="middle" x="120" y="210">fuera de la ventana: «olvidado»</text>
+<text fill="#a7f3d0" font-size="13" text-anchor="middle" x="544" y="210">dentro: se lee completo con cada mensaje nuevo</text>
+<text fill="#94a3b8" font-size="11" text-anchor="middle" x="450" y="245">(ilustrativo: el tamaño real de la ventana varía según el modelo)</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-emerald-400">Cómo leer:</strong> la conversación crece de izquierda a derecha. El marco azul es la ventana: todo lo que está dentro se vuelve a leer con cada mensaje. Cuando la conversación se hace demasiado larga, el comienzo sale del marco, o la herramienta resume el comienzo para que quepa. Por eso, después de horas de conversación, la IA «olvida» una regla que le diste al principio.</figcaption>
+</figure>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ Aprovecha bien la ventana</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-emerald-400">✓</span><span>Una conversación nueva para cada tema.</span></li>
+<li class="flex items-start gap-2"><span class="text-emerald-400">✓</span><span>Repite las reglas importantes cerca de la pregunta.</span></li>
+<li class="flex items-start gap-2"><span class="text-emerald-400">✓</span><span>Solo los fragmentos del documento que importan para la tarea.</span></li>
+<li class="flex items-start gap-2"><span class="text-emerald-400">✓</span><span>Un resumen de la conversación anterior para empezar la siguiente.</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Desperdicia la ventana</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Una sola conversación de semanas sobre todo.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Pegar diez archivos «por si acaso».</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Confiar en que recuerda lo que dijiste hace 200 mensajes.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Creer que una ventana grande garantiza una lectura atenta.</span></li>
+</ul>
+</div>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m1-8-t1-p3">Una ventana grande no significa que la atención sea igual para todo. En textos muy largos, los modelos tienden a dar menos peso a los detalles que quedan en medio. La solución práctica es sencilla: indica <strong class="text-neutral-100">dónde mirar</strong> («en la sección 4 del contrato») y pide que la respuesta cite el fragmento utilizado. Cuando la conversación se haga enorme, usa la solicitud de abajo para generar un «paquete de contexto» y continuar en una conversación nueva.</p>
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-emerald-400">Objetivo:</strong> <span class="text-neutral-300">llevar lo esencial de una conversación larga a una conversación nueva, sin perder decisiones.</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copiar</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900">Esta conversación se hizo larga y voy a continuar en una conversación nueva.
+Escribe un PAQUETE DE CONTEXTO para que lo pegue allí, con:
+
+1. Objetivo del trabajo (1 frase).
+2. Decisiones ya tomadas (lista breve, con el motivo de cada una).
+3. Reglas que siempre deben seguirse (tono, formato, qué evitar).
+4. Datos y cifras que usamos, marcados como [CONFIRMADO] o [POR VERIFICAR].
+5. Lo que falta hacer, en orden.
+
+No inventes nada que no esté en esta conversación. Máximo de 300 palabras.
+Tema de la conversación: &lt;resúmelo en una línea&gt;</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">Cómo verificar:</strong> Lee el paquete y busca una decisión que recuerdes haber tomado. Si no aparece, pide que la incluyan. Luego pega el paquete en una conversación nueva y pregunta «¿cuál es la siguiente tarea?»: la respuesta debe coincidir con el punto 5.</p>
+</div>
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m1-8-t1-p4" data-sum="porque">Muchas de las respuestas deficientes que la gente atribuye a una «IA tonta» se deben a conversaciones confusas: temas mezclados, reglas olvidadas porque quedaron fuera de la ventana, demasiados archivos. Entender la ventana te permite organizar el trabajo en conversaciones claras, y la calidad mejora sin cambiar de herramienta.</p>
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Ventana de contexto</div><div class="text-xs text-neutral-400">lo que cabe de una vez</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Token</div><div class="text-xs text-neutral-400">la unidad de la ventana</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Conversación clara</div><div class="text-xs text-neutral-400">un tema por conversación</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Paquete de contexto</div><div class="text-xs text-neutral-400">resumen para empezar de nuevo</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 2 -->
+<section class="mb-16" data-inema-topic="modulo-1-8#topico-2" id="topico-2" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="a IA respondendo com base no que é seu">📚 Conversar con tus documentos</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m1-8-t2-p1">El modelo sabe mucho sobre el mundo, pero no sabe nada sobre <strong class="text-neutral-100">tu empresa</strong>: tu catálogo, el manual del equipo, los contratos, las preguntas que más hacen los clientes. La solución no es entrenar un modelo nuevo. Es darle, en el momento de la pregunta, los fragmentos correctos de tus documentos y pedirle que responda <strong class="text-emerald-400">solo con base en ellos</strong>.</p>
+<div class="bg-dark-800 border border-emerald-500/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-emerald-400 font-semibold mb-1">🌱 ¿Nuevo aquí?</p>
+<p class="text-sm text-neutral-300" data-inema-block="m1-8-t2-p2"><strong>RAG</strong> (del inglés <em>Retrieval-Augmented Generation</em>, generación aumentada por búsqueda) es el nombre técnico de esta idea: primero <strong>buscar</strong> los fragmentos relevantes y después <strong>generar</strong> la respuesta con ellos. No necesitas configurar nada para usarlo: las funciones de «proyectos» de ChatGPT y Claude, los Gems de Gemini y NotebookLM, de Google, ya hacen esto cuando subes archivos.</p>
+</div>
+<div class="bg-gradient-to-br from-emerald-900/30 to-dark-800 rounded-xl border border-emerald-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">Consiste en hacer que la IA consulte tus archivos antes de responder: el sistema divide los documentos en fragmentos, encuentra los que se relacionan con la pregunta y se los entrega al modelo junto con ella. Así, la respuesta se basa en lo que es tuyo y señala la fuente.</p>
+</div>
+<!-- SVG 2: fluxo RAG -->
+<figure class="svg-frame rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="Flujo de preguntas sobre documentos propios: tus documentos se dividen en fragmentos; tu pregunta y los fragmentos se envían a una búsqueda que selecciona los fragmentos relevantes; el modelo solo lee esos fragmentos y devuelve una respuesta que cita la fuente." class="w-full h-auto" role="img" viewbox="0 0 900 280">
+<rect fill="url(#m18-grid)" height="280" width="900"></rect>
+<g font-family="Inter,sans-serif">
+<rect fill="#0f1f18" height="64" rx="12" stroke="#34d399" stroke-width="2" width="180" x="20" y="36"></rect>
+<text fill="#ecfdf5" font-size="15" font-weight="700" text-anchor="middle" x="110" y="63">tus documentos</text>
+<text fill="#a7f3d0" font-size="12" text-anchor="middle" x="110" y="84">PDF · hoja de cálculo · sitio web</text>
+<path class="m18-flow" d="M202,68 L262,68" fill="none" marker-end="url(#m18-ah)" stroke="#34d399" stroke-width="2.5"></path>
+<rect fill="#0f1f18" height="64" rx="12" stroke="#34d399" stroke-width="2" width="180" x="268" y="36"></rect>
+<text fill="#ecfdf5" font-size="15" font-weight="700" text-anchor="middle" x="358" y="63">fragmentos</text>
+<text fill="#a7f3d0" font-size="12" text-anchor="middle" x="358" y="84">partes de 1 a 2 párrafos</text>
+<rect fill="#0f1f18" height="64" rx="12" stroke="#34d399" stroke-width="2" width="180" x="20" y="186"></rect>
+<text fill="#ecfdf5" font-size="15" font-weight="700" text-anchor="middle" x="110" y="213">tu pregunta</text>
+<text fill="#a7f3d0" font-size="12" text-anchor="middle" x="110" y="234">«¿Cuál es el plazo para cambiarlo?»</text>
+<path class="m18-flow" d="M448,90 L500,124" fill="none" marker-end="url(#m18-ah)" stroke="#34d399" stroke-width="2.5"></path>
+<path class="m18-flow" d="M202,218 L500,168" fill="none" marker-end="url(#m18-ah)" stroke="#34d399" stroke-width="2.5"></path>
+<rect fill="#0e1b26" height="64" rx="12" stroke="#38bdf8" stroke-width="2.5" width="170" x="506" y="114"></rect>
+<text fill="#e0f2fe" font-size="15" font-weight="700" text-anchor="middle" x="591" y="141">búsqueda</text>
+<text fill="#bae6fd" font-size="12" text-anchor="middle" x="591" y="162">separa los fragmentos correctos</text>
+<path class="m18-flow" d="M678,146 L712,146" fill="none" marker-end="url(#m18-ahc)" stroke="#38bdf8" stroke-width="2.5"></path>
+<rect fill="#0e1b26" height="64" rx="12" stroke="#38bdf8" stroke-width="2.5" width="162" x="718" y="114"></rect>
+<text fill="#e0f2fe" font-size="15" font-weight="700" text-anchor="middle" x="799" y="141">modelo</text>
+<text fill="#bae6fd" font-size="12" text-anchor="middle" x="799" y="162">lee solo esos fragmentos</text>
+<path class="m18-flow" d="M799,180 L799,206" fill="none" marker-end="url(#m18-ahc)" stroke="#38bdf8" stroke-width="2.5"></path>
+<rect fill="#0e1b26" filter="url(#m18-glow)" height="52" rx="12" stroke="#38bdf8" stroke-width="2.5" width="230" x="650" y="212"></rect>
+<text fill="#e0f2fe" font-size="14" font-weight="700" text-anchor="middle" x="765" y="235">respuesta + fuente</text>
+<text fill="#bae6fd" font-size="12" text-anchor="middle" x="765" y="253">«Política de cambios, apartado 3»</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-emerald-400">Cómo leer:</strong> sigue las flechas. El modelo no lee toda la carpeta; recibe solo los fragmentos que eligió la búsqueda. Si la búsqueda trae el fragmento equivocado, la respuesta también será incorrecta, aunque el modelo sea excelente; por eso debes revisar la fuente citada al final.</figcaption>
+</figure>
+<div class="overflow-x-auto mb-6">
+<table class="w-full text-sm border border-dark-600 rounded-xl overflow-hidden">
+<thead><tr class="bg-dark-700"><th class="text-left p-3 text-emerald-400">Dónde hacerlo</th><th class="text-left p-3 text-emerald-400">Ideal para</th><th class="text-left p-3 text-emerald-400">Cuidado</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr><td class="p-3 font-semibold">Adjuntar en la conversación</td><td class="p-3 text-neutral-300">Uno o pocos archivos, una pregunta puntual.</td><td class="p-3 text-neutral-300">Desaparece cuando termina la conversación.</td></tr>
+<tr><td class="p-3 font-semibold">Proyectos / Gems</td><td class="p-3 text-neutral-300">Archivos fijos que usas cada semana, con instrucciones guardadas.</td><td class="p-3 text-neutral-300">Actualízalos cuando cambie el documento.</td></tr>
+<tr><td class="p-3 font-semibold">NotebookLM</td><td class="p-3 text-neutral-300">Estudiar un conjunto de fuentes, con citas en las que puedes hacer clic.</td><td class="p-3 text-neutral-300">Responde solo sobre las fuentes que subiste.</td></tr>
+<tr><td class="p-3 font-semibold">Sistema propio (Ruta 2)</td><td class="p-3 text-neutral-300">Miles de documentos, atención a clientes.</td><td class="p-3 text-neutral-300">Requiere un equipo técnico y cuidado con la LGPD.</td></tr>
+</tbody>
+</table>
+</div>
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-emerald-400">Prueba:</strong> <span class="text-neutral-300">Adjunta un documento tuyo (manual, política, contrato) y haz preguntas que requieran citar la fuente.</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copiar</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900">Usa ÚNICAMENTE el documento adjunto para responder. Reglas:
+- Para cada afirmación, cita el fragmento exacto entre comillas e indica la sección o página.
+- Si la respuesta no está en el documento, escribe «No lo encontré en el documento» y detente.
+- No completes la respuesta con conocimientos generales.
+
+Mis preguntas:
+1. &lt;pregunta cuya respuesta ya conoces, para probar&gt;
+2. &lt;pregunta que quieres responder&gt;
+3. &lt;pregunta cuya respuesta NO está en el documento, para probar&gt;</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">Cómo verificar:</strong> La respuesta a la pregunta 1 debe coincidir con lo que ya sabes; busca el fragmento citado en el archivo con Ctrl+F. La pregunta 3 debe recibir «No lo encontré». Si la IA inventa una respuesta, no confíes en este flujo sin una revisión manual.</p>
+</div>
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m1-8-t2-p3" data-sum="porque">Es el uso que más tiempo ahorra en el trabajo cotidiano: encontrar una cláusula, responder la duda de un cliente con la política correcta, estudiar una convocatoria. También es lo que más reduce las invenciones, porque la respuesta señala la fuente. Antes de pegar datos personales de clientes, recuerda la LGPD: usa cuentas con condiciones de uso adecuadas y anonimiza los datos cuando puedas.</p>
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">RAG</div><div class="text-xs text-neutral-400">buscar y después generar</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Fragmento</div><div class="text-xs text-neutral-400">parte del documento</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Cita</div><div class="text-xs text-neutral-400">la prueba de la respuesta</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Proyecto</div><div class="text-xs text-neutral-400">archivos + instrucciones guardados</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 3 -->
+<section class="mb-16" data-inema-topic="modulo-1-8#topico-3" id="topico-3" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="achar pelo sentido, não pela palavra">🧭 Búsqueda por significado</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m1-8-t3-p1">¿Cómo sabe la búsqueda del tema anterior que el fragmento «plazo de devolución» responde a la pregunta «¿puedo cambiar la prenda?», si las palabras son diferentes? No compara palabras: compara <strong class="text-neutral-100">significados</strong>. Cada fragmento se convierte en una lista de números que representa su sentido, y los textos con significados parecidos tienen números parecidos.</p>
+<div class="bg-dark-800 border border-emerald-500/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-emerald-400 font-semibold mb-1">🌱 ¿Nuevo aquí?</p>
+<p class="text-sm text-neutral-300" data-inema-block="m1-8-t3-p2"><strong>Embedding</strong> es esa lista de números que representa el sentido de un texto (o de una imagen). Imagina un mapa: cada texto se convierte en un punto, y los puntos vecinos hablan de cosas parecidas. <strong>Búsqueda semántica</strong> es buscar los puntos vecinos al de tu pregunta. <strong>Base de datos vectorial</strong> es el archivo que guarda esos puntos para que la búsqueda sea rápida.</p>
+</div>
+<div class="bg-gradient-to-br from-emerald-900/30 to-dark-800 rounded-xl border border-emerald-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">La búsqueda por significado encuentra información según el sentido de la pregunta, incluso cuando las palabras no coinciden. Es la pieza que permite «conversar con tus documentos», recomendar productos y hacer búsquedas internas en muchos sistemas.</p>
+</div>
+<!-- SVG 3: mapa de significados -->
+<figure class="svg-frame rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="Mapa de significados con tres grupos de puntos: animales (perro, gato, mascota), pagos (recibo, factura, pago) y viajes (viaje, playa, vacaciones). La búsqueda «animal de compañía» cae cerca del grupo de los animales, aunque no use ninguna de esas palabras." class="w-full h-auto" role="img" viewbox="0 0 900 300">
+<rect fill="url(#m18-grid)" height="300" width="900"></rect>
+<g fill="none" stroke-width="2">
+<ellipse cx="185" cy="122" rx="95" ry="60" stroke="#34d399" stroke-opacity="0.6"></ellipse>
+<ellipse cx="475" cy="225" rx="100" ry="50" stroke="#34d399" stroke-opacity="0.6"></ellipse>
+<ellipse cx="730" cy="110" rx="95" ry="55" stroke="#34d399" stroke-opacity="0.6"></ellipse>
+<path class="m18-flow" d="M322,147 L286,128" stroke="#38bdf8"></path>
+</g>
+<g font-family="Inter,sans-serif" font-size="14">
+<circle cx="150" cy="90" fill="#34d399" r="5"></circle><text fill="#ecfdf5" x="160" y="95">perro</text>
+<circle cx="200" cy="130" fill="#34d399" r="5"></circle><text fill="#ecfdf5" x="210" y="135">gato</text>
+<circle cx="140" cy="150" fill="#34d399" r="5"></circle><text fill="#ecfdf5" x="150" y="155">mascota</text>
+<circle cx="425" cy="205" fill="#34d399" r="5"></circle><text fill="#ecfdf5" x="435" y="210">recibo</text>
+<circle cx="490" cy="228" fill="#34d399" r="5"></circle><text fill="#ecfdf5" x="500" y="233">factura</text>
+<circle cx="430" cy="250" fill="#34d399" r="5"></circle><text fill="#ecfdf5" x="440" y="255">pago</text>
+<circle cx="690" cy="85" fill="#34d399" r="5"></circle><text fill="#ecfdf5" x="700" y="90">viaje</text>
+<circle cx="750" cy="115" fill="#34d399" r="5"></circle><text fill="#ecfdf5" x="760" y="120">playa</text>
+<circle cx="690" cy="140" fill="#34d399" r="5"></circle><text fill="#ecfdf5" x="700" y="145">vacaciones</text>
+<circle cx="330" cy="150" fill="#38bdf8" filter="url(#m18-glow)" r="8"></circle>
+<text fill="#7dd3fc" font-weight="700" x="345" y="155">búsqueda: «mascota»</text>
+<text fill="#a7f3d0" font-size="12" text-anchor="middle" x="185" y="48">animales</text>
+<text fill="#a7f3d0" font-size="12" text-anchor="middle" x="625" y="230">pagos</text>
+<text fill="#a7f3d0" font-size="12" text-anchor="middle" x="730" y="45">viaje</text>
+<text fill="#94a3b8" font-size="11" text-anchor="middle" x="690" y="288">(ilustrativo: el mapa real tiene cientos de dimensiones)</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-emerald-400">Cómo leer:</strong> cada punto es un texto. La distancia entre puntos mide la diferencia de significado. El punto azul es tu pregunta: queda junto a «mascota» y «perro», así que la búsqueda devuelve esos textos, aunque la pregunta no use ninguna de esas palabras.</figcaption>
+</figure>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-4"><p class="text-emerald-400 font-semibold text-sm mb-1">🔤 Búsqueda por palabra</p><p class="text-xs text-neutral-300" data-inema-block="m1-8-t3-p3">Encuentra «recibo» solo cuando escribes «recibo». Es excelente para códigos, nombres y números exactos.</p></div>
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-4"><p class="text-emerald-400 font-semibold text-sm mb-1">🧭 Búsqueda por significado</p><p class="text-xs text-neutral-300" data-inema-block="m1-8-t3-p4">Encuentra «factura vencida» cuando preguntas «cuenta atrasada». Es excelente para preguntas en lenguaje natural.</p></div>
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-4"><p class="text-emerald-400 font-semibold text-sm mb-1">🔀 Búsqueda híbrida</p><p class="text-xs text-neutral-300" data-inema-block="m1-8-t3-p5">Combina las dos. Es lo que usan los buenos sistemas para no perder ni el significado ni el número exacto.</p></div>
+</div>
+<div class="bg-primary/10 border border-primary/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-primary font-semibold mb-1">💡 Consejo</p>
+<p class="text-sm text-neutral-300" data-inema-block="m1-8-t3-p6">Cuando una función de «conversar con tus documentos» se equivoca, el culpable suele ser la búsqueda, no el modelo. Prueba reformular la pregunta con las palabras que usa el propio documento o indicar la sección. Si mejora, encontraste el problema.</p>
+</div>
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m1-8-t3-p7" data-sum="porque">No vas a programar embeddings en la Ruta 1, pero saber que existen explica por qué a veces la IA encuentra la respuesta correcta con palabras diferentes y por qué a veces trae un fragmento parecido, pero equivocado. Con esto, sabes cómo pedir mejor y qué exigirle a un proveedor que promete «IA entrenada con tus documentos».</p>
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Embedding</div><div class="text-xs text-neutral-400">sentido en números</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Búsqueda semántica</div><div class="text-xs text-neutral-400">busca por significado</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Base de datos vectorial</div><div class="text-xs text-neutral-400">guarda los puntos</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Búsqueda híbrida</div><div class="text-xs text-neutral-400">significado + palabra exacta</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 4 -->
+<section class="mb-16" data-inema-topic="modulo-1-8#topico-4" id="topico-4" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="pensar antes de responder">🧠 Modelos que razonan</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m1-8-t4-p1">Desde 2024, los principales asistentes incorporaron una segunda forma de responder. En el modo común, el modelo escribe la respuesta de una sola vez. En el modo de <strong class="text-emerald-400">razonamiento</strong>, primero escribe un borrador interno: divide el problema en etapas, prueba caminos, verifica cálculos y solo entonces responde. En las herramientas, esto aparece como «pensar», «pensamiento extendido», «razonamiento» o un selector de esfuerzo.</p>
+<div class="bg-gradient-to-br from-emerald-900/30 to-dark-800 rounded-xl border border-emerald-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">Un modelo que razona dedica más tiempo y usa más tokens antes de responder para planificar, intentar y verificar. Funciona mejor en problemas de varias etapas —cálculos, lógica, planificación, código— y es más lento y más costoso en tareas sencillas.</p>
+</div>
+<!-- SVG 4: rápido x raciocínio -->
+<figure class="svg-frame rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="Dos caminos de la pregunta a la respuesta. En el modo rápido, la pregunta va directo a la respuesta. En el modo de razonamiento, la pregunta pasa por planificar, intentar y verificar, con una flecha que vuelve de verificar a intentar cuando encuentra un error, antes de llegar a la respuesta." class="w-full h-auto" role="img" viewbox="0 0 900 250">
+<rect fill="url(#m18-grid)" height="250" width="900"></rect>
+<g font-family="Inter,sans-serif" font-size="14" font-weight="700" text-anchor="middle">
+<rect fill="#0f1f18" height="44" rx="10" stroke="#34d399" stroke-width="2" width="140" x="20" y="50"></rect>
+<text fill="#ecfdf5" x="90" y="77">pregunta</text>
+<path class="m18-flow" d="M162,72 L732,72" fill="none" marker-end="url(#m18-ah)" stroke="#34d399" stroke-width="2.5"></path>
+<text fill="#a7f3d0" font-size="13" font-weight="500" x="450" y="60">modo rápido: responde directamente</text>
+<rect fill="#0f1f18" height="44" rx="10" stroke="#34d399" stroke-width="2" width="140" x="740" y="50"></rect>
+<text fill="#ecfdf5" x="810" y="77">respuesta</text>
+<rect fill="#0e1b26" height="44" rx="10" stroke="#38bdf8" stroke-width="2" width="140" x="20" y="160"></rect>
+<text fill="#e0f2fe" x="90" y="187">pregunta</text>
+<rect fill="#0e1b26" height="44" rx="10" stroke="#38bdf8" stroke-width="2" width="140" x="200" y="160"></rect>
+<text fill="#e0f2fe" x="270" y="187">planifica</text>
+<rect fill="#0e1b26" height="44" rx="10" stroke="#38bdf8" stroke-width="2" width="140" x="380" y="160"></rect>
+<text fill="#e0f2fe" x="450" y="187">intenta</text>
+<rect fill="#0e1b26" height="44" rx="10" stroke="#38bdf8" stroke-width="2" width="140" x="560" y="160"></rect>
+<text fill="#e0f2fe" x="630" y="187">verifica</text>
+<rect fill="#0e1b26" filter="url(#m18-glow)" height="44" rx="10" stroke="#38bdf8" stroke-width="2.5" width="140" x="740" y="160"></rect>
+<text fill="#e0f2fe" x="810" y="187">respuesta</text>
+<path d="M162,182 L194,182" fill="none" marker-end="url(#m18-ahc)" stroke="#38bdf8" stroke-width="2.5"></path>
+<path d="M342,182 L374,182" fill="none" marker-end="url(#m18-ahc)" stroke="#38bdf8" stroke-width="2.5"></path>
+<path d="M522,182 L554,182" fill="none" marker-end="url(#m18-ahc)" stroke="#38bdf8" stroke-width="2.5"></path>
+<path d="M702,182 L734,182" fill="none" marker-end="url(#m18-ahc)" stroke="#38bdf8" stroke-width="2.5"></path>
+<path class="m18-flow" d="M630,158 C630,124 450,124 450,156" fill="none" marker-end="url(#m18-ahc)" stroke="#38bdf8" stroke-width="2"></path>
+<text fill="#7dd3fc" font-size="12" font-weight="500" x="540" y="118">encontró un error: vuelve y corrige</text>
+<text fill="#bae6fd" font-size="13" font-weight="500" x="450" y="236">modo de razonamiento: piensa por etapas (más lento y más costoso)</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-emerald-400">Cómo leer:</strong> La línea de arriba es el modo rápido, un solo salto. La de abajo es el razonamiento: más cuadros, más tiempo. La flecha curva es lo que marca la diferencia: el modelo verifica su propio trabajo y corrige antes de entregar. Aun así, puede equivocarse; verificar sigue siendo tu responsabilidad.</figcaption>
+</figure>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ Activa el razonamiento para</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-emerald-400">✓</span><span>Cálculos, presupuestos y comparación de propuestas.</span></li>
+<li class="flex items-start gap-2"><span class="text-emerald-400">✓</span><span>Planificar un proyecto con muchas dependencias.</span></li>
+<li class="flex items-start gap-2"><span class="text-emerald-400">✓</span><span>Analizar un contrato para buscar riesgos.</span></li>
+<li class="flex items-start gap-2"><span class="text-emerald-400">✓</span><span>Resolver un problema que ya salió mal una vez.</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ No hace falta para</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Reescribir un correo con un tono más cordial.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Traducir un párrafo o corregir el portugués.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Generar ideas para títulos o subtítulos.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Preguntas sencillas sobre hechos (y para consultar hechos, usa la búsqueda web).</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-emerald-400">Prueba:</strong> <span class="text-neutral-300">Resuelve el mismo problema en el modo rápido y en el modo de razonamiento, y compara.</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copiar</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900">Tengo dos propuestas y necesito elegir una.
+Propuesta A: &lt;precio, plazo, qué incluye, penalización, forma de pago&gt;
+Propuesta B: &lt;precio, plazo, qué incluye, penalización, forma de pago&gt;
+Mi contexto: &lt;presupuesto, urgencia, qué es innegociable&gt;
+
+1. Prepara una tabla que compare cada elemento.
+2. Calcula el costo total de cada una en 12 meses y muestra el cálculo paso a paso.
+3. Enumera los riesgos de cada una.
+4. Recomienda una y di en qué situación sería mejor la otra.
+5. Al final, vuelve a hacer los cálculos del punto 2 y di si encontraste algún error.</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">Cómo verificar:</strong> Vuelve a hacer uno de los cálculos con la calculadora. Compara las dos versiones: la del modo de razonamiento suele mostrar más pasos y detectar más detalles, pero lo que cuenta es que el cálculo dé el mismo resultado. Si las dos versiones no coinciden, esa discrepancia te muestra exactamente dónde debes revisar.</p>
+</div>
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m1-8-t4-p2" data-sum="porque">Elegir el modo adecuado ahorra tiempo y dinero: usar el razonamiento para todo hace que cada respuesta sea lenta; usar el modo rápido para todo puede hacer que recibas cálculos incorrectos en problemas difíciles. Saber cuándo activar «pensar» es una de las decisiones más sencillas y de mayor impacto en el uso diario.</p>
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Razonamiento</div><div class="text-xs text-neutral-400">pensar por etapas</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Esfuerzo</div><div class="text-xs text-neutral-400">cuánto piensa el modelo</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Autoverificación</div><div class="text-xs text-neutral-400">verificar antes de entregar</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Costo × calidad</div><div class="text-xs text-neutral-400">no todas las tareas lo requieren</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 5 -->
+<section class="mb-16" data-inema-topic="modulo-1-8#topico-5" id="topico-5" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="foto, tela, áudio e voz na mesma conversa">👁️ Ver, escuchar y hablar</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m1-8-t5-p1">Los asistentes de 2026 son <strong class="text-emerald-400">multimodales</strong>: además de texto, reciben fotos, capturas de pantalla, PDF escaneados, audio y, en algunos casos, video; también conversan por voz en tiempo real. En la práctica, esto reemplaza mucha escritura por un gesto: tomar una foto del recibo, mostrar la pantalla con el error, grabar la reunión.</p>
+<div class="bg-gradient-to-br from-emerald-900/30 to-dark-800 rounded-xl border border-emerald-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">Multimodal es el modelo que entiende y produce más de un tipo de contenido en la misma conversación: le muestras una imagen y preguntas por texto, o hablas y escuchas la respuesta. El modelo «lee» la imagen igual que lee las palabras y la transforma en fragmentos que puede procesar.</p>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-4"><p class="font-semibold mb-1">🧾 Foto de un documento</p><p class="text-xs text-neutral-400">Factura, receta, recibo de pago, matrícula: extraer datos para una tabla.</p></div>
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-4"><p class="font-semibold mb-1">🖥️ Captura de pantalla</p><p class="text-xs text-neutral-400">Mensaje de error, hoja de cálculo, panel: «¿qué quiere decir esto?».</p></div>
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-4"><p class="font-semibold mb-1">📈 Gráfico</p><p class="text-xs text-neutral-400">Pedir que interprete un gráfico y sus conclusiones, con los números que leyó.</p></div>
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-4"><p class="font-semibold mb-1">🎙️ Audio</p><p class="text-xs text-neutral-400">Transcribir y resumir reuniones, clases y mensajes de voz.</p></div>
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-4"><p class="font-semibold mb-1">🗣️ Conversación por voz</p><p class="text-xs text-neutral-400">Practicar una presentación, practicar otro idioma, pensar en voz alta.</p></div>
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-4"><p class="font-semibold mb-1">📷 Cámara en vivo</p><p class="text-xs text-neutral-400">Mostrar un equipo y pedir instrucciones paso a paso.</p></div>
+</div>
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-emerald-400">Prueba:</strong> <span class="text-neutral-300">Toma una foto de una factura o un recibo tuyo y adjúntala con esta solicitud.</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copiar</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900">Lee la imagen adjunta (factura o recibo).
+Prepara una tabla con: Fecha | Establecimiento | Artículo | Cantidad | Valor unitario | Valor total.
+Después:
+1. Suma los valores de los artículos y compáralos con el total impreso en la factura.
+2. Marca con [ILEGIBLE] cualquier campo que no hayas podido leer con certeza.
+3. No deduzcas valores que no aparecen en la imagen.
+Categoría de gasto que quiero usar: &lt;p. ej., alimentación, material de oficina&gt;</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">Cómo verificar:</strong> Verifica tres filas de la tabla con la foto y compara la suma del punto 1 con el total impreso. Si la suma no coincide y la IA no te avisa, leyó mal algún número. Las fotos torcidas o con sombra aumentan el error: vuelve a tomar la foto antes de culpar al modelo.</p>
+</div>
+<div class="bg-primary/10 border border-primary/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-primary font-semibold mb-1">💡 Consejo</p>
+<p class="text-sm text-neutral-300" data-inema-block="m1-8-t5-p2">Antes de enviar una captura de pantalla o una foto de un documento, fíjate en qué más aparece: nombres de clientes, CPF, saldo bancario, conversaciones de otras personas. Recorta solo lo necesario. La LGPD también se aplica a las imágenes.</p>
+</div>
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m1-8-t5-p3" data-sum="porque">Gran parte del trabajo de oficina consiste en copiar información de un papel o una pantalla a otro lugar. La IA multimodal hace una primera pasada de ese trabajo en segundos, y la voz permite usar la IA cuando tienes las manos ocupadas. La mejora se nota desde la primera semana, siempre que verifiques los números.</p>
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Multimodal</div><div class="text-xs text-neutral-400">varios tipos de entrada</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Visión</div><div class="text-xs text-neutral-400">leer fotos y pantallas</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Transcripción</div><div class="text-xs text-neutral-400">el audio se convierte en texto</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Voz en tiempo real</div><div class="text-xs text-neutral-400">conversación hablada</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 6 -->
+<section class="mb-16" data-inema-topic="modulo-1-8#topico-6" id="topico-6" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="modelos que rodam sem internet">💻 IA en tu computadora</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m1-8-t6-p1">ChatGPT, Claude y Gemini funcionan en los servidores de las empresas: lo que escribes viaja por internet. Hay otra opción: descargar un <strong class="text-emerald-400">modelo abierto</strong> y ejecutarlo en tu propia computadora. Programas gratuitos como <strong class="text-neutral-100">Ollama</strong> e o <strong class="text-neutral-100">LM Studio</strong> hacen que la instalación sea parecida a la de cualquier otra aplicación.</p>
+<div class="bg-dark-800 border border-emerald-500/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-emerald-400 font-semibold mb-1">🌱 ¿Nuevo aquí?</p>
+<p class="text-sm text-neutral-300" data-inema-block="m1-8-t6-p2"><strong>Modelo abierto</strong> es un modelo cuyo archivo la empresa puso a disposición para descargar, como las familias Llama, Qwen y Gemma. <strong>Ejecutarlo localmente</strong> es usar ese archivo en tu computadora, sin enviar nada afuera. <strong>Memoria (RAM o de video)</strong> es lo que más limita: los modelos más grandes necesitan más memoria; los pequeños funcionan en computadoras portátiles comunes, más despacio y con menos calidad que los grandes de la nube.</p>
+</div>
+<div class="bg-gradient-to-br from-emerald-900/30 to-dark-800 rounded-xl border border-emerald-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">La IA local es un modelo de lenguaje que funciona en tu propio equipo. Los datos no salen de la computadora, funciona sin internet y no tiene una cuota mensual. A cambio, los modelos que caben en una computadora común son más pequeños y se equivocan más que los grandes servicios en la nube.</p>
+</div>
+<!-- SVG 5: nuvem x local -->
+<figure class="svg-frame rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="Comparación lado a lado. A la izquierda, IA en la nube: el texto sale de tu computadora, pasa por internet y llega al servidor de la empresa, donde se ejecuta un modelo grande. A la derecha, IA local: el modelo más pequeño se ejecuta dentro de tu computadora y los datos no salen del equipo." class="w-full h-auto" role="img" viewbox="0 0 900 250">
+<rect fill="url(#m18-grid)" height="250" width="900"></rect>
+<g font-family="Inter,sans-serif" text-anchor="middle">
+<rect fill="none" height="170" rx="16" stroke="#38bdf8" stroke-opacity="0.6" stroke-width="2" width="400" x="20" y="40"></rect>
+<text fill="#7dd3fc" font-size="15" font-weight="700" x="220" y="70">Nube (ChatGPT, Claude, Gemini)</text>
+<rect fill="#0e1b26" height="50" rx="10" stroke="#38bdf8" stroke-width="2" width="110" x="40" y="100"></rect>
+<text fill="#e0f2fe" font-size="13" font-weight="700" x="95" y="130">tu PC</text>
+<path class="m18-flow" d="M152,125 L276,125" fill="none" marker-end="url(#m18-ahc)" stroke="#38bdf8" stroke-width="2.5"></path>
+<text fill="#bae6fd" font-size="12" x="214" y="114">internet</text>
+<rect fill="#0e1b26" filter="url(#m18-glow)" height="50" rx="10" stroke="#38bdf8" stroke-width="2.5" width="120" x="282" y="100"></rect>
+<text fill="#e0f2fe" font-size="13" font-weight="700" x="342" y="122">servidor</text>
+<text fill="#bae6fd" font-size="11" x="342" y="139">modelo grande</text>
+<text fill="#bae6fd" font-size="12" x="220" y="190">más potente · depende de internet y de los términos del servicio</text>
+<rect fill="none" height="170" rx="16" stroke="#34d399" stroke-opacity="0.7" stroke-width="2" width="400" x="480" y="40"></rect>
+<text fill="#34d399" font-size="15" font-weight="700" x="680" y="70">Local (Ollama, LM Studio)</text>
+<rect fill="#0f1f18" height="66" rx="12" stroke="#34d399" stroke-width="2" width="250" x="555" y="94"></rect>
+<text fill="#ecfdf5" font-size="14" font-weight="700" x="680" y="120">tu computadora</text>
+<rect fill="#10b981" fill-opacity="0.2" filter="url(#m18-glow)" height="22" rx="6" stroke="#34d399" width="170" x="595" y="128"></rect>
+<text fill="#a7f3d0" font-size="12" x="680" y="144">un modelo más pequeño funciona aquí</text>
+<text fill="#a7f3d0" font-size="12" x="680" y="190">los datos no salen del equipo · sin cuota mensual</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-emerald-400">Cómo leer:</strong> compara el recorrido de los datos. A la izquierda, el texto atraviesa internet hasta llegar a la empresa; a la derecha, todo queda dentro de la caja verde. La elección no es «cuál es mejor», sino «qué importa más en esta tarea»: potencia (nube) o privacidad e independencia (local).</figcaption>
+</figure>
+<div class="relative border-l-2 border-emerald-500/30 ml-3 pl-6 space-y-5 mb-6">
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-emerald-500/20 border-2 border-emerald-400"></span><p class="text-sm text-neutral-300"><strong class="text-emerald-400">Paso 1.</strong> Descarga Ollama desde el sitio oficial (ollama.com) e instálalo como cualquier otro programa. En Windows y Mac hay un instalador; en Linux, el sitio muestra un comando.</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-emerald-500/20 border-2 border-emerald-400"></span><p class="text-sm text-neutral-300"><strong class="text-emerald-400">Paso 2.</strong> Abre la Terminal (Mac/Linux) o el Símbolo del sistema (Windows) y pega el comando de abajo. La primera vez descarga el modelo, lo que tarda unos minutos.</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-emerald-500/20 border-2 border-emerald-400"></span><p class="text-sm text-neutral-300"><strong class="text-emerald-400">Paso 3.</strong> Cuando aparezca el símbolo &gt;&gt;&gt;, escribe tu pregunta. Para salir, escribe /bye.</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-emerald-500/20 border-2 border-emerald-400"></span><p class="text-sm text-neutral-300"><strong class="text-emerald-400">Paso 4.</strong> Desactiva el Wi-Fi y vuelve a preguntar. Si responde, tienes una IA que funciona sin internet.</p></div>
+</div>
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-emerald-400">Prueba:</strong> <span class="text-neutral-300">ejecutar un modelo pequeño y gratuito en tu computadora (después de instalar Ollama).</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copiar</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900">ollama run llama3.2
+
+# cuando aparezca &gt;&gt;&gt;, pega:
+Resume en 3 puntos el siguiente texto y di cuál es la acción más urgente:
+&lt;pega aquí un texto tuyo, como un correo largo o el acta de una reunión&gt;</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">Cómo verificar:</strong> ejecuta el comando <code>ollama list</code> y revisa el modelo instalado. Pega el mismo texto en un asistente en la nube y compara los dos resúmenes: el local suele ser más sencillo, y tú decides si es suficiente para este tipo de tarea. Si la computadora se pone muy lenta, cambia a un modelo más pequeño.</p>
+</div>
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m1-8-t6-p3" data-sum="porque">Hay tareas en las que los datos no pueden salir de casa: historiales clínicos, expedientes, datos financieros de clientes. Para ellas, la IA local es la opción que protege la privacidad sin renunciar a la ayuda. Y saber que existe te libera de depender de una sola empresa: si un servicio cambia de precio o de reglas, tienes una alternativa.</p>
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Modelo abierto</div><div class="text-xs text-neutral-400">archivo disponible para descargar</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Ollama</div><div class="text-xs text-neutral-400">ejecuta modelos localmente</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Memoria</div><div class="text-xs text-neutral-400">limita el tamaño del modelo</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Privacidad</div><div class="text-xs text-neutral-400">los datos no salen del equipo</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 7 -->
+<section class="mb-16" data-inema-topic="modulo-1-8#topico-7" id="topico-7" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">7</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="prompt, documentos, raciocínio, local ou ajuste fino">🧰 Qué recurso usar</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m1-8-t7-p1">Con tantas opciones, la tentación es usar la más sofisticada. El camino que funciona es el contrario: empieza por lo <strong class="text-neutral-100">más sencillo</strong> y pasa a algo más avanzado solo cuando falle. Un buen prompt resuelve la mayoría de los casos. Usa documentos cuando la respuesta dependa de información tuya. Usa el razonamiento cuando haya varios pasos. Usa la opción local cuando haya datos confidenciales.</p>
+<div class="bg-gradient-to-br from-emerald-900/30 to-dark-800 rounded-xl border border-emerald-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">Una forma de decidir qué recurso usar para cada tarea es responder tres preguntas: ¿la respuesta depende de información mía? ¿El problema tiene varios pasos? ¿Los datos pueden salir de mi equipo?</p>
+</div>
+<div class="overflow-x-auto mb-6">
+<table class="w-full text-sm border border-dark-600 rounded-xl overflow-hidden">
+<thead><tr class="bg-dark-700"><th class="text-left p-3 text-emerald-400">Situación</th><th class="text-left p-3 text-emerald-400">Recurso</th><th class="text-left p-3 text-emerald-400">Ejemplo</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr><td class="p-3 font-semibold">Tarea general, conocimiento común</td><td class="p-3 text-neutral-300">Buen prompt (módulo 1.3)</td><td class="p-3 text-neutral-300">Reescribir un correo, generar ideas.</td></tr>
+<tr><td class="p-3 font-semibold">Depende de tus archivos</td><td class="p-3 text-neutral-300">Documentos / proyectos</td><td class="p-3 text-neutral-300">Responder según la política de la empresa.</td></tr>
+<tr><td class="p-3 font-semibold">Información reciente</td><td class="p-3 text-neutral-300">Búsqueda web de la herramienta</td><td class="p-3 text-neutral-300">Reglas nuevas, precios actuales.</td></tr>
+<tr><td class="p-3 font-semibold">Varios pasos, cálculos, lógica</td><td class="p-3 text-neutral-300">Modo de razonamiento</td><td class="p-3 text-neutral-300">Comparar propuestas, planificar.</td></tr>
+<tr><td class="p-3 font-semibold">Foto, pantalla, audio</td><td class="p-3 text-neutral-300">Multimodal</td><td class="p-3 text-neutral-300">Extraer datos de facturas.</td></tr>
+<tr><td class="p-3 font-semibold">Datos confidenciales</td><td class="p-3 text-neutral-300">IA local</td><td class="p-3 text-neutral-300">Resumir documentos internos.</td></tr>
+<tr><td class="p-3 font-semibold">Estilo fijo en grandes volúmenes</td><td class="p-3 text-neutral-300">Ajuste fino (Ruta 2)</td><td class="p-3 text-neutral-300">Miles de respuestas con el mismo formato.</td></tr>
+</tbody>
+</table>
+</div>
+<div class="bg-dark-800 border border-emerald-500/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-emerald-400 font-semibold mb-1">🌱 ¿Nuevo aquí?</p>
+<p class="text-sm text-neutral-300" data-inema-block="m1-8-t7-p2"><strong>Ajuste fino</strong> (<em>fine-tuning</em>) consiste en entrenar un poco más un modelo listo para usar con cientos o miles de ejemplos tuyos, para que aprenda un formato o un estilo. Sirve para enseñarle <strong>la manera de hacer algo</strong>, no para enseñarle <strong>hechos</strong>: para hechos que cambian, los documentos (tema 2) funcionan mejor y cuestan menos. Si tienes dudas, no empieces por aquí.</p>
+</div>
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-emerald-400">Objetivo:</strong> <span class="text-neutral-300">elegir el recurso adecuado para tres tareas reales de tu trabajo.</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copiar</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900">Eres un consultor que ayuda a personas sin conocimientos técnicos a usar IA en el trabajo.
+Estos son los recursos disponibles para mí:
+- prompt sencillo
+- conversar con documentos (proyectos, NotebookLM)
+- búsqueda en la web
+- modo de razonamiento
+- entrada por foto, pantalla o audio
+- IA local en mi computadora (Ollama)
+
+Mis tareas:
+1. &lt;tarea 1, con frecuencia y tipo de dato&gt;
+2. &lt;tarea 2&gt;
+3. &lt;tarea 3&gt;
+
+Para cada tarea, responde en una tabla:
+Tarea | Recurso más sencillo que la resuelve | Por qué | Riesgo (privacidad, error) | Prueba de 10 minutos
+Si falta información sobre alguna tarea, pregunta antes de responder.</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">Cómo verificar:</strong> para cada tarea, la recomendación debe ser el recurso más sencillo posible, no el más sofisticado. Si una tarea con datos de clientes no incluye ningún riesgo, pide que se reevalúe la privacidad. Haz una de las pruebas de 10 minutos hoy mismo.</p>
+</div>
+<div class="bg-primary/10 border border-primary/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-primary font-semibold mb-1">💡 Consejo</p>
+<p class="text-sm text-neutral-300" data-inema-block="m1-8-t7-p3">Los nombres de los recursos cambian: el «proyecto» de hoy puede convertirse en «espacio» mañana, y el botón de razonamiento puede pasar a ser automático. Recuerda las tres preguntas —información mía, varias etapas, confidencialidad— y reconocerás el recurso en cualquier herramienta.</p>
+</div>
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m1-8-t7-p4" data-sum="porque">Quien sabe elegir el recurso adecuado gasta menos, comete menos errores y no cae en promesas de proveedores que venden «IA entrenada solo para ti» cuando un proyecto con documentos bastaría. También es la base para el siguiente módulo, donde transformarás ese dominio en valor para otras personas.</p>
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Primero, lo más sencillo</div><div class="text-xs text-neutral-400">sube de nivel solo si falla</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Tres preguntas</div><div class="text-xs text-neutral-400">mis datos, etapas, confidencialidad</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Ajuste fino</div><div class="text-xs text-neutral-400">enseña el método, no los hechos</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Prueba breve</div><div class="text-xs text-neutral-400">10 minutos, una tarea real</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- RESUMO -->
+<section class="mb-8">
+<div class="bg-gradient-to-br from-emerald-900/40 via-dark-800 to-dark-800 rounded-xl border border-emerald-500/30 p-6 sm:p-8">
+<h2 class="text-2xl font-bold mb-6">✅ Resumen del módulo</h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start gap-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-neutral-100">La ventana de contexto es finita</strong><span class="text-neutral-400"> — un tema por conversación y un paquete de contexto para retomarla.</span></div></div>
+<div class="flex items-start gap-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-neutral-100">Tus documentos se convierten en fuente</strong><span class="text-neutral-400"> — primero busca, después responde, siempre con citas.</span></div></div>
+<div class="flex items-start gap-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-neutral-100">El razonamiento es para problemas con varias etapas</strong><span class="text-neutral-400"> — es más lento y más caro; no lo uses para todo.</span></div></div>
+<div class="flex items-start gap-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-neutral-100">Las fotos, el audio y la voz ahorran escritura</strong><span class="text-neutral-400"> — verifica los números que se hayan leído.</span></div></div>
+<div class="flex items-start gap-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-neutral-100">La IA local protege la confidencialidad</strong><span class="text-neutral-400"> — y el recurso adecuado es el más sencillo que resuelve la tarea.</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-emerald-400 mb-2">Siguiente módulo:</h3>
+<p class="text-neutral-300">1.9 — Negocios y monetización con IA 💼</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="index.html">← Volver a la Ruta</a>
+<a class="flex-1 text-center px-6 py-3 bg-emerald-700 text-white rounded-lg font-semibold hover:bg-emerald-600 transition-colors" href="modulo-1-9.html">Siguiente módulo →</a>
+</div>
+</div>
+</section>
+</article>
+</div>
+</div>
+</main>
+<footer class="border-t border-dark-600 py-8 mt-8">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>FTD — Formación en Transformación Digital · contenido abierto y gratuito · 2026 · <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" rel="noopener" target="_blank">INEMA.CLUB</a> - <a class="text-amber-700 dark:text-slate-300 hover:underline" href="https://inema.pro" rel="noopener" target="_blank">PRO</a></p>
+</div>
+</footer>
+<!-- SCRIPTS NÚCLEO v1 -->
+<script>
+    function toggleTopic(button) {
+      var topicItem = button.closest('.topic-item');
+      if (!topicItem) return;
+      var explanation = topicItem.querySelector('.topic-explanation');
+      var willOpen = !explanation.classList.contains('active');
+      explanation.classList.toggle('active');
+      button.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+    }
+    function openModal(id) { var m = document.getElementById(id); if (m) { m.classList.remove('hidden'); document.body.style.overflow = 'hidden'; } }
+    function closeModal() { document.querySelectorAll('.modal').forEach(function (m) { m.classList.add('hidden'); }); document.body.style.overflow = 'auto'; }
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
+    function copyCode(btn) {
+      var pre = btn.closest('[data-copy-box]').querySelector('pre');
+      var txt = pre ? pre.innerText : '';
+      var done = function () { var o = btn.getAttribute('data-label-ok') || 'Copiado'; var t = btn.textContent; btn.textContent = o; setTimeout(function () { btn.textContent = t; }, 1500); };
+      try { navigator.clipboard.writeText(txt).then(done, done); } catch (e) { done(); }
+    }
+    (function () {
+      var themeToggle = document.getElementById('theme-toggle');
+      var darkIcon = document.getElementById('theme-toggle-dark-icon');
+      var lightIcon = document.getElementById('theme-toggle-light-icon');
+      var html = document.documentElement;
+      function sync() { var isDark = html.classList.contains('dark'); if (darkIcon) darkIcon.classList.toggle('hidden', isDark); if (lightIcon) lightIcon.classList.toggle('hidden', !isDark); }
+      sync();
+      if (themeToggle) themeToggle.addEventListener('click', function () {
+        html.classList.toggle('dark'); var nowDark = html.classList.contains('dark'); html.style.colorScheme = nowDark ? 'dark' : 'light';
+        try { localStorage.setItem('theme', nowDark ? 'dark' : 'light'); } catch (e) {}
+        try { var p = JSON.parse(localStorage.getItem('inema.prefs') || '{}'); p.theme = nowDark ? 'inema-dark' : 'claro'; localStorage.setItem('inema.prefs', JSON.stringify(p)); } catch (e) {}
+        sync();
+      });
+    })();
+  </script>
+<!-- learn.js + INEMA.init() POR ÚLTIMO -->
+<script src="../../assets/learn.js"></script>
+<script>
+    if (window.INEMA && typeof window.INEMA.init === 'function') { window.INEMA.init({ autoResume: true }); }
+  </script>
+</body>
+</html>

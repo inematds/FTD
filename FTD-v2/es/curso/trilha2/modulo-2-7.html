@@ -1,0 +1,1263 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="ftd-v2-es" name="inema-course"/>
+<title>Módulo 2.7 · NLP y procesamiento de texto | FTD v2</title>
+<meta content="Tokenización, clasificación, extracción de entidades, resumen, búsqueda semántica y pipelines de texto con LLMs." name="description"/>
+<meta content="Módulo 2.7 · NLP y procesamiento de texto | FTD v2" property="og:title"/>
+<meta content="Tokenización, clasificación, extracción de entidades, resumen, búsqueda semántica y pipelines de texto con LLMs." property="og:description"/>
+<!-- ANTI-FOUC (Erro #18) — primeiro script do head -->
+<script>
+(function () {
+  try {
+    var html = document.documentElement;
+    var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+    function clone(o) { var r = {}; for (var x in o) r[x] = o[x]; return r; }
+    var p = clone(DEF);
+    try {
+      var raw = localStorage.getItem('inema.prefs');
+      if (raw) {
+        var parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === 'object') {
+          for (var k in DEF) if (parsed[k] != null) p[k] = parsed[k];
+        }
+      } else {
+        var legacy = localStorage.getItem('theme');
+        if (legacy === 'light') p.theme = 'claro';
+        else if (legacy === 'dark') p.theme = 'inema-dark';
+      }
+    } catch (e) { p = clone(DEF); }
+
+    var THEMES = {
+      'inema-dark': { dark: true,  attr: null,        cs: 'dark'  },
+      'claro':      { dark: false, attr: null,        cs: 'light' },
+      'sepia':      { dark: false, attr: 'sepia',     cs: 'light' },
+      'foco':       { dark: null,  attr: 'foco',      cs: null    },
+      'contraste':  { dark: true,  attr: 'contraste', cs: 'dark'  }
+    };
+    var t = THEMES[p.theme] || THEMES['inema-dark'];
+
+    if (t.dark === true) html.classList.add('dark');
+    else if (t.dark === false) html.classList.remove('dark');
+
+    if (t.attr) html.setAttribute('data-theme', t.attr);
+    else html.removeAttribute('data-theme');
+
+    html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark') ? 'dark' : 'light'));
+
+    html.setAttribute('data-font', p.font || 'inter');
+    html.setAttribute('data-accent', p.accent || 'emerald');
+
+    var s = html.style;
+    var scale = (+p.fontScale || 100);
+    s.setProperty('--inema-font-scale', (scale / 100).toString());
+    s.setProperty('font-size', scale + '%');
+    s.setProperty('--measure', (+p.lineWidth || 68) + 'ch');
+    s.setProperty('--lh-body', (+p.leading || 1.7).toString());
+    var fam = p.font === 'system'
+      ? 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif'
+      : (p.font === 'leitura'
+        ? '"Atkinson Hyperlegible", "Inter", system-ui, sans-serif'
+        : '"Inter", system-ui, sans-serif');
+    s.setProperty('--font-body', fam);
+
+    var ACC = {
+      emerald: [152, 76, 45], blue: [217, 91, 60], purple: [258, 90, 66],
+      amber: [38, 92, 50], teal: [174, 72, 41], rose: [350, 89, 60]
+    };
+    var a = ACC[p.accent] || ACC.emerald;
+    s.setProperty('--accent-h', a[0] + '');
+    s.setProperty('--accent-s', a[1] + '%');
+    s.setProperty('--accent-l', a[2] + '%');
+    s.setProperty('--accent', 'hsl(' + a[0] + ' ' + a[1] + '% ' + a[2] + '%)');
+  } catch (err) {
+    try { document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme = 'dark'; } catch (e) {}
+  }
+})();
+</script>
+<!-- MANIFESTO do curso (Erro #28) — idêntico em todas as páginas -->
+<script data-inema-manifest="" type="application/json">
+{
+  "course": "ftd-v2-es",
+  "tracks": [
+    {
+      "n": "1",
+      "title": "Principiante",
+      "modules": [
+        {
+          "id": "1-1",
+          "title": "Impacto de la IA",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-1.html"
+        },
+        {
+          "id": "1-2",
+          "title": "Navegar el mundo digital",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-2.html"
+        },
+        {
+          "id": "1-3",
+          "title": "Ingeniería de prompts",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-3.html"
+        },
+        {
+          "id": "1-4",
+          "title": "Asistentes y agentes de IA",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-4.html"
+        },
+        {
+          "id": "1-5",
+          "title": "Creatividad visual con IA",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-5.html"
+        },
+        {
+          "id": "1-6",
+          "title": "Marketing y ventas con IA",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-6.html"
+        },
+        {
+          "id": "1-7",
+          "title": "Automatización de procesos",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-7.html"
+        },
+        {
+          "id": "1-8",
+          "title": "Inteligencia artificial avanzada",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-8.html"
+        },
+        {
+          "id": "1-9",
+          "title": "Negocios y monetización con IA",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-9.html"
+        }
+      ]
+    },
+    {
+      "n": "2",
+      "title": "Técnico",
+      "modules": [
+        {
+          "id": "2-1",
+          "title": "Desarrollo con APIs de IA",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-1.html"
+        },
+        {
+          "id": "2-2",
+          "title": "Arquitectura de aplicaciones con IA",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-2.html"
+        },
+        {
+          "id": "2-3",
+          "title": "RAG y bases de conocimiento",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-3.html"
+        },
+        {
+          "id": "2-4",
+          "title": "Fine-tuning y personalización",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-4.html"
+        },
+        {
+          "id": "2-5",
+          "title": "Agentes y flujos de trabajo complejos",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-5.html"
+        },
+        {
+          "id": "2-6",
+          "title": "Visión artificial avanzada",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-6.html"
+        },
+        {
+          "id": "2-7",
+          "title": "NLP y procesamiento de texto",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-7.html"
+        },
+        {
+          "id": "2-8",
+          "title": "MLOps y producción",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-8.html"
+        },
+        {
+          "id": "2-9",
+          "title": "Ética y gobernanza de IA",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-9.html"
+        }
+      ]
+    },
+    {
+      "n": "3",
+      "title": "Masterclass",
+      "modules": [
+        {
+          "id": "3-1",
+          "title": "Arquitectura de IA a gran escala",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-1.html"
+        },
+        {
+          "id": "3-2",
+          "title": "Modelos personalizados y propietarios",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-2.html"
+        },
+        {
+          "id": "3-3",
+          "title": "IA multimodal avanzada",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-3.html"
+        },
+        {
+          "id": "3-4",
+          "title": "Investigación y artículos de IA",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-4.html"
+        },
+        {
+          "id": "3-5",
+          "title": "Aprendizaje por refuerzo en IA",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-5.html"
+        },
+        {
+          "id": "3-6",
+          "title": "Seguridad y red teaming",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-6.html"
+        },
+        {
+          "id": "3-7",
+          "title": "IA en producción — escala enterprise",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-7.html"
+        },
+        {
+          "id": "3-8",
+          "title": "Liderazgo y estrategia en IA",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-8.html"
+        },
+        {
+          "id": "3-9",
+          "title": "Futuro de la IA y AGI",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-9.html"
+        }
+      ]
+    }
+  ]
+}
+</script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#0c0c10', 800: '#16161e', 700: '#1e1e28', 600: '#272730', 500: '#33333f' } }, fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'], display: ['Sora', 'Inter', 'sans-serif'], mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'] } } } }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Sora:wght@600;700;800&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    h1, h2, h3, h4, .font-display { font-family: 'Sora', 'Inter', sans-serif; }
+    .dark body { background-color: #0c0c10; }
+    .dark .text-neutral-100 { color: #e9e9ee; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+    pre { white-space: pre-wrap; word-break: break-word; }
+    pre, code, .font-mono { font-family: 'JetBrains Mono', ui-monospace, monospace; }
+
+    /* Light mode — Parte 1: base */
+    html:not(.dark) body { background-color: #f6f7f9; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800\/50 { background-color: #f6f7f9; }
+    html:not(.dark) .bg-dark-700 { background-color: #eceef2; }
+    html:not(.dark) .bg-dark-700\/50 { background-color: #f1f2f5; }
+    html:not(.dark) .bg-dark-700\/30 { background-color: #f4f5f7; }
+    html:not(.dark) .bg-dark-600 { background-color: #e1e3ea; }
+    html:not(.dark) .hover\:bg-dark-600:hover { background-color: #d6d9e1; }
+    html:not(.dark) .hover\:bg-dark-700\/50:hover { background-color: #eceef2; }
+    html:not(.dark) .text-neutral-100 { color: #1a1a22; }
+    html:not(.dark) .text-neutral-200 { color: #26262f; }
+    html:not(.dark) .text-neutral-300 { color: #3f3f4a; }
+    html:not(.dark) .text-neutral-400 { color: #5b5b68; }
+    html:not(.dark) .text-neutral-500 { color: #62626e; }
+    html:not(.dark) .border-dark-600 { border-color: #e1e3ea; }
+    html:not(.dark) .border-dark-700 { border-color: #e8e9ee; }
+    html:not(.dark) .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #e1e3ea; }
+    html:not(.dark) .bg-black\/40 { background-color: #f1f2f5; }
+    html:not(.dark) pre.code-dark { background-color: #1a1a22; color: #e9e9ee; }
+
+    /* Light mode — Parte 2: acento das 3 trilhas (texto -700, nunca -400 no claro) */
+    html:not(.dark) .text-emerald-400 { color: #047857; }
+    html:not(.dark) .text-emerald-300 { color: #047857; }
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #047857; }
+    html:not(.dark) .bg-emerald-500\/20 { background-color: rgba(4,120,87,0.12); }
+    html:not(.dark) .bg-emerald-500\/10 { background-color: rgba(4,120,87,0.08); }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(4,120,87,0.08); }
+    html:not(.dark) .bg-emerald-900\/20 { background-color: rgba(4,120,87,0.07); }
+    html:not(.dark) .bg-emerald-900\/30 { background-color: rgba(4,120,87,0.08); }
+    html:not(.dark) .bg-emerald-900\/40 { background-color: rgba(4,120,87,0.09); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(4,120,87,0.28); }
+    html:not(.dark) .hover\:border-emerald-500\/30:hover { border-color: rgba(4,120,87,0.4); }
+    html:not(.dark) .text-blue-400 { color: #1d4ed8; }
+    html:not(.dark) .text-blue-300 { color: #1d4ed8; }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #1d4ed8; }
+    html:not(.dark) .bg-blue-500\/20 { background-color: rgba(29,78,216,0.12); }
+    html:not(.dark) .bg-blue-500\/10 { background-color: rgba(29,78,216,0.08); }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(29,78,216,0.08); }
+    html:not(.dark) .bg-blue-900\/20 { background-color: rgba(29,78,216,0.07); }
+    html:not(.dark) .bg-blue-900\/30 { background-color: rgba(29,78,216,0.08); }
+    html:not(.dark) .bg-blue-900\/40 { background-color: rgba(29,78,216,0.09); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(29,78,216,0.28); }
+    html:not(.dark) .hover\:border-blue-500\/30:hover { border-color: rgba(29,78,216,0.4); }
+    html:not(.dark) .text-purple-400 { color: #6d28d9; }
+    html:not(.dark) .text-purple-300 { color: #6d28d9; }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #6d28d9; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(109,40,217,0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(109,40,217,0.08); }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(109,40,217,0.08); }
+    html:not(.dark) .bg-purple-900\/20 { background-color: rgba(109,40,217,0.07); }
+    html:not(.dark) .bg-purple-900\/30 { background-color: rgba(109,40,217,0.08); }
+    html:not(.dark) .bg-purple-900\/40 { background-color: rgba(109,40,217,0.09); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(109,40,217,0.28); }
+    html:not(.dark) .hover\:border-purple-500\/30:hover { border-color: rgba(109,40,217,0.4); }
+
+    /* Light mode — Parte 3: gradientes + especiais */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #854d0e; }
+    html:not(.dark) .text-yellow-400 { color: #854d0e; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #713f12; }
+    html:not(.dark) .bg-primary\/10 { background-color: #FEF9C3; }
+    html:not(.dark) .border-primary\/30 { border-color: #EAB308; }
+    html:not(.dark) .text-red-400 { color: #b91c1c; }
+    html:not(.dark) .bg-red-900\/20 { background-color: rgba(185,28,28,0.07); }
+    html:not(.dark) .border-red-500\/30 { border-color: rgba(185,28,28,0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #075985; }
+    html:not(.dark) .bg-sky-900\/20 { background-color: rgba(3,105,161,0.07); }
+    html:not(.dark) .border-sky-500\/30 { border-color: rgba(3,105,161,0.25); }
+
+    /* Light mode — Parte 4: nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255,255,255,0.95); }
+
+    /* Parte 5: bordas suavizadas no DARK (Erro #15) */
+    .dark .border-dark-600 { border-color: #2a2a35; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #2a2a35; }
+
+    /* SVG: no claro, um fundo escuro emoldurado mantém o contraste do desenho */
+    html:not(.dark) .svg-frame { background-color: #12121a; }
+    @media (prefers-reduced-motion: reduce) { svg * { animation: none !important; transition: none !important; } }
+  </style>
+<link href="../../../assets/learn.css" rel="stylesheet"/>
+<link href="https://inematds.github.io/FTD/FTD-v2/curso/trilha2/modulo-2-7.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/FTD/FTD-v2/en/curso/trilha2/modulo-2-7.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/FTD/FTD-v2/es/curso/trilha2/modulo-2-7.html" hreflang="es" rel="alternate"/><link href="https://inematds.github.io/FTD/FTD-v2/curso/trilha2/modulo-2-7.html" hreflang="x-default" rel="alternate"/><link href="https://inematds.github.io/FTD/FTD-v2/es/curso/trilha2/modulo-2-7.html" rel="canonical"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(250,204,21,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha2/modulo-2-7.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="../../../en/curso/trilha2/modulo-2-7.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">EN</a><a href="modulo-2-7.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#FACC15">ES</a></div>
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14 gap-2">
+<!-- Logo + INEMA.CLUB -->
+<div class="flex items-center space-x-3 flex-shrink-0">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🚀</span>
+<span class="font-display font-bold text-lg hidden sm:inline">FTD</span>
+</a>
+<span class="text-neutral-600 hidden sm:inline">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium hidden sm:inline" href="https://inema.club" rel="noopener" target="_blank">INEMA.CLUB</a>
+<span class="text-neutral-600 hidden sm:inline">-</span>
+<a class="text-amber-700 dark:text-slate-300 hover:underline text-sm font-medium hidden sm:inline" href="https://inema.pro" rel="noopener" target="_blank">PRO</a>
+</div>
+<!-- Trilhas + controles de aprendizagem + theme toggle -->
+<div class="flex items-center gap-1 sm:gap-1.5">
+<a class="px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors whitespace-nowrap" href="../trilha1/index.html">
+<span class="lg:hidden">T1</span><span class="hidden lg:inline">Principiante</span>
+</a>
+<a class="px-2.5 py-1.5 rounded-lg text-sm font-semibold text-blue-400 bg-blue-500/10 whitespace-nowrap" href="index.html">
+<span class="lg:hidden">T2</span><span class="hidden lg:inline">Técnico</span>
+</a>
+<a class="px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors whitespace-nowrap" href="../trilha3/index.html">
+<span class="lg:hidden">T3</span><span class="hidden lg:inline">Masterclass</span>
+</a>
+<span class="w-px h-6 bg-dark-600 mx-1 hidden sm:inline-block"></span>
+<!-- Minha jornada (abre o painel global; badge = % do curso) -->
+<button class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-300 hover:text-neutral-100 hover:bg-dark-700 transition-colors" data-inema-journey-open="" type="button">
+<svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="16"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+<span class="hidden md:inline">Mi recorrido</span>
+<span class="inema-journey-badge" data-count="0" data-inema-journey-badge=""></span>
+</button>
+<!-- Aparência (gatilho + painel obrigatório) -->
+<div class="relative">
+<button aria-expanded="false" class="inema-appearance-trigger inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-300 hover:text-neutral-100 transition-colors" data-inema-appearance-toggle="#inema-appearance-panel" type="button">
+<svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="16"><circle cx="12" cy="12" r="9"></circle><path d="M12 3v18"></path><path d="M12 3a9 9 0 0 1 0 18" fill="currentColor"></path></svg>
+<span class="hidden md:inline">Apariencia</span>
+</button>
+<div class="inema-appearance-pop right-0" data-inema-appearance="" id="inema-appearance-panel">
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Tema</span>
+<div class="inema-segment">
+<button data-inema-set-theme="inema-dark" type="button">Oscuro</button>
+<button data-inema-set-theme="claro" type="button">Claro</button>
+<button data-inema-set-theme="sepia" type="button">Sepia</button>
+</div>
+<div class="inema-segment">
+<button data-inema-set-theme="foco" type="button">Enfoque</button>
+<button data-inema-set-theme="contraste" type="button">Alto contraste</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Fuente</span>
+<div class="inema-segment">
+<button data-inema-set-font="inter" type="button">Inter</button>
+<button data-inema-set-font="system" type="button">Sistema</button>
+<button data-inema-set-font="leitura" type="button">Lectura</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Tamaño</span>
+<div class="inema-segment">
+<button data-inema-set-fontscale="100" type="button">A</button>
+<button data-inema-set-fontscale="112" type="button">A+</button>
+<button data-inema-set-fontscale="125" type="button">A++</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Ancho</span>
+<div class="inema-segment">
+<button data-inema-set-linewidth="60" type="button">Estrecho</button>
+<button data-inema-set-linewidth="68" type="button">Mediano</button>
+<button data-inema-set-linewidth="75" type="button">Ancho</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Interlineado</span>
+<div class="inema-segment">
+<button data-inema-set-leading="1.45" type="button">Compacto</button>
+<button data-inema-set-leading="1.7" type="button">Cómodo</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Acento</span>
+<div class="inema-accent-grid">
+<button aria-label="Acento esmeralda" data-inema-set-accent="emerald" type="button"></button>
+<button aria-label="Acento azul" data-inema-set-accent="blue" type="button"></button>
+<button aria-label="Acento violeta" data-inema-set-accent="purple" type="button"></button>
+<button aria-label="Acento ámbar" data-inema-set-accent="amber" type="button"></button>
+<button aria-label="Acento verde azulado" data-inema-set-accent="teal" type="button"></button>
+<button aria-label="Acento rosa" data-inema-set-accent="rose" type="button"></button>
+</div>
+</div>
+</div>
+</div>
+<!-- Theme toggle sol/lua (núcleo v1; o JS o mantém coerente com o tema) -->
+<button aria-label="Alternar tema claro/oscuro" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20">
+<path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+</svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20">
+<path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path>
+</svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<main data-inema-module="2-7" data-inema-track="2" id="conteudo">
+<!-- BREADCRUMB -->
+<nav aria-label="Ruta de navegación" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-blue-400" href="../../index.html">Inicio</a><span>/</span>
+<a class="hover:text-blue-400" href="index.html">Ruta 2</a><span>/</span>
+<span class="text-blue-400">Módulo 2.7</span>
+</div>
+</nav>
+<!-- HEADER do módulo -->
+<header class="bg-gradient-to-br from-blue-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-blue-500/20 text-blue-400 text-xs font-semibold rounded-full mb-4">MÓDULO 2.7</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">📝 NLP y procesamiento de texto</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">Cómo transformar texto suelto —correos electrónicos, solicitudes de soporte, contratos, reseñas— en <strong class="text-blue-400">datos que un programa puede usar</strong>. Vas a tokenizar, clasificar, extraer entidades, resumir, buscar por significado y, sobre todo, medir si tu pipeline acierta, todo con código Python que se ejecuta en tu máquina.</p>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">7</div><div class="text-xs text-neutral-400">Temas</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">~55</div><div class="text-xs text-neutral-400">Minutos</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">Técnico</div><div class="text-xs text-neutral-400">Nivel</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">Práctico</div><div class="text-xs text-neutral-400">Tipo</div></div>
+</div>
+<div class="flex items-center gap-3 mt-8">
+<div aria-label="Progreso del módulo 2.7" class="inema-ring" data-inema-meter="modulo:2-7"><span class="inema-ring__value" data-inema-meter-pct="">0%</span></div>
+<div class="inema-meter-label" data-inema-meter="modulo:2-7"><strong data-inema-meter-frac="">0 de 0</strong> temas leídos · <span data-inema-section-counter="">Sección 1 de 7</span></div>
+</div>
+</div>
+</header>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+<div class="lg:flex lg:gap-10">
+<!-- TOC sticky + scrollspy -->
+<aside class="hidden lg:block lg:w-56 flex-shrink-0">
+<nav aria-label="Índice de la página" class="sticky top-20 self-start" data-inema-toc="">
+<p class="text-xs font-semibold uppercase tracking-wide text-neutral-500 mb-3">En este módulo</p>
+<ol class="space-y-1 text-sm">
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-blue-400" href="#topico-1">1. El texto se convierte en datos</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-blue-400" href="#topico-2">2. Clasificar texto</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-blue-400" href="#topico-3">3. Extraer entidades</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-blue-400" href="#topico-4">4. Resumir textos largos</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-blue-400" href="#topico-5">5. Búsqueda semántica</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-blue-400" href="#topico-6">6. Portugués e idiomas</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-blue-400" href="#topico-7">7. Pipeline y evaluación</a></li>
+</ol>
+</nav>
+</aside>
+<!-- ARTIGO -->
+<article class="inema-prose flex-1 min-w-0">
+<h2 class="text-2xl font-bold mb-8">Contenido detallado</h2>
+<!-- TÓPICO 1 -->
+<section class="mb-16" data-inema-topic="modulo-2-7#topico-1" id="topico-1" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="tokens, normalização e vocabulário">🔤 El texto se convierte en datos</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-7-t1-p1"><strong class="text-blue-400">NLP</strong> (<em>Procesamiento del lenguaje natural</em>, procesamiento del lenguaje natural) es el conjunto de técnicas que permite a un programa leer, organizar y producir texto humano. El problema de partida siempre es el mismo: la computadora solo opera con números. Antes de clasificar una queja o resumir un contrato, el texto tiene que convertirse en una secuencia de números, y cada decisión que se toma en esa conversión afecta el resultado posterior.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-7-t1-p2">Hasta alrededor de 2018, el trabajo de NLP estaba dominado por reglas y modelos pequeños entrenados para una sola tarea. Hoy, un LLM hace casi todo con una instrucción bien redactada. Pero los fundamentos siguen vigentes: <strong class="text-neutral-100">los tokens cuestan dinero y caben en una ventana limitada</strong>, el texto sucio genera respuestas sucias y una misma palabra puede significar cosas distintas según el contexto.</p>
+<div class="bg-dark-800 border border-blue-500/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-blue-400 font-semibold mb-1">📘 Términos nuevos</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-7-t1-p3"><strong>Tokenización</strong> es dividir el texto en partes (tokens) que están en el vocabulario del modelo. Los modelos actuales usan <strong>subpalabras</strong>, generadas por algoritmos como BPE (<em>Codificación por pares de bytes</em>): las palabras comunes se convierten en un token; las palabras poco frecuentes se dividen en partes. <strong>Normalización</strong> es estandarizar el texto antes de procesarlo: espacios, saltos de línea, mayúsculas y minúsculas, caracteres invisibles.</p>
+</div>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">Es el recorrido texto → tokens → ID numéricos → vectores. Los vectores (embeddings) contienen el significado que el modelo aprendió; todo lo que viene después —clasificar, extraer, buscar— opera sobre ellos.</p>
+</div>
+<!-- SVG 1: pipeline de tokenização -->
+<figure class="svg-frame rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="Pipeline en cuatro recuadros: el texto sin procesar «Não gostei do frete» se convierte en tokens de subpalabra, los tokens se convierten en ID numéricos del vocabulario y los ID se convierten en vectores de embedding con el significado." class="w-full h-auto" role="img" viewbox="0 0 900 240">
+<defs>
+<filter height="160%" id="m27-glow" width="160%" x="-30%" y="-30%"><fegaussianblur result="b" stddeviation="2"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="28" id="m27-grid" patternunits="userSpaceOnUse" width="28"><circle cx="1.2" cy="1.2" fill="#3b82f6" opacity="0.14" r="1.2"></circle></pattern>
+<marker id="m27-ah" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#60a5fa"></path></marker>
+<style>@keyframes m27dash{to{stroke-dashoffset:-24}} .m27-flow{stroke-dasharray:6 6;animation:m27dash 1.6s linear infinite}</style>
+</defs>
+<rect fill="url(#m27-grid)" height="240" width="900"></rect>
+<g font-family="Inter,sans-serif">
+<g filter="url(#m27-glow)">
+<rect fill="#0e1626" height="100" rx="14" stroke="#60a5fa" stroke-width="2" width="185" x="20" y="60"></rect>
+<rect fill="#0e1626" height="100" rx="14" stroke="#60a5fa" stroke-width="2" width="185" x="245" y="60"></rect>
+<rect fill="#0e1b26" height="100" rx="14" stroke="#38bdf8" stroke-width="2" width="185" x="470" y="60"></rect>
+<rect fill="#0e1b26" height="100" rx="14" stroke="#38bdf8" stroke-width="2.5" width="185" x="695" y="60"></rect>
+</g>
+<text fill="#93c5fd" font-size="12" text-anchor="middle" x="112" y="86">texto sin procesar</text>
+<text fill="#eff6ff" font-size="15" font-weight="700" text-anchor="middle" x="112" y="118">«No me gustó</text>
+<text fill="#eff6ff" font-size="15" font-weight="700" text-anchor="middle" x="112" y="138">el envío»</text>
+<text fill="#93c5fd" font-size="12" text-anchor="middle" x="337" y="86">tokens</text>
+<text fill="#eff6ff" font-size="14" font-weight="700" text-anchor="middle" x="337" y="118">No · me · gus · tó</text>
+<text fill="#eff6ff" font-size="14" font-weight="700" text-anchor="middle" x="337" y="138">el · envío</text>
+<text fill="#bae6fd" font-size="12" text-anchor="middle" x="562" y="86">ID</text>
+<text fill="#e0f2fe" font-size="14" font-weight="700" text-anchor="middle" x="562" y="124">[812, 4471, 91, …]</text>
+<text fill="#bae6fd" font-size="12" text-anchor="middle" x="787" y="86">embeddings</text>
+<text fill="#e0f2fe" font-size="14" font-weight="700" text-anchor="middle" x="787" y="118">[0.12, −0.48,</text>
+<text fill="#e0f2fe" font-size="14" font-weight="700" text-anchor="middle" x="787" y="138">0.07, …]</text>
+<path class="m27-flow" d="M207,110 L238,110" fill="none" marker-end="url(#m27-ah)" stroke="#60a5fa" stroke-width="2.5"></path>
+<path class="m27-flow" d="M432,110 L463,110" fill="none" marker-end="url(#m27-ah)" stroke="#60a5fa" stroke-width="2.5"></path>
+<path class="m27-flow" d="M657,110 L688,110" fill="none" marker-end="url(#m27-ah)" stroke="#60a5fa" stroke-width="2.5"></path>
+<text fill="#94a3b8" font-size="12" text-anchor="middle" x="112" y="190">lo que tú lees</text>
+<text fill="#94a3b8" font-size="12" text-anchor="middle" x="337" y="190">lo que lee el modelo</text>
+<text fill="#94a3b8" font-size="12" text-anchor="middle" x="562" y="190">posición en el vocabulario</text>
+<text fill="#94a3b8" font-size="12" text-anchor="middle" x="787" y="190">significado en números</text>
+<text fill="#7dd3fc" font-size="12" text-anchor="middle" x="450" y="30">segmentaciones y números ilustrativos: cada modelo tiene su propio vocabulario</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-blue-400">Cómo leer:</strong> sigue de izquierda a derecha. Los dos primeros cuadros todavía contienen texto; los dos últimos ya contienen números. Observa que «gustó» se convirtió en dos tokens: las palabras flexionadas del portugués suelen generar más tokens que su equivalente en inglés, lo que influye en el costo y en la ventana de contexto.</figcaption>
+</figure>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
+<h4 class="font-bold text-blue-400 mb-4">✓ Normaliza siempre</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Unicode en forma NFC (los acentos compuestos y descompuestos se convierten en lo mismo).</span></li>
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Espacios repetidos, tabulaciones y saltos de línea adicionales.</span></li>
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Firmas de correo electrónico, pies de página y HTML que no aportan significado.</span></li>
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Datos personales que no necesitan enviarse al modelo (LGPD, módulo 2.9).</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ No destruyas la señal</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Quitar los acentos: «pais» y «país» dejan de ser diferentes.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Eliminar «no» como palabra vacía: la frase invierte su sentido.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Convertir todo a minúsculas cuando las siglas y los nombres son importantes.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Borrar los emojis de las reseñas: suelen transmitir el sentimiento.</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-primary/10 border border-primary/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-primary font-semibold mb-1">💡 Consejo</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-7-t1-p4">Con los LLM, la limpieza agresiva de las técnicas antiguas (lematización, eliminación de palabras vacías) perjudica más de lo que ayuda. Limpia el ruido de formato y los datos personales; deja el lenguaje tal como está.</p>
+</div>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-7-t1-p5" data-sum="porque">Entender los tokens explica el costo que llega a fin de mes, por qué un documento «no cabe» en el contexto y por qué un texto mal depurado confunde al modelo. Es la base para dimensionar cualquier pipeline de texto antes de escribir la primera línea de código.</p>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Token</div><div class="text-xs text-neutral-400">fragmento del vocabulario</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Subpalabra (BPE)</div><div class="text-xs text-neutral-400">una palabra poco frecuente se convierte en partes</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Normalización</div><div class="text-xs text-neutral-400">estandarizar sin perder el sentido</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Embedding</div><div class="text-xs text-neutral-400">significado como vector</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 2 -->
+<section class="mb-16" data-inema-topic="modulo-2-7#topico-2" id="topico-2" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="do TF-IDF ao LLM com rótulos fixos">🏷️ Clasificar texto</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-7-t2-p1"><strong class="text-blue-400">Clasificación de texto</strong> es asignar a cada texto una etiqueta de una lista cerrada: el tema de una solicitud, el sentimiento de una reseña, la urgencia de un correo electrónico, si un mensaje es spam. Es la tarea de NLP más común en las empresas, porque permite dirigir, contar y priorizar sin que nadie tenga que leerlo todo.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-7-t2-p2">Hay tres caminos. El <strong class="text-neutral-100">clásico</strong> transforma el texto en conteos de palabras (TF-IDF) y entrena un modelo sencillo, como una regresión logística en scikit-learn: es rápido y barato, pero necesita cientos de ejemplos etiquetados. El <strong class="text-neutral-100">ajuste fino</strong> de un modelo pequeño (de la familia BERT) ofrece alta calidad, con un costo de entrenamiento. Y el <strong class="text-neutral-100">zero-shot con LLM</strong> clasifica solo con la lista de etiquetas y una instrucción, sin ningún entrenamiento.</p>
+<div class="bg-dark-800 border border-blue-500/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-blue-400 font-semibold mb-1">📘 Términos nuevos</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-7-t2-p3"><strong>TF-IDF</strong> pondera cada palabra según su frecuencia en el texto y su rareza en el conjunto completo. <strong>Zero-shot</strong> es realizar la tarea sin ejemplos; <strong>few-shot</strong> es incluir algunos ejemplos en el propio prompt. <strong>Salida estructurada</strong> es obligar al modelo a responder en un formato legible por máquina, como JSON.</p>
+</div>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">Una función que recibe texto y devuelve una etiqueta de una lista definida por ti, preferiblemente con una justificación breve y en un formato que el resto del sistema pueda validar.</p>
+</div>
+<div class="overflow-x-auto mb-6">
+<table class="w-full text-sm border border-dark-600 rounded-xl overflow-hidden">
+<thead><tr class="bg-dark-700"><th class="text-left p-3 text-blue-400">Método</th><th class="text-left p-3 text-blue-400">Necesita</th><th class="text-left p-3 text-blue-400">Conviene cuando</th><th class="text-left p-3 text-blue-400">Cuidado</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr><td class="p-3 font-semibold">TF-IDF + modelo lineal</td><td class="p-3 text-neutral-300">Cientos de ejemplos etiquetados</td><td class="p-3 text-neutral-300">Alto volumen, etiquetas estables, costo mínimo</td><td class="p-3 text-neutral-300">No entiende los sinónimos ni la ironía</td></tr>
+<tr><td class="p-3 font-semibold">Ajuste fino (BERT y similares)</td><td class="p-3 text-neutral-300">Ejemplos etiquetados y una GPU</td><td class="p-3 text-neutral-300">Alta calidad con baja latencia</td><td class="p-3 text-neutral-300">Volver a entrenar con cada etiqueta nueva</td></tr>
+<tr><td class="p-3 font-semibold">LLM zero-shot/few-shot</td><td class="p-3 text-neutral-300">Lista de etiquetas y una buena instrucción</td><td class="p-3 text-neutral-300">Empezar hoy, etiquetas que cambian</td><td class="p-3 text-neutral-300">Costo y latencia por elemento; validar la salida</td></tr>
+</tbody>
+</table>
+</div>
+<!-- COPY-RUN: classificador com Ollama /v1 -->
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-blue-400">Prueba:</strong> <span class="text-neutral-300">clasificador zero-shot local, guardado como <code>classificador.py</code>.</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copiar</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900"># Instalación: pip install openai   |   ollama pull qwen2.5:7b
+# classificador.py — usa la ruta compatible con OpenAI de Ollama (local y gratis)
+import json
+from openai import OpenAI
+
+client = OpenAI(base_url="http://localhost:11434/v1", api_key="ollama")  # Ollama ignora la clave
+ROTULOS = ["entrega", "pagamento", "produto", "elogio", "outro"]
+
+INSTRUCAO = (
+    "Clasificas mensajes de clientes de una tienda en línea. "
+    'Responde ÚNICAMENTE con JSON en el formato {"rotulo": "...", "motivo": "..."}. '
+    "Etiquetas válidas: " + ", ".join(ROTULOS) + ". "
+    "Usa 'outro' cuando ninguna corresponda. El motivo tiene un máximo de 12 palabras."
+)
+
+def classificar(texto: str) -&gt; dict:
+    resp = client.chat.completions.create(
+        model="qwen2.5:7b",
+        temperature=0,                              # la misma entrada, la misma salida (casi siempre)
+        response_format={"type": "json_object"},    # obliga a devolver JSON válido
+        messages=[{"role": "system", "content": INSTRUCAO},
+                  {"role": "user", "content": texto}],
+    )
+    dado = json.loads(resp.choices[0].message.content)
+    if dado.get("rotulo") not in ROTULOS:           # nunca confíes ciegamente en la salida
+        dado["rotulo"] = "outro"
+    return dado
+
+if __name__ == "__main__":
+    print(classificar("&lt;pega aquí un mensaje real de un cliente, sin datos personales&gt;"))</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">Cómo verificar:</strong> ejecuta <code>python3 classificador.py</code>. La salida debe ser un diccionario como <code>{'rotulo': 'entrega', 'motivo': '...'}</code>. Prueba cinco mensajes de etiquetas diferentes y uno que no tenga nada que ver con la tienda: debe quedar como "outro". Para usar una API de pago, cambia solo <code>base_url</code>, <code>api_key</code> e <code>model</code>.</p>
+</div>
+<div class="bg-primary/10 border border-primary/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-primary font-semibold mb-1">💡 Consejo</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-7-t2-p4">Empieza con el LLM para descubrir las etiquetas adecuadas y reunir ejemplos. Cuando el volumen crezca y las etiquetas se estabilicen, usa las respuestas revisadas por personas para entrenar un clasificador pequeño y barato. Es una forma habitual de reducir costos sin perder calidad.</p>
+</div>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-7-t2-p5" data-sum="porque">Casi todos los sistemas de atención, clasificación o análisis de opiniones empiezan con una clasificación. Saber elegir entre el método clásico, el ajuste fino y el LLM —y validar la salida— evita tanto un proyecto demasiado costoso como uno que falla con la primera respuesta fuera del formato.</p>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Lista cerrada</div><div class="text-xs text-neutral-400">etiquetas definidas por ti</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Zero-shot</div><div class="text-xs text-neutral-400">sin ejemplos de entrenamiento</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Salida en JSON</div><div class="text-xs text-neutral-400">el sistema puede leerla</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Validación</div><div class="text-xs text-neutral-400">una etiqueta fuera de la lista se convierte en "outro"</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 3 -->
+<section class="mb-16" data-inema-topic="modulo-2-7#topico-3" id="topico-3" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="NER e saída com esquema JSON">🧾 Extraer entidades</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-7-t3-p1"><strong class="text-blue-400">NER</strong> (<em>Reconocimiento de entidades nombradas</em>, encontrar en el texto nombres de personas, empresas, lugares, fechas y valores, e indicar el tipo de cada uno. Así, un contrato se convierte en una fila de una hoja de cálculo: partes, valor, plazo, jurisdicción. Una noticia se convierte en una lista de las empresas mencionadas.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-7-t3-p2">Hay dos familias de herramientas. Bibliotecas como <strong class="text-neutral-100">spaCy</strong> incluyen modelos listos para portugués (<code>pt_core_news_sm</code>) que identifican personas, lugares y organizaciones con rapidez y costo cero. Para campos de tu negocio (número de pedido, nombre del producto, cláusula de penalización), un <strong class="text-neutral-100">LLM con esquema JSON</strong> suele ser más flexible: describes los campos y el modelo los completa.</p>
+<div class="bg-dark-800 border border-blue-500/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-blue-400 font-semibold mb-1">📘 Términos nuevos</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-7-t3-p3"><strong>JSON Schema</strong> es una descripción formal de los campos, los tipos y los requisitos de un JSON. Ollama acepta este esquema en el parámetro <code>format</code> y limita la generación para que la respuesta se ajuste a él. <strong>Etiquetas BIO</strong> (Begin, Inside, Outside) es la forma clásica de marcar entidades palabra por palabra durante el entrenamiento de modelos de NER.</p>
+</div>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">Extracción de información: localizar fragmentos con un significado específico dentro del texto libre y devolverlos organizados por tipo, listos para enviarlos a una base de datos o a otra etapa del pipeline.</p>
+</div>
+<!-- SVG 2: entidades extraídas -->
+<figure class="svg-frame rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="Una frase sobre contratación se descompone en cinco tarjetas de entidades: organización Loja Sol, persona Ana Lima, lugar São Paulo, valor R$ 4.000 y fecha 03/02/2026, que pasan a un registro estructurado en JSON." class="w-full h-auto" role="img" viewbox="0 0 900 250">
+<defs>
+<marker id="m27-ahc" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#38bdf8"></path></marker>
+</defs>
+<rect fill="url(#m27-grid)" height="250" width="900"></rect>
+<g font-family="Inter,sans-serif">
+<text fill="#94a3b8" font-size="12" text-anchor="middle" x="450" y="28">texto de entrada</text>
+<text fill="#eff6ff" font-size="16" font-weight="600" text-anchor="middle" x="450" y="54">"La Tienda Sol contrató a Ana Lima en São Paulo por R$ 4.000 el 03/02/2026."</text>
+<g filter="url(#m27-glow)">
+<rect fill="#0e1626" height="64" rx="12" stroke="#60a5fa" stroke-width="2" width="160" x="20" y="90"></rect>
+<rect fill="#0e1626" height="64" rx="12" stroke="#60a5fa" stroke-width="2" width="160" x="196" y="90"></rect>
+<rect fill="#0e1b26" height="64" rx="12" stroke="#38bdf8" stroke-width="2" width="160" x="372" y="90"></rect>
+<rect fill="#0e1b26" height="64" rx="12" stroke="#38bdf8" stroke-width="2" width="160" x="548" y="90"></rect>
+<rect fill="#0e1626" height="64" rx="12" stroke="#60a5fa" stroke-width="2" width="160" x="724" y="90"></rect>
+</g>
+<text fill="#93c5fd" font-size="11" font-weight="700" text-anchor="middle" x="100" y="112">ORGANIZACIÓN</text>
+<text fill="#eff6ff" font-size="15" font-weight="700" text-anchor="middle" x="100" y="136">Tienda Sol</text>
+<text fill="#93c5fd" font-size="11" font-weight="700" text-anchor="middle" x="276" y="112">PERSONA</text>
+<text fill="#eff6ff" font-size="15" font-weight="700" text-anchor="middle" x="276" y="136">Ana Lima</text>
+<text fill="#bae6fd" font-size="11" font-weight="700" text-anchor="middle" x="452" y="112">LUGAR</text>
+<text fill="#e0f2fe" font-size="15" font-weight="700" text-anchor="middle" x="452" y="136">São Paulo</text>
+<text fill="#bae6fd" font-size="11" font-weight="700" text-anchor="middle" x="628" y="112">VALOR</text>
+<text fill="#e0f2fe" font-size="15" font-weight="700" text-anchor="middle" x="628" y="136">R$ 4.000</text>
+<text fill="#93c5fd" font-size="11" font-weight="700" text-anchor="middle" x="804" y="112">FECHA</text>
+<text fill="#eff6ff" font-size="15" font-weight="700" text-anchor="middle" x="804" y="136">03/02/2026</text>
+<path d="M100,156 L100,176 L804,176 L804,156 M276,156 L276,176 M452,156 L452,176 M628,156 L628,176" fill="none" stroke="#60a5fa" stroke-opacity="0.6" stroke-width="1.5"></path>
+<path class="m27-flow" d="M450,176 L450,198" fill="none" marker-end="url(#m27-ahc)" stroke="#38bdf8" stroke-width="2"></path>
+<rect fill="#0e1b26" height="34" rx="10" stroke="#38bdf8" stroke-width="2" width="340" x="280" y="204"></rect>
+<text fill="#e0f2fe" font-size="13" font-weight="600" text-anchor="middle" x="450" y="226">registro JSON → base de datos o hoja de cálculo</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-blue-400">Cómo leer:</strong> la frase de arriba es lo que llega; cada tarjeta es un fragmento copiado de la frase con su tipo. Fíjate en que ninguna tarjeta contiene información que no estuviera en el texto: esa es la regla que tu código debe verificar, porque un LLM puede "completar" un campo vacío con algo plausible.</figcaption>
+</figure>
+<!-- COPY-RUN: NER com esquema -->
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-blue-400">Objetivo:</strong> <span class="text-neutral-300">extraer entidades con un esquema JSON y comprobar que no se haya inventado nada.</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copiar</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900"># Instalación: pip install requests   |   ollama pull qwen2.5:7b
+import json, requests
+
+CAMPOS = ["pessoas", "organizacoes", "locais", "datas", "valores"]
+SCHEMA = {
+    "type": "object",
+    "properties": {c: {"type": "array", "items": {"type": "string"}} for c in CAMPOS},
+    "required": CAMPOS,
+}
+
+def extrair(texto: str) -&gt; dict:
+    r = requests.post("http://localhost:11434/api/chat", json={
+        "model": "qwen2.5:7b",
+        "stream": False,
+        "format": SCHEMA,                 # la respuesta se limita a este esquema
+        "options": {"temperature": 0},
+        "messages": [
+            {"role": "system", "content": "Extrae las entidades del texto. Copia cada fragmento "
+             "exactamente como aparece. No inventes: usa una lista vacía cuando no haya."},
+            {"role": "user", "content": texto},
+        ],
+    }, timeout=120)
+    r.raise_for_status()
+    return json.loads(r.json()["message"]["content"])
+
+texto = "&lt;pega un párrafo de un contrato, una noticia o un correo electrónico&gt;"
+ents = extrair(texto)
+print(json.dumps(ents, ensure_ascii=False, indent=2))
+
+# Verificación contra invenciones: cada fragmento debe aparecer literalmente en el texto
+for tipo, itens in ents.items():
+    for item in itens:
+        if item not in texto:
+            print(f"ATENCIÓN [{tipo}] no aparece en el texto: {item!r}")</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">Cómo verificar:</strong> con la frase del diagrama, la salida debe tener las cinco listas completas y ninguna línea de "ATENCIÓN". Luego pega un texto sin fechas: <code>fechas</code> debe volver vacía. Si aparece una advertencia, el modelo reescribió o inventó un fragmento: trátalo como un error, no como un acierto.</p>
+</div>
+<div class="bg-primary/10 border border-primary/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-primary font-semibold mb-1">💡 Consejo</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-7-t3-p4">Para entidades estándar en grandes volúmenes, prueba spaCy primero: <code>pip install spacy</code> e <code>python -m spacy download pt_core_news_sm</code>. Funciona en CPU, sin GPU, y sirve como punto de comparación para el LLM.</p>
+</div>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-7-t3-p5" data-sum="porque">Buena parte del valor del NLP en las empresas está en extraer datos de documentos: notas, contratos, informes, currículums y correos electrónicos. Saber extraer con un esquema y verificar contra el texto original es lo que marca la diferencia entre una demostración y un proceso confiable.</p>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">NER</div><div class="text-xs text-neutral-400">nombres con tipo</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">JSON Schema</div><div class="text-xs text-neutral-400">el formato obligatorio</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Anclaje</div><div class="text-xs text-neutral-400">el fragmento aparece en el texto</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">spaCy</div><div class="text-xs text-neutral-400">NER listo, en CPU</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 4 -->
+<section class="mb-16" data-inema-topic="modulo-2-7#topico-4" id="topico-4" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="dividir, resumir e juntar sem perder o fio">📄 Resumir textos largos</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-7-t4-p1">Resumir parece sencillo hasta que el documento pasa de unas cuantas decenas de páginas. Incluso con ventanas de contexto grandes, los modelos tienden a prestar menos atención a la parte central de los textos muy largos, y un resumen único oculta de dónde viene cada afirmación. El método robusto es <strong class="text-neutral-100">dividir, resumir las partes y luego unirlas</strong>, guardando la referencia de cada fragmento.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-7-t4-p2">Hay dos tipos de resumen. El <strong class="text-blue-400">extractivo</strong> elige frases del original y las copia: es seguro porque nada se reescribe. El <strong class="text-blue-400">abstractivo</strong> reescribe con otras palabras: es más fluido, pero puede distorsionar el contenido. En textos jurídicos, médicos o financieros, funciona bien un punto medio: un resumen abstractivo con citas literales de los fragmentos que respaldan cada punto.</p>
+<div class="bg-dark-800 border border-blue-500/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-blue-400 font-semibold mb-1">📘 Términos nuevos</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-7-t4-p3"><strong>Chunking</strong> consiste en dividir el documento en fragmentos (chunks) de tamaño controlado, de preferencia respetando las secciones y los párrafos. <strong>Superposición</strong> (<em>overlap</em>) consiste en repetir una parte del final de un fragmento al principio del siguiente para no cortar una idea por la mitad. <strong>Map-reduce</strong> consiste en aplicar la misma operación a cada fragmento (map) y luego combinar los resultados (reduce).</p>
+</div>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">Resumen por etapas: el documento se divide en fragmentos, cada fragmento recibe un resumen parcial con una referencia a su origen y, al final, un resumen final combina los parciales según el formato que necesita el lector.</p>
+</div>
+<!-- SVG 3: map-reduce -->
+<figure class="svg-frame rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="Diagrama map-reduce: un documento largo se divide en cuatro fragmentos; cada fragmento genera un resumen parcial con referencia; los cuatro resúmenes parciales convergen en un resumen final." class="w-full h-auto" role="img" viewbox="0 0 900 270">
+<rect fill="url(#m27-grid)" height="270" width="900"></rect>
+<g font-family="Inter,sans-serif">
+<text fill="#93c5fd" font-size="12" font-weight="700" text-anchor="middle" x="90" y="24">ENTRADA</text>
+<text fill="#93c5fd" font-size="12" font-weight="700" text-anchor="middle" x="295" y="24">1 · DIVIDIR</text>
+<text fill="#bae6fd" font-size="12" font-weight="700" text-anchor="middle" x="525" y="24">2 · MAP</text>
+<text fill="#bae6fd" font-size="12" font-weight="700" text-anchor="middle" x="785" y="24">3 · REDUCE</text>
+<rect fill="#0e1626" filter="url(#m27-glow)" height="120" rx="12" stroke="#60a5fa" stroke-width="2" width="140" x="20" y="90"></rect>
+<text fill="#eff6ff" font-size="14" font-weight="700" text-anchor="middle" x="90" y="142">documento</text>
+<text fill="#eff6ff" font-size="14" font-weight="700" text-anchor="middle" x="90" y="162">largo</text>
+<g fill="#0e1626" stroke="#60a5fa" stroke-width="1.8">
+<rect height="36" rx="8" width="150" x="220" y="44"></rect>
+<rect height="36" rx="8" width="150" x="220" y="100"></rect>
+<rect height="36" rx="8" width="150" x="220" y="156"></rect>
+<rect height="36" rx="8" width="150" x="220" y="212"></rect>
+</g>
+<g fill="#dbeafe" font-size="13" text-anchor="middle">
+<text x="295" y="67">fragmento 1 · p. 1–8</text>
+<text x="295" y="123">fragmento 2 · p. 8–16</text>
+<text x="295" y="179">fragmento 3 · p. 16–24</text>
+<text x="295" y="235">fragmento 4 · p. 24–30</text>
+</g>
+<g fill="#0e1b26" stroke="#38bdf8" stroke-width="1.8">
+<rect height="36" rx="8" width="150" x="450" y="44"></rect>
+<rect height="36" rx="8" width="150" x="450" y="100"></rect>
+<rect height="36" rx="8" width="150" x="450" y="156"></rect>
+<rect height="36" rx="8" width="150" x="450" y="212"></rect>
+</g>
+<g fill="#e0f2fe" font-size="13" text-anchor="middle">
+<text x="525" y="67">resumen 1 + fuente</text>
+<text x="525" y="123">resumen 2 + fuente</text>
+<text x="525" y="179">resumen 3 + fuente</text>
+<text x="525" y="235">resumen 4 + fuente</text>
+</g>
+<g fill="none" stroke="#60a5fa" stroke-opacity="0.7" stroke-width="1.6">
+<path d="M162,150 L218,62 M162,150 L218,118 M162,150 L218,174 M162,150 L218,230"></path>
+<path class="m27-flow" d="M372,62 L446,62 M372,118 L446,118 M372,174 L446,174 M372,230 L446,230"></path>
+</g>
+<g fill="none" stroke="#38bdf8" stroke-opacity="0.8" stroke-width="1.6">
+<path d="M602,62 L688,140 M602,118 L688,145 M602,174 L688,150 M602,230 L688,155"></path>
+</g>
+<rect fill="#0e1b26" filter="url(#m27-glow)" height="80" rx="14" stroke="#38bdf8" stroke-width="2.5" width="190" x="690" y="108"></rect>
+<text fill="#e0f2fe" font-size="15" font-weight="700" text-anchor="middle" x="785" y="142">resumen final</text>
+<text fill="#bae6fd" font-size="12" text-anchor="middle" x="785" y="162">en el formato del lector</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-blue-400">Cómo leer:</strong> las columnas son etapas. Cada resumen parcial conserva la página de origen, y el resumen final solo puede usar lo que aparece en los parciales. Cuando alguien pregunte "¿de dónde salió esto?", puedes seguir las líneas de vuelta hasta el fragmento. Las etapas de map pueden ejecutarse en paralelo.</figcaption>
+</figure>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-4"><p class="text-blue-400 font-semibold text-sm mb-1">Para quien toma decisiones</p><p class="text-xs text-neutral-300" data-inema-block="m2-7-t4-p4">Cinco puntos, primero los riesgos, cada uno con la página de origen. Termina con "qué falta decidir".</p></div>
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-4"><p class="text-blue-400 font-semibold text-sm mb-1">Para quien ejecuta</p><p class="text-xs text-neutral-300" data-inema-block="m2-7-t4-p5">Lista de obligaciones, plazos y responsables en una tabla. Nada de párrafos largos.</p></div>
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-4"><p class="text-blue-400 font-semibold text-sm mb-1">Para el sistema</p><p class="text-xs text-neutral-300" data-inema-block="m2-7-t4-p6">JSON con campos fijos (tema, partes, fechas, valores) para indexar y filtrar después.</p></div>
+</div>
+<div class="bg-primary/10 border border-primary/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-primary font-semibold mb-1">💡 Consejo</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-7-t4-p7">Divide según la estructura (títulos, cláusulas, secciones), no por una cantidad fija de caracteres. Un corte a mitad de una cláusula genera dos resúmenes parciales incorrectos.</p>
+</div>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-7-t4-p8" data-sum="porque">Los informes, las actas, los expedientes y los manuales son extensos y se leen con prisa. Un resumen rastreable ahorra horas de lectura sin ocultar de dónde proviene cada conclusión; y el mismo método de dividir, procesar y reunir sirve para traducir, extraer y revisar documentos extensos.</p>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Extractivo</div><div class="text-xs text-neutral-400">copia frases del original</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Abstrativo</div><div class="text-xs text-neutral-400">reescribe con otras palabras</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Chunking</div><div class="text-xs text-neutral-400">fragmentos según la estructura</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Map-reduce</div><div class="text-xs text-neutral-400">resumir las partes y luego reunirlas</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 5 -->
+<section class="mb-16" data-inema-topic="modulo-2-7#topico-5" id="topico-5" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="embeddings e similaridade de cosseno">🔎 Búsqueda semántica</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-7-t5-p1">La búsqueda por palabra clave solo encuentra lo que contiene la misma palabra. Quien pregunta «mi pedido no llegó» no encuentra el texto «plazo de entrega», aunque sea exactamente lo que busca. La <strong class="text-blue-400">búsqueda semántica</strong> compara significados: convierte la pregunta y los documentos en vectores y devuelve los documentos cuyos vectores están más cerca.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-7-t5-p2">Esta es la pieza central de RAG (generación aumentada por recuperación), que vimos en el módulo sobre bases de conocimiento: antes de responder, el sistema busca los fragmentos relevantes y se los entrega al LLM. En producción, los vectores se almacenan en una base de datos propia, <strong class="text-neutral-100">pgvector</strong> en Postgres, <strong class="text-neutral-100">Qdrant</strong> o <strong class="text-neutral-100">Chroma</strong>. Para aprender, basta con un array de NumPy.</p>
+<div class="bg-dark-800 border border-blue-500/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-blue-400 font-semibold mb-1">📘 Términos nuevos</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-7-t5-p3"><strong>Similitud del coseno</strong> mide el ángulo entre dos vectores: cerca de 1, apuntan en la misma dirección (significados parecidos); cerca de 0, no tienen relación. Si los vectores están <strong>normalizados</strong> (longitud 1), el coseno se convierte en un simple producto escalar. <strong>Búsqueda híbrida</strong> combina palabras clave y vectores; es útil cuando importan los códigos y los nombres exactos.</p>
+</div>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">Búsqueda por proximidad de significado: un modelo de embeddings convierte los textos en vectores, y la consulta devuelve los textos más cercanos a la pregunta según el coseno, incluso si no comparten palabras.</p>
+</div>
+<!-- SVG 4: espaço vetorial -->
+<figure class="svg-frame rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="Mapa bidimensional de embeddings con tres grupos de puntos: entrega, pago y elogios. La pregunta 'mi pedido no llegó' aparece como una estrella junto al grupo de entrega, conectada con el punto más cercano." class="w-full h-auto" role="img" viewbox="0 0 900 300">
+<rect fill="url(#m27-grid)" height="300" width="900"></rect>
+<g font-family="Inter,sans-serif">
+<path d="M60,270 L860,270 M60,270 L60,30" fill="none" stroke="#475569" stroke-width="1.5"></path>
+<text fill="#94a3b8" font-size="11" x="70" y="290">proyección en 2D de vectores con cientos de dimensiones (ilustrativa)</text>
+<g fill="#60a5fa" filter="url(#m27-glow)">
+<circle cx="170" cy="90" r="7"></circle><circle cx="205" cy="70" r="7"></circle><circle cx="200" cy="115" r="7"></circle><circle cx="240" cy="95" r="7"></circle>
+</g>
+<text fill="#bfdbfe" font-size="13" font-weight="700" x="150" y="148">entrega y envío</text>
+<g fill="#38bdf8" filter="url(#m27-glow)">
+<circle cx="520" cy="200" r="7"></circle><circle cx="555" cy="180" r="7"></circle><circle cx="560" cy="225" r="7"></circle><circle cx="595" cy="205" r="7"></circle>
+</g>
+<text fill="#bae6fd" font-size="13" font-weight="700" x="505" y="256">pagos y facturas</text>
+<g fill="#93c5fd" filter="url(#m27-glow)">
+<circle cx="720" cy="70" r="7"></circle><circle cx="755" cy="55" r="7"></circle><circle cx="760" cy="95" r="7"></circle><circle cx="795" cy="75" r="7"></circle>
+</g>
+<text fill="#dbeafe" font-size="13" font-weight="700" x="715" y="128">elogios</text>
+<path d="M310,150 L318,166 L336,168 L322,180 L326,198 L310,188 L294,198 L298,180 L284,168 L302,166 Z" fill="#f0f9ff" filter="url(#m27-glow)"></path>
+<path class="m27-flow" d="M300,165 L246,104" fill="none" stroke="#f0f9ff" stroke-width="2"></path>
+<text fill="#f8fafc" font-size="13" font-weight="700" x="345" y="186">pregunta: «mi pedido</text>
+<text fill="#f8fafc" font-size="13" font-weight="700" x="345" y="204">no llegó»</text>
+<text fill="#f0f9ff" font-size="12" x="290" y="128">más cercano</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-blue-400">Cómo leer:</strong> cada punto es un texto; los textos sobre el mismo tema quedan agrupados, aunque usen palabras diferentes. La estrella es la pregunta: la búsqueda devuelve los puntos del grupo más cercano. La proyección en 2D solo sirve para visualizar; la distancia real se calcula en todas las dimensiones.</figcaption>
+</figure>
+<!-- COPY-RUN: busca semântica -->
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-blue-400">Prueba:</strong> <span class="text-neutral-300">búsqueda semántica local con <code>nomic-embed-text</code>.</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copiar</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900"># Instala: pip install requests numpy   |   ollama pull nomic-embed-text
+import requests
+import numpy as np
+
+def embed(textos: list[str]) -&gt; np.ndarray:
+    r = requests.post("http://localhost:11434/api/embed",
+                      json={"model": "nomic-embed-text", "input": textos}, timeout=120)
+    r.raise_for_status()
+    v = np.array(r.json()["embeddings"], dtype=float)
+    return v / np.linalg.norm(v, axis=1, keepdims=True)   # normaliza: coseno = producto escalar
+
+# nomic-embed-text recomienda prefijos diferentes para documentos y consultas
+docs = [
+    "El plazo de entrega es de 5 a 10 días hábiles después de confirmar el pago.",
+    "Las facturas vencidas se pueden volver a emitir en el área de clientes.",
+    "Se aceptan cambios hasta 7 días corridos después de recibir el producto.",
+    "&lt;agrega aquí fragmentos de tu propia base, uno por elemento&gt;",
+]
+D = embed(["search_document: " + d for d in docs])
+
+def buscar(pregunta: str, k: int = 2) -&gt; None:
+    q = embed(["search_query: " + pregunta])[0]
+    notas = D @ q
+    for i in np.argsort(-notas)[:k]:
+        print(f"{notas[i]:.3f}  {docs[i]}")
+
+buscar("mi pedido todavía no llegó")</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">Cómo verificar:</strong> El primer resultado debería ser la frase sobre el plazo de entrega, aunque no incluya la palabra «pedido». Cambia la pregunta por «¿puedo devolver la camiseta?»; la frase sobre cambios debería quedar en primer lugar. Las puntuaciones varían según el modelo; compara el orden, no el valor absoluto.</p>
+</div>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-7-t5-p4" data-sum="porque">La búsqueda semántica es la base de asistentes que responden con documentos de la empresa, de la deduplicación de solicitudes y de la recomendación de contenido. Entender el vector y la métrica permite diagnosticar por qué falla una búsqueda, antes de culpar al LLM por una respuesta deficiente.</p>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Embedding</div><div class="text-xs text-neutral-400">texto como vector</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Coseno</div><div class="text-xs text-neutral-400">proximidad de significado</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Base de datos vectorial</div><div class="text-xs text-neutral-400">pgvector, Qdrant, Chroma</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Búsqueda híbrida</div><div class="text-xs text-neutral-400">palabra clave + vector</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 6 -->
+<section class="mb-16" data-inema-topic="modulo-2-7#topico-6" id="topico-6" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="detecção, tradução e armadilhas do PT-BR">🌍 Portugués y otros idiomas</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-7-t6-p1">La mayor parte de los datos de entrenamiento de los modelos todavía está en inglés. Los LLM actuales manejan bien el portugués, pero hay diferencias: más tokens para el mismo contenido, jerga y regionalismos mal interpretados, confusión entre el portugués de Brasil y el de Portugal, y errores con formatos locales: CPF, CEP, fechas en formato día/mes, coma decimal, «R$ 1.234,56».</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-7-t6-p2">Para traducir, tienes modelos abiertos especializados, como <strong class="text-neutral-100">NLLB</strong> de Meta, y los LLM generales, que traducen bien y además siguen instrucciones de tono y glosario. Para los sistemas que reciben textos en varios idiomas, el estándar es <strong class="text-neutral-100">detectar primero el idioma</strong> y decidir: procesar en el idioma original con un modelo multilingüe o traducir antes.</p>
+<div class="bg-dark-800 border border-blue-500/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-blue-400 font-semibold mb-1">📘 Términos nuevos</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-7-t6-p3"><strong>Modelo multilingüe</strong> se entrena simultáneamente en varios idiomas y ubica frases equivalentes cerca unas de otras en el espacio de embeddings; por eso, una pregunta en portugués puede encontrar un documento en español. <strong>Glosario</strong>, en traducción, es la lista de términos que deben traducirse siempre de la misma manera (o que no deben traducirse, como los nombres de productos).</p>
+</div>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">Es tratar el idioma y los formatos locales como parte del problema: detectar el idioma, elegir el modelo y el prompt adecuados, estandarizar números, fechas y documentos brasileños, y probar con textos reales de tu público.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
+<h4 class="font-bold text-blue-400 mb-4">✓ Funciona bien</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Pedir explícitamente «portugués de Brasil» en el prompt del sistema.</span></li>
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Convertir «R$ 1.234,56» y «03/02/2026» con código, no con el modelo.</span></li>
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Validar CPF y CNPJ mediante el dígito de verificación después de la extracción.</span></li>
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Glosario fijo en el prompt de traducción para los términos de la empresa.</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Errores comunes</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Probar solo con textos en inglés y publicar para clientes brasileños.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Dejar que el modelo interprete «02/03» sin conocer el formato de fecha.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Ignorar textos con errores tipográficos y abreviaturas de WhatsApp.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Traducir y luego extraer, perdiendo los nombres y valores originales.</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-primary/10 border border-primary/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-primary font-semibold mb-1">💡 Consejo</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-7-t6-p4">Arma tu conjunto de pruebas con mensajes como los escribe realmente tu cliente: con «vc», «pq», errores y audios transcritos. A los modelos que funcionan bien con texto limpio les puede ir mucho peor con texto informal, y solo la prueba te muestra cuánto.</p>
+</div>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-7-t6-p5" data-sum="porque">Los ejemplos, tutoriales y benchmarks suelen estar en inglés. Quienes crean soluciones para el público brasileño deben conocer los errores típicos en portugués y los formatos locales; ahí es donde un sistema que "funcionó en la prueba" falla con el primer cliente real.</p>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Detección de idioma</div><div class="text-xs text-neutral-400">primer paso del pipeline</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Multilingüe</div><div class="text-xs text-neutral-400">idiomas en el mismo espacio</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Formato local</div><div class="text-xs text-neutral-400">fechas, moneda, CPF</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Glosario</div><div class="text-xs text-neutral-400">términos siempre iguales</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 7 -->
+<section class="mb-16" data-inema-topic="modulo-2-7#topico-7" id="topico-7" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">7</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="conjunto de testes antes de confiar">🧪 Pipeline y evaluación</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-7-t7-p1">Un <strong class="text-blue-400">pipeline de texto</strong> encadena las etapas de este módulo: normalizar, detectar el idioma, clasificar, extraer, validar y guardar. Cada etapa tiene una entrada y una salida definidas, y cada una puede fallar. Sin medir, no sabes qué etapa falló ni si un cambio de modelo o de prompt mejoró o empeoró el resultado.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-7-t7-p2">La herramienta para esto es el <strong class="text-neutral-100">conjunto de pruebas</strong>: unas decenas de ejemplos reales y anonimizados, con la respuesta correcta anotada por una persona. Cada cambio se prueba con ellos. El número que se obtiene no tiene que ser perfecto; tiene que poder compararse entre versiones.</p>
+<div class="bg-dark-800 border border-blue-500/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-blue-400 font-semibold mb-1">📘 Términos nuevos</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-7-t7-p3"><strong>Exactitud</strong> es la proporción de aciertos sobre el total. <strong>Precisión</strong> de una etiqueta: de los elementos que el modelo marcó con ella, cuántos eran correctos. <strong>Exhaustividad</strong> (<em>recall</em>): de los elementos que realmente correspondían a esa etiqueta, cuántos encontró el modelo. <strong>F1</strong> combina ambas. En clases desequilibradas, revisa la precisión y la exhaustividad por etiqueta, no solo la exactitud.</p>
+</div>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">Una secuencia de etapas de texto con un contrato de entrada y salida, acompañada de un conjunto de pruebas etiquetado que mide cada cambio antes de que llegue a los usuarios.</p>
+</div>
+<!-- PASSO A PASSO -->
+<div class="relative border-l-2 border-blue-500/30 ml-3 pl-6 space-y-5 mb-6">
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-blue-500/20 border-2 border-blue-400"></span><p class="text-sm text-neutral-300"><strong class="text-blue-400">Paso 1 · Reúne ejemplos reales.</strong> Empieza con entre 30 y 50 mensajes anonimizados que cubran todas las etiquetas y los casos difíciles.</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-blue-500/20 border-2 border-blue-400"></span><p class="text-sm text-neutral-300"><strong class="text-blue-400">Paso 2 · Anota la respuesta correcta.</strong> Dos personas que anoten la misma muestra revelan dónde las propias etiquetas son ambiguas.</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-sky-500/20 border-2 border-sky-400"></span><p class="text-sm text-neutral-300"><strong class="text-sky-400">Paso 3 · Mide la versión actual.</strong> Ejecuta el script de abajo y guarda el resultado como línea de base.</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-sky-500/20 border-2 border-sky-400"></span><p class="text-sm text-neutral-300"><strong class="text-sky-400">Paso 4 · Cambia una cosa a la vez.</strong> Prompt, modelo o etapa. Vuelve a medir y compara con la línea de base.</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-sky-500/20 border-2 border-sky-400"></span><p class="text-sm text-neutral-300"><strong class="text-sky-400">Paso 5 · Lee los errores.</strong> La lista de errores enseña más que el número: etiqueta ambigua, texto informal, falta de contexto.</p></div>
+</div>
+<!-- COPY-RUN: avaliação -->
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-blue-400">Objetivo:</strong> <span class="text-neutral-300">medir el clasificador del tema 2 con un conjunto de pruebas (<code>evaluar.py</code>).</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copiar</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900"># evaluar.py — guárdalo en la misma carpeta que clasificador.py (tema 2)
+from collections import Counter
+from classificador import classificar
+
+TESTE = [  # (texto, etiqueta correcta) — reemplázalos por más de 30 ejemplos reales y anonimizados
+    ("Meu pedido está parado na transportadora há uma semana", "entrega"),
+    ("O boleto venceu e não consigo gerar outro", "pagamento"),
+    ("A camiseta veio com a costura aberta", "produto"),
+    ("Atendimento excelente, resolveram em minutos", "elogio"),
+    ("Vocês abrem no feriado?", "outro"),
+    ("&lt;texto real&gt;", "&lt;etiqueta correcta&gt;"),
+]
+
+tp, fp, fn = Counter(), Counter(), Counter()
+erros = []
+for texto, certo in TESTE:
+    previsto = classificar(texto)["rotulo"]
+    if previsto == certo:
+        tp[certo] += 1
+    else:
+        fp[previsto] += 1
+        fn[certo] += 1
+        erros.append((texto, certo, previsto))
+
+total = len(TESTE)
+acertos = sum(tp.values())
+print(f"exactitud: {acertos}/{total} = {acertos / total:.0%}")
+for r in sorted({c for _, c in TESTE}):
+    prec = tp[r] / (tp[r] + fp[r]) if tp[r] + fp[r] else 0.0
+    rev = tp[r] / (tp[r] + fn[r]) if tp[r] + fn[r] else 0.0
+    print(f"{r:10s} precisión={prec:.2f}  exhaustividad={rev:.2f}")
+for texto, certo, previsto in erros:
+    print(f"ERROR  esperado={certo:10s} obtenido={previsto:10s} | {texto}")</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">Cómo verificar:</strong> ejecuta <code>python3 avaliar.py</code> (borra antes la línea de ejemplo con &lt; &gt;). Deberías ver la exactitud, una línea por etiqueta y la lista de errores. Cambia el prompt en <code>classificador.py</code>, vuelve a ejecutarlo y compara: si la exactitud subió, pero la de una etiqueta bajó, el cambio no es una victoria completa.</p>
+</div>
+<div class="bg-primary/10 border border-primary/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-primary font-semibold mb-1">💡 Consejo</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-7-t7-p4">Guarda el conjunto de pruebas en el repositorio junto con el código. En el módulo 2.8 se convierte en una barrera automática: ninguna versión pasa a producción si el resultado cae por debajo de la línea de base.</p>
+</div>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-7-t7-p5" data-sum="porque">Sin un conjunto de pruebas, cada ajuste del prompt es una conjetura y cada cambio de modelo es un riesgo. Con él, puedes cambiar el modelo por uno más barato sabiendo cuánto pierdes, demostrarle la mejora al equipo y encontrar los errores antes de que los vea el cliente.</p>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Conjunto de pruebas</div><div class="text-xs text-neutral-400">ejemplos con respuesta correcta</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Línea de base</div><div class="text-xs text-neutral-400">el número que hay que superar</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Precisión × exhaustividad</div><div class="text-xs text-neutral-400">acierto por etiqueta</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Análisis de errores</div><div class="text-xs text-neutral-400">leer lo que falló</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- RESUMO -->
+<section class="mb-8">
+<div class="bg-gradient-to-br from-blue-900/40 via-dark-800 to-dark-800 rounded-xl border border-blue-500/30 p-6 sm:p-8">
+<h2 class="text-2xl font-bold mb-6">✅ Resumen del módulo</h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start gap-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">El texto se convierte en tokens, ID y vectores</strong><span class="text-neutral-400"> — normaliza el formato, conserva el idioma.</span></div></div>
+<div class="flex items-start gap-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">Clasifica y extrae con una salida estructurada</strong><span class="text-neutral-400"> — valida la etiqueta y verifica cada fragmento contra el texto.</span></div></div>
+<div class="flex items-start gap-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">Resume por etapas y busca por significado</strong><span class="text-neutral-400"> — map-reduce con fuente y embeddings normalizados.</span></div></div>
+<div class="flex items-start gap-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">Prueba con portugués real y mide todo</strong><span class="text-neutral-400"> — conjunto de pruebas, línea de base y análisis de errores.</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-blue-400 mb-2">Siguiente módulo:</h3>
+<p class="text-neutral-300">2.8 — MLOps y producción 🛠️</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="index.html">← Volver a la Ruta</a>
+<a class="flex-1 text-center px-6 py-3 bg-blue-700 text-white rounded-lg font-semibold hover:bg-blue-600 transition-colors" href="modulo-2-8.html">Siguiente módulo →</a>
+</div>
+</div>
+</section>
+</article>
+</div>
+</div>
+</main>
+<footer class="border-t border-dark-600 py-8 mt-8">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>FTD — Formación en Transformación Digital · contenido abierto y gratuito · 2026 · <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" rel="noopener" target="_blank">INEMA.CLUB</a> - <a class="text-amber-700 dark:text-slate-300 hover:underline" href="https://inema.pro" rel="noopener" target="_blank">PRO</a></p>
+</div>
+</footer>
+<!-- SCRIPTS NÚCLEO v1 -->
+<script>
+    function toggleTopic(button) {
+      var topicItem = button.closest('.topic-item');
+      if (!topicItem) return;
+      var explanation = topicItem.querySelector('.topic-explanation');
+      var willOpen = !explanation.classList.contains('active');
+      explanation.classList.toggle('active');
+      button.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+    }
+    function openModal(id) { var m = document.getElementById(id); if (m) { m.classList.remove('hidden'); document.body.style.overflow = 'hidden'; } }
+    function closeModal() { document.querySelectorAll('.modal').forEach(function (m) { m.classList.add('hidden'); }); document.body.style.overflow = 'auto'; }
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
+    function copyCode(btn) {
+      var pre = btn.closest('[data-copy-box]').querySelector('pre');
+      var txt = pre ? pre.innerText : '';
+      var done = function () { var o = btn.getAttribute('data-label-ok') || 'Copiado'; var t = btn.textContent; btn.textContent = o; setTimeout(function () { btn.textContent = t; }, 1500); };
+      try { navigator.clipboard.writeText(txt).then(done, done); } catch (e) { done(); }
+    }
+    (function () {
+      var themeToggle = document.getElementById('theme-toggle');
+      var darkIcon = document.getElementById('theme-toggle-dark-icon');
+      var lightIcon = document.getElementById('theme-toggle-light-icon');
+      var html = document.documentElement;
+      function sync() { var isDark = html.classList.contains('dark'); if (darkIcon) darkIcon.classList.toggle('hidden', isDark); if (lightIcon) lightIcon.classList.toggle('hidden', !isDark); }
+      sync();
+      if (themeToggle) themeToggle.addEventListener('click', function () {
+        html.classList.toggle('dark'); var nowDark = html.classList.contains('dark'); html.style.colorScheme = nowDark ? 'dark' : 'light';
+        try { localStorage.setItem('theme', nowDark ? 'dark' : 'light'); } catch (e) {}
+        try { var p = JSON.parse(localStorage.getItem('inema.prefs') || '{}'); p.theme = nowDark ? 'inema-dark' : 'claro'; localStorage.setItem('inema.prefs', JSON.stringify(p)); } catch (e) {}
+        sync();
+      });
+    })();
+  </script>
+<!-- learn.js + INEMA.init() POR ÚLTIMO -->
+<script src="../../assets/learn.js"></script>
+<script>
+    if (window.INEMA && typeof window.INEMA.init === 'function') { window.INEMA.init({ autoResume: true }); }
+  </script>
+</body>
+</html>

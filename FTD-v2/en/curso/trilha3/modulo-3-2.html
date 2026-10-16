@@ -1,0 +1,1173 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="ftd-v2-en" name="inema-course"/>
+<title>Module 3.2 · Custom and Proprietary Models | FTD v2</title>
+<meta content="Continuous pretraining, distillation, open models, proprietary data as an advantage, and the real cost of maintaining a model." name="description"/>
+<meta content="Module 3.2 · Custom and Proprietary Models | FTD v2" property="og:title"/>
+<meta content="Continuous pretraining, distillation, open models, proprietary data as an advantage, and the real cost of maintaining a model." property="og:description"/>
+<!-- ANTI-FOUC (Erro #18) — primeiro script do head -->
+<script>
+(function () {
+  try {
+    var html = document.documentElement;
+    var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+    function clone(o) { var r = {}; for (var x in o) r[x] = o[x]; return r; }
+    var p = clone(DEF);
+    try {
+      var raw = localStorage.getItem('inema.prefs');
+      if (raw) {
+        var parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === 'object') {
+          for (var k in DEF) if (parsed[k] != null) p[k] = parsed[k];
+        }
+      } else {
+        var legacy = localStorage.getItem('theme');
+        if (legacy === 'light') p.theme = 'claro';
+        else if (legacy === 'dark') p.theme = 'inema-dark';
+      }
+    } catch (e) { p = clone(DEF); }
+
+    var THEMES = {
+      'inema-dark': { dark: true,  attr: null,        cs: 'dark'  },
+      'claro':      { dark: false, attr: null,        cs: 'light' },
+      'sepia':      { dark: false, attr: 'sepia',     cs: 'light' },
+      'foco':       { dark: null,  attr: 'foco',      cs: null    },
+      'contraste':  { dark: true,  attr: 'contraste', cs: 'dark'  }
+    };
+    var t = THEMES[p.theme] || THEMES['inema-dark'];
+
+    if (t.dark === true) html.classList.add('dark');
+    else if (t.dark === false) html.classList.remove('dark');
+
+    if (t.attr) html.setAttribute('data-theme', t.attr);
+    else html.removeAttribute('data-theme');
+
+    html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark') ? 'dark' : 'light'));
+
+    html.setAttribute('data-font', p.font || 'inter');
+    html.setAttribute('data-accent', p.accent || 'emerald');
+
+    var s = html.style;
+    var scale = (+p.fontScale || 100);
+    s.setProperty('--inema-font-scale', (scale / 100).toString());
+    s.setProperty('font-size', scale + '%');
+    s.setProperty('--measure', (+p.lineWidth || 68) + 'ch');
+    s.setProperty('--lh-body', (+p.leading || 1.7).toString());
+    var fam = p.font === 'system'
+      ? 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif'
+      : (p.font === 'leitura'
+        ? '"Atkinson Hyperlegible", "Inter", system-ui, sans-serif'
+        : '"Inter", system-ui, sans-serif');
+    s.setProperty('--font-body', fam);
+
+    var ACC = {
+      emerald: [152, 76, 45], blue: [217, 91, 60], purple: [258, 90, 66],
+      amber: [38, 92, 50], teal: [174, 72, 41], rose: [350, 89, 60]
+    };
+    var a = ACC[p.accent] || ACC.emerald;
+    s.setProperty('--accent-h', a[0] + '');
+    s.setProperty('--accent-s', a[1] + '%');
+    s.setProperty('--accent-l', a[2] + '%');
+    s.setProperty('--accent', 'hsl(' + a[0] + ' ' + a[1] + '% ' + a[2] + '%)');
+  } catch (err) {
+    try { document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme = 'dark'; } catch (e) {}
+  }
+})();
+</script>
+<!-- MANIFESTO do curso (Erro #28) — idêntico em todas as páginas -->
+<script data-inema-manifest="" type="application/json">
+{
+  "course": "ftd-v2-en",
+  "tracks": [
+    {
+      "n": "1",
+      "title": "Beginner",
+      "modules": [
+        {
+          "id": "1-1",
+          "title": "The Impact of AI",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-1.html"
+        },
+        {
+          "id": "1-2",
+          "title": "Navigating the Digital World",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-2.html"
+        },
+        {
+          "id": "1-3",
+          "title": "Prompt Engineering",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-3.html"
+        },
+        {
+          "id": "1-4",
+          "title": "AI Assistants and Agents",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-4.html"
+        },
+        {
+          "id": "1-5",
+          "title": "Visual Creativity with AI",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-5.html"
+        },
+        {
+          "id": "1-6",
+          "title": "Marketing and Sales with AI",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-6.html"
+        },
+        {
+          "id": "1-7",
+          "title": "Process Automation",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-7.html"
+        },
+        {
+          "id": "1-8",
+          "title": "Advanced Artificial Intelligence",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-8.html"
+        },
+        {
+          "id": "1-9",
+          "title": "Business and Monetization with AI",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-9.html"
+        }
+      ]
+    },
+    {
+      "n": "2",
+      "title": "Technical",
+      "modules": [
+        {
+          "id": "2-1",
+          "title": "Developing with AI APIs",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-1.html"
+        },
+        {
+          "id": "2-2",
+          "title": "AI Application Architecture",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-2.html"
+        },
+        {
+          "id": "2-3",
+          "title": "RAG and Knowledge Bases",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-3.html"
+        },
+        {
+          "id": "2-4",
+          "title": "Fine-Tuning and Customization",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-4.html"
+        },
+        {
+          "id": "2-5",
+          "title": "Agents and Complex Workflows",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-5.html"
+        },
+        {
+          "id": "2-6",
+          "title": "Advanced Computer Vision",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-6.html"
+        },
+        {
+          "id": "2-7",
+          "title": "NLP and Text Processing",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-7.html"
+        },
+        {
+          "id": "2-8",
+          "title": "MLOps and Production",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-8.html"
+        },
+        {
+          "id": "2-9",
+          "title": "AI Ethics and Governance",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-9.html"
+        }
+      ]
+    },
+    {
+      "n": "3",
+      "title": "Masterclass",
+      "modules": [
+        {
+          "id": "3-1",
+          "title": "Large-Scale AI Architecture",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-1.html"
+        },
+        {
+          "id": "3-2",
+          "title": "Custom and Proprietary Models",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-2.html"
+        },
+        {
+          "id": "3-3",
+          "title": "Advanced Multimodal AI",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-3.html"
+        },
+        {
+          "id": "3-4",
+          "title": "AI Research and Papers",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-4.html"
+        },
+        {
+          "id": "3-5",
+          "title": "Reinforcement Learning for AI",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-5.html"
+        },
+        {
+          "id": "3-6",
+          "title": "Security and Red Teaming",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-6.html"
+        },
+        {
+          "id": "3-7",
+          "title": "AI in Production — Enterprise Scale",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-7.html"
+        },
+        {
+          "id": "3-8",
+          "title": "AI Leadership and Strategy",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-8.html"
+        },
+        {
+          "id": "3-9",
+          "title": "The Future of AI and AGI",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-9.html"
+        }
+      ]
+    }
+  ]
+}
+</script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#0c0c10', 800: '#16161e', 700: '#1e1e28', 600: '#272730', 500: '#33333f' } }, fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'], display: ['Sora', 'Inter', 'sans-serif'], mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'] } } } }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Sora:wght@600;700;800&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    h1, h2, h3, h4, .font-display { font-family: 'Sora', 'Inter', sans-serif; }
+    .dark body { background-color: #0c0c10; }
+    .dark .text-neutral-100 { color: #e9e9ee; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+    pre { white-space: pre-wrap; word-break: break-word; }
+    pre, code, .font-mono { font-family: 'JetBrains Mono', ui-monospace, monospace; }
+
+    /* Light mode — Parte 1: base */
+    html:not(.dark) body { background-color: #f6f7f9; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800\/50 { background-color: #f6f7f9; }
+    html:not(.dark) .bg-dark-700 { background-color: #eceef2; }
+    html:not(.dark) .bg-dark-700\/50 { background-color: #f1f2f5; }
+    html:not(.dark) .bg-dark-700\/30 { background-color: #f4f5f7; }
+    html:not(.dark) .bg-dark-600 { background-color: #e1e3ea; }
+    html:not(.dark) .hover\:bg-dark-600:hover { background-color: #d6d9e1; }
+    html:not(.dark) .hover\:bg-dark-700\/50:hover { background-color: #eceef2; }
+    html:not(.dark) .text-neutral-100 { color: #1a1a22; }
+    html:not(.dark) .text-neutral-200 { color: #26262f; }
+    html:not(.dark) .text-neutral-300 { color: #3f3f4a; }
+    html:not(.dark) .text-neutral-400 { color: #5b5b68; }
+    html:not(.dark) .text-neutral-500 { color: #62626e; }
+    html:not(.dark) .border-dark-600 { border-color: #e1e3ea; }
+    html:not(.dark) .border-dark-700 { border-color: #e8e9ee; }
+    html:not(.dark) .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #e1e3ea; }
+    html:not(.dark) .bg-black\/40 { background-color: #f1f2f5; }
+    html:not(.dark) pre.code-dark { background-color: #1a1a22; color: #e9e9ee; }
+
+    /* Light mode — Parte 2: acento das 3 trilhas (texto -700, nunca -400 no claro) */
+    html:not(.dark) .text-emerald-400 { color: #047857; }
+    html:not(.dark) .text-emerald-300 { color: #047857; }
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #047857; }
+    html:not(.dark) .bg-emerald-500\/20 { background-color: rgba(4,120,87,0.12); }
+    html:not(.dark) .bg-emerald-500\/10 { background-color: rgba(4,120,87,0.08); }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(4,120,87,0.08); }
+    html:not(.dark) .bg-emerald-900\/20 { background-color: rgba(4,120,87,0.07); }
+    html:not(.dark) .bg-emerald-900\/30 { background-color: rgba(4,120,87,0.08); }
+    html:not(.dark) .bg-emerald-900\/40 { background-color: rgba(4,120,87,0.09); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(4,120,87,0.28); }
+    html:not(.dark) .hover\:border-emerald-500\/30:hover { border-color: rgba(4,120,87,0.4); }
+    html:not(.dark) .text-blue-400 { color: #1d4ed8; }
+    html:not(.dark) .text-blue-300 { color: #1d4ed8; }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #1d4ed8; }
+    html:not(.dark) .bg-blue-500\/20 { background-color: rgba(29,78,216,0.12); }
+    html:not(.dark) .bg-blue-500\/10 { background-color: rgba(29,78,216,0.08); }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(29,78,216,0.08); }
+    html:not(.dark) .bg-blue-900\/20 { background-color: rgba(29,78,216,0.07); }
+    html:not(.dark) .bg-blue-900\/30 { background-color: rgba(29,78,216,0.08); }
+    html:not(.dark) .bg-blue-900\/40 { background-color: rgba(29,78,216,0.09); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(29,78,216,0.28); }
+    html:not(.dark) .hover\:border-blue-500\/30:hover { border-color: rgba(29,78,216,0.4); }
+    html:not(.dark) .text-purple-400 { color: #6d28d9; }
+    html:not(.dark) .text-purple-300 { color: #6d28d9; }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #6d28d9; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(109,40,217,0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(109,40,217,0.08); }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(109,40,217,0.08); }
+    html:not(.dark) .bg-purple-900\/20 { background-color: rgba(109,40,217,0.07); }
+    html:not(.dark) .bg-purple-900\/30 { background-color: rgba(109,40,217,0.08); }
+    html:not(.dark) .bg-purple-900\/40 { background-color: rgba(109,40,217,0.09); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(109,40,217,0.28); }
+    html:not(.dark) .hover\:border-purple-500\/30:hover { border-color: rgba(109,40,217,0.4); }
+
+    /* Light mode — Parte 3: gradientes + especiais */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #854d0e; }
+    html:not(.dark) .text-yellow-400 { color: #854d0e; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #713f12; }
+    html:not(.dark) .bg-primary\/10 { background-color: #FEF9C3; }
+    html:not(.dark) .border-primary\/30 { border-color: #EAB308; }
+    html:not(.dark) .text-red-400 { color: #b91c1c; }
+    html:not(.dark) .bg-red-900\/20 { background-color: rgba(185,28,28,0.07); }
+    html:not(.dark) .border-red-500\/30 { border-color: rgba(185,28,28,0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #075985; }
+    html:not(.dark) .bg-sky-900\/20 { background-color: rgba(3,105,161,0.07); }
+    html:not(.dark) .border-sky-500\/30 { border-color: rgba(3,105,161,0.25); }
+
+    /* Light mode — Parte 4: nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255,255,255,0.95); }
+
+    /* Parte 5: bordas suavizadas no DARK (Erro #15) */
+    .dark .border-dark-600 { border-color: #2a2a35; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #2a2a35; }
+
+    /* SVG: no claro, um fundo escuro emoldurado mantém o contraste do desenho */
+    html:not(.dark) .svg-frame { background-color: #12121a; }
+    @media (prefers-reduced-motion: reduce) { svg * { animation: none !important; transition: none !important; } }
+  </style>
+<link href="../../../assets/learn.css" rel="stylesheet"/>
+<link href="https://inematds.github.io/FTD/FTD-v2/curso/trilha3/modulo-3-2.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/FTD/FTD-v2/en/curso/trilha3/modulo-3-2.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/FTD/FTD-v2/es/curso/trilha3/modulo-3-2.html" hreflang="es" rel="alternate"/><link href="https://inematds.github.io/FTD/FTD-v2/curso/trilha3/modulo-3-2.html" hreflang="x-default" rel="alternate"/><link href="https://inematds.github.io/FTD/FTD-v2/en/curso/trilha3/modulo-3-2.html" rel="canonical"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(250,204,21,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha3/modulo-3-2.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="modulo-3-2.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#FACC15">EN</a><a href="../../../es/curso/trilha3/modulo-3-2.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14 gap-2">
+<!-- Logo + INEMA.CLUB -->
+<div class="flex items-center space-x-3 flex-shrink-0">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🚀</span>
+<span class="font-display font-bold text-lg hidden sm:inline">FTD</span>
+</a>
+<span class="text-neutral-600 hidden sm:inline">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium hidden sm:inline" href="https://inema.club" rel="noopener" target="_blank">INEMA.CLUB</a>
+<span class="text-neutral-600 hidden sm:inline">-</span>
+<a class="text-amber-700 dark:text-slate-300 hover:underline text-sm font-medium hidden sm:inline" href="https://inema.pro" rel="noopener" target="_blank">PRO</a>
+</div>
+<!-- Trilhas + controles de aprendizagem + theme toggle -->
+<div class="flex items-center gap-1 sm:gap-1.5">
+<a class="px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors whitespace-nowrap" href="../trilha1/index.html">
+<span class="lg:hidden">T1</span><span class="hidden lg:inline">Beginner</span>
+</a>
+<a class="px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors whitespace-nowrap" href="../trilha2/index.html">
+<span class="lg:hidden">T2</span><span class="hidden lg:inline">Technical</span>
+</a>
+<a class="px-2.5 py-1.5 rounded-lg text-sm font-semibold text-purple-400 bg-purple-500/10 whitespace-nowrap" href="index.html">
+<span class="lg:hidden">T3</span><span class="hidden lg:inline">Masterclass</span>
+</a>
+<span class="w-px h-6 bg-dark-600 mx-1 hidden sm:inline-block"></span>
+<!-- Minha jornada (abre o painel global; badge = % do curso) -->
+<button class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-300 hover:text-neutral-100 hover:bg-dark-700 transition-colors" data-inema-journey-open="" type="button">
+<svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="16"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+<span class="hidden md:inline">My journey</span>
+<span class="inema-journey-badge" data-count="0" data-inema-journey-badge=""></span>
+</button>
+<!-- Aparência (gatilho + painel obrigatório) -->
+<div class="relative">
+<button aria-expanded="false" class="inema-appearance-trigger inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-300 hover:text-neutral-100 transition-colors" data-inema-appearance-toggle="#inema-appearance-panel" type="button">
+<svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="16"><circle cx="12" cy="12" r="9"></circle><path d="M12 3v18"></path><path d="M12 3a9 9 0 0 1 0 18" fill="currentColor"></path></svg>
+<span class="hidden md:inline">Appearance</span>
+</button>
+<div class="inema-appearance-pop right-0" data-inema-appearance="" id="inema-appearance-panel">
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Theme</span>
+<div class="inema-segment">
+<button data-inema-set-theme="inema-dark" type="button">Dark</button>
+<button data-inema-set-theme="claro" type="button">Light</button>
+<button data-inema-set-theme="sepia" type="button">Sepia</button>
+</div>
+<div class="inema-segment">
+<button data-inema-set-theme="foco" type="button">Focus</button>
+<button data-inema-set-theme="contraste" type="button">High contrast</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Font</span>
+<div class="inema-segment">
+<button data-inema-set-font="inter" type="button">Inter</button>
+<button data-inema-set-font="system" type="button">System</button>
+<button data-inema-set-font="leitura" type="button">Reading</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Size</span>
+<div class="inema-segment">
+<button data-inema-set-fontscale="100" type="button">A</button>
+<button data-inema-set-fontscale="112" type="button">A+</button>
+<button data-inema-set-fontscale="125" type="button">A++</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Width</span>
+<div class="inema-segment">
+<button data-inema-set-linewidth="60" type="button">Narrow</button>
+<button data-inema-set-linewidth="68" type="button">Medium</button>
+<button data-inema-set-linewidth="75" type="button">Wide</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Line spacing</span>
+<div class="inema-segment">
+<button data-inema-set-leading="1.45" type="button">Compact</button>
+<button data-inema-set-leading="1.7" type="button">Comfortable</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Accent</span>
+<div class="inema-accent-grid">
+<button aria-label="Emerald accent" data-inema-set-accent="emerald" type="button"></button>
+<button aria-label="Blue accent" data-inema-set-accent="blue" type="button"></button>
+<button aria-label="Purple accent" data-inema-set-accent="purple" type="button"></button>
+<button aria-label="Amber accent" data-inema-set-accent="amber" type="button"></button>
+<button aria-label="Teal accent" data-inema-set-accent="teal" type="button"></button>
+<button aria-label="Pink accent" data-inema-set-accent="rose" type="button"></button>
+</div>
+</div>
+</div>
+</div>
+<!-- Theme toggle sol/lua (núcleo v1; o JS o mantém coerente com o tema) -->
+<button aria-label="Toggle light/dark theme" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20">
+<path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+</svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20">
+<path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path>
+</svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<main data-inema-module="3-2" data-inema-track="3" id="conteudo">
+<!-- BREADCRUMB -->
+<nav aria-label="Navigation track" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-purple-400" href="../../index.html">Home</a><span>/</span>
+<a class="hover:text-purple-400" href="index.html">Track 3</a><span>/</span>
+<span class="text-purple-400">Module 3.2</span>
+</div>
+</nav>
+<!-- HEADER do módulo -->
+<header class="bg-gradient-to-br from-purple-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-purple-500/20 text-purple-400 text-xs font-semibold rounded-full mb-4">MODULE 3.2</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🧬 Custom and Proprietary Models</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">When it makes sense to have your own model—and when it's just expensive vanity. The customization ladder, open models, LoRA, continued pretraining, distillation, proprietary data as an advantage, and the <strong class="text-purple-400">real cost of maintaining</strong> a model that's live in production.</p>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">7</div><div class="text-xs text-neutral-400">Topics</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">~60</div><div class="text-xs text-neutral-400">Minutes</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">Advanced</div><div class="text-xs text-neutral-400">Level</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">Strategy</div><div class="text-xs text-neutral-400">Type</div></div>
+</div>
+<div class="flex items-center gap-3 mt-8">
+<div aria-label="Module 3.2 progress" class="inema-ring" data-inema-meter="modulo:3-2"><span class="inema-ring__value" data-inema-meter-pct="">0%</span></div>
+<div class="inema-meter-label" data-inema-meter="modulo:3-2"><strong data-inema-meter-frac="">0 of 0</strong> topics read · <span data-inema-section-counter="">Section 1 of 7</span></div>
+</div>
+</div>
+</header>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+<div class="lg:flex lg:gap-10">
+<!-- TOC sticky + scrollspy -->
+<aside class="hidden lg:block lg:w-56 flex-shrink-0">
+<nav aria-label="Page index" class="sticky top-20 self-start" data-inema-toc="">
+<p class="text-xs font-semibold uppercase tracking-wide text-neutral-500 mb-3">In this module</p>
+<ol class="space-y-1 text-sm">
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-purple-400" href="#topico-1">1. The customization ladder</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-purple-400" href="#topico-2">2. Open models</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-purple-400" href="#topico-3">3. LoRA and QLoRA</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-purple-400" href="#topico-4">4. Continued pretraining</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-purple-400" href="#topico-5">5. Distillation</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-purple-400" href="#topico-6">6. Data as a moat</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-purple-400" href="#topico-7">7. The real cost of maintaining it</a></li>
+</ol>
+</nav>
+</aside>
+<!-- ARTIGO -->
+<article class="inema-prose flex-1 min-w-0">
+<h2 class="text-2xl font-bold mb-8">Detailed content</h2>
+<!-- TÓPICO 1 -->
+<section class="mb-16" data-inema-topic="modulo-3-2#topico-1" id="topico-1" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="do prompt ao modelo do zero">🪜 The customization ladder</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Mark this topic as a question" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-2-t1-p1">“Having your own model” has become a boardroom phrase. In practice, there are six levels of customization, and each level up costs more money, people, and maintenance. The rule that protects your budget is simple: <strong class="text-neutral-100">move up one level only when the previous one has demonstrably failed to solve the problem</strong> — and “demonstrably” means an evaluation with numbers, not an impression from a meeting.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-2-t1-p2">The levels: <strong class="text-purple-400">prompt engineering</strong> (instructions and examples in the request); <strong class="text-purple-400">RAG</strong> (retrieve your own documents and add them to the context); <strong class="text-purple-400">parameter-efficient fine-tuning</strong> such as LoRA (training a small part of the model with your examples); <strong class="text-purple-400">continued pretraining</strong> (keep training the base model on a large corpus from your domain); <strong class="text-purple-400">distillation</strong> (teach a small model to imitate a large one) and, at the top, <strong class="text-purple-400">training from scratch</strong>.</p>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-purple-400 mb-3">What it is</h3>
+<p class="text-neutral-300">The customization ladder orders the ways to adapt AI to your business from the cheapest and most reversible (prompt) to the most expensive and permanent (a model from scratch). Each rung solves a different kind of problem: prompts and RAG change what the model <em>knows right away</em>; fine-tuning changes <em>how it behaves</em>; pretraining and training from scratch change <em>what it is</em>.</p>
+</div>
+<!-- SVG 1: escada -->
+<figure class="svg-frame rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="Six-step ladder for customizing models: prompt, RAG, LoRA, continued pretraining, distillation, and training from scratch. The higher the step, the greater the cost, data effort, and maintenance time." class="w-full h-auto" role="img" viewbox="0 0 900 340">
+<defs>
+<filter height="160%" id="m32-glow" width="160%" x="-30%" y="-30%"><fegaussianblur result="b" stddeviation="2"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="28" id="m32-grid" patternunits="userSpaceOnUse" width="28"><circle cx="1.2" cy="1.2" fill="#8b5cf6" opacity="0.15" r="1.2"></circle></pattern>
+<marker id="m32-ah" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#38bdf8"></path></marker>
+<style>@keyframes m32pulse{0%,100%{opacity:.55}50%{opacity:1}} .m32-top{animation:m32pulse 2.4s ease-in-out infinite}</style>
+</defs>
+<rect fill="url(#m32-grid)" height="340" width="900"></rect>
+<g filter="url(#m32-glow)" font-family="Inter,sans-serif">
+<rect fill="#1a1430" height="46" rx="9" stroke="#a78bfa" stroke-width="2" width="140" x="12" y="270"></rect>
+<text fill="#ede9fe" font-size="14" font-weight="700" x="24" y="291">1 · Prompt</text><text fill="#c4b5fd" font-size="11" x="24" y="308">hours · reversible</text>
+<rect fill="#1a1430" height="46" rx="9" stroke="#a78bfa" stroke-width="2" width="140" x="158" y="226"></rect>
+<text fill="#ede9fe" font-size="14" font-weight="700" x="170" y="247">2 · RAG</text><text fill="#c4b5fd" font-size="11" x="170" y="264">days · documents</text>
+<rect fill="#1a1430" height="46" rx="9" stroke="#8b5cf6" stroke-width="2" width="140" x="304" y="182"></rect>
+<text fill="#ede9fe" font-size="14" font-weight="700" x="316" y="203">3 · LoRA</text><text fill="#c4b5fd" font-size="11" x="316" y="220">weeks · examples</text>
+<rect fill="#1a1430" height="46" rx="9" stroke="#8b5cf6" stroke-width="2" width="140" x="450" y="138"></rect>
+<text fill="#ede9fe" font-size="14" font-weight="700" x="462" y="159">4 · Pretraining</text><text fill="#c4b5fd" font-size="11" x="462" y="176">ongoing · corpus</text>
+<rect fill="#0e1b26" height="46" rx="9" stroke="#38bdf8" stroke-width="2" width="140" x="596" y="94"></rect>
+<text fill="#e0f2fe" font-size="14" font-weight="700" x="608" y="115">5 · Distillation</text><text fill="#bae6fd" font-size="11" x="608" y="132">large → small</text>
+<rect class="m32-top" fill="#0e1b26" height="46" rx="9" stroke="#38bdf8" stroke-width="2.5" width="140" x="742" y="50"></rect>
+<text fill="#e0f2fe" font-size="14" font-weight="700" x="754" y="71">6 · From scratch</text><text fill="#bae6fd" font-size="11" x="754" y="88">months · cluster</text>
+</g>
+<path d="M40,250 L720,40" fill="none" marker-end="url(#m32-ah)" stroke="#38bdf8" stroke-dasharray="5 7" stroke-opacity="0.6" stroke-width="2"></path>
+<text fill="#7dd3fc" font-family="Inter,sans-serif" font-size="12" x="30" y="40">↗ cost, data, people, and maintenance</text>
+<text fill="#c4b5fd" font-family="Inter,sans-serif" font-size="12" x="560" y="300">start at the bottom · move up only with evidence</text>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-purple-400">How to read:</strong> from left to right, each rung requires more investment and is harder to undo. The dashed line has no numeric scale—it shows the direction. Most business use cases stop at rungs 1 to 3; rungs 4 to 6 pay off only with high volume, a very specific domain, or sovereignty requirements.</figcaption>
+</figure>
+<div class="overflow-x-auto mb-6">
+<table class="w-full text-sm border border-dark-600 rounded-xl overflow-hidden">
+<thead><tr class="bg-dark-700"><th class="text-left p-3 text-purple-400">Symptom</th><th class="text-left p-3 text-purple-400">Rung that usually solves it</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr><td class="p-3 text-neutral-300">Responds in the wrong format or ignores rules</td><td class="p-3 text-neutral-300">Prompt with examples; then LoRA</td></tr>
+<tr><td class="p-3 text-neutral-300">Doesn't know the company's policies, products, and prices</td><td class="p-3 text-neutral-300">RAG (knowledge changes; training gets outdated)</td></tr>
+<tr><td class="p-3 text-neutral-300">Inconsistent tone, style, or classification at high volume</td><td class="p-3 text-neutral-300">LoRA with curated examples</td></tr>
+<tr><td class="p-3 text-neutral-300">Domain vocabulary that the model doesn't even tokenize well</td><td class="p-3 text-neutral-300">Continuous pretraining</td></tr>
+<tr><td class="p-3 text-neutral-300">A large model works, but the cost and latency don't add up</td><td class="p-3 text-neutral-300">Distillation to a smaller model</td></tr>
+</tbody>
+</table>
+</div>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Why learn</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-2-t1-p3" data-sum="porque">The question "do we need our own model?" comes up in every planning process. With the ladder, you replace an opinion-based answer with a diagnosis: which symptom, which rung, and which test proves the rung below isn't enough. This helps avoid six-month projects that good RAG could solve in two weeks.</p>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Key concepts</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Step</div><div class="text-xs text-neutral-400">customization level</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Knowledge × behavior</div><div class="text-xs text-neutral-400">RAG × fine-tuning</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Reversibility</div><div class="text-xs text-neutral-400">how much it costs to undo</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Proof of need</div><div class="text-xs text-neutral-400">evaluation before moving up</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Mark as read</span>
+<span class="inema-label-done">Read</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 2 -->
+<section class="mb-16" data-inema-topic="modulo-3-2#topico-2" id="topico-2" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="pesos abertos, licenças e escolha">🔓 Open models as a starting point</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Mark this topic as a question" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-2-t2-p1">Almost nobody trains a language model from scratch. The realistic path to a model of "your own" is to start with a model with <strong class="text-purple-400">open weights</strong> (<em>open weights</em>: you download the file with the parameters and run it wherever you want) and adapt it. Model families such as Llama (Meta), Qwen (Alibaba), Mistral, Gemma (Google), and DeepSeek publish models in various sizes on Hugging Face, and new versions come out frequently—always check the official page before choosing.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-2-t2-p2">Pay attention to the difference between <strong class="text-neutral-100">open weights</strong> e <strong class="text-neutral-100">open source</strong> in the strict sense. Many models release their weights, but not their training data or full code, and come with their own licenses that may limit commercial use above a certain scale, require attribution, or prohibit specific uses. Others are released under permissive licenses such as Apache 2.0 or MIT. The license is part of the architecture: anyone who doesn't read it inherits a legal risk.</p>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-purple-400 mb-3">What it is</h3>
+<p class="text-neutral-300">An open model is one whose weights you can download, run on your infrastructure, and adjust. It is the foundation of nearly every proprietary business model: you inherit general capabilities and add what is specific to your business.</p>
+</div>
+<div class="overflow-x-auto mb-6">
+<table class="w-full text-sm border border-dark-600 rounded-xl overflow-hidden">
+<thead><tr class="bg-dark-700"><th class="text-left p-3 text-purple-400">Criterion</th><th class="text-left p-3 text-purple-400">Question to ask</th><th class="text-left p-3 text-purple-400">Where to check</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr><td class="p-3 font-semibold">License</td><td class="p-3 text-neutral-300">Can I use it commercially, at my scale, for this use?</td><td class="p-3 text-neutral-300">LICENSE file and model card</td></tr>
+<tr><td class="p-3 font-semibold">Size</td><td class="p-3 text-neutral-300">Will it fit on the GPU I have, with the latency I need?</td><td class="p-3 text-neutral-300">Local test with quantization</td></tr>
+<tr><td class="p-3 font-semibold">Language</td><td class="p-3 text-neutral-300">Does it perform well in Brazilian Portuguese in my domain?</td><td class="p-3 text-neutral-300">Your evaluation set, not the leaderboard</td></tr>
+<tr><td class="p-3 font-semibold">Context</td><td class="p-3 text-neutral-300">Can the context window fit my typical documents?</td><td class="p-3 text-neutral-300">Model card + real-world test</td></tr>
+<tr><td class="p-3 font-semibold">Ecosystem</td><td class="p-3 text-neutral-300">Is it supported in vLLM, Ollama, PEFT, Unsloth?</td><td class="p-3 text-neutral-300">Tool documentation</td></tr>
+<tr><td class="p-3 font-semibold">Provenance</td><td class="p-3 text-neutral-300">Who published it? Is the file official? Is there a hash?</td><td class="p-3 text-neutral-300">Verified organization on Hugging Face</td></tr>
+</tbody>
+</table>
+</div>
+<div class="bg-dark-800 border border-purple-500/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-purple-400 font-semibold mb-1">📌 New term</p>
+<p class="text-sm text-neutral-300" data-inema-block="m3-2-t2-p3"><strong>Quantization</strong> means storing the weights with fewer bits (for example, 4 bits instead of 16) so the model fits in less memory, with some loss of quality that you need to measure. <strong>Model card</strong> (<em>model card</em>) is the page that describes training, limitations, license, and intended use.</p>
+</div>
+<div class="bg-primary/10 border border-primary/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-primary font-semibold mb-1">💡 Tip</p>
+<p class="text-sm text-neutral-300" data-inema-block="m3-2-t2-p4">Choose two or three candidates from different model families and run the same set of 50 to 200 questions from your business through all of them before adjusting anything. Public leaderboards measure general tasks; your use case is what decides.</p>
+</div>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Why learn</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-2-t2-p5" data-sum="porque">Choosing the base model sets the ceiling for your customized model, the hardware you’ll need, and the legal risk. Switching bases later means redoing fine-tuning, evaluation, and integration. Making the decision with written criteria saves months.</p>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Key concepts</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Open weights</div><div class="text-xs text-neutral-400">download it and run it wherever you want</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">License</div><div class="text-xs text-neutral-400">what you're allowed to do</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Quantization</div><div class="text-xs text-neutral-400">fewer bits, less memory</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Base model</div><div class="text-xs text-neutral-400">the ceiling of what you can adjust</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Mark as read</span>
+<span class="inema-label-done">Read</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 3 -->
+<section class="mb-16" data-inema-topic="modulo-3-2#topico-3" id="topico-3" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="ajustar pouco, com dados limpos">🎛️ Efficient fine-tuning: LoRA and QLoRA</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Mark this topic as a question" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-2-t3-p1"><strong class="text-purple-400">LoRA</strong> (<em>Low-Rank Adaptation</em>) freezes the original model and trains only small matrices attached to some layers. The result is an <strong class="text-neutral-100">adapter</strong>: a small file that is added to the base model. <strong class="text-purple-400">QLoRA</strong> does the same with the base model quantized to 4 bits, which makes it possible to fine-tune medium-sized models on a single GPU. Common tools: Hugging Face PEFT and TRL, Unsloth, and Axolotl.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-2-t3-p2">What determines the result isn't the hyperparameter—it's the <strong class="text-neutral-100">dataset</strong>. A few hundred to a few thousand clean, consistent, representative examples are usually worth more than tens of thousands of noisy examples. Duplicate examples teach the model to memorize; examples with personal data create an LGPD problem inside the weights, where it's very difficult to remove later.</p>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-purple-400 mb-3">What it is</h3>
+<p class="text-neutral-300">Parameter-efficient fine-tuning (PEFT) means training a tiny fraction of the parameters to change the model's behavior—format, tone, classification, tool use—without the cost of training everything. Multiple adapters can share the same base model in production.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6">
+<h4 class="font-bold text-purple-400 mb-4">✓ LoRA works well</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-purple-400">✓</span><span>High-volume, rigid output formats (JSON, reports, forms).</span></li>
+<li class="flex items-start gap-2"><span class="text-purple-400">✓</span><span>Consistent brand voice and style.</span></li>
+<li class="flex items-start gap-2"><span class="text-purple-400">✓</span><span>Classification and extraction using company categories.</span></li>
+<li class="flex items-start gap-2"><span class="text-purple-400">✓</span><span>Shorten long prompts that are repeated in every call.</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ LoRA handles this poorly</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Teach facts that change every week (prices, inventory).</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Give the model reasoning abilities it doesn’t have in its base version.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Fix bad data with more training epochs.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Guarantee source citations (that’s what RAG is for).</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-purple-400">Goal:</strong> <span class="text-neutral-300">clean and split a JSONL dataset before any fine-tuning (Python 3 only, no libraries).</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copy</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900"># prepare_dataset.py — usage: python3 prepare_dataset.py &lt;input.jsonl&gt;
+# Each line: {"question": "...", "answer": "..."}
+import hashlib, json, random, re, sys
+
+MIN_CHARS, MAX_CHARS, FRACAO_AVAL = 20, 8000, 0.1
+PII = {
+    "cpf": re.compile(r"\b\d{3}\.?\d{3}\.?\d{3}-?\d{2}\b"),
+    "email": re.compile(r"\b[\w.+-]+@[\w-]+\.[\w.-]+\b"),
+    "telefone": re.compile(r"(?:\(?\d{2}\)?\s?)?9?\d{4}-?\d{4}\b"),
+}
+
+def mascara(texto, contagem):
+    for nome, rx in PII.items():
+        texto, n = rx.subn(f"[{nome.upper()}]", texto)
+        contagem[nome] += n
+    return texto
+
+entrada = sys.argv[1]
+vistos, limpos = set(), []
+stats = {"lidas": 0, "invalidas": 0, "curtas_longas": 0, "duplicadas": 0}
+pii = {k: 0 for k in PII}
+with open(entrada, encoding="utf-8") as f:
+    for linha in f:
+        if not linha.strip():
+            continue
+        stats["lidas"] += 1
+        try:
+            reg = json.loads(linha)
+            p, r = reg["pergunta"].strip(), reg["resposta"].strip()
+        except (json.JSONDecodeError, KeyError, AttributeError):
+            stats["invalidas"] += 1
+            continue
+        if not (MIN_CHARS &lt;= len(p) + len(r) &lt;= MAX_CHARS):
+            stats["curtas_longas"] += 1
+            continue
+        p, r = mascara(p, pii), mascara(r, pii)
+        chave = hashlib.sha256(" ".join(p.lower().split()).encode()).hexdigest()
+        if chave in vistos:
+            stats["duplicadas"] += 1
+            continue
+        vistos.add(chave)
+        limpos.append({"pergunta": p, "resposta": r})
+
+random.Random(42).shuffle(limpos)
+n_aval = max(1, int(len(limpos) * FRACAO_AVAL))
+for nome, parte in (("avaliacao.jsonl", limpos[:n_aval]), ("treino.jsonl", limpos[n_aval:])):
+    with open(nome, "w", encoding="utf-8") as f:
+        for reg in parte:
+            f.write(json.dumps(reg, ensure_ascii=False) + "\n")
+
+print(json.dumps({**stats, "pii_mascarada": pii,
+                  "treino": len(limpos) - n_aval, "avaliacao": n_aval}, indent=2))</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">How to check:</strong> create a test file with 5 lines, two of them identical and one containing a fictional email and CPF. Run the script: the summary should show <code>"duplicated": 1</code>, a PII count greater than zero, and the files <code>train.jsonl</code> e <code>evaluation.jsonl</code> with no visible email (<code>grep -c @ train.jsonl</code> should return 0). Regex catches the obvious, not everything: proper names and addresses require human review or a dedicated PII detection tool.</p>
+</div>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Why learn</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-2-t3-p3" data-sum="porque">LoRA is the most cost-effective customization step when the problem is behavior. Knowing that it depends almost entirely on data quality and cleanliness changes where the technical lead assigns the team: to curation, not the search for the perfect hyperparameter.</p>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Key concepts</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Adapter</div><div class="text-xs text-neutral-400">small file added to the base</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">QLoRA</div><div class="text-xs text-neutral-400">LoRA on a 4-bit base model</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Curation</div><div class="text-xs text-neutral-400">a few good examples</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Evaluation split</div><div class="text-xs text-neutral-400">data the model doesn't see during training</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Mark as read</span>
+<span class="inema-label-done">Read</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 4 -->
+<section class="mb-16" data-inema-topic="modulo-3-2#topico-4" id="topico-4" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="ensinar um domínio inteiro sem esquecer o resto">📚 Continued pretraining</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Mark this topic as a question" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-2-t4-p1">O <strong class="text-purple-400">continued pretraining</strong> (<em>continued pretraining</em>) takes an already-trained base model and continues training it on the same next-token prediction task, but now on a large corpus from your domain: case law, technical standards, engineering manuals, anonymized medical records. Unlike LoRA, which teaches behavior using question-answer pairs, here the model absorbs <strong class="text-neutral-100">the domain’s vocabulary, style, and relationships</strong> from raw text.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-2-t4-p2">The main risk has a name: <strong class="text-red-400">catastrophic forgetting</strong> — as it learns the domain, the model loses general capabilities, such as following instructions or writing well in Portuguese. The classic defense is a <strong class="text-neutral-100">data mixture</strong>: a portion of high-quality general text is added alongside the domain corpus, and after pretraining, instruction tuning helps restore assistant behavior. You find the right proportion by measuring, not by copying a recipe.</p>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-purple-400 mb-3">What it is</h3>
+<p class="text-neutral-300">It means continuing the pretraining of an open model on a large corpus from a specific domain, followed by instruction tuning and dual evaluation: gains in the domain and preservation of general capabilities.</p>
+</div>
+<!-- SVG 2: pipeline -->
+<figure class="svg-frame rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="Continued pretraining pipeline: domain-specific and general text go into a mixer, feed the base model’s pretraining, go through instruction tuning, and reach a dual evaluation that measures gains in the domain and losses in general capabilities." class="w-full h-auto" role="img" viewbox="0 0 900 300">
+<defs>
+<marker id="m32-ahp" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#a78bfa"></path></marker>
+<style>@keyframes m32dash{to{stroke-dashoffset:-24}} .m32-flow{stroke-dasharray:6 6;animation:m32dash 1.6s linear infinite}</style>
+</defs>
+<rect fill="url(#m32-grid)" height="300" width="900"></rect>
+<g font-family="Inter,sans-serif">
+<rect fill="#1a1430" height="54" rx="10" stroke="#a78bfa" stroke-width="2" width="150" x="20" y="50"></rect>
+<text fill="#ede9fe" font-size="14" font-weight="700" text-anchor="middle" x="95" y="74">Domain corpus</text>
+<text fill="#c4b5fd" font-size="11" text-anchor="middle" x="95" y="92">clean, with no PII</text>
+<rect fill="#0e1b26" height="54" rx="10" stroke="#38bdf8" stroke-width="2" width="150" x="20" y="180"></rect>
+<text fill="#e0f2fe" font-size="14" font-weight="700" text-anchor="middle" x="95" y="204">General text</text>
+<text fill="#bae6fd" font-size="11" text-anchor="middle" x="95" y="222">prevents forgetting</text>
+<path class="m32-flow" d="M172,77 L225,130" fill="none" marker-end="url(#m32-ahp)" stroke="#a78bfa" stroke-width="2"></path>
+<path class="m32-flow" d="M172,207 L225,160" fill="none" marker-end="url(#m32-ahp)" stroke="#38bdf8" stroke-width="2"></path>
+<circle cx="260" cy="145" fill="#1a1430" r="32" stroke="#8b5cf6" stroke-width="2.5"></circle>
+<text fill="#ede9fe" font-size="12" font-weight="700" text-anchor="middle" x="260" y="149">mixture</text>
+<path class="m32-flow" d="M294,145 L340,145" fill="none" marker-end="url(#m32-ahp)" stroke="#a78bfa" stroke-width="2"></path>
+<rect fill="#1a1430" height="70" rx="12" stroke="#8b5cf6" stroke-width="2.5" width="160" x="345" y="110"></rect>
+<text fill="#ede9fe" font-size="14" font-weight="700" text-anchor="middle" x="425" y="140">Pretraining</text>
+<text fill="#c4b5fd" font-size="11" text-anchor="middle" x="425" y="160">on the base model</text>
+<path class="m32-flow" d="M507,145 L548,145" fill="none" marker-end="url(#m32-ahp)" stroke="#a78bfa" stroke-width="2"></path>
+<rect fill="#1a1430" height="70" rx="12" stroke="#a78bfa" stroke-width="2" width="150" x="553" y="110"></rect>
+<text fill="#ede9fe" font-size="14" font-weight="700" text-anchor="middle" x="628" y="140">Instruction</text>
+<text fill="#ede9fe" font-size="14" font-weight="700" text-anchor="middle" x="628" y="158">tuning</text>
+<path class="m32-flow" d="M705,135 L744,104" fill="none" marker-end="url(#m32-ahp)" stroke="#a78bfa" stroke-width="2"></path>
+<path class="m32-flow" d="M705,155 L744,186" fill="none" marker-end="url(#m32-ahp)" stroke="#a78bfa" stroke-width="2"></path>
+<rect fill="#0e1b26" height="54" rx="10" stroke="#38bdf8" stroke-width="2" width="130" x="750" y="70"></rect>
+<text fill="#e0f2fe" font-size="13" font-weight="700" text-anchor="middle" x="815" y="94">Domain eval</text>
+<text fill="#bae6fd" font-size="11" text-anchor="middle" x="815" y="111">improved?</text>
+<rect fill="#0e1b26" height="54" rx="10" stroke="#38bdf8" stroke-width="2" width="130" x="750" y="166"></rect>
+<text fill="#e0f2fe" font-size="13" font-weight="700" text-anchor="middle" x="815" y="190">General eval</text>
+<text fill="#bae6fd" font-size="11" text-anchor="middle" x="815" y="207">how much did it drop?</text>
+<text fill="#c4b5fd" font-size="12" text-anchor="middle" x="450" y="270">if general performance drops too much, adjust the mixture and repeat</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-purple-400">How to read:</strong> follow from left to right. The mixture circle is the most important decision in the pipeline: domain corpus alone leads to forgetting; too much general text dilutes the gains. Read the two evaluations at the end together—improving in the domain while plummeting in general performance makes the model worse for the user.</figcaption>
+</figure>
+<div class="bg-primary/10 border border-primary/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-primary font-semibold mb-1">💡 Tip</p>
+<p class="text-sm text-neutral-300" data-inema-block="m3-2-t4-p3">Before approving ongoing pretraining, ask the team to answer three questions: how many tokens of clean, proprietary corpus do you have today, which eval proves that RAG + LoRA aren’t enough, and who will maintain the model when a better new base model comes out. If any question goes unanswered, the project isn’t ready yet.</p>
+</div>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Why learn</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-2-t4-p4" data-sum="porque">It’s the step that separates adaptation from true specialization. For domains with highly specialized language, it may be the only path to high quality—but it requires a volume of data, GPU resources, and evaluation discipline that few companies have. Knowing this helps you say yes to the right cases and no to the rest.</p>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Key concepts</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Corpus</div><div class="text-xs text-neutral-400">raw domain text</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Catastrophic forgetting</div><div class="text-xs text-neutral-400">loses what it knew</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Data mixing</div><div class="text-xs text-neutral-400">domain + general</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Dual evaluation</div><div class="text-xs text-neutral-400">improvement and retention</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Mark as read</span>
+<span class="inema-label-done">Read</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 5 -->
+<section class="mb-16" data-inema-topic="modulo-3-2#topico-5" id="topico-5" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="o grande ensina, o pequeno serve">🧪 Distillation: teacher and student</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Mark this topic as a question" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-2-t5-p1"><strong class="text-purple-400">Distillation</strong> means training a small model (the  <strong class="text-neutral-100">student</strong>) to imitate a large model (the  <strong class="text-neutral-100">teacher</strong>) on a specific task. In the most common approach today, the teacher generates high-quality answers for thousands of real inputs, those answers are filtered, and the student is fine-tuned on them. The student doesn’t become the teacher—it gets good at that narrow range of tasks while running more cheaply and quickly.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-2-t5-p2">One legal issue can sink projects: the  <strong class="text-red-400">terms of use for many commercial providers restrict using their model’s outputs to train a competing model</strong>. Before distilling from a paid API, review the provider’s current terms with your legal team. Using an open model whose license allows this as the teacher removes the uncertainty.</p>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-purple-400 mb-3">What it is</h3>
+<p class="text-neutral-300">Distillation transfers a large model’s ability on a defined task to a smaller model that costs less per call and responds faster—trading generality for efficiency.</p>
+</div>
+<!-- SVG 3: professor-aluno -->
+<figure class="svg-frame rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="Distillation: real inputs go to the large teacher model, which generates responses; a quality filter approves only some of them; the approved responses train the small student model, which goes into production at lower cost and latency." class="w-full h-auto" role="img" viewbox="0 0 900 280">
+<rect fill="url(#m32-grid)" height="280" width="900"></rect>
+<g font-family="Inter,sans-serif">
+<rect fill="#1a1430" height="56" rx="10" stroke="#a78bfa" stroke-width="2" width="140" x="20" y="110"></rect>
+<text fill="#ede9fe" font-size="14" font-weight="700" text-anchor="middle" x="90" y="134">Real inputs</text>
+<text fill="#c4b5fd" font-size="11" text-anchor="middle" x="90" y="152">anonymized</text>
+<path class="m32-flow" d="M162,138 L210,138" fill="none" marker-end="url(#m32-ahp)" stroke="#a78bfa" stroke-width="2"></path>
+<rect fill="#1a1430" filter="url(#m32-glow)" height="110" rx="14" stroke="#8b5cf6" stroke-width="3" width="170" x="215" y="83"></rect>
+<text fill="#ede9fe" font-size="16" font-weight="700" text-anchor="middle" x="300" y="128">Teacher</text>
+<text fill="#c4b5fd" font-size="11" text-anchor="middle" x="300" y="148">large model</text>
+<text fill="#c4b5fd" font-size="11" text-anchor="middle" x="300" y="164">license allows it?</text>
+<path class="m32-flow" d="M387,138 L440,138" fill="none" marker-end="url(#m32-ahp)" stroke="#a78bfa" stroke-width="2"></path>
+<polygon fill="#0e1b26" points="445,98 575,98 545,178 475,178" stroke="#38bdf8" stroke-width="2"></polygon>
+<text fill="#e0f2fe" font-size="13" font-weight="700" text-anchor="middle" x="510" y="132">Filter</text>
+<text fill="#bae6fd" font-size="11" text-anchor="middle" x="510" y="150">quality</text>
+<path class="m32-flow" d="M548,138 L620,138" fill="none" marker-end="url(#m32-ah)" stroke="#38bdf8" stroke-width="2"></path>
+<rect fill="#0e1b26" height="66" rx="12" stroke="#38bdf8" stroke-width="2.5" width="120" x="625" y="105"></rect>
+<text fill="#e0f2fe" font-size="15" font-weight="700" text-anchor="middle" x="685" y="134">Student</text>
+<text fill="#bae6fd" font-size="11" text-anchor="middle" x="685" y="153">small model</text>
+<path class="m32-flow" d="M747,138 L790,138" fill="none" marker-end="url(#m32-ah)" stroke="#38bdf8" stroke-width="2"></path>
+<text fill="#e0f2fe" font-size="13" font-weight="700" x="796" y="134">production</text>
+<text fill="#bae6fd" font-size="11" x="796" y="152">cheaper</text>
+<text fill="#c4b5fd" font-size="12" text-anchor="middle" x="510" y="230">answers rejected by the filter aren’t included in training</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-purple-400">How to read:</strong> The larger box is the teacher and the smaller one is the student—the visual size indicates the model’s scale. The funnel in the middle is where quality is decided: the student also learns the teacher’s mistakes if nothing is filtered out. The licensing question appears inside the teacher because that’s where the legal risk comes from.</figcaption>
+</figure>
+<div class="relative border-l-2 border-purple-500/30 ml-3 pl-6 space-y-5 mb-6">
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-purple-500/20 border-2 border-purple-400"></span><p class="text-sm text-neutral-300"><strong class="text-purple-400">Step 1.</strong> Define a narrow task and measure the teacher on it using your evaluation set.</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-purple-500/20 border-2 border-purple-400"></span><p class="text-sm text-neutral-300"><strong class="text-purple-400">Step 2.</strong> Generate teacher answers for real, anonymized inputs that are separate from the evaluation inputs.</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-purple-500/20 border-2 border-purple-400"></span><p class="text-sm text-neutral-300"><strong class="text-purple-400">Step 3.</strong> Filter using rules (valid format, no inappropriate refusals) and sample-based human review.</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-purple-500/20 border-2 border-purple-400"></span><p class="text-sm text-neutral-300"><strong class="text-purple-400">Step 4.</strong> Fine-tune the student with LoRA and compare the student × teacher on the same eval, including cost and latency.</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-sky-500/20 border-2 border-sky-400"></span><p class="text-sm text-neutral-300"><strong class="text-sky-400">Step 5.</strong> In production, send cases where the student has low confidence to the teacher.</p></div>
+</div>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Why learn</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-2-t5-p3" data-sum="porque">Distillation is the most direct way to reduce the unit cost of AI at high volumes without losing much quality on the task that matters. It’s also a common legal trap. A leader who knows both sides can approve the right project with the right teacher model.</p>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Key concepts</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Teacher</div><div class="text-xs text-neutral-400">large reference model</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Student</div><div class="text-xs text-neutral-400">trained small model</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Synthetic data</div><div class="text-xs text-neutral-400">generated by a model</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Terms of use</div><div class="text-xs text-neutral-400">may prohibit distillation</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Mark as read</span>
+<span class="inema-label-done">Read</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 6 -->
+<section class="mb-16" data-inema-topic="modulo-3-2#topico-6" id="topico-6" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="o que o concorrente não copia">🏰 Proprietary data as a moat</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Mark this topic as a question" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-2-t6-p1">A <strong class="text-purple-400">moat</strong> (<em>moat</em>) is an advantage that’s hard to copy. Your model’s weights are rarely that moat: a better open base model can come out in a few months, and a competitor can repeat the fine-tuning. What’s hard to copy are three things— <strong class="text-neutral-100">data only you generate</strong>, an  <strong class="text-neutral-100">evaluation set</strong> that captures what “good” means in your business, and the  <strong class="text-neutral-100">cycle</strong> that turns usage into continuous improvement.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-2-t6-p2">That cycle is the  <strong class="text-purple-400">data flywheel</strong>: people use the product, their corrections and evaluations are recorded, they become curated examples, and they improve the model, which improves the product and attracts more use. It only turns within the bounds of the LGPD (Brazil’s data protection law): a legal basis for using the data, the purpose disclosed to the data subject, anonymization before training, and the ability to honor deletion requests—which is much easier with RAG than with weights that have already been trained.</p>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-purple-400 mb-3">What it is</h3>
+<p class="text-neutral-300">A data moat is a competitive advantage built on exclusive data that can legally be used and is continually renewed through product use, combined with an in-house evaluation set that shows whether each model version is actually better.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6">
+<h4 class="font-bold text-purple-400 mb-4">✓ Real moat</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-purple-400">✓</span><span>Expert corrections to model outputs, recorded in the workflow.</span></li>
+<li class="flex items-start gap-2"><span class="text-purple-400">✓</span><span>Business outcomes tied to each answer (the customer came back, the report was accepted).</span></li>
+<li class="flex items-start gap-2"><span class="text-purple-400">✓</span><span>An in-house, versioned eval with difficult cases from your domain.</span></li>
+<li class="flex items-start gap-2"><span class="text-purple-400">✓</span><span>Documented consent and legal basis for use in training.</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Fake moat</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>“Our fine-tuned model” based on public data anyone can download.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>A mountain of logs with no labels, no quality, and no legal basis.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>A long prompt treated as a trade secret.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>A lead on a public leaderboard that the next base model surpasses.</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-purple-400">Try this:</strong> <span class="text-neutral-300">Compare the base model with your fine-tuned model on your own eval, locally with Ollama.</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copy</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900"># compara_modelos.py — usage:
+#   python3 compara_modelos.py avaliacao.jsonl &lt;modelo_base&gt; &lt;modelo_ajustado&gt;
+# Ex.: python3 compara_modelos.py avaliacao.jsonl qwen2.5 qwen2.5-empresa
+# Each JSONL line: {"pergunta": "...", "esperado": ["termo1", "termo2"]}
+# Requires Ollama to be running (ollama serve). A paid API works the same way if you swap the URL and key.
+import json, sys, time, urllib.request
+
+URL = "http://localhost:11434/api/generate"
+
+def gerar(modelo, prompt):
+    corpo = json.dumps({"model": modelo, "prompt": prompt, "stream": False,
+                        "options": {"temperature": 0}}).encode()
+    req = urllib.request.Request(URL, data=corpo, headers={"Content-Type": "application/json"})
+    t0 = time.time()
+    with urllib.request.urlopen(req, timeout=300) as r:
+        resp = json.loads(r.read())["response"]
+    return resp, time.time() - t0
+
+def acerto(resposta, esperado):
+    texto = resposta.lower()
+    return all(termo.lower() in texto for termo in esperado)
+
+arquivo, modelos = sys.argv[1], sys.argv[2:4]
+casos = [json.loads(l) for l in open(arquivo, encoding="utf-8") if l.strip()]
+placar = {m: {"acertos": 0, "segundos": 0.0} for m in modelos}
+for i, caso in enumerate(casos, 1):
+    linha = [f"#{i:03d}"]
+    for m in modelos:
+        resp, seg = gerar(m, caso["pergunta"])
+        ok = acerto(resp, caso["esperado"])
+        placar[m]["acertos"] += ok
+        placar[m]["segundos"] += seg
+        linha.append(f"{m}={'OK' if ok else 'erro'}")
+    print("  ".join(linha))
+
+print("\nResumo")
+for m, p in placar.items():
+    print(f"{m:30s} acertos {p['acertos']}/{len(casos)}  "
+          f"tempo médio {p['segundos'] / len(casos):.1f}s")</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">How to check:</strong> run it first with the same model in both positions (<code>qwen2.5 qwen2.5</code>): the number of correct answers should match, which shows that the script and zero temperature are stable. Then run base × fine-tuned on the <code>evaluation.jsonl</code> generated in Topic 3, which the training process did not see. The expected-term criterion is deliberately simple; for open-ended responses, replace <code>acerto()</code> with human review or an evaluator model using a rubric.</p>
+</div>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Why learn</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-2-t6-p3" data-sum="porque">Investing in your own model without a data moat is like buying an asset that depreciates with every release. Investing in the data cycle and your own eval creates an asset that appreciates and works with any future base model—including switching providers without losing quality.</p>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Key concepts</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Moat</div><div class="text-xs text-neutral-400">hard-to-copy advantage</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Flywheel</div><div class="text-xs text-neutral-400">usage that drives improvement</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Your own eval</div><div class="text-xs text-neutral-400">what “good” means for your business</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Legal basis</div><div class="text-xs text-neutral-400">LGPD before training</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Mark as read</span>
+<span class="inema-label-done">Read</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 7 -->
+<section class="mb-16" data-inema-topic="modulo-3-2#topico-7" id="topico-7" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">7</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="treinar é o começo da conta">💰 The real cost of maintaining a model</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Mark this topic as a question" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-2-t7-p1">The figure in the proposal is usually the training cost. The bill that comes later is the <strong class="text-purple-400">total cost of ownership</strong> (TCO, <em>total cost of ownership</em>): serving the model 24/7, monitoring quality, retraining when the data changes, migrating to a new base model, responding to incidents, and keeping the people who know how to do all of this. Your own model is a living product, not a deliverable.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-2-t7-p2">The most often overlooked cost is the <strong class="text-neutral-100">opportunity</strong>: while the team maintains the fine-tuned model from the previous generation, general models on the market keep improving. Often, the next generation of a general model with a good prompt reaches the custom model’s performance. That’s why the plan needs to include, from the start, how to reassess the decision with each relevant new base model.</p>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-purple-400 mb-3">What it is</h3>
+<p class="text-neutral-300">It’s the sum of everything your own model requires over its useful life—infrastructure, data, evaluation, retraining, security, compliance, and staff—compared with the cost of using and adapting a third-party model.</p>
+</div>
+<div class="overflow-x-auto mb-6">
+<table class="w-full text-sm border border-dark-600 rounded-xl overflow-hidden">
+<thead><tr class="bg-dark-700"><th class="text-left p-3 text-purple-400">Cost item</th><th class="text-left p-3 text-purple-400">Third-party API + RAG</th><th class="text-left p-3 text-purple-400">Your own fine-tuned model</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr><td class="p-3 font-semibold">Infrastructure</td><td class="p-3 text-neutral-300">Variable, based on usage</td><td class="p-3 text-neutral-300">Reserved or rented GPU, idle outside peak hours</td></tr>
+<tr><td class="p-3 font-semibold">Team</td><td class="p-3 text-neutral-300">Application engineering</td><td class="p-3 text-neutral-300">+ ML, MLOps, and inference on-call</td></tr>
+<tr><td class="p-3 font-semibold">Updates</td><td class="p-3 text-neutral-300">The provider improves the model</td><td class="p-3 text-neutral-300">Retraining and reevaluation with each new base model</td></tr>
+<tr><td class="p-3 font-semibold">Data</td><td class="p-3 text-neutral-300">RAG indexing and governance</td><td class="p-3 text-neutral-300">+ ongoing curation of examples</td></tr>
+<tr><td class="p-3 font-semibold">Compliance</td><td class="p-3 text-neutral-300">Contract and DPA with the provider</td><td class="p-3 text-neutral-300">Personal data in the weights, difficult to remove</td></tr>
+<tr><td class="p-3 font-semibold">Control</td><td class="p-3 text-neutral-300">Subject to price and version changes</td><td class="p-3 text-neutral-300">In total: frozen version, data kept in-house</td></tr>
+</tbody>
+</table>
+</div>
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-purple-400">Goal:</strong> <span class="text-neutral-300">decision checklist + analysis prompt to take the “build or buy” decision to the committee.</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copy</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900">You are a skeptical AI architect who protects the company’s budget.
+Use case: &lt;3-line description&gt;
+Expected volume: &lt;calls per day&gt; · Required latency: &lt;e.g., 2 s&gt;
+Available data: &lt;type, amount, whether it contains personal data&gt;
+Current team: &lt;who we have in ML, MLOps, data&gt;
+Current eval results: &lt;prompt + RAG gets X of Y cases right; target is Z&gt;
+
+Answer the checklist, one line per item, with YES / NO / NOT SURE and the reason:
+[ ] 1. Have prompt + RAG been evaluated with our own eval and fallen short of the target?
+[ ] 2. Is the problem about behavior (format, tone, class) rather than knowledge?
+[ ] 3. Do we have exclusive, clean data and a legal basis (LGPD (Brazil’s data protection law)) for training?
+[ ] 4. Does the volume make the cost per API call significant in the budget?
+[ ] 5. Is there a requirement for data sovereignty, offline operation, or data that cannot leave our systems?
+[ ] 6. Do we have someone to maintain the model and retrain it with each new dataset?
+[ ] 7. Does the base model’s license allow our commercial use?
+[ ] 8. Do we know how to handle a request to delete data that has already been used for training?
+
+Then:
+- Recommend the step (prompt, RAG, LoRA, continued pretraining, distillation, from scratch).
+- List the 3 biggest risks and a 2-week test that confirms or overturns your recommendation.
+- Say what would change your mind. Don’t make up numbers; mark [ESTIMATE] where data is missing.</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">How to check:</strong> The answer must address all 8 items, one per line, and no figure may appear unless it is marked [ESTIMATE] or comes from the data you provided. If item 1 is NO or NOT SURE, the right recommendation is to stick with prompt or RAG and build the eval first — if the model recommends training anyway, be skeptical of the analysis.</p>
+</div>
+<div class="bg-primary/10 border border-primary/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-primary font-semibold mb-1">💡 Tip</p>
+<p class="text-sm text-neutral-300" data-inema-block="m3-2-t7-p3">Include a “reassessment date” in the proposal: when a relevant new dataset becomes available, run our own eval on it with prompt + RAG before any retraining. If the general-purpose model performs just as well, retire the custom model without hesitation — your data and eval remain your moat.</p>
+</div>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Why learn</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-2-t7-p4" data-sum="porque">Decisions to build your own model are among the most expensive AI decisions to reverse. Leaders who bring the full TCO, a completed checklist, and a reassessment criterion to the committee approve fewer projects—and the ones they approve deliver returns.</p>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Key concepts</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">TCO</div><div class="text-xs text-neutral-400">lifetime cost</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Opportunity cost</div><div class="text-xs text-neutral-400">the market never stops</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Build × buy</div><div class="text-xs text-neutral-400">checklist-based decision</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Reassessment</div><div class="text-xs text-neutral-400">with each new dataset</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Mark as read</span>
+<span class="inema-label-done">Read</span>
+</button>
+</div>
+</div>
+</section>
+<!-- RESUMO -->
+<section class="mb-8">
+<div class="bg-gradient-to-br from-purple-900/40 via-dark-800 to-dark-800 rounded-xl border border-purple-500/30 p-6 sm:p-8">
+<h2 class="text-2xl font-bold mb-6">✅ Module summary</h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start gap-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">Climb the ladder only with evidence</strong><span class="text-neutral-400"> — prompt and RAG first, evaluated with numbers.</span></div></div>
+<div class="flex items-start gap-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">An open model is the starting point</strong><span class="text-neutral-400"> — and the license is part of the architecture.</span></div></div>
+<div class="flex items-start gap-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">LoRA changes behavior; pretraining changes the domain; distillation changes the cost</strong><span class="text-neutral-400"> — each solves a different problem.</span></div></div>
+<div class="flex items-start gap-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">Your moat is data and eval, not weights</strong><span class="text-neutral-400"> — under the LGPD.</span></div></div>
+<div class="flex items-start gap-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">Count the full TCO</strong><span class="text-neutral-400"> — and set a reassessment date.</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-purple-400 mb-2">Next module:</h3>
+<p class="text-neutral-300">3.3 — Advanced Multimodal AI 🎞️</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="index.html">← Back to Track</a>
+<a class="flex-1 text-center px-6 py-3 bg-purple-700 text-white rounded-lg font-semibold hover:bg-purple-600 transition-colors" href="modulo-3-3.html">Next module →</a>
+</div>
+</div>
+</section>
+</article>
+</div>
+</div>
+</main>
+<footer class="border-t border-dark-600 py-8 mt-8">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>FTD — Digital Transformation Training · open and free content · 2026 · <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" rel="noopener" target="_blank">INEMA.CLUB</a> - <a class="text-amber-700 dark:text-slate-300 hover:underline" href="https://inema.pro" rel="noopener" target="_blank">PRO</a></p>
+</div>
+</footer>
+<!-- SCRIPTS NÚCLEO v1 -->
+<script>
+    function toggleTopic(button) {
+      var topicItem = button.closest('.topic-item');
+      if (!topicItem) return;
+      var explanation = topicItem.querySelector('.topic-explanation');
+      var willOpen = !explanation.classList.contains('active');
+      explanation.classList.toggle('active');
+      button.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+    }
+    function openModal(id) { var m = document.getElementById(id); if (m) { m.classList.remove('hidden'); document.body.style.overflow = 'hidden'; } }
+    function closeModal() { document.querySelectorAll('.modal').forEach(function (m) { m.classList.add('hidden'); }); document.body.style.overflow = 'auto'; }
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
+    function copyCode(btn) {
+      var pre = btn.closest('[data-copy-box]').querySelector('pre');
+      var txt = pre ? pre.innerText : '';
+      var done = function () { var o = btn.getAttribute('data-label-ok') || 'Copiado'; var t = btn.textContent; btn.textContent = o; setTimeout(function () { btn.textContent = t; }, 1500); };
+      try { navigator.clipboard.writeText(txt).then(done, done); } catch (e) { done(); }
+    }
+    (function () {
+      var themeToggle = document.getElementById('theme-toggle');
+      var darkIcon = document.getElementById('theme-toggle-dark-icon');
+      var lightIcon = document.getElementById('theme-toggle-light-icon');
+      var html = document.documentElement;
+      function sync() { var isDark = html.classList.contains('dark'); if (darkIcon) darkIcon.classList.toggle('hidden', isDark); if (lightIcon) lightIcon.classList.toggle('hidden', !isDark); }
+      sync();
+      if (themeToggle) themeToggle.addEventListener('click', function () {
+        html.classList.toggle('dark'); var nowDark = html.classList.contains('dark'); html.style.colorScheme = nowDark ? 'dark' : 'light';
+        try { localStorage.setItem('theme', nowDark ? 'dark' : 'light'); } catch (e) {}
+        try { var p = JSON.parse(localStorage.getItem('inema.prefs') || '{}'); p.theme = nowDark ? 'inema-dark' : 'claro'; localStorage.setItem('inema.prefs', JSON.stringify(p)); } catch (e) {}
+        sync();
+      });
+    })();
+  </script>
+<!-- learn.js + INEMA.init() POR ÚLTIMO -->
+<script src="../../assets/learn.js"></script>
+<script>
+    if (window.INEMA && typeof window.INEMA.init === 'function') { window.INEMA.init({ autoResume: true }); }
+  </script>
+</body>
+</html>

@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="ftd-v2-es" name="inema-course"/>
+<title>Módulo 1.7 · Automatización de procesos | FTD v2</title>
+<meta content="Mapear un proceso, elegir el disparador, armar el flujo y dejar que la IA se encargue de las etapas adecuadas." name="description"/>
+<meta content="Módulo 1.7 · Automatización de procesos | FTD v2" property="og:title"/>
+<meta content="Mapear un proceso, elegir el disparador, armar el flujo y dejar que la IA se encargue de las etapas adecuadas." property="og:description"/>
+<!-- ANTI-FOUC (Erro #18) — primeiro script do head -->
+<script>
+(function () {
+  try {
+    var html = document.documentElement;
+    var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+    function clone(o) { var r = {}; for (var x in o) r[x] = o[x]; return r; }
+    var p = clone(DEF);
+    try {
+      var raw = localStorage.getItem('inema.prefs');
+      if (raw) {
+        var parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === 'object') {
+          for (var k in DEF) if (parsed[k] != null) p[k] = parsed[k];
+        }
+      } else {
+        var legacy = localStorage.getItem('theme');
+        if (legacy === 'light') p.theme = 'claro';
+        else if (legacy === 'dark') p.theme = 'inema-dark';
+      }
+    } catch (e) { p = clone(DEF); }
+
+    var THEMES = {
+      'inema-dark': { dark: true,  attr: null,        cs: 'dark'  },
+      'claro':      { dark: false, attr: null,        cs: 'light' },
+      'sepia':      { dark: false, attr: 'sepia',     cs: 'light' },
+      'foco':       { dark: null,  attr: 'foco',      cs: null    },
+      'contraste':  { dark: true,  attr: 'contraste', cs: 'dark'  }
+    };
+    var t = THEMES[p.theme] || THEMES['inema-dark'];
+
+    if (t.dark === true) html.classList.add('dark');
+    else if (t.dark === false) html.classList.remove('dark');
+
+    if (t.attr) html.setAttribute('data-theme', t.attr);
+    else html.removeAttribute('data-theme');
+
+    html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark') ? 'dark' : 'light'));
+
+    html.setAttribute('data-font', p.font || 'inter');
+    html.setAttribute('data-accent', p.accent || 'emerald');
+
+    var s = html.style;
+    var scale = (+p.fontScale || 100);
+    s.setProperty('--inema-font-scale', (scale / 100).toString());
+    s.setProperty('font-size', scale + '%');
+    s.setProperty('--measure', (+p.lineWidth || 68) + 'ch');
+    s.setProperty('--lh-body', (+p.leading || 1.7).toString());
+    var fam = p.font === 'system'
+      ? 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif'
+      : (p.font === 'leitura'
+        ? '"Atkinson Hyperlegible", "Inter", system-ui, sans-serif'
+        : '"Inter", system-ui, sans-serif');
+    s.setProperty('--font-body', fam);
+
+    var ACC = {
+      emerald: [152, 76, 45], blue: [217, 91, 60], purple: [258, 90, 66],
+      amber: [38, 92, 50], teal: [174, 72, 41], rose: [350, 89, 60]
+    };
+    var a = ACC[p.accent] || ACC.emerald;
+    s.setProperty('--accent-h', a[0] + '');
+    s.setProperty('--accent-s', a[1] + '%');
+    s.setProperty('--accent-l', a[2] + '%');
+    s.setProperty('--accent', 'hsl(' + a[0] + ' ' + a[1] + '% ' + a[2] + '%)');
+  } catch (err) {
+    try { document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme = 'dark'; } catch (e) {}
+  }
+})();
+</script>
+<!-- MANIFESTO do curso (Erro #28) — idêntico em todas as páginas -->
+<script data-inema-manifest="" type="application/json">
+{
+  "course": "ftd-v2-es",
+  "tracks": [
+    {
+      "n": "1",
+      "title": "Principiante",
+      "modules": [
+        {
+          "id": "1-1",
+          "title": "Impacto de la IA",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-1.html"
+        },
+        {
+          "id": "1-2",
+          "title": "Navegar el mundo digital",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-2.html"
+        },
+        {
+          "id": "1-3",
+          "title": "Ingeniería de prompts",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-3.html"
+        },
+        {
+          "id": "1-4",
+          "title": "Asistentes y agentes de IA",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-4.html"
+        },
+        {
+          "id": "1-5",
+          "title": "Creatividad visual con IA",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-5.html"
+        },
+        {
+          "id": "1-6",
+          "title": "Marketing y ventas con IA",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-6.html"
+        },
+        {
+          "id": "1-7",
+          "title": "Automatización de procesos",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-7.html"
+        },
+        {
+          "id": "1-8",
+          "title": "Inteligencia artificial avanzada",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-8.html"
+        },
+        {
+          "id": "1-9",
+          "title": "Negocios y monetización con IA",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-9.html"
+        }
+      ]
+    },
+    {
+      "n": "2",
+      "title": "Técnico",
+      "modules": [
+        {
+          "id": "2-1",
+          "title": "Desarrollo con APIs de IA",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-1.html"
+        },
+        {
+          "id": "2-2",
+          "title": "Arquitectura de aplicaciones con IA",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-2.html"
+        },
+        {
+          "id": "2-3",
+          "title": "RAG y bases de conocimiento",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-3.html"
+        },
+        {
+          "id": "2-4",
+          "title": "Fine-tuning y personalización",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-4.html"
+        },
+        {
+          "id": "2-5",
+          "title": "Agentes y flujos de trabajo complejos",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-5.html"
+        },
+        {
+          "id": "2-6",
+          "title": "Visión artificial avanzada",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-6.html"
+        },
+        {
+          "id": "2-7",
+          "title": "NLP y procesamiento de texto",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-7.html"
+        },
+        {
+          "id": "2-8",
+          "title": "MLOps y producción",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-8.html"
+        },
+        {
+          "id": "2-9",
+          "title": "Ética y gobernanza de IA",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-9.html"
+        }
+      ]
+    },
+    {
+      "n": "3",
+      "title": "Masterclass",
+      "modules": [
+        {
+          "id": "3-1",
+          "title": "Arquitectura de IA a gran escala",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-1.html"
+        },
+        {
+          "id": "3-2",
+          "title": "Modelos personalizados y propietarios",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-2.html"
+        },
+        {
+          "id": "3-3",
+          "title": "IA multimodal avanzada",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-3.html"
+        },
+        {
+          "id": "3-4",
+          "title": "Investigación y artículos de IA",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-4.html"
+        },
+        {
+          "id": "3-5",
+          "title": "Aprendizaje por refuerzo en IA",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-5.html"
+        },
+        {
+          "id": "3-6",
+          "title": "Seguridad y red teaming",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-6.html"
+        },
+        {
+          "id": "3-7",
+          "title": "IA en producción — escala enterprise",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-7.html"
+        },
+        {
+          "id": "3-8",
+          "title": "Liderazgo y estrategia en IA",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-8.html"
+        },
+        {
+          "id": "3-9",
+          "title": "Futuro de la IA y AGI",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-9.html"
+        }
+      ]
+    }
+  ]
+}
+</script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#0c0c10', 800: '#16161e', 700: '#1e1e28', 600: '#272730', 500: '#33333f' } }, fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'], display: ['Sora', 'Inter', 'sans-serif'], mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'] } } } }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Sora:wght@600;700;800&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    h1, h2, h3, h4, .font-display { font-family: 'Sora', 'Inter', sans-serif; }
+    .dark body { background-color: #0c0c10; }
+    .dark .text-neutral-100 { color: #e9e9ee; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+    pre { white-space: pre-wrap; word-break: break-word; }
+    pre, code, .font-mono { font-family: 'JetBrains Mono', ui-monospace, monospace; }
+
+    /* Light mode — Parte 1: base */
+    html:not(.dark) body { background-color: #f6f7f9; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800\/50 { background-color: #f6f7f9; }
+    html:not(.dark) .bg-dark-700 { background-color: #eceef2; }
+    html:not(.dark) .bg-dark-700\/50 { background-color: #f1f2f5; }
+    html:not(.dark) .bg-dark-700\/30 { background-color: #f4f5f7; }
+    html:not(.dark) .bg-dark-600 { background-color: #e1e3ea; }
+    html:not(.dark) .hover\:bg-dark-600:hover { background-color: #d6d9e1; }
+    html:not(.dark) .hover\:bg-dark-700\/50:hover { background-color: #eceef2; }
+    html:not(.dark) .text-neutral-100 { color: #1a1a22; }
+    html:not(.dark) .text-neutral-200 { color: #26262f; }
+    html:not(.dark) .text-neutral-300 { color: #3f3f4a; }
+    html:not(.dark) .text-neutral-400 { color: #5b5b68; }
+    html:not(.dark) .text-neutral-500 { color: #62626e; }
+    html:not(.dark) .border-dark-600 { border-color: #e1e3ea; }
+    html:not(.dark) .border-dark-700 { border-color: #e8e9ee; }
+    html:not(.dark) .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #e1e3ea; }
+    html:not(.dark) .bg-black\/40 { background-color: #f1f2f5; }
+    html:not(.dark) pre.code-dark { background-color: #1a1a22; color: #e9e9ee; }
+
+    /* Light mode — Parte 2: acento das 3 trilhas (texto -700, nunca -400 no claro) */
+    html:not(.dark) .text-emerald-400 { color: #047857; }
+    html:not(.dark) .text-emerald-300 { color: #047857; }
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #047857; }
+    html:not(.dark) .bg-emerald-500\/20 { background-color: rgba(4,120,87,0.12); }
+    html:not(.dark) .bg-emerald-500\/10 { background-color: rgba(4,120,87,0.08); }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(4,120,87,0.08); }
+    html:not(.dark) .bg-emerald-900\/20 { background-color: rgba(4,120,87,0.07); }
+    html:not(.dark) .bg-emerald-900\/30 { background-color: rgba(4,120,87,0.08); }
+    html:not(.dark) .bg-emerald-900\/40 { background-color: rgba(4,120,87,0.09); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(4,120,87,0.28); }
+    html:not(.dark) .hover\:border-emerald-500\/30:hover { border-color: rgba(4,120,87,0.4); }
+    html:not(.dark) .text-blue-400 { color: #1d4ed8; }
+    html:not(.dark) .text-blue-300 { color: #1d4ed8; }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #1d4ed8; }
+    html:not(.dark) .bg-blue-500\/20 { background-color: rgba(29,78,216,0.12); }
+    html:not(.dark) .bg-blue-500\/10 { background-color: rgba(29,78,216,0.08); }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(29,78,216,0.08); }
+    html:not(.dark) .bg-blue-900\/20 { background-color: rgba(29,78,216,0.07); }
+    html:not(.dark) .bg-blue-900\/30 { background-color: rgba(29,78,216,0.08); }
+    html:not(.dark) .bg-blue-900\/40 { background-color: rgba(29,78,216,0.09); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(29,78,216,0.28); }
+    html:not(.dark) .hover\:border-blue-500\/30:hover { border-color: rgba(29,78,216,0.4); }
+    html:not(.dark) .text-purple-400 { color: #6d28d9; }
+    html:not(.dark) .text-purple-300 { color: #6d28d9; }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #6d28d9; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(109,40,217,0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(109,40,217,0.08); }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(109,40,217,0.08); }
+    html:not(.dark) .bg-purple-900\/20 { background-color: rgba(109,40,217,0.07); }
+    html:not(.dark) .bg-purple-900\/30 { background-color: rgba(109,40,217,0.08); }
+    html:not(.dark) .bg-purple-900\/40 { background-color: rgba(109,40,217,0.09); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(109,40,217,0.28); }
+    html:not(.dark) .hover\:border-purple-500\/30:hover { border-color: rgba(109,40,217,0.4); }
+
+    /* Light mode — Parte 3: gradientes + especiais */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #854d0e; }
+    html:not(.dark) .text-yellow-400 { color: #854d0e; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #713f12; }
+    html:not(.dark) .bg-primary\/10 { background-color: #FEF9C3; }
+    html:not(.dark) .border-primary\/30 { border-color: #EAB308; }
+    html:not(.dark) .text-red-400 { color: #b91c1c; }
+    html:not(.dark) .bg-red-900\/20 { background-color: rgba(185,28,28,0.07); }
+    html:not(.dark) .border-red-500\/30 { border-color: rgba(185,28,28,0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #075985; }
+    html:not(.dark) .bg-sky-900\/20 { background-color: rgba(3,105,161,0.07); }
+    html:not(.dark) .border-sky-500\/30 { border-color: rgba(3,105,161,0.25); }
+
+    /* Light mode — Parte 4: nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255,255,255,0.95); }
+
+    /* Parte 5: bordas suavizadas no DARK (Erro #15) */
+    .dark .border-dark-600 { border-color: #2a2a35; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #2a2a35; }
+
+    /* SVG: no claro, um fundo escuro emoldurado mantém o contraste do desenho */
+    html:not(.dark) .svg-frame { background-color: #12121a; }
+    @media (prefers-reduced-motion: reduce) { svg * { animation: none !important; transition: none !important; } }
+  </style>
+<link href="../../../assets/learn.css" rel="stylesheet"/>
+<link href="https://inematds.github.io/FTD/FTD-v2/curso/trilha1/modulo-1-7.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/FTD/FTD-v2/en/curso/trilha1/modulo-1-7.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/FTD/FTD-v2/es/curso/trilha1/modulo-1-7.html" hreflang="es" rel="alternate"/><link href="https://inematds.github.io/FTD/FTD-v2/curso/trilha1/modulo-1-7.html" hreflang="x-default" rel="alternate"/><link href="https://inematds.github.io/FTD/FTD-v2/es/curso/trilha1/modulo-1-7.html" rel="canonical"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(250,204,21,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha1/modulo-1-7.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="../../../en/curso/trilha1/modulo-1-7.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">EN</a><a href="modulo-1-7.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#FACC15">ES</a></div>
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14 gap-2">
+<!-- Logo + INEMA.CLUB -->
+<div class="flex items-center space-x-3 flex-shrink-0">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🚀</span>
+<span class="font-display font-bold text-lg hidden sm:inline">FTD</span>
+</a>
+<span class="text-neutral-600 hidden sm:inline">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium hidden sm:inline" href="https://inema.club" rel="noopener" target="_blank">INEMA.CLUB</a>
+<span class="text-neutral-600 hidden sm:inline">-</span>
+<a class="text-amber-700 dark:text-slate-300 hover:underline text-sm font-medium hidden sm:inline" href="https://inema.pro" rel="noopener" target="_blank">PRO</a>
+</div>
+<!-- Trilhas + controles de aprendizagem + theme toggle -->
+<div class="flex items-center gap-1 sm:gap-1.5">
+<a class="px-2.5 py-1.5 rounded-lg text-sm font-semibold text-emerald-400 bg-emerald-500/10 whitespace-nowrap" href="index.html">
+<span class="lg:hidden">T1</span><span class="hidden lg:inline">Principiante</span>
+</a>
+<a class="px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors whitespace-nowrap" href="../trilha2/index.html">
+<span class="lg:hidden">T2</span><span class="hidden lg:inline">Técnico</span>
+</a>
+<a class="px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors whitespace-nowrap" href="../trilha3/index.html">
+<span class="lg:hidden">T3</span><span class="hidden lg:inline">Masterclass</span>
+</a>
+<span class="w-px h-6 bg-dark-600 mx-1 hidden sm:inline-block"></span>
+<!-- Minha jornada (abre o painel global; badge = % do curso) -->
+<button class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-300 hover:text-neutral-100 hover:bg-dark-700 transition-colors" data-inema-journey-open="" type="button">
+<svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="16"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+<span class="hidden md:inline">Mi recorrido</span>
+<span class="inema-journey-badge" data-count="0" data-inema-journey-badge=""></span>
+</button>
+<!-- Aparência (gatilho + painel obrigatório) -->
+<div class="relative">
+<button aria-expanded="false" class="inema-appearance-trigger inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-300 hover:text-neutral-100 transition-colors" data-inema-appearance-toggle="#inema-appearance-panel" type="button">
+<svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="16"><circle cx="12" cy="12" r="9"></circle><path d="M12 3v18"></path><path d="M12 3a9 9 0 0 1 0 18" fill="currentColor"></path></svg>
+<span class="hidden md:inline">Apariencia</span>
+</button>
+<div class="inema-appearance-pop right-0" data-inema-appearance="" id="inema-appearance-panel">
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Tema</span>
+<div class="inema-segment">
+<button data-inema-set-theme="inema-dark" type="button">Oscuro</button>
+<button data-inema-set-theme="claro" type="button">Claro</button>
+<button data-inema-set-theme="sepia" type="button">Sepia</button>
+</div>
+<div class="inema-segment">
+<button data-inema-set-theme="foco" type="button">Enfoque</button>
+<button data-inema-set-theme="contraste" type="button">Alto contraste</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Fuente</span>
+<div class="inema-segment">
+<button data-inema-set-font="inter" type="button">Inter</button>
+<button data-inema-set-font="system" type="button">Sistema</button>
+<button data-inema-set-font="leitura" type="button">Lectura</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Tamaño</span>
+<div class="inema-segment">
+<button data-inema-set-fontscale="100" type="button">A</button>
+<button data-inema-set-fontscale="112" type="button">A+</button>
+<button data-inema-set-fontscale="125" type="button">A++</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Ancho</span>
+<div class="inema-segment">
+<button data-inema-set-linewidth="60" type="button">Estrecho</button>
+<button data-inema-set-linewidth="68" type="button">Mediano</button>
+<button data-inema-set-linewidth="75" type="button">Ancho</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Interlineado</span>
+<div class="inema-segment">
+<button data-inema-set-leading="1.45" type="button">Compacto</button>
+<button data-inema-set-leading="1.7" type="button">Cómodo</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Acento</span>
+<div class="inema-accent-grid">
+<button aria-label="Acento esmeralda" data-inema-set-accent="emerald" type="button"></button>
+<button aria-label="Acento azul" data-inema-set-accent="blue" type="button"></button>
+<button aria-label="Acento violeta" data-inema-set-accent="purple" type="button"></button>
+<button aria-label="Acento ámbar" data-inema-set-accent="amber" type="button"></button>
+<button aria-label="Acento verde azulado" data-inema-set-accent="teal" type="button"></button>
+<button aria-label="Acento rosa" data-inema-set-accent="rose" type="button"></button>
+</div>
+</div>
+</div>
+</div>
+<!-- Theme toggle sol/lua (núcleo v1; o JS o mantém coerente com o tema) -->
+<button aria-label="Alternar tema claro/oscuro" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20">
+<path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+</svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20">
+<path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path>
+</svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<main data-inema-module="1-7" data-inema-track="1" id="conteudo">
+<!-- BREADCRUMB -->
+<nav aria-label="Ruta de navegación" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-emerald-400" href="../../index.html">Inicio</a><span>/</span>
+<a class="hover:text-emerald-400" href="index.html">Ruta 1</a><span>/</span>
+<span class="text-emerald-400">Módulo 1.7</span>
+</div>
+</nav>
+<!-- HEADER do módulo -->
+<header class="bg-gradient-to-br from-emerald-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-emerald-500/20 text-emerald-400 text-xs font-semibold rounded-full mb-4">MÓDULO 1.7</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">⚙️ Automatización de procesos</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">Cómo convertir una tarea que repites cada semana en un flujo que funciona solo, usando herramientas sin código como n8n, Make y Zapier, y dónde incluir la IA en ese flujo. Vas a crear, paso a paso, <strong class="text-emerald-400">una automatización real de solicitudes de cotización</strong>, con prueba, aviso de error y una persona que aprueba lo que se envía.</p>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">7</div><div class="text-xs text-neutral-400">Temas</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">~50</div><div class="text-xs text-neutral-400">Minutos</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">Inicial</div><div class="text-xs text-neutral-400">Nivel</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">Práctica</div><div class="text-xs text-neutral-400">Tipo</div></div>
+</div>
+<div class="flex items-center gap-3 mt-8">
+<div aria-label="Progreso del módulo 1.7" class="inema-ring" data-inema-meter="modulo:1-7"><span class="inema-ring__value" data-inema-meter-pct="">0%</span></div>
+<div class="inema-meter-label" data-inema-meter="modulo:1-7"><strong data-inema-meter-frac="">0 de 0</strong> temas leídos · <span data-inema-section-counter="">Sección 1 de 7</span></div>
+</div>
+</div>
+</header>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+<div class="lg:flex lg:gap-10">
+<!-- TOC sticky + scrollspy -->
+<aside class="hidden lg:block lg:w-56 flex-shrink-0">
+<nav aria-label="Índice de la página" class="sticky top-20 self-start" data-inema-toc="">
+<p class="text-xs font-semibold uppercase tracking-wide text-neutral-500 mb-3">En este módulo</p>
+<ol class="space-y-1 text-sm">
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-emerald-400" href="#topico-1">1. Disparador y acción</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-emerald-400" href="#topico-2">2. Mapear antes</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-emerald-400" href="#topico-3">3. n8n, Make y Zapier</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-emerald-400" href="#topico-4">4. Un flujo real</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-emerald-400" href="#topico-5">5. Dónde entra la IA</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-emerald-400" href="#topico-6">6. Probar y proteger</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-emerald-400" href="#topico-7">7. Tu primera automatización</a></li>
+</ol>
+</nav>
+</aside>
+<!-- ARTIGO -->
+<article class="inema-prose flex-1 min-w-0">
+<h2 class="text-2xl font-bold mb-8">Contenido detallado</h2>
+<!-- TÓPICO 1 -->
+<section class="mb-16" data-inema-topic="modulo-1-7#topico-1" id="topico-1" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="quando isto acontece, faça aquilo">🔄 Disparador y acción</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m1-7-t1-p1">Toda automatización, desde la más sencilla hasta la más elaborada, cabe en una frase: <strong class="text-neutral-100">"cuando ocurra esto, haz aquello"</strong>. Cuando llegue un correo electrónico con un archivo adjunto, guarda el archivo en una carpeta. Cuando alguien complete el formulario, regístralo en la hoja de cálculo y avísame. Cuando sea lunes a las 8 h, prepara el informe de la semana. Ya haces estas tareas a mano; automatizar es enseñarle a la computadora a hacerlas por ti.</p>
+<div class="bg-dark-800 border border-emerald-500/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-emerald-400 font-semibold mb-1">🌱 ¿Nuevo aquí?</p>
+<p class="text-sm text-neutral-300" data-inema-block="m1-7-t1-p2"><strong>Disparador</strong> (trigger) es el evento que pone todo en marcha: un correo nuevo, una fila nueva en la hoja de cálculo, una hora determinada. <strong>Acción</strong> es lo que hace la automatización después: crear, enviar, copiar, avisar. <strong>Flujo</strong> (workflow) es la secuencia de un disparador y acciones. <strong>Sin código</strong> (no-code) significa que armas todo arrastrando bloques en una pantalla, sin programar. <strong>Integración</strong> es la conexión entre dos aplicaciones, como Gmail y Google Sheets.</p>
+</div>
+<div class="bg-gradient-to-br from-emerald-900/30 to-dark-800 rounded-xl border border-emerald-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">La automatización de procesos consiste en hacer que las aplicaciones se comuniquen entre sí para ejecutar, sin que tengas que intervenir, una secuencia de pasos que antes se hacía manualmente. Siempre empieza con un disparador y sigue con acciones, a veces con decisiones intermedias.</p>
+</div>
+<!-- SVG 1: gatilho → ações -->
+<figure class="svg-frame rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="Un flujo simple: el disparador «llegó un correo con un archivo adjunto» activa tres acciones en secuencia: guardar el archivo adjunto en Google Drive, registrar una fila en la hoja de cálculo y enviar una notificación por Telegram. Debajo, la frase: cuando ocurra esto, haz aquello." class="w-full h-auto" role="img" viewbox="0 0 900 230">
+<defs>
+<filter height="160%" id="m17-glow" width="160%" x="-30%" y="-30%"><fegaussianblur result="b" stddeviation="2"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="28" id="m17-grid" patternunits="userSpaceOnUse" width="28"><circle cx="1.2" cy="1.2" fill="#10b981" opacity="0.13" r="1.2"></circle></pattern>
+<marker id="m17-ah" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#34d399"></path></marker>
+<marker id="m17-ahc" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#38bdf8"></path></marker>
+<style>@keyframes m17dash{to{stroke-dashoffset:-24}} .m17-flow{stroke-dasharray:6 6;animation:m17dash 1.6s linear infinite} @keyframes m17pulse{0%,100%{opacity:.35}50%{opacity:1}} .m17-pulse{animation:m17pulse 2s ease-in-out infinite}</style>
+</defs>
+<rect fill="url(#m17-grid)" height="230" width="900"></rect>
+<g font-family="Inter,sans-serif">
+<circle class="m17-pulse" cx="120" cy="96" fill="none" r="74" stroke="#34d399" stroke-opacity="0.5" stroke-width="2"></circle>
+<rect fill="#0f1f18" filter="url(#m17-glow)" height="84" rx="14" stroke="#34d399" stroke-width="2.5" width="180" x="30" y="54"></rect>
+<text fill="#34d399" font-size="12" font-weight="700" text-anchor="middle" x="120" y="78">DISPARADOR</text>
+<text fill="#ecfdf5" font-size="14" font-weight="700" text-anchor="middle" x="120" y="102">correo electrónico con archivo adjunto</text>
+<text fill="#a7f3d0" font-size="12" text-anchor="middle" x="120" y="122">llegó a Gmail</text>
+<path class="m17-flow" d="M212,96 L262,96" fill="none" marker-end="url(#m17-ah)" stroke="#34d399" stroke-width="2.5"></path>
+<rect fill="#0e1b26" height="84" rx="14" stroke="#38bdf8" stroke-width="2" width="180" x="268" y="54"></rect>
+<text fill="#7dd3fc" font-size="12" font-weight="700" text-anchor="middle" x="358" y="78">ACCIÓN 1</text>
+<text fill="#e0f2fe" font-size="14" font-weight="700" text-anchor="middle" x="358" y="102">guarda el archivo adjunto</text>
+<text fill="#bae6fd" font-size="12" text-anchor="middle" x="358" y="122">en la carpeta de Drive</text>
+<path class="m17-flow" d="M450,96 L500,96" fill="none" marker-end="url(#m17-ahc)" stroke="#38bdf8" stroke-width="2.5"></path>
+<rect fill="#0e1b26" height="84" rx="14" stroke="#38bdf8" stroke-width="2" width="180" x="506" y="54"></rect>
+<text fill="#7dd3fc" font-size="12" font-weight="700" text-anchor="middle" x="596" y="78">ACCIÓN 2</text>
+<text fill="#e0f2fe" font-size="14" font-weight="700" text-anchor="middle" x="596" y="102">registra la fila</text>
+<text fill="#bae6fd" font-size="12" text-anchor="middle" x="596" y="122">en la hoja de cálculo</text>
+<path class="m17-flow" d="M688,96 L738,96" fill="none" marker-end="url(#m17-ahc)" stroke="#38bdf8" stroke-width="2.5"></path>
+<rect fill="#0e1b26" height="84" rx="14" stroke="#38bdf8" stroke-width="2" width="140" x="744" y="54"></rect>
+<text fill="#7dd3fc" font-size="12" font-weight="700" text-anchor="middle" x="814" y="78">ACCIÓN 3</text>
+<text fill="#e0f2fe" font-size="14" font-weight="700" text-anchor="middle" x="814" y="102">te avisa</text>
+<text fill="#bae6fd" font-size="12" text-anchor="middle" x="814" y="122">por Telegram</text>
+<text fill="#a7f3d0" font-size="14" font-weight="700" text-anchor="middle" x="450" y="200">"cuando ocurra esto, haz aquello"</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-emerald-400">Cómo leer:</strong> El círculo que pulsa muestra que el disparador permanece "de guardia" todo el tiempo. Cuando ocurre el evento, las acciones se ejecutan en orden, de izquierda a derecha, y cada una usa los datos de la anterior (el nombre del archivo adjunto, el remitente, la fecha). No necesitas intervenir en ninguna.</figcaption>
+</figure>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-4"><p class="text-emerald-400 font-semibold text-sm mb-1">📨 Por evento</p><p class="text-xs text-neutral-300" data-inema-block="m1-7-t1-p3">Ocurrió algo: un mensaje, un formulario, un pago, un archivo nuevo en una carpeta.</p></div>
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-4"><p class="text-emerald-400 font-semibold text-sm mb-1">⏰ Por horario</p><p class="text-xs text-neutral-300" data-inema-block="m1-7-t1-p4">Todos los días a las 7 h, cada lunes, el último día del mes. Ideal para informes y recordatorios.</p></div>
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-4"><p class="text-emerald-400 font-semibold text-sm mb-1">👆 Manual</p><p class="text-xs text-neutral-300" data-inema-block="m1-7-t1-p5">Presionas un botón y se ejecuta toda la secuencia. Es una buena forma de empezar y probar.</p></div>
+</div>
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m1-7-t1-p6" data-sum="porque">Las tareas pequeñas y repetidas suman horas al mes y son donde más se producen olvidos y errores de escritura. Pensar en «disparador y acción» te ayuda a detectar estas tareas en tu rutina, y es el primer paso para quitártelas de encima.</p>
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Disparador</div><div class="text-xs text-neutral-400">el evento que pone todo en marcha</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Acción</div><div class="text-xs text-neutral-400">lo que ejecuta el flujo</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Flujo</div><div class="text-xs text-neutral-400">disparador + acciones en orden</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Integración</div><div class="text-xs text-neutral-400">aplicaciones que se comunican</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 2 -->
+<section class="mb-16" data-inema-topic="modulo-1-7#topico-2" id="topico-2" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="priorizar, planejar e pilotar">🗺️ Mapear antes de automatizar</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m1-7-t2-p1">El error más común es abrir la herramienta antes de entender el proceso. Automatizar un desorden solo produce desorden más rápido. Antes de arrastrar el primer bloque, escribe en papel <strong class="text-neutral-100">cómo se hace hoy la tarea</strong>, paso a paso, quién la hace, dónde está la información y qué ocurre cuando algo sale de lo normal. Un método sencillo de tres etapas ayuda: <strong class="text-emerald-400">priorizar, planificar y pilotear</strong>.</p>
+<div class="bg-gradient-to-br from-emerald-900/30 to-dark-800 rounded-xl border border-emerald-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">Mapear un proceso es describir cada paso de una tarea repetida —entrada, decisiones, salida y excepciones— para elegir qué vale la pena automatizar y diseñar el flujo antes de armarlo en la herramienta.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-4"><p class="text-emerald-400 font-semibold text-sm mb-1">1 · Priorizar</p><p class="text-xs text-neutral-300" data-inema-block="m1-7-t2-p2">Enumera las tareas repetidas y elige la que sea frecuente, siga reglas claras y resulte molesta. Deja para después lo que ocurre rara vez o cambia cada vez.</p></div>
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-4"><p class="text-emerald-400 font-semibold text-sm mb-1">2 · Planificar</p><p class="text-xs text-neutral-300" data-inema-block="m1-7-t2-p3">Dibuja el flujo: activador, pasos, decisiones («si es urgente…»), dónde queda cada dato y qué hacer cuando haya un error.</p></div>
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-4"><p class="text-emerald-400 font-semibold text-sm mb-1">3 · Hacer una prueba piloto</p><p class="text-xs text-neutral-300" data-inema-block="m1-7-t2-p4">Ejecútalo con datos de prueba, luego en paralelo al trabajo manual durante una o dos semanas y solo entonces déjalo funcionar por su cuenta.</p></div>
+</div>
+<div class="overflow-x-auto mb-6">
+<table class="w-full text-sm border border-dark-600 rounded-xl overflow-hidden">
+<thead><tr class="bg-dark-700"><th class="text-left p-3 text-emerald-400">Pregunta</th><th class="text-left p-3 text-emerald-400">Buen candidato</th><th class="text-left p-3 text-emerald-400">Mal candidato</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr><td class="p-3 font-semibold">¿Con qué frecuencia ocurre?</td><td class="p-3 text-neutral-300">Todas las semanas o todos los días.</td><td class="p-3 text-neutral-300">Dos veces al año.</td></tr>
+<tr><td class="p-3 font-semibold">¿Los pasos son siempre los mismos?</td><td class="p-3 text-neutral-300">Sí, con pocas excepciones.</td><td class="p-3 text-neutral-300">Cada caso es diferente.</td></tr>
+<tr><td class="p-3 font-semibold">¿Los datos están en formato digital?</td><td class="p-3 text-neutral-300">Correo electrónico, formulario, hoja de cálculo.</td><td class="p-3 text-neutral-300">Papel, llamada, conversación de pasillo.</td></tr>
+<tr><td class="p-3 font-semibold">¿Cuánto cuesta un error?</td><td class="p-3 text-neutral-300">Poco, y se puede corregir.</td><td class="p-3 text-neutral-300">Mucho: dinero, salud, contrato.</td></tr>
+</tbody>
+</table>
+</div>
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-emerald-400">Objetivo:</strong> <span class="text-neutral-300">describir un proceso y descubrir si vale la pena automatizarlo.</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copiar</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900">Eres consultor de procesos y automatización sin código.
+Tarea que hago a mano: &lt;descríbela con tus propias palabras, de principio a fin&gt;
+Con qué frecuencia: &lt;por día, semana o mes&gt;
+Aplicaciones involucradas: &lt;Gmail, WhatsApp, Hojas de cálculo de Google, sistema de la tienda...&gt;
+
+1. Haz hasta 5 preguntas para entender las excepciones (qué ocurre cuando algo se sale de lo normal).
+2. Después, escribe el proceso actual en pasos numerados: quién lo hace, dónde está la información y qué decisión se toma.
+3. Evalúa: frecuencia, reglas claras, datos digitales y costo de un error. ¿Vale la pena automatizarlo? ¿Por qué?
+4. Si vale la pena, diseña el flujo: activador, acciones en orden, decisiones y qué hacer cuando haya un error.
+5. Señala qué pasos deben seguir a cargo de una persona.</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">Cómo verificar:</strong> Lee los pasos numerados y pregúntate: «¿Así es como lo hago?». Si la IA se saltó un paso o inventó uno, corrígelo antes de continuar. El flujo final debe tener un activador claro y un plan para cuando haya un error.</p>
+</div>
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m1-7-t2-p5" data-sum="porque">Media hora de mapeo evita días de retrabajo en la herramienta. Además, solo con escribir el proceso, sueles encontrar pasos inútiles que puedes eliminar; a veces, la mejor automatización es simplemente dejar de hacer algo.</p>
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Mapeo</div><div class="text-xs text-neutral-400">el proceso en papel</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Excepción</div><div class="text-xs text-neutral-400">cuando se sale de lo normal</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Método 3P</div><div class="text-xs text-neutral-400">priorizar, planificar, hacer una prueba piloto</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Prueba piloto</div><div class="text-xs text-neutral-400">ejecutar en paralelo primero</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 3 -->
+<section class="mb-16" data-inema-topic="modulo-1-7#topico-3" id="topico-3" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="três ferramentas, o mesmo raciocínio">🧰 n8n, Make y Zapier</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m1-7-t3-p1">Las tres herramientas sin código más conocidas para automatización son <strong class="text-neutral-100">Zapier</strong>, o <strong class="text-neutral-100">Make</strong> e o <strong class="text-neutral-100">n8n</strong>. Las tres hacen el mismo trabajo de fondo —conectar aplicaciones mediante activadores y acciones— y todas ya tienen bloques listos para usar IA. Cambia la forma de armarlas, dónde se ejecuta el flujo y cómo cobran. Quien aprende a usar una entiende las otras en poco tiempo.</p>
+<div class="bg-gradient-to-br from-emerald-900/30 to-dark-800 rounded-xl border border-emerald-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">Son plataformas visuales donde cada paso del flujo es un bloque (llamado etapa, módulo o nodo) conectado con el siguiente. Eliges la aplicación, conectas tu cuenta e indicas qué dato pasa de un bloque a otro.</p>
+</div>
+<div class="overflow-x-auto mb-6">
+<table class="w-full text-sm border border-dark-600 rounded-xl overflow-hidden">
+<thead><tr class="bg-dark-700"><th class="text-left p-3 text-emerald-400"></th><th class="text-left p-3 text-emerald-400">Zapier</th><th class="text-left p-3 text-emerald-400">Make</th><th class="text-left p-3 text-emerald-400">n8n</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr><td class="p-3 font-semibold">Cómo se llama el flujo</td><td class="p-3 text-neutral-300">Zap</td><td class="p-3 text-neutral-300">Escenario</td><td class="p-3 text-neutral-300">Workflow</td></tr>
+<tr><td class="p-3 font-semibold">Forma de armarlo</td><td class="p-3 text-neutral-300">Lista de pasos, de arriba hacia abajo; la opción más sencilla para empezar.</td><td class="p-3 text-neutral-300">Pantalla con círculos conectados; útil para ver ramificaciones.</td><td class="p-3 text-neutral-300">Pantalla con nodos conectados; muy flexible.</td></tr>
+<tr><td class="p-3 font-semibold">Dónde se ejecuta</td><td class="p-3 text-neutral-300">En la nube de Zapier.</td><td class="p-3 text-neutral-300">En la nube de Make.</td><td class="p-3 text-neutral-300">En la nube de n8n o en tu propio servidor.</td></tr>
+<tr><td class="p-3 font-semibold">Punto fuerte</td><td class="p-3 text-neutral-300">Gran catálogo de aplicaciones listas para usar.</td><td class="p-3 text-neutral-300">Flujos visuales con varias rutas.</td><td class="p-3 text-neutral-300">Código abierto, control de los datos, posibilidad de usar IA local.</td></tr>
+<tr><td class="p-3 font-semibold">Para quién</td><td class="p-3 text-neutral-300">Para quien quiere resultados rápidos.</td><td class="p-3 text-neutral-300">Para quien prefiere ver el diagrama.</td><td class="p-3 text-neutral-300">Para quien quiere llegar más lejos o guardar los datos en casa.</td></tr>
+</tbody>
+</table>
+</div>
+<div class="bg-dark-800 border border-emerald-500/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-emerald-400 font-semibold mb-1">🌱 ¿Nuevo aquí?</p>
+<p class="text-sm text-neutral-300" data-inema-block="m1-7-t3-p2"><strong>Código abierto</strong> quiere decir que cualquier persona puede descargar e instalar el programa. <strong>Alojar en un servidor propio</strong> (self-host) es ejecutar el programa en una computadora propia o alquilada, en lugar de usar el servicio de la empresa. <strong>Conector</strong> es el bloque listo para usar que sabe comunicarse con una aplicación. <strong>Credencial</strong> es el permiso que le das a la herramienta para acceder a tu cuenta (por ejemplo, «puedes leer mi Gmail»).</p>
+</div>
+<div class="bg-primary/10 border border-primary/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-primary font-semibold mb-1">💡 Consejo</p>
+<p class="text-sm text-neutral-300" data-inema-block="m1-7-t3-p3">Las tres ofrecen alguna forma de empezar sin pagar y cobran a medida que aumenta el uso; cada una lo cuenta de una manera (tareas, operaciones o ejecuciones). Los nombres de los planes y los precios cambian con frecuencia; consulta la página de la herramienta el día que vayas a contratarla. El método que aprendes aquí sirve para cualquiera.</p>
+</div>
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m1-7-t3-p4" data-sum="porque">Saber qué diferencia a las herramientas evita que elijas basándote en la publicidad. Para la mayoría de los primeros flujos, cualquiera sirve; la elección cobra importancia cuando entran en juego el volumen, los datos sensibles o las ganas de ejecutar todo en tu propio servidor.</p>
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Nodo / módulo / etapa</div><div class="text-xs text-neutral-400">un paso del flujo</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Conector</div><div class="text-xs text-neutral-400">bloque listo para usar de una aplicación</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Credencial</div><div class="text-xs text-neutral-400">acceso a tu cuenta</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Self-host</div><div class="text-xs text-neutral-400">ejecutar en tu servidor</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 4 -->
+<section class="mb-16" data-inema-topic="modulo-1-7#topico-4" id="topico-4" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="pedidos de orçamento, do formulário ao rascunho">🧪 Un flujo real, paso a paso</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m1-7-t4-p1">Vamos a armar un flujo concreto. Escenario: una pequeña empresa de remodelaciones recibe <strong class="text-neutral-100">solicitudes de presupuesto</strong> a través de un formulario del sitio web. Hoy alguien copia cada solicitud en una hoja de cálculo, la lee, decide si es urgente y redacta una respuesta. El flujo de abajo hace el trabajo mecánico y deja la decisión final en manos de una persona: la IA resume y clasifica, la hoja de cálculo registra, Telegram avisa qué es urgente y Gmail guarda un <strong class="text-neutral-100">borrador</strong> — que solo se envía después de que alguien lo revise.</p>
+<div class="bg-gradient-to-br from-emerald-900/30 to-dark-800 rounded-xl border border-emerald-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">Un flujo de seis pasos —formulario, IA, hoja de cálculo, decisión, aviso y borrador— que convierte cada solicitud de presupuesto en un registro organizado y una respuesta lista para revisión, sin enviar nada por su cuenta.</p>
+</div>
+<!-- SVG 2: fluxo de orçamento -->
+<figure class="svg-frame rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="Flujo de solicitudes de presupuesto con seis nodos: el formulario recibe la solicitud, la IA la resume y clasifica, la hoja de cálculo la registra y una decisión verifica si es urgente; si lo es, Telegram avisa; en todos los casos, Gmail crea un borrador que una persona revisa y envía." class="w-full h-auto" role="img" viewbox="0 0 900 320">
+<rect fill="url(#m17-grid)" height="320" width="900"></rect>
+<g font-family="Inter,sans-serif">
+<rect fill="#0f1f18" height="64" rx="12" stroke="#34d399" stroke-width="2.5" width="140" x="20" y="100"></rect>
+<text fill="#34d399" font-size="11" font-weight="700" text-anchor="middle" x="90" y="122">1 · ACTIVADOR</text>
+<text fill="#ecfdf5" font-size="13" font-weight="700" text-anchor="middle" x="90" y="141">Formulario</text>
+<text fill="#a7f3d0" font-size="11" text-anchor="middle" x="90" y="156">nueva solicitud</text>
+<path class="m17-flow" d="M162,132 L184,132" fill="none" marker-end="url(#m17-ah)" stroke="#34d399" stroke-width="2.5"></path>
+<rect fill="#0f1f18" filter="url(#m17-glow)" height="64" rx="12" stroke="#34d399" stroke-width="2" width="140" x="190" y="100"></rect>
+<text fill="#34d399" font-size="11" font-weight="700" text-anchor="middle" x="260" y="122">2 · IA</text>
+<text fill="#ecfdf5" font-size="13" font-weight="700" text-anchor="middle" x="260" y="141">resume y</text>
+<text fill="#a7f3d0" font-size="11" text-anchor="middle" x="260" y="156">clasifica la urgencia</text>
+<path class="m17-flow" d="M332,132 L354,132" fill="none" marker-end="url(#m17-ah)" stroke="#34d399" stroke-width="2.5"></path>
+<rect fill="#0e1b26" height="64" rx="12" stroke="#38bdf8" stroke-width="2" width="140" x="360" y="100"></rect>
+<text fill="#7dd3fc" font-size="11" font-weight="700" text-anchor="middle" x="430" y="122">3 · HOJA DE CÁLCULO</text>
+<text fill="#e0f2fe" font-size="13" font-weight="700" text-anchor="middle" x="430" y="141">registra</text>
+<text fill="#bae6fd" font-size="11" text-anchor="middle" x="430" y="156">una fila por solicitud</text>
+<path class="m17-flow" d="M502,132 L524,132" fill="none" marker-end="url(#m17-ahc)" stroke="#38bdf8" stroke-width="2.5"></path>
+<rect fill="#0e1b26" height="64" rx="12" stroke="#38bdf8" stroke-width="2" width="140" x="530" y="100"></rect>
+<text fill="#7dd3fc" font-size="11" font-weight="700" text-anchor="middle" x="600" y="122">4 · DECISIÓN</text>
+<text fill="#e0f2fe" font-size="13" font-weight="700" text-anchor="middle" x="600" y="141">¿es urgente?</text>
+<text fill="#bae6fd" font-size="11" text-anchor="middle" x="600" y="156">regla sencilla (SI)</text>
+<path class="m17-flow" d="M672,118 L716,70" fill="none" marker-end="url(#m17-ahc)" stroke="#38bdf8" stroke-width="2"></path>
+<text fill="#7dd3fc" font-size="12" font-weight="700" x="672" y="82">sí</text>
+<path class="m17-flow" d="M672,148 L716,180" fill="none" marker-end="url(#m17-ah)" stroke="#34d399" stroke-width="2"></path>
+<text fill="#a7f3d0" font-size="12" font-weight="700" x="626" y="196">siempre</text>
+<rect fill="#0e1b26" height="64" rx="12" stroke="#38bdf8" stroke-width="2" width="160" x="722" y="22"></rect>
+<text fill="#7dd3fc" font-size="11" font-weight="700" text-anchor="middle" x="802" y="44">5a · TELEGRAM</text>
+<text fill="#e0f2fe" font-size="13" font-weight="700" text-anchor="middle" x="802" y="63">avisa al equipo</text>
+<text fill="#bae6fd" font-size="11" text-anchor="middle" x="802" y="78">con el resumen</text>
+<rect fill="#0f1f18" height="64" rx="12" stroke="#34d399" stroke-width="2" width="160" x="722" y="150"></rect>
+<text fill="#34d399" font-size="11" font-weight="700" text-anchor="middle" x="802" y="172">5b · GMAIL</text>
+<text fill="#ecfdf5" font-size="13" font-weight="700" text-anchor="middle" x="802" y="191">crea un borrador</text>
+<text fill="#a7f3d0" font-size="11" text-anchor="middle" x="802" y="206">no lo envía</text>
+<path class="m17-flow" d="M802,216 L802,246" fill="none" marker-end="url(#m17-ah)" stroke="#34d399" stroke-width="2"></path>
+<rect fill="#052e1c" filter="url(#m17-glow)" height="44" rx="22" stroke="#34d399" stroke-width="2.5" width="190" x="707" y="252"></rect>
+<text fill="#ecfdf5" font-size="13" font-weight="700" text-anchor="middle" x="802" y="279">6 · tú revisas y envías</text>
+<text fill="#a7f3d0" font-size="12" x="20" y="226">datos que pasan al siguiente paso:</text>
+<text fill="#d1fae5" font-size="12" x="20" y="246">nombre, contacto, servicio, ciudad, plazo deseado</text>
+<text fill="#d1fae5" font-size="12" x="20" y="266">+ resumen, urgencia y borrador creados por la IA</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-emerald-400">Cómo leer:</strong> sigue las flechas desde el formulario. En el paso 4, el flujo se divide: el aviso en Telegram solo ocurre cuando la solicitud es urgente; el borrador en Gmail se crea siempre. Observa que el último paso lo realiza una persona: la automatización prepara, pero nada se envía al cliente sin revisión.</figcaption>
+</figure>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m1-7-t4-p2">A continuación, el montaje en <strong class="text-neutral-100">n8n</strong>. En Make y Zapier los nombres de los bloques cambian un poco, pero la secuencia es la misma. Antes de empezar, crea una hoja de cálculo en Google Sheets con las columnas <em>fecha, nombre, contacto, servicio, ciudad, resumen, urgencia, estado</em>.</p>
+<div class="relative border-l-2 border-emerald-500/30 ml-3 pl-6 space-y-5 mb-6">
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-emerald-500/20 border-2 border-emerald-400"></span><p class="text-sm text-neutral-300"><strong class="text-emerald-400">Paso 1 · Disparador.</strong> Crea un workflow nuevo y agrega el disparador de formulario (en n8n, el nodo <em>On form submission</em>, que genera un formulario propio; o el disparador de Google Forms en Make y Zapier). Campos: nombre, contacto, servicio, ciudad, plazo deseado, descripción.</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-emerald-500/20 border-2 border-emerald-400"></span><p class="text-sm text-neutral-300"><strong class="text-emerald-400">Paso 2 · IA.</strong> Agrega un nodo de modelo de lenguaje (OpenAI, Anthropic, Gemini o un modelo local mediante Ollama). Conecta la credencial y pega el prompt del bloque de abajo, insertando en él los campos del formulario. Pide la respuesta en formato JSON.</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-emerald-500/20 border-2 border-emerald-400"></span><p class="text-sm text-neutral-300"><strong class="text-emerald-400">Paso 3 · Hoja de cálculo.</strong> Agrega el nodo de Google Sheets con la operación «agregar fila». Vincula cada columna con el campo correspondiente: los del formulario y los que devolvió la IA (resumen, urgencia). En estado, escribe «pendiente de revisión».</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-sky-500/20 border-2 border-sky-400"></span><p class="text-sm text-neutral-300"><strong class="text-sky-400">Paso 4 · Decisión.</strong> Agrega un nodo <em>IF</em> con esta regla: la urgencia es igual a «alta». La salida «verdadero» va a Telegram.</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-sky-500/20 border-2 border-sky-400"></span><p class="text-sm text-neutral-300"><strong class="text-sky-400">Paso 5 · Aviso y borrador.</strong> En la salida «verdadero», un nodo de Telegram envía el resumen al grupo del equipo. Conectado a la salida del paso 3 (para que se ejecute siempre, haya urgencia o no), un nodo de Gmail crea un <em>borrador</em> (draft) para el contacto del cliente con el texto sugerido por la IA.</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-sky-500/20 border-2 border-sky-400"></span><p class="text-sm text-neutral-300"><strong class="text-sky-400">Paso 6 · Prueba y activación.</strong> Completa el formulario con una solicitud inventada, ejecuta el flujo una vez y revisa cada nodo. Solo entonces activa el workflow.</p></div>
+</div>
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-emerald-400">Objetivo:</strong> <span class="text-neutral-300">el prompt que va dentro del nodo de IA (paso 2).</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copiar</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900">Eres responsable de clasificar las solicitudes de presupuesto de &lt;nombre de la empresa&gt;, que ofrece &lt;tipo de servicio&gt; en &lt;región&gt;.
+Solicitud recibida:
+- Nombre: {{ $json.nome }}
+- Servicio: {{ $json.servico }}
+- Ciudad: {{ $json.cidade }}
+- Plazo deseado: {{ $json.prazo }}
+- Descripción: {{ $json.descricao }}
+
+Responde SOLAMENTE con un JSON válido, sin texto antes ni después, con este formato:
+{
+  "resumo": "hasta 2 frases con lo que necesita el cliente",
+  "urgencia": "alta" | "media" | "baixa",
+  "motivo_urgencia": "1 frase",
+  "fora_da_area": true | false,
+  "rascunho_resposta": "correo breve y cordial que confirme la solicitud y pida fotos del lugar"
+}
+Reglas: la urgencia es «alta» solo si hay un riesgo (fuga, cableado expuesto, filtración) o si el plazo es de hasta 3 días.
+No prometas precios ni fechas. Si falta información, pídela en el borrador.</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">Cómo verificar:</strong> Ejecuta el flujo con tres solicitudes de prueba: una con una fuga, otra sin prisa y otra de otra ciudad. Comprueba que la urgencia sea «alta» y «baja», respectivamente, y que «fora_da_area» sea verdadero en la tercera. Los fragmentos entre <code>{{ }}</code> son la forma en que n8n toma los campos del paso anterior: cambia los nombres por los nombres exactos de los campos de tu formulario; en Make y Zapier, haz clic en el campo en vez de escribirlo.</p>
+</div>
+<div class="bg-primary/10 border border-primary/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-primary font-semibold mb-1">💡 Consejo</p>
+<p class="text-sm text-neutral-300" data-inema-block="m1-7-t4-p3">El nodo de IA de un servicio en la nube usa una clave de acceso de la empresa del modelo y cobra por uso. Para aprender sin costo, n8n instalado en tu computadora se conecta con un modelo local mediante Ollama; el resultado es un poco menos refinado, pero el flujo es idéntico.</p>
+</div>
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m1-7-t4-p4" data-sum="porque">Ver un flujo completo, con una decisión y revisión humana, muestra el patrón que se repite en casi todas las automatizaciones útiles: entrada, procesamiento con IA, registro, regla y salida supervisada. Cuando armes este, podrás adaptarlo a atención al cliente, finanzas o RR. HH.</p>
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Nodo de IA</div><div class="text-xs text-neutral-400">el modelo dentro del flujo</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">JSON</div><div class="text-xs text-neutral-400">respuesta en campos fijos</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Nodo SI (IF)</div><div class="text-xs text-neutral-400">divide el camino</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Borrador</div><div class="text-xs text-neutral-400">prepara, no envía</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 5 -->
+<section class="mb-16" data-inema-topic="modulo-1-7#topico-5" id="topico-5" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="regra fixa onde dá, IA onde precisa">🧠 Dónde entra la IA en el flujo</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m1-7-t5-p1">No todos los pasos necesitan IA. Copiar un campo a la hoja de cálculo, comparar una fecha o enviar un aviso son <strong class="text-neutral-100">reglas fijas</strong>: siempre dan el mismo resultado, no tienen un costo adicional y no fallan por creatividad. La IA vale la pena cuando la entrada es <strong class="text-neutral-100">texto libre y variado</strong> —un correo, una descripción, una queja— y alguien tendría que leerla para entenderla.</p>
+<div class="bg-gradient-to-br from-emerald-900/30 to-dark-800 rounded-xl border border-emerald-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">Es la elección, paso a paso, entre una regla fija y la IA. La IA sirve para clasificar, extraer datos, resumir y redactar textos; las reglas fijas se encargan de copiar, comparar, calcular y enviar. Cuando un error puede costar caro, una persona lo aprueba.</p>
+</div>
+<!-- SVG 3: matriz regra x IA -->
+<figure class="svg-frame rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="Matriz de dos por dos para decidir cada paso: en el eje horizontal, si la entrada es fija o variable; en el eje vertical, si el error cuesta poco o mucho. Los cuatro cuadrantes son: regla fija, IA sola, regla con verificación e IA con una persona que aprueba." class="w-full h-auto" role="img" viewbox="0 0 800 340">
+<rect fill="url(#m17-grid)" height="340" width="800"></rect>
+<g font-family="Inter,sans-serif">
+<rect fill="#0f1f18" height="120" rx="12" stroke="#34d399" stroke-width="2" width="300" x="140" y="170"></rect>
+<text fill="#34d399" font-size="15" font-weight="700" text-anchor="middle" x="290" y="210">Regla fija</text>
+<text fill="#d1fae5" font-size="12" text-anchor="middle" x="290" y="236">copiar un campo, mover un archivo,</text>
+<text fill="#d1fae5" font-size="12" text-anchor="middle" x="290" y="254">enviar un aviso</text>
+<rect fill="#0e1b26" height="120" rx="12" stroke="#38bdf8" stroke-width="2" width="300" x="460" y="170"></rect>
+<text fill="#7dd3fc" font-size="15" font-weight="700" text-anchor="middle" x="610" y="210">IA por sí sola</text>
+<text fill="#e0f2fe" font-size="12" text-anchor="middle" x="610" y="236">clasificar un correo, resumir,</text>
+<text fill="#e0f2fe" font-size="12" text-anchor="middle" x="610" y="254">etiquetar una solicitud</text>
+<rect fill="#0f1f18" height="120" rx="12" stroke="#34d399" stroke-dasharray="6 4" stroke-width="2" width="300" x="140" y="30"></rect>
+<text fill="#34d399" font-size="15" font-weight="700" text-anchor="middle" x="290" y="70">Regla + revisión</text>
+<text fill="#d1fae5" font-size="12" text-anchor="middle" x="290" y="96">emitir un cobro, registrar</text>
+<text fill="#d1fae5" font-size="12" text-anchor="middle" x="290" y="114">un pago, cambiar datos</text>
+<rect fill="#0e1b26" filter="url(#m17-glow)" height="120" rx="12" stroke="#38bdf8" stroke-dasharray="6 4" stroke-width="2.5" width="300" x="460" y="30"></rect>
+<text fill="#7dd3fc" font-size="15" font-weight="700" text-anchor="middle" x="610" y="70">La IA propone y una persona aprueba</text>
+<text fill="#e0f2fe" font-size="12" text-anchor="middle" x="610" y="96">respuesta a un cliente, propuesta,</text>
+<text fill="#e0f2fe" font-size="12" text-anchor="middle" x="610" y="114">mensaje sobre salud o dinero</text>
+<path d="M140,312 L760,312" fill="none" marker-end="url(#m17-ahc)" stroke="#38bdf8" stroke-width="2"></path>
+<text fill="#bae6fd" font-size="12" text-anchor="middle" x="290" y="332">entrada fija (campos, fechas)</text>
+<text fill="#bae6fd" font-size="12" text-anchor="middle" x="610" y="332">la entrada varía (texto libre)</text>
+<path d="M118,290 L118,30" fill="none" marker-end="url(#m17-ah)" stroke="#34d399" stroke-width="2"></path>
+<text fill="#a7f3d0" font-size="12" text-anchor="middle" x="60" y="236">error</text>
+<text fill="#a7f3d0" font-size="12" text-anchor="middle" x="60" y="252">cuesta poco</text>
+<text fill="#a7f3d0" font-size="12" text-anchor="middle" x="60" y="86">error</text>
+<text fill="#a7f3d0" font-size="12" text-anchor="middle" x="60" y="102">cuesta caro</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-emerald-400">Cómo leer:</strong> Para cada paso del flujo, encuentra el cuadrante. Avanza a la derecha cuando la entrada sea texto libre (ahí ayuda la IA); sube cuando un error pueda costar caro (ahí se requiere una revisión humana, representada con un borde discontinuo). En el ejemplo del tema 4, la clasificación queda abajo a la derecha y la respuesta al cliente, arriba a la derecha.</figcaption>
+</figure>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ Buen trabajo para la IA en el flujo</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-emerald-400">✓</span><span>Clasificar mensajes por tema, urgencia o sentimiento.</span></li>
+<li class="flex items-start gap-2"><span class="text-emerald-400">✓</span><span>Extraer datos de un correo o una factura a campos.</span></li>
+<li class="flex items-start gap-2"><span class="text-emerald-400">✓</span><span>Resumir textos largos y redactar respuestas preliminares.</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ No dejes que la IA decida por sí sola</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Pagos, descuentos y cobros.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Respuestas sobre salud, contratos o asuntos legales.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Borrar o cambiar registros importantes.</span></li>
+</ul>
+</div>
+</div>
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m1-7-t5-p2" data-sum="porque">Poner IA en cada paso hace que el flujo sea más caro, más lento y menos predecible. Usarla solo donde hace falta —y contar con aprobación humana cuando un error tiene consecuencias— ofrece lo mejor de ambos mundos: la máquina lee, la regla ejecuta y la persona decide.</p>
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Regla fija</div><div class="text-xs text-neutral-400">siempre da el mismo resultado</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Clasificar</div><div class="text-xs text-neutral-400">ponerle una etiqueta al texto</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Extraer</div><div class="text-xs text-neutral-400">sacar datos del texto</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Aprobación humana</div><div class="text-xs text-neutral-400">donde un error puede costar caro</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 6 -->
+<section class="mb-16" data-inema-topic="modulo-1-7#topico-6" id="topico-6" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="dados falsos, aviso de erro e LGPD">🛡️ Probar, vigilar y proteger</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m1-7-t6-p1">Una automatización trabaja cuando nadie está mirando, y precisamente por eso puede fallar en silencio durante semanas. Vence la contraseña de una cuenta, cambia el nombre de un campo del formulario o la IA devuelve un texto con un formato distinto. Un flujo bien hecho <strong class="text-neutral-100">te avisa cuando falla</strong>, guarda un registro de lo que hizo y protege los datos que pasan por él.</p>
+<div class="bg-gradient-to-br from-emerald-900/30 to-dark-800 rounded-xl border border-emerald-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">Son cuidados que hacen que una automatización sea confiable: probarla con datos falsos, recibir un aviso cuando haya un error, revisar el historial de ejecuciones, limitar los costos de la IA y tratar los datos personales de acuerdo con la LGPD.</p>
+</div>
+<div class="overflow-x-auto mb-6">
+<table class="w-full text-sm border border-dark-600 rounded-xl overflow-hidden">
+<thead><tr class="bg-dark-700"><th class="text-left p-3 text-emerald-400">Riesgo</th><th class="text-left p-3 text-emerald-400">Cómo se manifiesta</th><th class="text-left p-3 text-emerald-400">Protección</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr><td class="p-3 font-semibold">Falla silenciosa</td><td class="p-3 text-neutral-300">El flujo se detuvo y nadie se dio cuenta.</td><td class="p-3 text-neutral-300">Flujo de error que envía un aviso (en n8n, el <em>Error Trigger</em>; en Make y Zapier, alertas de fallas).</td></tr>
+<tr><td class="p-3 font-semibold">IA con formato incorrecto</td><td class="p-3 text-neutral-300">El JSON llegó dañado y el siguiente paso falla.</td><td class="p-3 text-neutral-300">Pide solo JSON, revisa los campos y envíalo a revisión si falta alguno.</td></tr>
+<tr><td class="p-3 font-semibold">Bucle o repetición</td><td class="p-3 text-neutral-300">El mismo correo electrónico se envía varias veces.</td><td class="p-3 text-neutral-300">Columna «status» en la hoja de cálculo y regla de «solo si aún no se procesó».</td></tr>
+<tr><td class="p-3 font-semibold">Costo de la IA</td><td class="p-3 text-neutral-300">Un volumen alto genera una factura inesperada.</td><td class="p-3 text-neutral-300">Límite de gasto en la cuenta del proveedor y uso de IA solo en los pasos necesarios.</td></tr>
+<tr><td class="p-3 font-semibold">Datos personales</td><td class="p-3 text-neutral-300">Nombre, teléfono y CPF circulando por varios servicios.</td><td class="p-3 text-neutral-300">Usa solo los campos necesarios, utiliza cuentas de la empresa e informa al cliente (LGPD).</td></tr>
+</tbody>
+</table>
+</div>
+<div class="bg-dark-800 border border-emerald-500/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-emerald-400 font-semibold mb-1">🌱 ¿Nuevo aquí?</p>
+<p class="text-sm text-neutral-300" data-inema-block="m1-7-t6-p2"><strong>Ejecución</strong> es cada vez que el flujo corre de principio a fin; las herramientas guardan un historial con lo que entró y salió en cada paso. <strong>Flujo de error</strong> es un segundo flujo que solo se ejecuta cuando falla el principal, para avisarte. <strong>Dato de prueba</strong> es una información inventada («Cliente de prueba», «prueba@ejemplo.com») que se usa para experimentar sin modificar datos reales.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ Antes de activar</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-emerald-400">✓</span><span>Se ejecutó con al menos tres datos de prueba diferentes.</span></li>
+<li class="flex items-start gap-2"><span class="text-emerald-400">✓</span><span>Recibes el aviso de error en tu celular.</span></li>
+<li class="flex items-start gap-2"><span class="text-emerald-400">✓</span><span>Al principio, los mensajes a clientes se envían como borradores.</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Señales de riesgo</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Probar directamente con la lista real de clientes.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Nadie sabe que existe el flujo ni cómo desactivarlo.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Contraseña personal de un empleado conectada al flujo.</span></li>
+</ul>
+</div>
+</div>
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m1-7-t6-p3" data-sum="porque">Una automatización sin vigilancia se convierte en un riesgo oculto: puede dejar de funcionar, enviar un mensaje equivocado o exponer datos. Los cuidados de esta lista llevan poco tiempo y permiten confiar en el flujo y dejarlo funcionar de verdad.</p>
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Dato de prueba</div><div class="text-xs text-neutral-400">experimentar sin riesgos</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Flujo de error</div><div class="text-xs text-neutral-400">te avisa cuando falla</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Historial</div><div class="text-xs text-neutral-400">lo que hizo cada ejecución</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Datos mínimos</div><div class="text-xs text-neutral-400">solo lo necesario (LGPD)</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 7 -->
+<section class="mb-16" data-inema-topic="modulo-1-7#topico-7" id="topico-7" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">7</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="escolha uma e monte esta semana">🛠️ Tu primera automatización</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m1-7-t7-p1">La mejor primera automatización es <strong class="text-neutral-100">pequeña, frecuente y de bajo riesgo</strong>. No empieces por el proceso más importante de la empresa; empieza por algo que te molesta cada semana y que, si sale mal, puedes corregir en dos minutos. Las cinco ideas de abajo cubren las situaciones más comunes para quienes están empezando.</p>
+<div class="bg-gradient-to-br from-emerald-900/30 to-dark-800 rounded-xl border border-emerald-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">Un ejercicio para elegir una automatización sencilla, pedirle al asistente la especificación completa del flujo y montarla en la herramienta que elegiste, siguiendo el método del módulo.</p>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-4"><p class="font-semibold mb-1">📎 Archivos adjuntos organizados</p><p class="text-xs text-neutral-400">Correo electrónico con un archivo adjunto de un remitente → lo guarda en la carpeta correcta de Drive con la fecha en el nombre.</p></div>
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-4"><p class="font-semibold mb-1">🎯 Contactos calificados</p><p class="text-xs text-neutral-400">Formulario del sitio web → la IA clasifica el interés → hoja de cálculo de prospectos con prioridad.</p></div>
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-4"><p class="font-semibold mb-1">📊 Informe de la semana</p><p class="text-xs text-neutral-400">Todos los lunes a las 8 h → lee la hoja de cálculo de ventas → la IA redacta el resumen → lo envía por correo electrónico.</p></div>
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-4"><p class="font-semibold mb-1">💬 Respuestas en borrador</p><p class="text-xs text-neutral-400">Correo electrónico de un cliente → la IA identifica el tema → borrador de respuesta para que lo revises.</p></div>
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-4"><p class="font-semibold mb-1">🚨 Alerta útil</p><p class="text-xs text-neutral-400">Evaluación negativa o solicitud por encima de cierto monto → aviso inmediato en Telegram.</p></div>
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-4"><p class="font-semibold mb-1">✍️ La tuya</p><p class="text-xs text-neutral-400">La tarea que mapeaste en el tema 2, si pasó la prueba para ser una buena candidata.</p></div>
+</div>
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-emerald-400">Objetivo:</strong> <span class="text-neutral-300">recibir la especificación paso a paso de tu primera automatización, en la herramienta elegida.</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copiar</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900">Quiero montar mi primera automatización sin código.
+Herramienta: &lt;n8n, Make o Zapier&gt;
+Automatización: &lt;elige una de las ideas o describe la tuya&gt;
+Aplicaciones que uso: &lt;Gmail, Google Drive, Hojas de cálculo de Google, Telegram...&gt;
+Mi nivel: nunca he montado una automatización.
+
+Entrégame:
+1. El diseño del flujo en pasos numerados (disparador, acciones, decisiones).
+2. Para cada paso: nombre del bloque en esta herramienta, qué configurar y qué campos conectar.
+   Si no tienes certeza del nombre exacto de un bloque, dilo y describe qué debo buscar.
+3. Dónde interviene la IA (si interviene) y el prompt para ese paso, con respuesta en JSON.
+4. Tres datos de prueba y el resultado esperado para cada uno.
+5. Cómo configurar el aviso de error.
+6. Qué NO debo automatizar en este flujo y debe seguir a cargo de una persona.</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">Cómo verificar:</strong> abre la herramienta y busca cada bloque mencionado. Si alguno no existe con ese nombre, pregúntale al asistente «¿cuál es el equivalente actual de X en &lt;herramienta&gt;?» o consulta la documentación oficial: las herramientas cambian los nombres de los bloques con el tiempo. Ejecuta las tres pruebas y compara los resultados con lo esperado antes de activar el flujo.</p>
+</div>
+<div class="bg-primary/10 border border-primary/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-primary font-semibold mb-1">💡 Consejo</p>
+<p class="text-sm text-neutral-300" data-inema-block="m1-7-t7-p2">Anota en una hoja de cálculo sencilla cada automatización que crees: nombre, qué hace, herramienta, quién es responsable y cómo desactivarla. Cuando tengas cinco o seis flujos, esta lista se convertirá en el mapa que evita sorpresas y muestra cuánto trabajo repetitivo salió de tu rutina.</p>
+</div>
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m1-7-t7-p3" data-sum="porque">La primera automatización en funcionamiento cambia la forma en que ves el trabajo: cada tarea repetitiva se convierte en una candidata. Empezar poco a poco garantiza que esa primera experiencia sea un éxito y no un susto.</p>
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Bajo riesgo</div><div class="text-xs text-neutral-400">error fácil de corregir</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Especificación</div><div class="text-xs text-neutral-400">el flujo descrito antes</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Resultado esperado</div><div class="text-xs text-neutral-400">lo que debe dar la prueba</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Inventario</div><div class="text-xs text-neutral-400">lista de tus flujos</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- RESUMO -->
+<section class="mb-8">
+<div class="bg-gradient-to-br from-emerald-900/40 via-dark-800 to-dark-800 rounded-xl border border-emerald-500/30 p-6 sm:p-8">
+<h2 class="text-2xl font-bold mb-6">✅ Resumen del módulo</h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start gap-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-neutral-100">Toda automatización es un disparador + acciones</strong><span class="text-neutral-400"> — y comienza en papel, con el proceso mapeado.</span></div></div>
+<div class="flex items-start gap-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-neutral-100">n8n, Make y Zapier hacen el mismo trabajo</strong><span class="text-neutral-400"> — cambia la forma de montarlo y dónde se ejecuta el flujo.</span></div></div>
+<div class="flex items-start gap-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-neutral-100">IA para texto libre, reglas fijas para lo demás</strong><span class="text-neutral-400"> — y una persona aprueba cuando un error tendría consecuencias graves.</span></div></div>
+<div class="flex items-start gap-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-neutral-100">Prueba con datos falsos y configura un aviso de error</strong><span class="text-neutral-400"> — solo entonces deja que se ejecute sin supervisión.</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-emerald-400 mb-2">Siguiente módulo:</h3>
+<p class="text-neutral-300">1.8 — Inteligencia artificial avanzada 🚀</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="index.html">← Volver a la Ruta</a>
+<a class="flex-1 text-center px-6 py-3 bg-emerald-700 text-white rounded-lg font-semibold hover:bg-emerald-600 transition-colors" href="modulo-1-8.html">Siguiente módulo →</a>
+</div>
+</div>
+</section>
+</article>
+</div>
+</div>
+</main>
+<footer class="border-t border-dark-600 py-8 mt-8">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>FTD — Formación en Transformación Digital · contenido abierto y gratuito · 2026 · <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" rel="noopener" target="_blank">INEMA.CLUB</a> - <a class="text-amber-700 dark:text-slate-300 hover:underline" href="https://inema.pro" rel="noopener" target="_blank">PRO</a></p>
+</div>
+</footer>
+<!-- SCRIPTS NÚCLEO v1 -->
+<script>
+    function toggleTopic(button) {
+      var topicItem = button.closest('.topic-item');
+      if (!topicItem) return;
+      var explanation = topicItem.querySelector('.topic-explanation');
+      var willOpen = !explanation.classList.contains('active');
+      explanation.classList.toggle('active');
+      button.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+    }
+    function openModal(id) { var m = document.getElementById(id); if (m) { m.classList.remove('hidden'); document.body.style.overflow = 'hidden'; } }
+    function closeModal() { document.querySelectorAll('.modal').forEach(function (m) { m.classList.add('hidden'); }); document.body.style.overflow = 'auto'; }
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
+    function copyCode(btn) {
+      var pre = btn.closest('[data-copy-box]').querySelector('pre');
+      var txt = pre ? pre.innerText : '';
+      var done = function () { var o = btn.getAttribute('data-label-ok') || 'Copiado'; var t = btn.textContent; btn.textContent = o; setTimeout(function () { btn.textContent = t; }, 1500); };
+      try { navigator.clipboard.writeText(txt).then(done, done); } catch (e) { done(); }
+    }
+    (function () {
+      var themeToggle = document.getElementById('theme-toggle');
+      var darkIcon = document.getElementById('theme-toggle-dark-icon');
+      var lightIcon = document.getElementById('theme-toggle-light-icon');
+      var html = document.documentElement;
+      function sync() { var isDark = html.classList.contains('dark'); if (darkIcon) darkIcon.classList.toggle('hidden', isDark); if (lightIcon) lightIcon.classList.toggle('hidden', !isDark); }
+      sync();
+      if (themeToggle) themeToggle.addEventListener('click', function () {
+        html.classList.toggle('dark'); var nowDark = html.classList.contains('dark'); html.style.colorScheme = nowDark ? 'dark' : 'light';
+        try { localStorage.setItem('theme', nowDark ? 'dark' : 'light'); } catch (e) {}
+        try { var p = JSON.parse(localStorage.getItem('inema.prefs') || '{}'); p.theme = nowDark ? 'inema-dark' : 'claro'; localStorage.setItem('inema.prefs', JSON.stringify(p)); } catch (e) {}
+        sync();
+      });
+    })();
+  </script>
+<!-- learn.js + INEMA.init() POR ÚLTIMO -->
+<script src="../../assets/learn.js"></script>
+<script>
+    if (window.INEMA && typeof window.INEMA.init === 'function') { window.INEMA.init({ autoResume: true }); }
+  </script>
+</body>
+</html>

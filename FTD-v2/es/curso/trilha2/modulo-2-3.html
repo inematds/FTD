@@ -1,0 +1,1225 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="ftd-v2-es" name="inema-course"/>
+<title>Módulo 2.3 · RAG y bases de conocimiento | FTD v2</title>
+<meta content="Embeddings, chunking, búsqueda vectorial e híbrida, reranking, cita de fuentes y evaluación de RAG." name="description"/>
+<meta content="Módulo 2.3 · RAG y bases de conocimiento | FTD v2" property="og:title"/>
+<meta content="Embeddings, chunking, búsqueda vectorial e híbrida, reranking, cita de fuentes y evaluación de RAG." property="og:description"/>
+<!-- ANTI-FOUC (Erro #18) — primeiro script do head -->
+<script>
+(function () {
+  try {
+    var html = document.documentElement;
+    var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+    function clone(o) { var r = {}; for (var x in o) r[x] = o[x]; return r; }
+    var p = clone(DEF);
+    try {
+      var raw = localStorage.getItem('inema.prefs');
+      if (raw) {
+        var parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === 'object') {
+          for (var k in DEF) if (parsed[k] != null) p[k] = parsed[k];
+        }
+      } else {
+        var legacy = localStorage.getItem('theme');
+        if (legacy === 'light') p.theme = 'claro';
+        else if (legacy === 'dark') p.theme = 'inema-dark';
+      }
+    } catch (e) { p = clone(DEF); }
+
+    var THEMES = {
+      'inema-dark': { dark: true,  attr: null,        cs: 'dark'  },
+      'claro':      { dark: false, attr: null,        cs: 'light' },
+      'sepia':      { dark: false, attr: 'sepia',     cs: 'light' },
+      'foco':       { dark: null,  attr: 'foco',      cs: null    },
+      'contraste':  { dark: true,  attr: 'contraste', cs: 'dark'  }
+    };
+    var t = THEMES[p.theme] || THEMES['inema-dark'];
+
+    if (t.dark === true) html.classList.add('dark');
+    else if (t.dark === false) html.classList.remove('dark');
+
+    if (t.attr) html.setAttribute('data-theme', t.attr);
+    else html.removeAttribute('data-theme');
+
+    html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark') ? 'dark' : 'light'));
+
+    html.setAttribute('data-font', p.font || 'inter');
+    html.setAttribute('data-accent', p.accent || 'emerald');
+
+    var s = html.style;
+    var scale = (+p.fontScale || 100);
+    s.setProperty('--inema-font-scale', (scale / 100).toString());
+    s.setProperty('font-size', scale + '%');
+    s.setProperty('--measure', (+p.lineWidth || 68) + 'ch');
+    s.setProperty('--lh-body', (+p.leading || 1.7).toString());
+    var fam = p.font === 'system'
+      ? 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif'
+      : (p.font === 'leitura'
+        ? '"Atkinson Hyperlegible", "Inter", system-ui, sans-serif'
+        : '"Inter", system-ui, sans-serif');
+    s.setProperty('--font-body', fam);
+
+    var ACC = {
+      emerald: [152, 76, 45], blue: [217, 91, 60], purple: [258, 90, 66],
+      amber: [38, 92, 50], teal: [174, 72, 41], rose: [350, 89, 60]
+    };
+    var a = ACC[p.accent] || ACC.emerald;
+    s.setProperty('--accent-h', a[0] + '');
+    s.setProperty('--accent-s', a[1] + '%');
+    s.setProperty('--accent-l', a[2] + '%');
+    s.setProperty('--accent', 'hsl(' + a[0] + ' ' + a[1] + '% ' + a[2] + '%)');
+  } catch (err) {
+    try { document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme = 'dark'; } catch (e) {}
+  }
+})();
+</script>
+<!-- MANIFESTO do curso (Erro #28) — idêntico em todas as páginas -->
+<script data-inema-manifest="" type="application/json">
+{
+  "course": "ftd-v2-es",
+  "tracks": [
+    {
+      "n": "1",
+      "title": "Principiante",
+      "modules": [
+        {
+          "id": "1-1",
+          "title": "Impacto de la IA",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-1.html"
+        },
+        {
+          "id": "1-2",
+          "title": "Navegar el mundo digital",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-2.html"
+        },
+        {
+          "id": "1-3",
+          "title": "Ingeniería de prompts",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-3.html"
+        },
+        {
+          "id": "1-4",
+          "title": "Asistentes y agentes de IA",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-4.html"
+        },
+        {
+          "id": "1-5",
+          "title": "Creatividad visual con IA",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-5.html"
+        },
+        {
+          "id": "1-6",
+          "title": "Marketing y ventas con IA",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-6.html"
+        },
+        {
+          "id": "1-7",
+          "title": "Automatización de procesos",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-7.html"
+        },
+        {
+          "id": "1-8",
+          "title": "Inteligencia artificial avanzada",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-8.html"
+        },
+        {
+          "id": "1-9",
+          "title": "Negocios y monetización con IA",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-9.html"
+        }
+      ]
+    },
+    {
+      "n": "2",
+      "title": "Técnico",
+      "modules": [
+        {
+          "id": "2-1",
+          "title": "Desarrollo con APIs de IA",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-1.html"
+        },
+        {
+          "id": "2-2",
+          "title": "Arquitectura de aplicaciones con IA",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-2.html"
+        },
+        {
+          "id": "2-3",
+          "title": "RAG y bases de conocimiento",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-3.html"
+        },
+        {
+          "id": "2-4",
+          "title": "Fine-tuning y personalización",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-4.html"
+        },
+        {
+          "id": "2-5",
+          "title": "Agentes y flujos de trabajo complejos",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-5.html"
+        },
+        {
+          "id": "2-6",
+          "title": "Visión artificial avanzada",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-6.html"
+        },
+        {
+          "id": "2-7",
+          "title": "NLP y procesamiento de texto",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-7.html"
+        },
+        {
+          "id": "2-8",
+          "title": "MLOps y producción",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-8.html"
+        },
+        {
+          "id": "2-9",
+          "title": "Ética y gobernanza de IA",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-9.html"
+        }
+      ]
+    },
+    {
+      "n": "3",
+      "title": "Masterclass",
+      "modules": [
+        {
+          "id": "3-1",
+          "title": "Arquitectura de IA a gran escala",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-1.html"
+        },
+        {
+          "id": "3-2",
+          "title": "Modelos personalizados y propietarios",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-2.html"
+        },
+        {
+          "id": "3-3",
+          "title": "IA multimodal avanzada",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-3.html"
+        },
+        {
+          "id": "3-4",
+          "title": "Investigación y artículos de IA",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-4.html"
+        },
+        {
+          "id": "3-5",
+          "title": "Aprendizaje por refuerzo en IA",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-5.html"
+        },
+        {
+          "id": "3-6",
+          "title": "Seguridad y red teaming",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-6.html"
+        },
+        {
+          "id": "3-7",
+          "title": "IA en producción — escala enterprise",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-7.html"
+        },
+        {
+          "id": "3-8",
+          "title": "Liderazgo y estrategia en IA",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-8.html"
+        },
+        {
+          "id": "3-9",
+          "title": "Futuro de la IA y AGI",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-9.html"
+        }
+      ]
+    }
+  ]
+}
+</script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#0c0c10', 800: '#16161e', 700: '#1e1e28', 600: '#272730', 500: '#33333f' } }, fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'], display: ['Sora', 'Inter', 'sans-serif'], mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'] } } } }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Sora:wght@600;700;800&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    h1, h2, h3, h4, .font-display { font-family: 'Sora', 'Inter', sans-serif; }
+    .dark body { background-color: #0c0c10; }
+    .dark .text-neutral-100 { color: #e9e9ee; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+    pre { white-space: pre-wrap; word-break: break-word; }
+    pre, code, .font-mono { font-family: 'JetBrains Mono', ui-monospace, monospace; }
+
+    /* Light mode — Parte 1: base */
+    html:not(.dark) body { background-color: #f6f7f9; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800\/50 { background-color: #f6f7f9; }
+    html:not(.dark) .bg-dark-700 { background-color: #eceef2; }
+    html:not(.dark) .bg-dark-700\/50 { background-color: #f1f2f5; }
+    html:not(.dark) .bg-dark-700\/30 { background-color: #f4f5f7; }
+    html:not(.dark) .bg-dark-600 { background-color: #e1e3ea; }
+    html:not(.dark) .hover\:bg-dark-600:hover { background-color: #d6d9e1; }
+    html:not(.dark) .hover\:bg-dark-700\/50:hover { background-color: #eceef2; }
+    html:not(.dark) .text-neutral-100 { color: #1a1a22; }
+    html:not(.dark) .text-neutral-200 { color: #26262f; }
+    html:not(.dark) .text-neutral-300 { color: #3f3f4a; }
+    html:not(.dark) .text-neutral-400 { color: #5b5b68; }
+    html:not(.dark) .text-neutral-500 { color: #62626e; }
+    html:not(.dark) .border-dark-600 { border-color: #e1e3ea; }
+    html:not(.dark) .border-dark-700 { border-color: #e8e9ee; }
+    html:not(.dark) .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #e1e3ea; }
+    html:not(.dark) .bg-black\/40 { background-color: #f1f2f5; }
+    html:not(.dark) pre.code-dark { background-color: #1a1a22; color: #e9e9ee; }
+
+    /* Light mode — Parte 2: acento das 3 trilhas (texto -700, nunca -400 no claro) */
+    html:not(.dark) .text-emerald-400 { color: #047857; }
+    html:not(.dark) .text-emerald-300 { color: #047857; }
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #047857; }
+    html:not(.dark) .bg-emerald-500\/20 { background-color: rgba(4,120,87,0.12); }
+    html:not(.dark) .bg-emerald-500\/10 { background-color: rgba(4,120,87,0.08); }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(4,120,87,0.08); }
+    html:not(.dark) .bg-emerald-900\/20 { background-color: rgba(4,120,87,0.07); }
+    html:not(.dark) .bg-emerald-900\/30 { background-color: rgba(4,120,87,0.08); }
+    html:not(.dark) .bg-emerald-900\/40 { background-color: rgba(4,120,87,0.09); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(4,120,87,0.28); }
+    html:not(.dark) .hover\:border-emerald-500\/30:hover { border-color: rgba(4,120,87,0.4); }
+    html:not(.dark) .text-blue-400 { color: #1d4ed8; }
+    html:not(.dark) .text-blue-300 { color: #1d4ed8; }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #1d4ed8; }
+    html:not(.dark) .bg-blue-500\/20 { background-color: rgba(29,78,216,0.12); }
+    html:not(.dark) .bg-blue-500\/10 { background-color: rgba(29,78,216,0.08); }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(29,78,216,0.08); }
+    html:not(.dark) .bg-blue-900\/20 { background-color: rgba(29,78,216,0.07); }
+    html:not(.dark) .bg-blue-900\/30 { background-color: rgba(29,78,216,0.08); }
+    html:not(.dark) .bg-blue-900\/40 { background-color: rgba(29,78,216,0.09); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(29,78,216,0.28); }
+    html:not(.dark) .hover\:border-blue-500\/30:hover { border-color: rgba(29,78,216,0.4); }
+    html:not(.dark) .text-purple-400 { color: #6d28d9; }
+    html:not(.dark) .text-purple-300 { color: #6d28d9; }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #6d28d9; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(109,40,217,0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(109,40,217,0.08); }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(109,40,217,0.08); }
+    html:not(.dark) .bg-purple-900\/20 { background-color: rgba(109,40,217,0.07); }
+    html:not(.dark) .bg-purple-900\/30 { background-color: rgba(109,40,217,0.08); }
+    html:not(.dark) .bg-purple-900\/40 { background-color: rgba(109,40,217,0.09); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(109,40,217,0.28); }
+    html:not(.dark) .hover\:border-purple-500\/30:hover { border-color: rgba(109,40,217,0.4); }
+
+    /* Light mode — Parte 3: gradientes + especiais */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #854d0e; }
+    html:not(.dark) .text-yellow-400 { color: #854d0e; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #713f12; }
+    html:not(.dark) .bg-primary\/10 { background-color: #FEF9C3; }
+    html:not(.dark) .border-primary\/30 { border-color: #EAB308; }
+    html:not(.dark) .text-red-400 { color: #b91c1c; }
+    html:not(.dark) .bg-red-900\/20 { background-color: rgba(185,28,28,0.07); }
+    html:not(.dark) .border-red-500\/30 { border-color: rgba(185,28,28,0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #075985; }
+    html:not(.dark) .bg-sky-900\/20 { background-color: rgba(3,105,161,0.07); }
+    html:not(.dark) .border-sky-500\/30 { border-color: rgba(3,105,161,0.25); }
+
+    /* Light mode — Parte 4: nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255,255,255,0.95); }
+
+    /* Parte 5: bordas suavizadas no DARK (Erro #15) */
+    .dark .border-dark-600 { border-color: #2a2a35; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #2a2a35; }
+
+    /* SVG: no claro, um fundo escuro emoldurado mantém o contraste do desenho */
+    html:not(.dark) .svg-frame { background-color: #12121a; }
+    @media (prefers-reduced-motion: reduce) { svg * { animation: none !important; transition: none !important; } }
+  </style>
+<link href="../../../assets/learn.css" rel="stylesheet"/>
+<link href="https://inematds.github.io/FTD/FTD-v2/curso/trilha2/modulo-2-3.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/FTD/FTD-v2/en/curso/trilha2/modulo-2-3.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/FTD/FTD-v2/es/curso/trilha2/modulo-2-3.html" hreflang="es" rel="alternate"/><link href="https://inematds.github.io/FTD/FTD-v2/curso/trilha2/modulo-2-3.html" hreflang="x-default" rel="alternate"/><link href="https://inematds.github.io/FTD/FTD-v2/es/curso/trilha2/modulo-2-3.html" rel="canonical"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(250,204,21,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha2/modulo-2-3.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="../../../en/curso/trilha2/modulo-2-3.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">EN</a><a href="modulo-2-3.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#FACC15">ES</a></div>
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14 gap-2">
+<!-- Logo + INEMA.CLUB -->
+<div class="flex items-center space-x-3 flex-shrink-0">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🚀</span>
+<span class="font-display font-bold text-lg hidden sm:inline">FTD</span>
+</a>
+<span class="text-neutral-600 hidden sm:inline">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium hidden sm:inline" href="https://inema.club" rel="noopener" target="_blank">INEMA.CLUB</a>
+<span class="text-neutral-600 hidden sm:inline">-</span>
+<a class="text-amber-700 dark:text-slate-300 hover:underline text-sm font-medium hidden sm:inline" href="https://inema.pro" rel="noopener" target="_blank">PRO</a>
+</div>
+<!-- Trilhas + controles de aprendizagem + theme toggle -->
+<div class="flex items-center gap-1 sm:gap-1.5">
+<a class="px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors whitespace-nowrap" href="../trilha1/index.html">
+<span class="lg:hidden">T1</span><span class="hidden lg:inline">Principiante</span>
+</a>
+<a class="px-2.5 py-1.5 rounded-lg text-sm font-semibold text-blue-400 bg-blue-500/10 whitespace-nowrap" href="index.html">
+<span class="lg:hidden">T2</span><span class="hidden lg:inline">Técnico</span>
+</a>
+<a class="px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors whitespace-nowrap" href="../trilha3/index.html">
+<span class="lg:hidden">T3</span><span class="hidden lg:inline">Masterclass</span>
+</a>
+<span class="w-px h-6 bg-dark-600 mx-1 hidden sm:inline-block"></span>
+<!-- Minha jornada (abre o painel global; badge = % do curso) -->
+<button class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-300 hover:text-neutral-100 hover:bg-dark-700 transition-colors" data-inema-journey-open="" type="button">
+<svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="16"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+<span class="hidden md:inline">Mi recorrido</span>
+<span class="inema-journey-badge" data-count="0" data-inema-journey-badge=""></span>
+</button>
+<!-- Aparência (gatilho + painel obrigatório) -->
+<div class="relative">
+<button aria-expanded="false" class="inema-appearance-trigger inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-300 hover:text-neutral-100 transition-colors" data-inema-appearance-toggle="#inema-appearance-panel" type="button">
+<svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="16"><circle cx="12" cy="12" r="9"></circle><path d="M12 3v18"></path><path d="M12 3a9 9 0 0 1 0 18" fill="currentColor"></path></svg>
+<span class="hidden md:inline">Apariencia</span>
+</button>
+<div class="inema-appearance-pop right-0" data-inema-appearance="" id="inema-appearance-panel">
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Tema</span>
+<div class="inema-segment">
+<button data-inema-set-theme="inema-dark" type="button">Oscuro</button>
+<button data-inema-set-theme="claro" type="button">Claro</button>
+<button data-inema-set-theme="sepia" type="button">Sepia</button>
+</div>
+<div class="inema-segment">
+<button data-inema-set-theme="foco" type="button">Enfoque</button>
+<button data-inema-set-theme="contraste" type="button">Alto contraste</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Fuente</span>
+<div class="inema-segment">
+<button data-inema-set-font="inter" type="button">Inter</button>
+<button data-inema-set-font="system" type="button">Sistema</button>
+<button data-inema-set-font="leitura" type="button">Lectura</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Tamaño</span>
+<div class="inema-segment">
+<button data-inema-set-fontscale="100" type="button">A</button>
+<button data-inema-set-fontscale="112" type="button">A+</button>
+<button data-inema-set-fontscale="125" type="button">A++</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Ancho</span>
+<div class="inema-segment">
+<button data-inema-set-linewidth="60" type="button">Estrecho</button>
+<button data-inema-set-linewidth="68" type="button">Mediano</button>
+<button data-inema-set-linewidth="75" type="button">Ancho</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Interlineado</span>
+<div class="inema-segment">
+<button data-inema-set-leading="1.45" type="button">Compacto</button>
+<button data-inema-set-leading="1.7" type="button">Cómodo</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Acento</span>
+<div class="inema-accent-grid">
+<button aria-label="Acento esmeralda" data-inema-set-accent="emerald" type="button"></button>
+<button aria-label="Acento azul" data-inema-set-accent="blue" type="button"></button>
+<button aria-label="Acento violeta" data-inema-set-accent="purple" type="button"></button>
+<button aria-label="Acento ámbar" data-inema-set-accent="amber" type="button"></button>
+<button aria-label="Acento verde azulado" data-inema-set-accent="teal" type="button"></button>
+<button aria-label="Acento rosa" data-inema-set-accent="rose" type="button"></button>
+</div>
+</div>
+</div>
+</div>
+<!-- Theme toggle sol/lua (núcleo v1; o JS o mantém coerente com o tema) -->
+<button aria-label="Alternar tema claro/oscuro" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20">
+<path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+</svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20">
+<path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path>
+</svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<main data-inema-module="2-3" data-inema-track="2" id="conteudo">
+<!-- BREADCRUMB -->
+<nav aria-label="Ruta de navegación" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-blue-400" href="../../index.html">Inicio</a><span>/</span>
+<a class="hover:text-blue-400" href="index.html">Ruta 2</a><span>/</span>
+<span class="text-blue-400">Módulo 2.3</span>
+</div>
+</nav>
+<!-- HEADER do módulo -->
+<header class="bg-gradient-to-br from-blue-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-blue-500/20 text-blue-400 text-xs font-semibold rounded-full mb-4">MÓDULO 2.3</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">📚 RAG y bases de conocimiento</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">Cómo hacer que un modelo responda basándose en <strong class="text-blue-400">tus documentos</strong> — manuales, políticas, contratos, base de soporte — y cite de dónde obtuvo cada información. Entenderás los embeddings, el chunking, la búsqueda vectorial e híbrida, el reranking y la evaluación, y crearás un RAG completo en Python que funciona gratis en tu computadora.</p>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">7</div><div class="text-xs text-neutral-400">Temas</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">~60</div><div class="text-xs text-neutral-400">Minutos</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">Intermedio</div><div class="text-xs text-neutral-400">Nivel</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">Práctico</div><div class="text-xs text-neutral-400">Tipo</div></div>
+</div>
+<div class="flex items-center gap-3 mt-8">
+<div aria-label="Progreso del módulo 2.3" class="inema-ring" data-inema-meter="modulo:2-3"><span class="inema-ring__value" data-inema-meter-pct="">0%</span></div>
+<div class="inema-meter-label" data-inema-meter="modulo:2-3"><strong data-inema-meter-frac="">0 de 0</strong> temas leídos · <span data-inema-section-counter="">Sección 1 de 7</span></div>
+</div>
+</div>
+</header>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+<div class="lg:flex lg:gap-10">
+<!-- TOC sticky + scrollspy -->
+<aside class="hidden lg:block lg:w-56 flex-shrink-0">
+<nav aria-label="Índice de la página" class="sticky top-20 self-start" data-inema-toc="">
+<p class="text-xs font-semibold uppercase tracking-wide text-neutral-500 mb-3">En este módulo</p>
+<ol class="space-y-1 text-sm">
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-blue-400" href="#topico-1">1. Qué es RAG</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-blue-400" href="#topico-2">2. Embeddings</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-blue-400" href="#topico-3">3. Chunking</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-blue-400" href="#topico-4">4. Búsqueda vectorial</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-blue-400" href="#topico-5">5. Búsqueda híbrida y reranking</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-blue-400" href="#topico-6">6. RAG con citas</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-blue-400" href="#topico-7">7. Evaluación</a></li>
+</ol>
+</nav>
+</aside>
+<!-- ARTIGO -->
+<article class="inema-prose flex-1 min-w-0">
+<h2 class="text-2xl font-bold mb-8">Contenido detallado</h2>
+<!-- TÓPICO 1 -->
+<section class="mb-16" data-inema-topic="modulo-2-3#topico-1" id="topico-1" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="buscar primeiro, responder depois">📚 Qué es RAG</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-3-t1-p1">Un modelo de lenguaje solo sabe lo que vio durante el entrenamiento. No conoce el manual de tu producto, la política de cambios de tu tienda ni el contrato que se firmó ayer. <strong class="text-blue-400">RAG</strong> (<em>Retrieval-Augmented Generation</em>, generación aumentada por recuperación) resuelve esto en dos etapas: primero, un sistema de búsqueda encuentra los fragmentos de tus documentos relacionados con la pregunta; después, el modelo recibe esos fragmentos junto con la pregunta y responde <strong class="text-neutral-100">basándose en ellos</strong>, citando la fuente.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-3-t1-p2">La idea se formalizó en un artículo de investigación de 2020 y se convirtió en el estándar para «conversar con documentos». Una <strong class="text-neutral-100">base de conocimiento</strong> (base de conocimientos) es el conjunto de documentos preparado para esa búsqueda. Incluso con modelos que aceptan ventanas de contexto enormes, RAG sigue siendo útil: es más barato enviar cuatro fragmentos que mil páginas, la actualización es inmediata (basta con volver a indexar un archivo) y las citas permiten verificar la información.</p>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">RAG es un patrón de arquitectura con dos fases: la <strong>indexación</strong> (dividir documentos en fragmentos, calcular embeddings y guardarlos en un índice) y la <strong>consulta</strong> (buscar los fragmentos más relevantes para la pregunta y pedirle al modelo una respuesta basada solo en ellos, con citas).</p>
+</div>
+<!-- SVG 1: duas fases -->
+<figure class="svg-frame rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="Dos etapas. Indexación, se hace una vez: documentos, chunking, embeddings y base de datos vectorial. Consulta, con cada pregunta: pregunta, embedding de la pregunta, búsqueda de los fragmentos más parecidos en la base de datos vectorial, prompt con los fragmentos y respuesta con cita." class="w-full h-auto" role="img" viewbox="0 0 900 330">
+<defs>
+<filter height="160%" id="m23-glow" width="160%" x="-30%" y="-30%"><fegaussianblur result="b" stddeviation="2"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="28" id="m23-grid" patternunits="userSpaceOnUse" width="28"><circle cx="1.2" cy="1.2" fill="#3b82f6" opacity="0.14" r="1.2"></circle></pattern>
+<marker id="m23-ah" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#60a5fa"></path></marker>
+<marker id="m23-ahc" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#38bdf8"></path></marker>
+<style>@keyframes m23dash{to{stroke-dashoffset:-24}} .m23-flow{stroke-dasharray:6 6;animation:m23dash 1.6s linear infinite}</style>
+</defs>
+<rect fill="url(#m23-grid)" height="330" width="900"></rect>
+<g font-family="Inter,sans-serif" text-anchor="middle">
+<text fill="#93c5fd" font-size="13" font-weight="700" text-anchor="start" x="20" y="30">INDEXACIÓN · una vez por documento</text>
+<rect fill="#0e1726" height="58" rx="10" stroke="#60a5fa" stroke-width="2" width="185" x="20" y="44"></rect><text fill="#eff6ff" font-size="14" font-weight="700" x="112" y="70">documentos</text><text fill="#bfdbfe" font-size="12" x="112" y="89">.md · .txt · PDF</text>
+<rect fill="#0e1726" height="58" rx="10" stroke="#60a5fa" stroke-width="2" width="185" x="245" y="44"></rect><text fill="#eff6ff" font-size="14" font-weight="700" x="337" y="70">chunking</text><text fill="#bfdbfe" font-size="12" x="337" y="89">fragmentos + fuente</text>
+<rect fill="#0e1726" height="58" rx="10" stroke="#60a5fa" stroke-width="2" width="185" x="470" y="44"></rect><text fill="#eff6ff" font-size="14" font-weight="700" x="562" y="70">embeddings</text><text fill="#bfdbfe" font-size="12" x="562" y="89">un vector por fragmento</text>
+<rect fill="#1e3a8a" filter="url(#m23-glow)" height="58" rx="10" stroke="#93c5fd" stroke-width="2.2" width="185" x="695" y="44"></rect><text fill="#eff6ff" font-size="14" font-weight="700" x="787" y="70">base de datos vectorial</text><text fill="#dbeafe" font-size="12" x="787" y="89">el índice</text>
+<path class="m23-flow" d="M207,73 L241,73 M432,73 L466,73 M657,73 L691,73" fill="none" marker-end="url(#m23-ah)" stroke="#60a5fa" stroke-width="2.4"></path>
+<text fill="#7dd3fc" font-size="13" font-weight="700" text-anchor="start" x="20" y="196">CONSULTA · con cada pregunta</text>
+<rect fill="#0e1b26" height="58" rx="10" stroke="#38bdf8" stroke-width="2" width="150" x="20" y="212"></rect><text fill="#e0f2fe" font-size="14" font-weight="700" x="95" y="238">pregunta</text><text fill="#bae6fd" font-size="12" x="95" y="257">del usuario</text>
+<rect fill="#0e1b26" height="58" rx="10" stroke="#38bdf8" stroke-width="2" width="150" x="198" y="212"></rect><text fill="#e0f2fe" font-size="14" font-weight="700" x="273" y="238">embedding</text><text fill="#bae6fd" font-size="12" x="273" y="257">de la pregunta</text>
+<rect fill="#0e1b26" height="58" rx="10" stroke="#38bdf8" stroke-width="2.4" width="150" x="376" y="212"></rect><text fill="#e0f2fe" font-size="14" font-weight="700" x="451" y="238">búsqueda top-k</text><text fill="#bae6fd" font-size="12" x="451" y="257">fragmentos similares</text>
+<rect fill="#0e1b26" height="58" rx="10" stroke="#38bdf8" stroke-width="2" width="150" x="554" y="212"></rect><text fill="#e0f2fe" font-size="14" font-weight="700" x="629" y="238">prompt</text><text fill="#bae6fd" font-size="12" x="629" y="257">pregunta + fragmentos</text>
+<rect fill="#1e3a8a" filter="url(#m23-glow)" height="58" rx="10" stroke="#93c5fd" stroke-width="2.2" width="150" x="732" y="212"></rect><text fill="#eff6ff" font-size="14" font-weight="700" x="807" y="238">respuesta</text><text fill="#dbeafe" font-size="12" x="807" y="257">con [fuente]</text>
+<path class="m23-flow" d="M172,241 L194,241 M350,241 L372,241 M528,241 L550,241 M706,241 L728,241" fill="none" marker-end="url(#m23-ahc)" stroke="#38bdf8" stroke-width="2.4"></path>
+<path class="m23-flow" d="M760,104 C760,160 470,150 458,206" fill="none" marker-end="url(#m23-ahc)" stroke="#38bdf8" stroke-width="2"></path>
+<text fill="#bae6fd" font-size="12" text-anchor="start" x="772" y="150">consulta el índice</text>
+<text fill="#93c5fd" font-size="13" x="450" y="310">el modelo solo interviene en el último paso; todo lo demás es búsqueda</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-blue-400">Cómo leer:</strong> La franja superior se ejecuta cuando se agrega o cambia un documento; la inferior, con cada pregunta. La flecha curva conecta ambas: la búsqueda consulta el índice creado previamente. Si la respuesta es incorrecta, el problema suele estar a la izquierda (fragmento mal dividido, búsqueda que no lo encontró), no en el modelo.</figcaption>
+</figure>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
+<h4 class="font-bold text-blue-400 mb-4">✓ RAG funciona bien</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Preguntas sobre documentos internos y privados.</span></li>
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Contenido que cambia (precios, políticas, existencias de artículos).</span></li>
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Respuestas que deben citar fuentes para auditoría.</span></li>
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Control de acceso: cada usuario solo busca lo que puede ver.</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ RAG no lo resuelve</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Enseñar un estilo o formato fijo (eso es prompt o fine-tuning, módulo 2.4).</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Preguntas que requieren leerlo todo ("¿cuántos contratos vencen en marzo?") — eso es una consulta a datos estructurados.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Los documentos de mala calidad, contradictorios o desactualizados generan respuestas iguales.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Ausencia total de alucinaciones: las reduce, pero no las elimina.</span></li>
+</ul>
+</div>
+</div>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-3-t1-p3" data-sum="porque">Es el caso de uso de IA más solicitado en las empresas: un asistente de soporte que lee la base de conocimiento, busca en normas internas y responde preguntas sobre contratos. Entender las dos fases permite diagnosticar el problema correcto cuando falla una respuesta — y la mayoría de las fallas está en la búsqueda, no en el modelo.</p>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Recuperación</div><div class="text-xs text-neutral-400">encontrar los fragmentos correctos</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Generación</div><div class="text-xs text-neutral-400">responder solo con ellos</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Indexación</div><div class="text-xs text-neutral-400">preparar los documentos</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Base de conocimiento</div><div class="text-xs text-neutral-400">documentos listos para la búsqueda</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 2 -->
+<section class="mb-16" data-inema-topic="modulo-2-3#topico-2" id="topico-2" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="o sentido do texto virado em números">🧬 Embeddings</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-3-t2-p1">Un <strong class="text-blue-400">embedding</strong> es una lista de números (un <strong>vector</strong>) que representa el sentido de un texto. Un modelo de embeddings, como <code>nomic-embed-text</code> en Ollama, lee "¿cómo devuelvo un producto?" y devuelve cientos de números. La clave es que los textos con sentidos parecidos obtienen vectores parecidos, incluso sin palabras en común. "Devolver" y "política de cambios" quedan cerca; "horario del sábado" queda lejos.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-3-t2-p2">Para medir qué tan "cerca", se usa la <strong class="text-neutral-100">similitud del coseno</strong>: el ángulo entre dos vectores. Va de −1 a 1; cuanto más cerca de 1, más parecido es el sentido. Si <strong class="text-neutral-100">normalizas</strong> los vectores (haces que todos tengan longitud 1), el coseno se convierte en un simple producto escalar, un cálculo muy rápido. Ten en cuenta dos cosas: usa el mismo modelo de embeddings para los documentos y las preguntas, y considera que cambiar de modelo requiere recalcular todo el índice.</p>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">Un embedding es la representación de un texto como vector en un espacio donde la distancia significa diferencia de sentido. Permite buscar "por el significado" en vez de "por la palabra exacta".</p>
+</div>
+<!-- SVG 2: espaço de embeddings -->
+<figure class="svg-frame rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="Mapa en dos dimensiones de un espacio de embeddings con tres grupos de puntos: cambios y devoluciones, entrega y envío, horario de atención. La pregunta «¿cómo devuelvo un producto?» cae cerca del grupo de cambios, conectada con los dos puntos más cercanos." class="w-full h-auto" role="img" viewbox="0 0 900 320">
+<defs>
+<style>@keyframes m23pulse{0%,100%{opacity:1}50%{opacity:.55}} .m23-q{animation:m23pulse 2.2s ease-in-out infinite}</style>
+</defs>
+<rect fill="url(#m23-grid)" height="320" width="900"></rect>
+<g font-family="Inter,sans-serif">
+<ellipse cx="220" cy="130" fill="#1e3a8a" fill-opacity="0.25" rx="150" ry="80" stroke="#60a5fa" stroke-dasharray="5 5" stroke-opacity="0.7"></ellipse>
+<ellipse cx="660" cy="105" fill="#0e1b26" fill-opacity="0.4" rx="150" ry="65" stroke="#38bdf8" stroke-dasharray="5 5" stroke-opacity="0.7"></ellipse>
+<ellipse cx="710" cy="245" fill="#0e1726" fill-opacity="0.4" rx="140" ry="50" stroke="#93c5fd" stroke-dasharray="5 5" stroke-opacity="0.5"></ellipse>
+<g fill="#60a5fa"><circle cx="150" cy="115" r="7"></circle><circle cx="200" cy="160" r="7"></circle><circle cx="260" cy="110" r="7"></circle><circle cx="300" cy="150" r="7"></circle></g>
+<g fill="#38bdf8"><circle cx="600" cy="90" r="7"></circle><circle cx="660" cy="125" r="7"></circle><circle cx="720" cy="85" r="7"></circle></g>
+<g fill="#93c5fd"><circle cx="650" cy="245" r="7"></circle><circle cx="720" cy="230" r="7"></circle><circle cx="780" cy="255" r="7"></circle></g>
+<text fill="#bfdbfe" font-size="14" font-weight="700" text-anchor="middle" x="220" y="38">cambios y devoluciones</text>
+<text fill="#bae6fd" font-size="14" font-weight="700" text-anchor="middle" x="660" y="28">entrega y envío</text>
+<text fill="#dbeafe" font-size="14" font-weight="700" text-anchor="middle" x="710" y="312">horario de atención</text>
+<path d="M110,250 L150,115 M110,250 L200,160" stroke="#93c5fd" stroke-dasharray="4 4" stroke-width="1.8"></path>
+<circle class="m23-q" cx="110" cy="250" fill="#eff6ff" filter="url(#m23-glow)" r="9"></circle>
+<text fill="#eff6ff" font-size="14" font-weight="700" x="130" y="255">"¿cómo devuelvo un producto?"</text>
+<text fill="#93c5fd" font-size="12" x="130" y="275">los vecinos más cercanos se convierten en el contexto</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-blue-400">Cómo leer:</strong> cada punto es un fragmento de documento; su posición proviene del embedding (aquí se redujo a 2 dimensiones, a modo ilustrativo; los vectores reales tienen cientos). La pregunta en blanco queda cerca del grupo de cambios, aunque no use la palabra "cambio". Las líneas discontinuas representan la búsqueda: tomar los vecinos más cercanos.</figcaption>
+</figure>
+<!-- COPY-RUN 1: similaridade -->
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-blue-400">Prueba:</strong> <span class="text-neutral-300">calcular embeddings y comparar el sentido de tres frases.</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copiar</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900"># similaridade.py
+# 1) en la terminal, una vez:
+#      pip install openai numpy
+#      ollama pull nomic-embed-text
+# 2) guarda este archivo y ejecútalo: python3 similaridade.py
+import numpy as np
+from openai import OpenAI
+
+client = OpenAI(base_url="http://localhost:11434/v1", api_key="ollama")
+
+frases = [
+    "¿Cómo devuelvo un producto defectuoso?",
+    "Política de cambios y devoluciones de mercancías",
+    "Horario de atención de la tienda los sábados",
+]
+
+r = client.embeddings.create(model="nomic-embed-text", input=frases)
+v = np.array([d.embedding for d in r.data])
+v = v / np.linalg.norm(v, axis=1, keepdims=True)  # normaliza: coseno = producto escalar
+
+print("dimensiones de cada vector:", v.shape[1])
+sim = v @ v.T
+for i in range(len(frases)):
+    for j in range(i + 1, len(frases)):
+        print(f"{sim[i, j]:.3f}   {frases[i][:38]}  x  {frases[j][:38]}")</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">Cómo verificar:</strong> la primera línea muestra 768 dimensiones (el tamaño de <code>nomic-embed-text</code>). De las tres comparaciones, la de "devolver" con "política de cambios" debería tener la puntuación más alta; las que incluyen "horario" serán más bajas. Los valores exactos varían según el modelo; lo que importa es el orden. Una API de pago para embeddings funciona igual si cambias <code>base_url</code>, <code>api_key</code> e <code>model</code>.</p>
+</div>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-3-t2-p3" data-sum="porque">El usuario nunca formula la pregunta con las mismas palabras que aparecen en el documento. Los embeddings conectan «mi factura llegó dos veces» con un párrafo sobre «cobro duplicado». Sin entender ese vínculo, es imposible ajustar la búsqueda cuando falla.</p>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Vector</div><div class="text-xs text-neutral-400">lista de números</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Coseno</div><div class="text-xs text-neutral-400">qué tan parecido es el sentido</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Normalizar</div><div class="text-xs text-neutral-400">longitud 1, cálculo rápido</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Mismo modelo</div><div class="text-xs text-neutral-400">para el documento y la pregunta</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 3 -->
+<section class="mb-16" data-inema-topic="modulo-2-3#topico-3" id="topico-3" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="cortar o documento no tamanho certo">✂️ Chunking</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-3-t3-p1"><strong class="text-blue-400">Chunking</strong> es dividir cada documento en fragmentos (<em>chunks</em>) antes de calcular los embeddings. El tamaño requiere un equilibrio: un fragmento demasiado grande mezcla varios temas y el vector termina siendo un promedio sin enfoque; uno demasiado pequeño pierde el contexto ("el plazo es de 30 días" — ¿plazo de qué?). No existe un tamaño universal: prueba con tus preguntas reales y mide los resultados (tema 7).</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-3-t3-p2">Tres prácticas mejoran casi cualquier estrategia de fragmentación. <strong class="text-neutral-100">Respetar la estructura</strong>: dividir por títulos y párrafos, no a mitad de una oración. <strong class="text-neutral-100">Superposición</strong> (<em>overlap</em>): repetir un fragmento del final del segmento anterior al inicio del siguiente, para no partir una idea por la mitad. <strong class="text-neutral-100">Metadatos</strong>: guardar con cada fragmento el archivo, la sección, la fecha y quién puede verlo; eso es lo que luego se convierte en la cita y el filtro de acceso.</p>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">Chunking es la estrategia para dividir los documentos en fragmentos indexables: tamaño, punto de corte, superposición y metadatos de cada fragmento.</p>
+</div>
+<!-- SVG 3: chunks com sobreposição -->
+<figure class="svg-frame rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="Una franja representa el documento completo. Debajo, cuatro fragmentos a distintas alturas cubren el documento, y cada uno repite una parte del anterior: la superposición. Cada fragmento lleva una etiqueta de metadatos con el archivo, el número de fragmento y la sección." class="w-full h-auto" role="img" viewbox="0 0 900 300">
+<rect fill="url(#m23-grid)" height="300" width="900"></rect>
+<g font-family="Inter,sans-serif">
+<rect fill="#0e1726" height="34" rx="8" stroke="#93c5fd" stroke-width="2" width="840" x="30" y="24"></rect>
+<text fill="#eff6ff" font-size="14" font-weight="700" text-anchor="middle" x="450" y="46">manual.md — documento completo</text>
+<rect fill="#60a5fa" fill-opacity="0.35" height="20" rx="4" width="50" x="250" y="98"></rect>
+<rect fill="#60a5fa" fill-opacity="0.35" height="20" rx="4" width="50" x="460" y="98"></rect>
+<rect fill="#60a5fa" fill-opacity="0.35" height="20" rx="4" width="50" x="670" y="98"></rect>
+<rect fill="#1e3a8a" fill-opacity="0.55" height="40" rx="8" stroke="#60a5fa" stroke-width="2" width="270" x="30" y="120"></rect>
+<rect fill="#0e1b26" fill-opacity="0.75" height="40" rx="8" stroke="#38bdf8" stroke-width="2" width="260" x="250" y="196"></rect>
+<rect fill="#1e3a8a" fill-opacity="0.55" height="40" rx="8" stroke="#60a5fa" stroke-width="2" width="260" x="460" y="120"></rect>
+<rect fill="#0e1b26" fill-opacity="0.75" height="40" rx="8" stroke="#38bdf8" stroke-width="2" width="200" x="670" y="196"></rect>
+<g fill="#eff6ff" font-size="13" font-weight="700" text-anchor="middle"><text x="150" y="145">fragmento 1</text><text x="380" y="221">fragmento 2</text><text x="590" y="145">fragmento 3</text><text x="770" y="221">fragmento 4</text></g>
+<text fill="#bfdbfe" font-size="12" text-anchor="middle" x="275" y="90">superposición</text>
+<text fill="#bfdbfe" font-size="12" text-anchor="middle" x="485" y="90">superposición</text>
+<text fill="#bfdbfe" font-size="12" text-anchor="middle" x="695" y="90">superposición</text>
+<text fill="#7dd3fc" font-size="12" x="30" y="178">manual.md#1 · Cambios</text>
+<text fill="#7dd3fc" font-size="12" x="470" y="178">manual.md#3 · Envíos</text>
+<text fill="#7dd3fc" font-size="12" x="250" y="254">manual.md#2 · Cambios</text>
+<text fill="#7dd3fc" font-size="12" x="670" y="254">manual.md#4 · Plazos</text>
+<text fill="#93c5fd" font-size="13" text-anchor="middle" x="450" y="288">cada fragmento se convierte en un vector + la etiqueta que luego se convierte en la cita</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-blue-400">Cómo leer:</strong> la franja superior es el archivo original; los cuatro bloques de abajo, en dos niveles, son los fragmentos indexados. Las franjas claras marcan la parte que aparece en dos fragmentos: una frase cortada en el borde sigue completa en uno de ellos. Las etiquetas en cian son los metadatos que acompañan a cada vector.</figcaption>
+</figure>
+<div class="overflow-x-auto mb-6">
+<table class="w-full text-sm border border-dark-600 rounded-xl overflow-hidden">
+<thead><tr class="bg-dark-700"><th class="text-left p-3 text-blue-400">Estrategia</th><th class="text-left p-3 text-blue-400">Cómo corta</th><th class="text-left p-3 text-blue-400">Cuándo usarlo</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr><td class="p-3 font-semibold">Tamaño fijo</td><td class="p-3 text-neutral-300">Cada N caracteres o tokens, con superposición.</td><td class="p-3 text-neutral-300">Texto corrido sin estructura; punto de partida.</td></tr>
+<tr><td class="p-3 font-semibold">Por estructura</td><td class="p-3 text-neutral-300">Títulos, secciones, párrafos, filas de tablas.</td><td class="p-3 text-neutral-300">Manuales, Markdown, documentación, contratos con cláusulas.</td></tr>
+<tr><td class="p-3 font-semibold">Recursiva</td><td class="p-3 text-neutral-300">Intenta por sección; si es grande, por párrafo; si es grande, por frase.</td><td class="p-3 text-neutral-300">Documentos mixtos; es el valor predeterminado de varias bibliotecas.</td></tr>
+<tr><td class="p-3 font-semibold">Padre e hijo</td><td class="p-3 text-neutral-300">Busca en fragmentos pequeños y envía al modelo el fragmento más grande que los contiene.</td><td class="p-3 text-neutral-300">Cuando la búsqueda necesita precisión y la respuesta, contexto.</td></tr>
+</tbody>
+</table>
+</div>
+<div class="bg-primary/10 border border-primary/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-primary font-semibold mb-1">💡 Consejo</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-3-t3-p3">Antes de cambiar el tamaño, revisa los fragmentos. Imprime diez y léelos como si estuvieras haciendo una búsqueda: ¿cada uno tiene sentido por sí solo? Un PDF mal convertido —con el encabezado repetido en cada página o una tabla convertida en un revoltijo de números— perjudica más al RAG que cualquier elección de tamaño.</p>
+</div>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-3-t3-p4" data-sum="porque">La búsqueda solo encuentra lo que se cortó bien. Un fragmento que mezcla flete y garantía no aparece ni para una pregunta ni para la otra; una regla partida por la mitad llega incompleta al modelo. El chunking es la etapa más barata de ajustar y la que más cambia el resultado.</p>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Chunk</div><div class="text-xs text-neutral-400">fragmento indexable</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Superposición</div><div class="text-xs text-neutral-400">no partir la idea por la mitad</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Metadatos</div><div class="text-xs text-neutral-400">fuente, sección, fecha, acceso</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Padre e hijo</div><div class="text-xs text-neutral-400">búsqueda precisa, contexto amplio</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 4 -->
+<section class="mb-16" data-inema-topic="modulo-2-3#topico-4" id="topico-4" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="achar os vizinhos mais próximos, rápido">🔎 Búsqueda vectorial y bases de datos vectoriales</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-3-t4-p1"><strong class="text-blue-400">La búsqueda vectorial</strong> consiste en calcular el embedding de la pregunta y devolver los <strong class="text-neutral-100">top-k</strong> fragmentos más parecidos: los k vecinos más cercanos. Con unos miles de fragmentos, comparar la pregunta con todos (búsqueda exacta o «fuerza bruta») toma milisegundos en un arreglo de NumPy, y es lo que hace el RAG del tema 6. Con millones, entra la búsqueda <strong class="text-neutral-100">aproximada</strong> (ANN, <em>approximate nearest neighbor</em>), con índices como HNSW, que sacrifican un poco de precisión a cambio de mucha velocidad.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-3-t4-p2">Un <strong class="text-blue-400">base de datos vectorial</strong> almacena los vectores, los textos y los metadatos, crea estos índices y permite <strong class="text-neutral-100">filtrar</strong> antes de buscar («solo documentos del departamento jurídico», «solo versiones vigentes», «solo lo que este usuario puede ver»). Opciones consolidadas: Chroma (integrado, excelente para empezar), Qdrant (servidor dedicado, abierto), pgvector (extensión de Postgres, útil cuando ya usas Postgres) y servicios gestionados en la nube.</p>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">La búsqueda vectorial consiste en encontrar los k vectores más cercanos al vector de la pregunta. La base de datos vectorial es el sistema que almacena vectores con metadatos, los indexa para buscarlos rápidamente y aplica filtros.</p>
+</div>
+<div class="overflow-x-auto mb-6">
+<table class="w-full text-sm border border-dark-600 rounded-xl overflow-hidden">
+<thead><tr class="bg-dark-700"><th class="text-left p-3 text-blue-400">Opción</th><th class="text-left p-3 text-blue-400">Perfil</th><th class="text-left p-3 text-blue-400">Elígela cuando</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr><td class="p-3 font-semibold">NumPy en memoria</td><td class="p-3 text-neutral-300">Búsqueda exacta, cero infraestructura.</td><td class="p-3 text-neutral-300">Aprendizaje, prototipos, bases pequeñas.</td></tr>
+<tr><td class="p-3 font-semibold">Chroma</td><td class="p-3 text-neutral-300">Biblioteca integrada en Python que guarda datos en disco.</td><td class="p-3 text-neutral-300">Primer proyecto real, un solo servidor.</td></tr>
+<tr><td class="p-3 font-semibold">pgvector</td><td class="p-3 text-neutral-300">Vectores dentro de Postgres, junto con tus datos.</td><td class="p-3 text-neutral-300">Ya usas Postgres y quieres una sola base de datos.</td></tr>
+<tr><td class="p-3 font-semibold">Qdrant</td><td class="p-3 text-neutral-300">Servidor vectorial dedicado, filtros avanzados.</td><td class="p-3 text-neutral-300">Gran volumen, búsqueda híbrida, varios servicios.</td></tr>
+</tbody>
+</table>
+</div>
+<div class="bg-dark-800 border border-blue-500/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-blue-400 font-semibold mb-1">🧩 Términos nuevos</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-3-t4-p3"><strong>top-k</strong>: cuántos fragmentos devuelve la búsqueda; muy pocos pueden dejar fuera la respuesta, y demasiados llenan el prompt de ruido. <strong>HNSW</strong>: un índice en forma de grafo con «atajos» entre vectores vecinos, que usan varias bases de datos para buscar rápidamente en colecciones grandes. <strong>Filtro por metadatos</strong>: condición aplicada junto con la búsqueda, esencial para el control de acceso.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
+<h4 class="font-bold text-blue-400 mb-4">✓ Buenas prácticas</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Empieza con NumPy o Chroma; cambia cuando midas que hace falta.</span></li>
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Filtra por permisos durante la búsqueda, no después de la respuesta.</span></li>
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Guarda la versión del modelo de embedding junto con el índice.</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Trampas</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Levantar un clúster vectorial para quinientos documentos.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Mezclar vectores de dos modelos de embedding en el mismo índice.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Indexar documentos con datos personales sin base legal (LGPD).</span></li>
+</ul>
+</div>
+</div>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-3-t4-p4" data-sum="porque">Elegir la herramienta de búsqueda según el tamaño real del problema ahorra semanas de trabajo de infraestructura. Y el filtro por metadatos impide que un asistente interno muestre el contrato de la dirección a alguien que no debería verlo: un riesgo real en cualquier RAG corporativo.</p>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">top-k</div><div class="text-xs text-neutral-400">cuántos fragmentos vuelven</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Exacta × ANN</div><div class="text-xs text-neutral-400">precisión total o velocidad</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Base de datos vectorial</div><div class="text-xs text-neutral-400">vectores + texto + metadatos</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Filtro</div><div class="text-xs text-neutral-400">quién puede ver qué</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 5 -->
+<section class="mb-16" data-inema-topic="modulo-2-3#topico-5" id="topico-5" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="palavra exata + sentido, depois uma segunda leitura">🎯 Búsqueda híbrida y reranking</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-3-t5-p1">La búsqueda vectorial entiende el significado, pero tropieza con los términos exactos: un código de producto («XR-2049»), un número de cláusula o un nombre propio poco común. La búsqueda clásica por palabras —el algoritmo <strong class="text-blue-400">BM25</strong>, que los motores de búsqueda usan desde hace décadas— hace lo contrario: encuentra la palabra exacta e ignora los sinónimos. La <strong class="text-neutral-100">búsqueda híbrida</strong> ejecuta ambas y combina las listas.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-3-t5-p2">Para combinarlas, el método más usado es <strong class="text-neutral-100">RRF</strong> (<em>Reciprocal Rank Fusion</em>): cada fragmento recibe, en cada lista, una puntuación de 1/(60 + posición), y las puntuaciones se suman. Los que aparecen bien posicionados en ambas listas suben. Después viene el <strong class="text-blue-400">reranking</strong>: un modelo especializado (un <em>cross-encoder</em>, como los de la familia bge-reranker) lee juntos la pregunta y cada candidato, y los reordena con más precisión. Es más lento, por eso se aplica solo a los primeros 20 o 30 de la fusión.</p>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">La búsqueda híbrida combina la búsqueda por palabras (BM25) y por significado (vectorial) en una sola lista, generalmente con RRF. El reranking es una segunda etapa que reordena los mejores candidatos con un modelo que lee juntos la pregunta y el fragmento.</p>
+</div>
+<!-- SVG 4: RRF + rerank -->
+<figure class="svg-frame rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="Dos listas de resultados: BM25 por palabras devuelve A, C, F y B; la búsqueda vectorial por sentido devuelve C, D, A y E. La fusión RRF suma las puntuaciones y produce C, A, D y F. El reranker lee juntos la pregunta y el fragmento, y entrega al modelo los tres mejores: A, C y F." class="w-full h-auto" role="img" viewbox="0 0 900 320">
+<rect fill="url(#m23-grid)" height="320" width="900"></rect>
+<g font-family="Inter,sans-serif">
+<rect fill="#0e1726" height="210" rx="12" stroke="#60a5fa" stroke-width="2" width="170" x="20" y="40"></rect>
+<text fill="#eff6ff" font-size="14" font-weight="700" text-anchor="middle" x="105" y="68">BM25</text><text fill="#bfdbfe" font-size="12" text-anchor="middle" x="105" y="86">palabra exacta</text>
+<g fill="#dbeafe" font-size="13"><text x="45" y="120">1 · fragmento A</text><text x="45" y="152">2 · fragmento C</text><text x="45" y="184">3 · fragmento F</text><text x="45" y="216">4 · fragmento B</text></g>
+<rect fill="#0e1b26" height="210" rx="12" stroke="#38bdf8" stroke-width="2" width="170" x="210" y="40"></rect>
+<text fill="#e0f2fe" font-size="14" font-weight="700" text-anchor="middle" x="295" y="68">vectorial</text><text fill="#bae6fd" font-size="12" text-anchor="middle" x="295" y="86">sentido</text>
+<g fill="#e0f2fe" font-size="13"><text x="235" y="120">1 · fragmento C</text><text x="235" y="152">2 · fragmento D</text><text x="235" y="184">3 · fragmento A</text><text x="235" y="216">4 · fragmento E</text></g>
+<path class="m23-flow" d="M382,145 L428,145" fill="none" marker-end="url(#m23-ah)" stroke="#60a5fa" stroke-width="2.5"></path>
+<rect fill="#1e3a8a" filter="url(#m23-glow)" height="210" rx="12" stroke="#93c5fd" stroke-width="2.2" width="190" x="433" y="40"></rect>
+<text fill="#eff6ff" font-size="14" font-weight="700" text-anchor="middle" x="528" y="68">fusión RRF</text><text fill="#dbeafe" font-size="12" text-anchor="middle" x="528" y="86">suma 1/(60 + posición)</text>
+<g fill="#eff6ff" font-size="13"><text x="458" y="120">1 · fragmento C</text><text x="458" y="152">2 · fragmento A</text><text x="458" y="184">3 · fragmento D</text><text x="458" y="216">4 · fragmento F</text></g>
+<path class="m23-flow" d="M625,145 L671,145" fill="none" marker-end="url(#m23-ahc)" stroke="#38bdf8" stroke-width="2.5"></path>
+<rect fill="#0e1b26" height="210" rx="12" stroke="#38bdf8" stroke-width="2.2" width="200" x="676" y="40"></rect>
+<text fill="#e0f2fe" font-size="14" font-weight="700" text-anchor="middle" x="776" y="68">reranker</text><text fill="#bae6fd" font-size="12" text-anchor="middle" x="776" y="86">lee la pregunta + el fragmento</text>
+<g fill="#e0f2fe" font-size="13"><text x="701" y="120">1 · fragmento A</text><text x="701" y="152">2 · fragmento C</text><text x="701" y="184">3 · fragmento F</text></g>
+<text fill="#7dd3fc" font-size="12" x="701" y="222">→ pasan al modelo</text>
+<text fill="#93c5fd" font-size="13" text-anchor="middle" x="450" y="290">C y A aparecen en ambas listas y suben en la fusión; el reranker decide el orden final</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-blue-400">Cómo leer:</strong> sigue de izquierda a derecha. Las dos primeras columnas son búsquedas independientes; la fusión no mira el texto, solo las posiciones, por eso C y A, que aparecen en ambas, suben. El reranker es el único paso que vuelve a leer el contenido y puede cambiar el orden (aquí, A pasa antes que C). El orden final es ilustrativo.</figcaption>
+</figure>
+<div class="relative border-l-2 border-blue-500/30 ml-3 pl-6 space-y-5 mb-6">
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-blue-500/20 border-2 border-blue-400"></span><p class="text-sm text-neutral-300"><strong class="text-blue-400">Paso 1.</strong> Haz funcionar solo la búsqueda vectorial y mídela (tema 7).</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-blue-500/20 border-2 border-blue-400"></span><p class="text-sm text-neutral-300"><strong class="text-blue-400">Paso 2.</strong> Si fallan las preguntas con códigos, siglas o nombres, agrega BM25 (la biblioteca <code>rank-bm25</code> en Python, o la función nativa de Qdrant o Postgres) y combina con RRF.</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-sky-500/20 border-2 border-sky-400"></span><p class="text-sm text-neutral-300"><strong class="text-sky-400">Paso 3.</strong> Si el fragmento correcto está entre los primeros 20, pero no entre los primeros 4, agrega un reranker a los 20.</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-sky-500/20 border-2 border-sky-400"></span><p class="text-sm text-neutral-300"><strong class="text-sky-400">Paso 4.</strong> Vuelve a medir. Cada etapa se queda solo si mejora el resultado.</p></div>
+</div>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-3-t5-p3" data-sum="porque">Las bases reales están llenas de códigos, siglas y nombres que la búsqueda por sentido no encuentra. La búsqueda híbrida y el reranking son las dos mejoras de búsqueda con mejor relación entre esfuerzo y resultado después de un buen chunking; saber en qué orden aplicarlas evita complicar el sistema sin obtener beneficios.</p>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">BM25</div><div class="text-xs text-neutral-400">búsqueda por palabra exacta</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Híbrida</div><div class="text-xs text-neutral-400">palabra + sentido</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">RRF</div><div class="text-xs text-neutral-400">combina listas según la posición</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Reranker</div><div class="text-xs text-neutral-400">segunda lectura, más precisa</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 6 -->
+<section class="mb-16" data-inema-topic="modulo-2-3#topico-6" id="topico-6" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="um RAG completo, local, que cita a fonte">🧾 RAG mínimo con citas</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-3-t6-p1">Es hora de reunirlo todo en un solo script, sin framework: <strong class="text-blue-400">chunking</strong> por párrafos con superposición, <strong class="text-blue-400">embeddings</strong> con el <code>nomic-embed-text</code>, índice guardado en un archivo JSON, <strong class="text-blue-400">búsqueda</strong> exacta por coseno con NumPy y <strong class="text-blue-400">respuesta</strong> del <code>llama3.2</code> con citas en el formato <code>[archivo#fragmento]</code>. Son menos de cien líneas y cada función corresponde a un recuadro del diagrama del tema 1.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-3-t6-p2">Dos detalles marcan la diferencia. El <code>nomic-embed-text</code> se entrenó con prefijos de tarea: <code>search_document:</code> para los fragmentos y <code>search_query:</code> para la pregunta, y funciona mejor con ellos. Y el prompt de respuesta tiene tres reglas: usar solo los fragmentos, citar la fuente después de cada afirmación y decir «no encontré» cuando la respuesta no esté ahí. Esta última es la que más reduce las invenciones.</p>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">Un RAG de principio a fin en Python: indexa una carpeta de archivos <code>.md</code>/<code>.txt</code>, busca los cuatro fragmentos más cercanos a la pregunta y genera una respuesta que cita cada fuente; todo local y gratis con Ollama.</p>
+</div>
+<!-- COPY-RUN 2: RAG completo -->
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-blue-400">Objetivo:</strong> <span class="text-neutral-300">un RAG completo: chunking, embeddings, búsqueda y respuesta con citas.</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copiar</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900"># rag.py  (pip install openai numpy · ollama pull nomic-embed-text · ollama pull llama3.2)
+# Uso: python3 rag.py &lt;pasta-com-.md-ou-.txt&gt; "&lt;sua pergunta&gt;"
+import json, sys
+from pathlib import Path
+import numpy as np
+from openai import OpenAI
+
+client = OpenAI(base_url="http://localhost:11434/v1", api_key="ollama")
+EMBED, CHAT = "nomic-embed-text", "llama3.2"
+TAM, SOBRA, TOP_K = 800, 150, 4      # caracteres por trecho, sobreposição, trechos usados
+INDICE = Path("indice.json")         # apague este arquivo para reindexar
+
+def fatiar(texto, tam=TAM, sobra=SOBRA):
+    """Junta parágrafos até ~tam caracteres; cada trecho novo repete o fim do anterior."""
+    paragrafos = [p.strip() for p in texto.split("\n\n") if p.strip()]
+    trechos, atual = [], ""
+    for p in paragrafos:
+        if atual and len(atual) + len(p) &gt; tam:
+            trechos.append(atual)
+            atual = atual[-sobra:]
+        atual = (atual + "\n\n" + p).strip()
+    if atual:
+        trechos.append(atual)
+    return trechos
+
+def embed(textos, prefixo):
+    r = client.embeddings.create(model=EMBED, input=[prefixo + t for t in textos])
+    v = np.array([d.embedding for d in r.data], dtype=np.float32)
+    return v / np.linalg.norm(v, axis=1, keepdims=True)  # normalizado: cosseno = produto escalar
+
+def indexar(pasta):
+    trechos, fontes = [], []
+    for arq in sorted(Path(pasta).rglob("*")):
+        if arq.suffix.lower() in (".md", ".txt"):
+            for i, t in enumerate(fatiar(arq.read_text(encoding="utf-8")), start=1):
+                trechos.append(t)
+                fontes.append(f"{arq.name}#{i}")
+    vetores = np.vstack([embed(trechos[i:i + 32], "search_document: ") for i in range(0, len(trechos), 32)])
+    INDICE.write_text(json.dumps({"modelo": EMBED, "fontes": fontes, "trechos": trechos,
+                                  "vetores": vetores.tolist()}, ensure_ascii=False))
+    print(f"{len(trechos)} fragmentos de {len(set(f.split('#')[0] for f in fontes))} archivos indexados")
+
+def carregar():
+    dados = json.loads(INDICE.read_text())
+    dados["vetores"] = np.array(dados["vetores"], dtype=np.float32)
+    return dados
+
+def buscar(pergunta, indice, k=TOP_K):
+    q = embed([pergunta], "search_query: ")[0]
+    notas = indice["vetores"] @ q
+    melhores = np.argsort(-notas)[:k]
+    return [(indice["fontes"][i], indice["trechos"][i], float(notas[i])) for i in melhores]
+
+def responder(pergunta, achados):
+    contexto = "\n\n".join(f"[{fonte}]\n{texto}" for fonte, texto, _ in achados)
+    regras = ("Responda en español usando SOLO los fragmentos proporcionados. "
+              "Termina CADA oración con la fuente entre corchetes, exactamente como aparece en el fragmento, p. ej.: [manual.md#2]. "
+              "Si la respuesta no está en los fragmentos, di solo: No encontré eso en los documentos.")
+    r = client.chat.completions.create(model=CHAT, temperature=0, messages=[
+        {"role": "system", "content": regras},
+        {"role": "user", "content": f"Fragmentos:\n{contexto}\n\nPregunta: {pergunta}"},
+    ])
+    return r.choices[0].message.content
+
+if __name__ == "__main__":
+    pasta, pergunta = sys.argv[1], sys.argv[2]
+    if not INDICE.exists():
+        indexar(pasta)
+    indice = carregar()
+    achados = buscar(pergunta, indice)
+    print("fragmentos recuperados:")
+    for fonte, _, nota in achados:
+        print(f"  {nota:.3f}  {fonte}")
+    print("\n" + responder(pergunta, achados))</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">Cómo verificar:</strong> crea una carpeta <code>docs/</code> con dos o tres archivos <code>.md</code> tuyos (o los de prueba del bloque de abajo) y ejecuta <code>python3 rag.py docs "&lt;una pregunta cuya respuesta esté en uno de ellos&gt;"</code>. La primera ejecución imprime "indexados N trechos" y crea <code>indice.json</code>. Después aparecen los cuatro fragmentos con su puntuación (el correcto debería estar en primer lugar) y la respuesta con <code>[archivo#n]</code>. Pregunta algo que no esté en los archivos: la respuesta debería ser "No encontré esto en los documentos." Los modelos pequeños como <code>llama3.2</code> a veces olvidan la cita o se equivocan con los sinónimos; con <code>qwen2.5</code> (cambia <code>CHAT</code>) suele mejorar el cumplimiento del formato. ¿Cambiaste los archivos? Borra <code>indice.json</code>. Para usar API de pago, cambia <code>base_url</code>, <code>api_key</code> y los dos nombres de modelo.</p>
+</div>
+<!-- COPY-RUN 3: documentos de teste -->
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-blue-400">Prueba:</strong> <span class="text-neutral-300">documentos de prueba para RAG (pégalos en la terminal).</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copiar</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900">mkdir -p docs
+cat &gt; docs/trocas.md &lt;&lt;'FIM'
+# Política de trocas
+
+O cliente pode trocar ou devolver um produto em até 30 dias corridos após o recebimento.
+
+O produto deve estar sem uso e na embalagem original. Produtos com defeito podem ser trocados mesmo usados.
+
+O reembolso é feito no mesmo meio de pagamento em até 10 dias úteis após recebermos o produto de volta.
+FIM
+cat &gt; docs/entrega.md &lt;&lt;'FIM'
+# Entregas
+
+Entregamos de segunda a sábado. Pedidos feitos até 14h saem no mesmo dia útil.
+
+O frete é grátis para compras acima de R$ 200 nas capitais. Nas demais cidades, o valor aparece no carrinho.
+
+O código de rastreio é enviado por e-mail quando o pedido sai do depósito.
+FIM
+python3 rag.py docs "Comprei há três semanas e não gostei. Ainda posso devolver?"
+python3 rag.py docs "Vocês entregam no domingo?"
+python3 rag.py docs "Qual é o telefone do SAC?"</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">Cómo verificar:</strong> la primera pregunta debe aparecer con <code>trocas.md#…</code> en primer lugar y una respuesta sobre los 30 días, citando la fuente. La segunda debe citar <code>entrega.md</code> (de lunes a sábado). La tercera no está en los documentos: si el modelo inventa un teléfono, falló la regla de «no encontré», y eso es lo que el tema 7 enseña a medir. Los valores de los documentos son ficticios, solo para probar.</p>
+</div>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-3-t6-p3" data-sum="porque">Frameworks como LlamaIndex y LangChain hacen todo esto en pocas líneas y ocultan dónde está el problema cuando la respuesta sale mal. Montarlo una vez a mano deja claro qué hace cada pieza; después usas el framework sabiendo qué cambiar, o descubres que no lo necesitas.</p>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Prefijo de tarea</div><div class="text-xs text-neutral-400">documento × pregunta</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Cita</div><div class="text-xs text-neutral-400">[archivo#fragmento] en cada dato</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">«No encontré»</div><div class="text-xs text-neutral-400">respuesta honesta permitida</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Reindexar</div><div class="text-xs text-neutral-400">cuando cambia el documento</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 7 -->
+<section class="mb-16" data-inema-topic="modulo-2-3#topico-7" id="topico-7" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">7</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="medir a busca e medir a resposta">🧪 Evaluación de RAG</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-3-t7-p1">«Parece que quedó mejor» no es una medida. Evaluar un RAG comienza con un <strong class="text-blue-400">conjunto de referencia</strong> (<em>conjunto de referencia (golden set)</em>de 20 a 50 preguntas reales, cada una con la fuente que debería encontrarse y, si es posible, la respuesta esperada. Con ellas, cada cambio —tamaño del fragmento, modelo de embeddings, búsqueda híbrida, reranker— se convierte en un número antes y después.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-3-t7-p2">Mide las dos mitades por separado. En la <strong class="text-neutral-100">búsqueda</strong>: o <strong>hit@k</strong> (en cuántas preguntas apareció la fuente correcta entre los k fragmentos) y el <strong>MRR</strong> (promedio de 1/posición de la fuente correcta: 1 si apareció en primer lugar, 0,5 en segundo…). En la <strong class="text-neutral-100">respuesta</strong>: <strong>fidelidad</strong> (¿todo lo que se dijo está en los fragmentos?) y la <strong>relevancia</strong> (¿respondió lo que se preguntó?). Herramientas como RAGAS automatizan las métricas de respuesta usando un modelo como juez; es útil, siempre que revises una muestra manualmente.</p>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">Evaluar RAG consiste en ejecutar un conjunto fijo de preguntas y medir por separado si la búsqueda encontró la fuente correcta (hit@k, MRR) y si la respuesta fue fiel a las fuentes y relevante para la pregunta.</p>
+</div>
+<!-- COPY-RUN 4: avaliação da busca -->
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-blue-400">Prueba:</strong> <span class="text-neutral-300">medir hit@k y MRR de la búsqueda de tu RAG.</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copiar</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900"># evaluar.py  (en la misma carpeta que rag.py, después de indexar)
+from rag import TOP_K, buscar, cargar
+
+# Conjunto de referencia: (pregunta, archivo que debería aparecer). Usa preguntas REALES de los usuarios.
+CASOS = [
+    ("Compré hace tres semanas y no me gustó. ¿Todavía puedo devolverlo?", "trocas.md"),
+    ("¿Cuánto tarda en acreditarse el reembolso?", "trocas.md"),
+    ("¿Se puede cambiar un producto roto que ya se usó?", "trocas.md"),
+    ("¿Entregan los domingos?", "entrega.md"),
+    ("¿Cuánto cuesta el envío a Belo Horizonte?", "entrega.md"),
+    ("¿Cómo puedo seguir mi pedido?", "entrega.md"),
+]
+
+indice = cargar()
+aciertos, suma_rr = 0, 0.0
+for pregunta, esperado in CASOS:
+    fuentes = [fuente for fuente, _, _ in buscar(pregunta, indice)]
+    posicion = next((i for i, f in enumerate(fuentes, start=1) if f.startswith(esperado + "#")), None)
+    if posicion:
+        aciertos += 1
+        suma_rr += 1 / posicion
+    marca = f"posición {posicion}" if posicion else "NO LA ENCONTRÓ"
+    print(f"{marca:12}  {pregunta}")
+
+print(f"\nhit@{TOP_K}: {aciertos}/{len(CASOS)}   MRR: {suma_rr / len(CASOS):.2f}")</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">Cómo verificar:</strong> con los documentos de prueba, ejecuta <code>python3 avaliar.py</code>: cada línea muestra en qué posición apareció la fuente correcta y, al final, el hit@4 y el MRR. Con solo dos archivos es fácil acertar todo; el valor se nota con tu base real. Cambia <code>TAM</code> en <code>rag.py</code>, borra <code>indice.json</code>, vuelve a indexar y compara los números: eso es evaluar un cambio.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
+<h4 class="font-bold text-blue-400 mb-4">✓ Evaluación que funciona</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Preguntas tomadas de consultas y conversaciones reales, anonimizadas.</span></li>
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Incluye preguntas que no tienen respuesta en los documentos.</span></li>
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Se ejecuta con cada cambio, como una prueba automatizada.</span></li>
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Mide la búsqueda y la respuesta por separado para saber qué ajustar.</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Evaluación engañosa</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Preguntas redactadas copiando frases del documento.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Probar solo mirando tres respuestas que «parecieron buenas».</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Confiar al 100 % en el modelo juez sin revisar una muestra.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Cambiar tres cosas a la vez y no saber cuál ayudó.</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-primary/10 border border-primary/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-primary font-semibold mb-1">💡 Consejo</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-3-t7-p3">Lee el diagnóstico en el orden correcto: si el hit@k es bajo, el problema está en la búsqueda o en el chunking; no sirve cambiar el modelo de respuesta. Si el hit@k es alto y la respuesta sale equivocada o inventada, el problema está en el prompt o en el modelo de generación.</p>
+</div>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-3-t7-p4" data-sum="porque">Sin evaluación, cada ajuste en un RAG es una conjetura, y las mejoras en una pregunta ocultan los empeoramientos en otras. Con un conjunto de referencia y dos métricas de búsqueda, puedes decidir con datos si conviene cambiar de modelo, de tamaño de fragmento o agregar un reranker, y puedes mostrarlo a quien paga la cuenta.</p>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Conjunto de referencia</div><div class="text-xs text-neutral-400">preguntas + fuente esperada</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">hit@k</div><div class="text-xs text-neutral-400">¿apareció la fuente entre los k?</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">MRR</div><div class="text-xs text-neutral-400">en qué posición apareció</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Fidelidad</div><div class="text-xs text-neutral-400">la respuesta está en las fuentes</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- RESUMO -->
+<section class="mb-8">
+<div class="bg-gradient-to-br from-blue-900/40 via-dark-800 to-dark-800 rounded-xl border border-blue-500/30 p-6 sm:p-8">
+<h2 class="text-2xl font-bold mb-6">✅ Resumen del módulo</h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start gap-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">RAG = buscar y luego responder</strong><span class="text-neutral-400"> — indexación una vez, consulta con cada pregunta.</span></div></div>
+<div class="flex items-start gap-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">Los embeddings miden el sentido</strong><span class="text-neutral-400"> — coseno entre vectores, el mismo modelo en ambos lados.</span></div></div>
+<div class="flex items-start gap-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">El chunking decide qué se puede encontrar</strong><span class="text-neutral-400"> — estructura, superposición y metadatos.</span></div></div>
+<div class="flex items-start gap-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">Búsqueda a la medida del problema</strong><span class="text-neutral-400"> — Primero NumPy o Chroma; búsqueda híbrida y reranker cuando las métricas lo indiquen.</span></div></div>
+<div class="flex items-start gap-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">Cita y mide</strong><span class="text-neutral-400"> — [fuente] en cada dato, conjunto de referencia con hit@k y MRR.</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-blue-400 mb-2">Siguiente módulo:</h3>
+<p class="text-neutral-300">2.4 — Fine-tuning y personalización 🎛️</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="index.html">← Volver a la Ruta</a>
+<a class="flex-1 text-center px-6 py-3 bg-blue-700 text-white rounded-lg font-semibold hover:bg-blue-600 transition-colors" href="modulo-2-4.html">Siguiente módulo →</a>
+</div>
+</div>
+</section>
+</article>
+</div>
+</div>
+</main>
+<footer class="border-t border-dark-600 py-8 mt-8">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>FTD — Formación en Transformación Digital · contenido abierto y gratuito · 2026 · <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" rel="noopener" target="_blank">INEMA.CLUB</a> - <a class="text-amber-700 dark:text-slate-300 hover:underline" href="https://inema.pro" rel="noopener" target="_blank">PRO</a></p>
+</div>
+</footer>
+<!-- SCRIPTS NÚCLEO v1 -->
+<script>
+    function toggleTopic(button) {
+      var topicItem = button.closest('.topic-item');
+      if (!topicItem) return;
+      var explanation = topicItem.querySelector('.topic-explanation');
+      var willOpen = !explanation.classList.contains('active');
+      explanation.classList.toggle('active');
+      button.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+    }
+    function openModal(id) { var m = document.getElementById(id); if (m) { m.classList.remove('hidden'); document.body.style.overflow = 'hidden'; } }
+    function closeModal() { document.querySelectorAll('.modal').forEach(function (m) { m.classList.add('hidden'); }); document.body.style.overflow = 'auto'; }
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
+    function copyCode(btn) {
+      var pre = btn.closest('[data-copy-box]').querySelector('pre');
+      var txt = pre ? pre.innerText : '';
+      var done = function () { var o = btn.getAttribute('data-label-ok') || 'Copiado'; var t = btn.textContent; btn.textContent = o; setTimeout(function () { btn.textContent = t; }, 1500); };
+      try { navigator.clipboard.writeText(txt).then(done, done); } catch (e) { done(); }
+    }
+    (function () {
+      var themeToggle = document.getElementById('theme-toggle');
+      var darkIcon = document.getElementById('theme-toggle-dark-icon');
+      var lightIcon = document.getElementById('theme-toggle-light-icon');
+      var html = document.documentElement;
+      function sync() { var isDark = html.classList.contains('dark'); if (darkIcon) darkIcon.classList.toggle('hidden', isDark); if (lightIcon) lightIcon.classList.toggle('hidden', !isDark); }
+      sync();
+      if (themeToggle) themeToggle.addEventListener('click', function () {
+        html.classList.toggle('dark'); var nowDark = html.classList.contains('dark'); html.style.colorScheme = nowDark ? 'dark' : 'light';
+        try { localStorage.setItem('theme', nowDark ? 'dark' : 'light'); } catch (e) {}
+        try { var p = JSON.parse(localStorage.getItem('inema.prefs') || '{}'); p.theme = nowDark ? 'inema-dark' : 'claro'; localStorage.setItem('inema.prefs', JSON.stringify(p)); } catch (e) {}
+        sync();
+      });
+    })();
+  </script>
+<!-- learn.js + INEMA.init() POR ÚLTIMO -->
+<script src="../../assets/learn.js"></script>
+<script>
+    if (window.INEMA && typeof window.INEMA.init === 'function') { window.INEMA.init({ autoResume: true }); }
+  </script>
+</body>
+</html>

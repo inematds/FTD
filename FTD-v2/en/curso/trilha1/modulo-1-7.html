@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="ftd-v2-en" name="inema-course"/>
+<title>Module 1.7 · Process Automation | FTD v2</title>
+<meta content="Map a process, choose the trigger, build the workflow, and let AI handle the right steps." name="description"/>
+<meta content="Module 1.7 · Process Automation | FTD v2" property="og:title"/>
+<meta content="Map a process, choose the trigger, build the workflow, and let AI handle the right steps." property="og:description"/>
+<!-- ANTI-FOUC (Erro #18) — primeiro script do head -->
+<script>
+(function () {
+  try {
+    var html = document.documentElement;
+    var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+    function clone(o) { var r = {}; for (var x in o) r[x] = o[x]; return r; }
+    var p = clone(DEF);
+    try {
+      var raw = localStorage.getItem('inema.prefs');
+      if (raw) {
+        var parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === 'object') {
+          for (var k in DEF) if (parsed[k] != null) p[k] = parsed[k];
+        }
+      } else {
+        var legacy = localStorage.getItem('theme');
+        if (legacy === 'light') p.theme = 'claro';
+        else if (legacy === 'dark') p.theme = 'inema-dark';
+      }
+    } catch (e) { p = clone(DEF); }
+
+    var THEMES = {
+      'inema-dark': { dark: true,  attr: null,        cs: 'dark'  },
+      'claro':      { dark: false, attr: null,        cs: 'light' },
+      'sepia':      { dark: false, attr: 'sepia',     cs: 'light' },
+      'foco':       { dark: null,  attr: 'foco',      cs: null    },
+      'contraste':  { dark: true,  attr: 'contraste', cs: 'dark'  }
+    };
+    var t = THEMES[p.theme] || THEMES['inema-dark'];
+
+    if (t.dark === true) html.classList.add('dark');
+    else if (t.dark === false) html.classList.remove('dark');
+
+    if (t.attr) html.setAttribute('data-theme', t.attr);
+    else html.removeAttribute('data-theme');
+
+    html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark') ? 'dark' : 'light'));
+
+    html.setAttribute('data-font', p.font || 'inter');
+    html.setAttribute('data-accent', p.accent || 'emerald');
+
+    var s = html.style;
+    var scale = (+p.fontScale || 100);
+    s.setProperty('--inema-font-scale', (scale / 100).toString());
+    s.setProperty('font-size', scale + '%');
+    s.setProperty('--measure', (+p.lineWidth || 68) + 'ch');
+    s.setProperty('--lh-body', (+p.leading || 1.7).toString());
+    var fam = p.font === 'system'
+      ? 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif'
+      : (p.font === 'leitura'
+        ? '"Atkinson Hyperlegible", "Inter", system-ui, sans-serif'
+        : '"Inter", system-ui, sans-serif');
+    s.setProperty('--font-body', fam);
+
+    var ACC = {
+      emerald: [152, 76, 45], blue: [217, 91, 60], purple: [258, 90, 66],
+      amber: [38, 92, 50], teal: [174, 72, 41], rose: [350, 89, 60]
+    };
+    var a = ACC[p.accent] || ACC.emerald;
+    s.setProperty('--accent-h', a[0] + '');
+    s.setProperty('--accent-s', a[1] + '%');
+    s.setProperty('--accent-l', a[2] + '%');
+    s.setProperty('--accent', 'hsl(' + a[0] + ' ' + a[1] + '% ' + a[2] + '%)');
+  } catch (err) {
+    try { document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme = 'dark'; } catch (e) {}
+  }
+})();
+</script>
+<!-- MANIFESTO do curso (Erro #28) — idêntico em todas as páginas -->
+<script data-inema-manifest="" type="application/json">
+{
+  "course": "ftd-v2-en",
+  "tracks": [
+    {
+      "n": "1",
+      "title": "Beginner",
+      "modules": [
+        {
+          "id": "1-1",
+          "title": "The Impact of AI",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-1.html"
+        },
+        {
+          "id": "1-2",
+          "title": "Navigating the Digital World",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-2.html"
+        },
+        {
+          "id": "1-3",
+          "title": "Prompt Engineering",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-3.html"
+        },
+        {
+          "id": "1-4",
+          "title": "AI Assistants and Agents",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-4.html"
+        },
+        {
+          "id": "1-5",
+          "title": "Visual Creativity with AI",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-5.html"
+        },
+        {
+          "id": "1-6",
+          "title": "Marketing and Sales with AI",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-6.html"
+        },
+        {
+          "id": "1-7",
+          "title": "Process Automation",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-7.html"
+        },
+        {
+          "id": "1-8",
+          "title": "Advanced Artificial Intelligence",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-8.html"
+        },
+        {
+          "id": "1-9",
+          "title": "Business and Monetization with AI",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-9.html"
+        }
+      ]
+    },
+    {
+      "n": "2",
+      "title": "Technical",
+      "modules": [
+        {
+          "id": "2-1",
+          "title": "Developing with AI APIs",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-1.html"
+        },
+        {
+          "id": "2-2",
+          "title": "AI Application Architecture",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-2.html"
+        },
+        {
+          "id": "2-3",
+          "title": "RAG and Knowledge Bases",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-3.html"
+        },
+        {
+          "id": "2-4",
+          "title": "Fine-Tuning and Customization",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-4.html"
+        },
+        {
+          "id": "2-5",
+          "title": "Agents and Complex Workflows",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-5.html"
+        },
+        {
+          "id": "2-6",
+          "title": "Advanced Computer Vision",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-6.html"
+        },
+        {
+          "id": "2-7",
+          "title": "NLP and Text Processing",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-7.html"
+        },
+        {
+          "id": "2-8",
+          "title": "MLOps and Production",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-8.html"
+        },
+        {
+          "id": "2-9",
+          "title": "AI Ethics and Governance",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-9.html"
+        }
+      ]
+    },
+    {
+      "n": "3",
+      "title": "Masterclass",
+      "modules": [
+        {
+          "id": "3-1",
+          "title": "Large-Scale AI Architecture",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-1.html"
+        },
+        {
+          "id": "3-2",
+          "title": "Custom and Proprietary Models",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-2.html"
+        },
+        {
+          "id": "3-3",
+          "title": "Advanced Multimodal AI",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-3.html"
+        },
+        {
+          "id": "3-4",
+          "title": "AI Research and Papers",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-4.html"
+        },
+        {
+          "id": "3-5",
+          "title": "Reinforcement Learning for AI",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-5.html"
+        },
+        {
+          "id": "3-6",
+          "title": "Security and Red Teaming",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-6.html"
+        },
+        {
+          "id": "3-7",
+          "title": "AI in Production — Enterprise Scale",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-7.html"
+        },
+        {
+          "id": "3-8",
+          "title": "AI Leadership and Strategy",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-8.html"
+        },
+        {
+          "id": "3-9",
+          "title": "The Future of AI and AGI",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-9.html"
+        }
+      ]
+    }
+  ]
+}
+</script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#0c0c10', 800: '#16161e', 700: '#1e1e28', 600: '#272730', 500: '#33333f' } }, fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'], display: ['Sora', 'Inter', 'sans-serif'], mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'] } } } }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Sora:wght@600;700;800&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    h1, h2, h3, h4, .font-display { font-family: 'Sora', 'Inter', sans-serif; }
+    .dark body { background-color: #0c0c10; }
+    .dark .text-neutral-100 { color: #e9e9ee; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+    pre { white-space: pre-wrap; word-break: break-word; }
+    pre, code, .font-mono { font-family: 'JetBrains Mono', ui-monospace, monospace; }
+
+    /* Light mode — Parte 1: base */
+    html:not(.dark) body { background-color: #f6f7f9; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800\/50 { background-color: #f6f7f9; }
+    html:not(.dark) .bg-dark-700 { background-color: #eceef2; }
+    html:not(.dark) .bg-dark-700\/50 { background-color: #f1f2f5; }
+    html:not(.dark) .bg-dark-700\/30 { background-color: #f4f5f7; }
+    html:not(.dark) .bg-dark-600 { background-color: #e1e3ea; }
+    html:not(.dark) .hover\:bg-dark-600:hover { background-color: #d6d9e1; }
+    html:not(.dark) .hover\:bg-dark-700\/50:hover { background-color: #eceef2; }
+    html:not(.dark) .text-neutral-100 { color: #1a1a22; }
+    html:not(.dark) .text-neutral-200 { color: #26262f; }
+    html:not(.dark) .text-neutral-300 { color: #3f3f4a; }
+    html:not(.dark) .text-neutral-400 { color: #5b5b68; }
+    html:not(.dark) .text-neutral-500 { color: #62626e; }
+    html:not(.dark) .border-dark-600 { border-color: #e1e3ea; }
+    html:not(.dark) .border-dark-700 { border-color: #e8e9ee; }
+    html:not(.dark) .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #e1e3ea; }
+    html:not(.dark) .bg-black\/40 { background-color: #f1f2f5; }
+    html:not(.dark) pre.code-dark { background-color: #1a1a22; color: #e9e9ee; }
+
+    /* Light mode — Parte 2: acento das 3 trilhas (texto -700, nunca -400 no claro) */
+    html:not(.dark) .text-emerald-400 { color: #047857; }
+    html:not(.dark) .text-emerald-300 { color: #047857; }
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #047857; }
+    html:not(.dark) .bg-emerald-500\/20 { background-color: rgba(4,120,87,0.12); }
+    html:not(.dark) .bg-emerald-500\/10 { background-color: rgba(4,120,87,0.08); }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(4,120,87,0.08); }
+    html:not(.dark) .bg-emerald-900\/20 { background-color: rgba(4,120,87,0.07); }
+    html:not(.dark) .bg-emerald-900\/30 { background-color: rgba(4,120,87,0.08); }
+    html:not(.dark) .bg-emerald-900\/40 { background-color: rgba(4,120,87,0.09); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(4,120,87,0.28); }
+    html:not(.dark) .hover\:border-emerald-500\/30:hover { border-color: rgba(4,120,87,0.4); }
+    html:not(.dark) .text-blue-400 { color: #1d4ed8; }
+    html:not(.dark) .text-blue-300 { color: #1d4ed8; }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #1d4ed8; }
+    html:not(.dark) .bg-blue-500\/20 { background-color: rgba(29,78,216,0.12); }
+    html:not(.dark) .bg-blue-500\/10 { background-color: rgba(29,78,216,0.08); }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(29,78,216,0.08); }
+    html:not(.dark) .bg-blue-900\/20 { background-color: rgba(29,78,216,0.07); }
+    html:not(.dark) .bg-blue-900\/30 { background-color: rgba(29,78,216,0.08); }
+    html:not(.dark) .bg-blue-900\/40 { background-color: rgba(29,78,216,0.09); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(29,78,216,0.28); }
+    html:not(.dark) .hover\:border-blue-500\/30:hover { border-color: rgba(29,78,216,0.4); }
+    html:not(.dark) .text-purple-400 { color: #6d28d9; }
+    html:not(.dark) .text-purple-300 { color: #6d28d9; }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #6d28d9; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(109,40,217,0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(109,40,217,0.08); }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(109,40,217,0.08); }
+    html:not(.dark) .bg-purple-900\/20 { background-color: rgba(109,40,217,0.07); }
+    html:not(.dark) .bg-purple-900\/30 { background-color: rgba(109,40,217,0.08); }
+    html:not(.dark) .bg-purple-900\/40 { background-color: rgba(109,40,217,0.09); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(109,40,217,0.28); }
+    html:not(.dark) .hover\:border-purple-500\/30:hover { border-color: rgba(109,40,217,0.4); }
+
+    /* Light mode — Parte 3: gradientes + especiais */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #854d0e; }
+    html:not(.dark) .text-yellow-400 { color: #854d0e; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #713f12; }
+    html:not(.dark) .bg-primary\/10 { background-color: #FEF9C3; }
+    html:not(.dark) .border-primary\/30 { border-color: #EAB308; }
+    html:not(.dark) .text-red-400 { color: #b91c1c; }
+    html:not(.dark) .bg-red-900\/20 { background-color: rgba(185,28,28,0.07); }
+    html:not(.dark) .border-red-500\/30 { border-color: rgba(185,28,28,0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #075985; }
+    html:not(.dark) .bg-sky-900\/20 { background-color: rgba(3,105,161,0.07); }
+    html:not(.dark) .border-sky-500\/30 { border-color: rgba(3,105,161,0.25); }
+
+    /* Light mode — Parte 4: nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255,255,255,0.95); }
+
+    /* Parte 5: bordas suavizadas no DARK (Erro #15) */
+    .dark .border-dark-600 { border-color: #2a2a35; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #2a2a35; }
+
+    /* SVG: no claro, um fundo escuro emoldurado mantém o contraste do desenho */
+    html:not(.dark) .svg-frame { background-color: #12121a; }
+    @media (prefers-reduced-motion: reduce) { svg * { animation: none !important; transition: none !important; } }
+  </style>
+<link href="../../../assets/learn.css" rel="stylesheet"/>
+<link href="https://inematds.github.io/FTD/FTD-v2/curso/trilha1/modulo-1-7.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/FTD/FTD-v2/en/curso/trilha1/modulo-1-7.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/FTD/FTD-v2/es/curso/trilha1/modulo-1-7.html" hreflang="es" rel="alternate"/><link href="https://inematds.github.io/FTD/FTD-v2/curso/trilha1/modulo-1-7.html" hreflang="x-default" rel="alternate"/><link href="https://inematds.github.io/FTD/FTD-v2/en/curso/trilha1/modulo-1-7.html" rel="canonical"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(250,204,21,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha1/modulo-1-7.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="modulo-1-7.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#FACC15">EN</a><a href="../../../es/curso/trilha1/modulo-1-7.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14 gap-2">
+<!-- Logo + INEMA.CLUB -->
+<div class="flex items-center space-x-3 flex-shrink-0">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🚀</span>
+<span class="font-display font-bold text-lg hidden sm:inline">FTD</span>
+</a>
+<span class="text-neutral-600 hidden sm:inline">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium hidden sm:inline" href="https://inema.club" rel="noopener" target="_blank">INEMA.CLUB</a>
+<span class="text-neutral-600 hidden sm:inline">-</span>
+<a class="text-amber-700 dark:text-slate-300 hover:underline text-sm font-medium hidden sm:inline" href="https://inema.pro" rel="noopener" target="_blank">PRO</a>
+</div>
+<!-- Trilhas + controles de aprendizagem + theme toggle -->
+<div class="flex items-center gap-1 sm:gap-1.5">
+<a class="px-2.5 py-1.5 rounded-lg text-sm font-semibold text-emerald-400 bg-emerald-500/10 whitespace-nowrap" href="index.html">
+<span class="lg:hidden">T1</span><span class="hidden lg:inline">Beginner</span>
+</a>
+<a class="px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors whitespace-nowrap" href="../trilha2/index.html">
+<span class="lg:hidden">T2</span><span class="hidden lg:inline">Technical</span>
+</a>
+<a class="px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors whitespace-nowrap" href="../trilha3/index.html">
+<span class="lg:hidden">T3</span><span class="hidden lg:inline">Masterclass</span>
+</a>
+<span class="w-px h-6 bg-dark-600 mx-1 hidden sm:inline-block"></span>
+<!-- Minha jornada (abre o painel global; badge = % do curso) -->
+<button class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-300 hover:text-neutral-100 hover:bg-dark-700 transition-colors" data-inema-journey-open="" type="button">
+<svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="16"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+<span class="hidden md:inline">My journey</span>
+<span class="inema-journey-badge" data-count="0" data-inema-journey-badge=""></span>
+</button>
+<!-- Aparência (gatilho + painel obrigatório) -->
+<div class="relative">
+<button aria-expanded="false" class="inema-appearance-trigger inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-300 hover:text-neutral-100 transition-colors" data-inema-appearance-toggle="#inema-appearance-panel" type="button">
+<svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="16"><circle cx="12" cy="12" r="9"></circle><path d="M12 3v18"></path><path d="M12 3a9 9 0 0 1 0 18" fill="currentColor"></path></svg>
+<span class="hidden md:inline">Appearance</span>
+</button>
+<div class="inema-appearance-pop right-0" data-inema-appearance="" id="inema-appearance-panel">
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Theme</span>
+<div class="inema-segment">
+<button data-inema-set-theme="inema-dark" type="button">Dark</button>
+<button data-inema-set-theme="claro" type="button">Light</button>
+<button data-inema-set-theme="sepia" type="button">Sepia</button>
+</div>
+<div class="inema-segment">
+<button data-inema-set-theme="foco" type="button">Focus</button>
+<button data-inema-set-theme="contraste" type="button">High contrast</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Font</span>
+<div class="inema-segment">
+<button data-inema-set-font="inter" type="button">Inter</button>
+<button data-inema-set-font="system" type="button">System</button>
+<button data-inema-set-font="leitura" type="button">Reading</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Size</span>
+<div class="inema-segment">
+<button data-inema-set-fontscale="100" type="button">A</button>
+<button data-inema-set-fontscale="112" type="button">A+</button>
+<button data-inema-set-fontscale="125" type="button">A++</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Width</span>
+<div class="inema-segment">
+<button data-inema-set-linewidth="60" type="button">Narrow</button>
+<button data-inema-set-linewidth="68" type="button">Medium</button>
+<button data-inema-set-linewidth="75" type="button">Wide</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Line spacing</span>
+<div class="inema-segment">
+<button data-inema-set-leading="1.45" type="button">Compact</button>
+<button data-inema-set-leading="1.7" type="button">Comfortable</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Accent</span>
+<div class="inema-accent-grid">
+<button aria-label="Emerald accent" data-inema-set-accent="emerald" type="button"></button>
+<button aria-label="Blue accent" data-inema-set-accent="blue" type="button"></button>
+<button aria-label="Purple accent" data-inema-set-accent="purple" type="button"></button>
+<button aria-label="Amber accent" data-inema-set-accent="amber" type="button"></button>
+<button aria-label="Teal accent" data-inema-set-accent="teal" type="button"></button>
+<button aria-label="Pink accent" data-inema-set-accent="rose" type="button"></button>
+</div>
+</div>
+</div>
+</div>
+<!-- Theme toggle sol/lua (núcleo v1; o JS o mantém coerente com o tema) -->
+<button aria-label="Toggle light/dark theme" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20">
+<path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+</svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20">
+<path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path>
+</svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<main data-inema-module="1-7" data-inema-track="1" id="conteudo">
+<!-- BREADCRUMB -->
+<nav aria-label="Navigation track" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-emerald-400" href="../../index.html">Home</a><span>/</span>
+<a class="hover:text-emerald-400" href="index.html">Track 1</a><span>/</span>
+<span class="text-emerald-400">Module 1.7</span>
+</div>
+</nav>
+<!-- HEADER do módulo -->
+<header class="bg-gradient-to-br from-emerald-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-emerald-500/20 text-emerald-400 text-xs font-semibold rounded-full mb-4">MODULE 1.7</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">⚙️ Process Automation</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">How to turn a task you repeat every week into a flow that runs on its own, using no-code tools like n8n, Make, and Zapier—and where to add AI to that flow. Step by step, you’ll build <strong class="text-emerald-400">a real quote-request automation</strong>, with a test, an error alert, and a person approving what gets sent.</p>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">7</div><div class="text-xs text-neutral-400">Topics</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">~50</div><div class="text-xs text-neutral-400">Minutes</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">Beginner</div><div class="text-xs text-neutral-400">Level</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">Practice</div><div class="text-xs text-neutral-400">Type</div></div>
+</div>
+<div class="flex items-center gap-3 mt-8">
+<div aria-label="Module 1.7 progress" class="inema-ring" data-inema-meter="modulo:1-7"><span class="inema-ring__value" data-inema-meter-pct="">0%</span></div>
+<div class="inema-meter-label" data-inema-meter="modulo:1-7"><strong data-inema-meter-frac="">0 of 0</strong> topics read · <span data-inema-section-counter="">Section 1 of 7</span></div>
+</div>
+</div>
+</header>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+<div class="lg:flex lg:gap-10">
+<!-- TOC sticky + scrollspy -->
+<aside class="hidden lg:block lg:w-56 flex-shrink-0">
+<nav aria-label="Page index" class="sticky top-20 self-start" data-inema-toc="">
+<p class="text-xs font-semibold uppercase tracking-wide text-neutral-500 mb-3">In this module</p>
+<ol class="space-y-1 text-sm">
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-emerald-400" href="#topico-1">1. Trigger and action</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-emerald-400" href="#topico-2">2. Map it first</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-emerald-400" href="#topico-3">3. n8n, Make, and Zapier</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-emerald-400" href="#topico-4">4. A real workflow</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-emerald-400" href="#topico-5">5. Where AI fits</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-emerald-400" href="#topico-6">6. Test and protect</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-emerald-400" href="#topico-7">7. Your first automation</a></li>
+</ol>
+</nav>
+</aside>
+<!-- ARTIGO -->
+<article class="inema-prose flex-1 min-w-0">
+<h2 class="text-2xl font-bold mb-8">Detailed content</h2>
+<!-- TÓPICO 1 -->
+<section class="mb-16" data-inema-topic="modulo-1-7#topico-1" id="topico-1" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="quando isto acontece, faça aquilo">🔄 Trigger and action</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Mark this topic as a question" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m1-7-t1-p1">Every automation, from the simplest to the most elaborate, can be summed up in one sentence: <strong class="text-neutral-100">“when this happens, do that”</strong>. When an email with an attachment arrives, save the attachment to a folder. When someone fills out the form, add it to the spreadsheet and let me know. When it’s Monday at 8 a.m., put together the week’s report. You already do these tasks by hand; automating them means teaching the computer to do them for you.</p>
+<div class="bg-dark-800 border border-emerald-500/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-emerald-400 font-semibold mb-1">🌱 New here?</p>
+<p class="text-sm text-neutral-300" data-inema-block="m1-7-t1-p2"><strong>Trigger</strong> (trigger) is the event that starts things: a new email, a new spreadsheet row, or a time. <strong>Action</strong> is what the automation does next: create, send, copy, notify. <strong>Flow</strong> (workflow) is the sequence of a trigger and actions. <strong>No-code</strong> (no-code) means you build everything by dragging blocks onto a screen, without programming. <strong>Integration</strong> is the connection between two apps, such as Gmail and Google Sheets.</p>
+</div>
+<div class="bg-gradient-to-br from-emerald-900/30 to-dark-800 rounded-xl border border-emerald-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">What it is</h3>
+<p class="text-neutral-300">Process automation means getting apps to communicate with each other so they can carry out a sequence of steps that used to be manual, without you. It always starts with a trigger and continues with actions, sometimes with decisions along the way.</p>
+</div>
+<!-- SVG 1: gatilho → ações -->
+<figure class="svg-frame rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="A simple flow: the trigger “email with attachment received” starts three actions in sequence: save the attachment to Google Drive, add a row to the spreadsheet, and send an alert on Telegram. Below it, the phrase: when this happens, do that." class="w-full h-auto" role="img" viewbox="0 0 900 230">
+<defs>
+<filter height="160%" id="m17-glow" width="160%" x="-30%" y="-30%"><fegaussianblur result="b" stddeviation="2"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="28" id="m17-grid" patternunits="userSpaceOnUse" width="28"><circle cx="1.2" cy="1.2" fill="#10b981" opacity="0.13" r="1.2"></circle></pattern>
+<marker id="m17-ah" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#34d399"></path></marker>
+<marker id="m17-ahc" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#38bdf8"></path></marker>
+<style>@keyframes m17dash{to{stroke-dashoffset:-24}} .m17-flow{stroke-dasharray:6 6;animation:m17dash 1.6s linear infinite} @keyframes m17pulse{0%,100%{opacity:.35}50%{opacity:1}} .m17-pulse{animation:m17pulse 2s ease-in-out infinite}</style>
+</defs>
+<rect fill="url(#m17-grid)" height="230" width="900"></rect>
+<g font-family="Inter,sans-serif">
+<circle class="m17-pulse" cx="120" cy="96" fill="none" r="74" stroke="#34d399" stroke-opacity="0.5" stroke-width="2"></circle>
+<rect fill="#0f1f18" filter="url(#m17-glow)" height="84" rx="14" stroke="#34d399" stroke-width="2.5" width="180" x="30" y="54"></rect>
+<text fill="#34d399" font-size="12" font-weight="700" text-anchor="middle" x="120" y="78">TRIGGER</text>
+<text fill="#ecfdf5" font-size="14" font-weight="700" text-anchor="middle" x="120" y="102">email with an attachment</text>
+<text fill="#a7f3d0" font-size="12" text-anchor="middle" x="120" y="122">arrived in Gmail</text>
+<path class="m17-flow" d="M212,96 L262,96" fill="none" marker-end="url(#m17-ah)" stroke="#34d399" stroke-width="2.5"></path>
+<rect fill="#0e1b26" height="84" rx="14" stroke="#38bdf8" stroke-width="2" width="180" x="268" y="54"></rect>
+<text fill="#7dd3fc" font-size="12" font-weight="700" text-anchor="middle" x="358" y="78">ACTION 1</text>
+<text fill="#e0f2fe" font-size="14" font-weight="700" text-anchor="middle" x="358" y="102">saves the attachment</text>
+<text fill="#bae6fd" font-size="12" text-anchor="middle" x="358" y="122">to the Drive folder</text>
+<path class="m17-flow" d="M450,96 L500,96" fill="none" marker-end="url(#m17-ahc)" stroke="#38bdf8" stroke-width="2.5"></path>
+<rect fill="#0e1b26" height="84" rx="14" stroke="#38bdf8" stroke-width="2" width="180" x="506" y="54"></rect>
+<text fill="#7dd3fc" font-size="12" font-weight="700" text-anchor="middle" x="596" y="78">ACTION 2</text>
+<text fill="#e0f2fe" font-size="14" font-weight="700" text-anchor="middle" x="596" y="102">adds a row</text>
+<text fill="#bae6fd" font-size="12" text-anchor="middle" x="596" y="122">to the spreadsheet</text>
+<path class="m17-flow" d="M688,96 L738,96" fill="none" marker-end="url(#m17-ahc)" stroke="#38bdf8" stroke-width="2.5"></path>
+<rect fill="#0e1b26" height="84" rx="14" stroke="#38bdf8" stroke-width="2" width="140" x="744" y="54"></rect>
+<text fill="#7dd3fc" font-size="12" font-weight="700" text-anchor="middle" x="814" y="78">ACTION 3</text>
+<text fill="#e0f2fe" font-size="14" font-weight="700" text-anchor="middle" x="814" y="102">notifies you</text>
+<text fill="#bae6fd" font-size="12" text-anchor="middle" x="814" y="122">on Telegram</text>
+<text fill="#a7f3d0" font-size="14" font-weight="700" text-anchor="middle" x="450" y="200">“when this happens, do that”</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-emerald-400">How to read:</strong> The pulsing circle shows that the trigger stays “on watch” all the time. When the event happens, the actions run in order, from left to right, each using data from the previous one (the attachment name, the sender, the date). None of them requires you.</figcaption>
+</figure>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-4"><p class="text-emerald-400 font-semibold text-sm mb-1">📨 Event-based</p><p class="text-xs text-neutral-300" data-inema-block="m1-7-t1-p3">Something happened: a message, form, payment, or new file in a folder.</p></div>
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-4"><p class="text-emerald-400 font-semibold text-sm mb-1">⏰ Scheduled</p><p class="text-xs text-neutral-300" data-inema-block="m1-7-t1-p4">Every day at 7 a.m., every Monday, or on the last day of the month. Great for reports and reminders.</p></div>
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-4"><p class="text-emerald-400 font-semibold text-sm mb-1">👆 Manual</p><p class="text-xs text-neutral-300" data-inema-block="m1-7-t1-p5">You press a button and the whole sequence runs. A good way to get started and test things.</p></div>
+</div>
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Why learn</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m1-7-t1-p6" data-sum="porque">Small, repeated tasks add up to hours each month, and they’re where you’re most likely to forget things or make typing errors. Thinking in terms of “trigger and action” helps you spot these tasks in your routine—and is the first step toward taking them off your hands.</p>
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Key concepts</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Trigger</div><div class="text-xs text-neutral-400">the event that starts it</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Action</div><div class="text-xs text-neutral-400">what the flow does</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Flow</div><div class="text-xs text-neutral-400">trigger + actions in order</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Integration</div><div class="text-xs text-neutral-400">apps that communicate</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Mark as read</span>
+<span class="inema-label-done">Read</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 2 -->
+<section class="mb-16" data-inema-topic="modulo-1-7#topico-2" id="topico-2" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="priorizar, planejar e pilotar">🗺️ Map it before automating</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Mark this topic as a question" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m1-7-t2-p1">The most common mistake is opening the tool before understanding the process. Automating a mess just makes it happen faster. Before dragging the first block, write down <strong class="text-neutral-100">how the task is done today</strong>, step by step, including who does it, where the information is, and what happens when something goes wrong. A simple three-step method helps: <strong class="text-emerald-400">prioritize, plan, and pilot</strong>.</p>
+<div class="bg-gradient-to-br from-emerald-900/30 to-dark-800 rounded-xl border border-emerald-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">What it is</h3>
+<p class="text-neutral-300">Mapping a process means describing each step in a recurring task—inputs, decisions, outputs, and exceptions—so you can choose what’s worth automating and design the flow before building it in the tool.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-4"><p class="text-emerald-400 font-semibold text-sm mb-1">1 · Prioritize</p><p class="text-xs text-neutral-300" data-inema-block="m1-7-t2-p2">List recurring tasks and choose one that happens often, follows clear rules, and is a pain. Save tasks that happen rarely or change every time for later.</p></div>
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-4"><p class="text-emerald-400 font-semibold text-sm mb-1">2 · Plan</p><p class="text-xs text-neutral-300" data-inema-block="m1-7-t2-p3">Draw the flow: trigger, steps, decisions (“if it’s urgent…”), where each piece of data lives, and what to do if something goes wrong.</p></div>
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-4"><p class="text-emerald-400 font-semibold text-sm mb-1">3 · Pilot</p><p class="text-xs text-neutral-300" data-inema-block="m1-7-t2-p4">Run it with test data, then alongside the manual process for a week or two, and only then let it run on its own.</p></div>
+</div>
+<div class="overflow-x-auto mb-6">
+<table class="w-full text-sm border border-dark-600 rounded-xl overflow-hidden">
+<thead><tr class="bg-dark-700"><th class="text-left p-3 text-emerald-400">Question</th><th class="text-left p-3 text-emerald-400">Good candidate</th><th class="text-left p-3 text-emerald-400">Poor candidate</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr><td class="p-3 font-semibold">How often does it happen?</td><td class="p-3 text-neutral-300">Every week or every day.</td><td class="p-3 text-neutral-300">Twice a year.</td></tr>
+<tr><td class="p-3 font-semibold">Are the steps always the same?</td><td class="p-3 text-neutral-300">Yes, with few exceptions.</td><td class="p-3 text-neutral-300">Every case is different.</td></tr>
+<tr><td class="p-3 font-semibold">Is the data in digital form?</td><td class="p-3 text-neutral-300">Email, form, spreadsheet.</td><td class="p-3 text-neutral-300">Paper, phone call, hallway conversation.</td></tr>
+<tr><td class="p-3 font-semibold">What does an error cost?</td><td class="p-3 text-neutral-300">Not much, and it can be fixed.</td><td class="p-3 text-neutral-300">A lot: money, health, contract.</td></tr>
+</tbody>
+</table>
+</div>
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-emerald-400">Goal:</strong> <span class="text-neutral-300">describe a process and find out whether it’s worth automating.</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copy</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900">You are a process and no-code automation consultant.
+Task I do by hand: &lt;describe it in your own words, from start to finish&gt;
+How often: &lt;per day, week, or month&gt;
+Apps involved: &lt;Gmail, WhatsApp, Google Sheets, store system...&gt;
+
+1. Ask up to 5 questions to understand the exceptions (what happens when something doesn’t go as usual).
+2. Then write out the current process in numbered steps: who does each step, where the information is, and what decision is made.
+3. Evaluate the frequency, clarity of the rules, whether the data is digital, and the cost of an error. Is it worth automating? Why?
+4. If it is, design the flow: trigger, actions in order, decisions, and what to do if something goes wrong.
+5. Point out which steps should stay with a person.</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">How to check:</strong> Read the numbered steps and ask yourself, “Is this really how I do it?” If the AI skipped a step or made one up, correct it before moving on. The final flow needs a clear trigger and a plan for what to do if something goes wrong.</p>
+</div>
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Why learn</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m1-7-t2-p5" data-sum="porque">Half an hour of mapping can prevent days of rework in the tool. Plus, just writing down the process often helps you find unnecessary steps you can cut—sometimes the best automation is simply to stop doing something.</p>
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Key concepts</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Mapping</div><div class="text-xs text-neutral-400">the process on paper</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Exception</div><div class="text-xs text-neutral-400">when something doesn’t go as usual</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">3P method</div><div class="text-xs text-neutral-400">prioritize, plan, pilot</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Pilot</div><div class="text-xs text-neutral-400">run it alongside the current process first</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Mark as read</span>
+<span class="inema-label-done">Read</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 3 -->
+<section class="mb-16" data-inema-topic="modulo-1-7#topico-3" id="topico-3" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="três ferramentas, o mesmo raciocínio">🧰 n8n, Make, and Zapier</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Mark this topic as a question" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m1-7-t3-p1">The three best-known no-code automation tools are <strong class="text-neutral-100">Zapier</strong>, o <strong class="text-neutral-100">Make</strong> e o <strong class="text-neutral-100">n8n</strong>. They all do the same basic job—connect apps with triggers and actions—and they all have ready-made blocks for using AI. They differ in how you build, where the flow runs, and how they charge. Once you learn one, you can understand the others in no time.</p>
+<div class="bg-gradient-to-br from-emerald-900/30 to-dark-800 rounded-xl border border-emerald-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">What it is</h3>
+<p class="text-neutral-300">They’re visual platforms where each step in the flow is a block (called a step, module, or node) connected to the next one. You choose the app, connect your account, and specify which data goes from one block to another.</p>
+</div>
+<div class="overflow-x-auto mb-6">
+<table class="w-full text-sm border border-dark-600 rounded-xl overflow-hidden">
+<thead><tr class="bg-dark-700"><th class="text-left p-3 text-emerald-400"></th><th class="text-left p-3 text-emerald-400">Zapier</th><th class="text-left p-3 text-emerald-400">Make</th><th class="text-left p-3 text-emerald-400">n8n</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr><td class="p-3 font-semibold">What the flow is called</td><td class="p-3 text-neutral-300">Zap</td><td class="p-3 text-neutral-300">Scenario</td><td class="p-3 text-neutral-300">Workflow</td></tr>
+<tr><td class="p-3 font-semibold">How you build it</td><td class="p-3 text-neutral-300">A list of steps from top to bottom; the simplest way to get started.</td><td class="p-3 text-neutral-300">A screen with connected bubbles; good for seeing branches.</td><td class="p-3 text-neutral-300">A screen with connected nodes; very flexible.</td></tr>
+<tr><td class="p-3 font-semibold">Where it runs</td><td class="p-3 text-neutral-300">In Zapier’s cloud.</td><td class="p-3 text-neutral-300">In Make’s cloud.</td><td class="p-3 text-neutral-300">In n8n’s cloud or on your own server.</td></tr>
+<tr><td class="p-3 font-semibold">Strength</td><td class="p-3 text-neutral-300">A large catalog of ready-to-use apps.</td><td class="p-3 text-neutral-300">Visual flows with multiple routes.</td><td class="p-3 text-neutral-300">Open source, control over your data, and the option to run AI locally.</td></tr>
+<tr><td class="p-3 font-semibold">Who it’s for</td><td class="p-3 text-neutral-300">People who want quick results.</td><td class="p-3 text-neutral-300">People who like seeing the diagram.</td><td class="p-3 text-neutral-300">People who want to go further or keep data on their own devices.</td></tr>
+</tbody>
+</table>
+</div>
+<div class="bg-dark-800 border border-emerald-500/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-emerald-400 font-semibold mb-1">🌱 New here?</p>
+<p class="text-sm text-neutral-300" data-inema-block="m1-7-t3-p2"><strong>Open source</strong> means anyone can download and install the software. <strong>Hosting on your own server</strong> (self-hosting) means running the software on a computer you own or rent, instead of using the company’s service. <strong>Connector</strong> is the ready-made block that knows how to communicate with an app. <strong>Credential</strong> is the permission you give the tool to access your account (for example, “you can read my Gmail”).</p>
+</div>
+<div class="bg-primary/10 border border-primary/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-primary font-semibold mb-1">💡 Tip</p>
+<p class="text-sm text-neutral-300" data-inema-block="m1-7-t3-p3">All three offer a way to get started without paying, and charge as usage grows—each counts usage differently (tasks, operations, or runs). Plan names and prices change often; check the tool’s page on the day you sign up. The method you learn here works with any of them.</p>
+</div>
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Why learn</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m1-7-t3-p4" data-sum="porque">Knowing how the tools differ helps you avoid choosing based on advertising. For most first workflows, any of them will work; the choice matters when volume, sensitive data, or a desire to run everything on your own server comes into play.</p>
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Key concepts</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Node / module / step</div><div class="text-xs text-neutral-400">one step in the workflow</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Connector</div><div class="text-xs text-neutral-400">ready-made app block</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Credential</div><div class="text-xs text-neutral-400">access to your account</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Self-host</div><div class="text-xs text-neutral-400">run it on your server</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Mark as read</span>
+<span class="inema-label-done">Read</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 4 -->
+<section class="mb-16" data-inema-topic="modulo-1-7#topico-4" id="topico-4" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="pedidos de orçamento, do formulário ao rascunho">🧪 A real workflow, step by step</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Mark this topic as a question" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m1-7-t4-p1">Let’s build a concrete workflow. Scenario: a small home renovation company receives <strong class="text-neutral-100">quote requests</strong> through a form on its website. Today, someone copies each request into a spreadsheet, reads it, decides whether it’s urgent, and writes a response. The workflow below handles the busywork and leaves the final decision to a person: AI summarizes and classifies each request, the spreadsheet records it, Telegram alerts the team about urgent requests, and Gmail saves a <strong class="text-neutral-100">draft</strong> —which is only sent after someone reviews it.</p>
+<div class="bg-gradient-to-br from-emerald-900/30 to-dark-800 rounded-xl border border-emerald-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">What it is</h3>
+<p class="text-neutral-300">A six-step workflow—form, AI, spreadsheet, decision, alert, and draft—turns each quote request into an organized record and a response ready for review, without sending anything automatically.</p>
+</div>
+<!-- SVG 2: fluxo de orçamento -->
+<figure class="svg-frame rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="A quote request flow with six nodes: a form receives the request, AI summarizes and classifies it, the spreadsheet records it, and a decision checks whether it’s urgent; if so, Telegram sends an alert; in every case, Gmail creates a draft for a person to review and send." class="w-full h-auto" role="img" viewbox="0 0 900 320">
+<rect fill="url(#m17-grid)" height="320" width="900"></rect>
+<g font-family="Inter,sans-serif">
+<rect fill="#0f1f18" height="64" rx="12" stroke="#34d399" stroke-width="2.5" width="140" x="20" y="100"></rect>
+<text fill="#34d399" font-size="11" font-weight="700" text-anchor="middle" x="90" y="122">1 · TRIGGER</text>
+<text fill="#ecfdf5" font-size="13" font-weight="700" text-anchor="middle" x="90" y="141">Form</text>
+<text fill="#a7f3d0" font-size="11" text-anchor="middle" x="90" y="156">new request</text>
+<path class="m17-flow" d="M162,132 L184,132" fill="none" marker-end="url(#m17-ah)" stroke="#34d399" stroke-width="2.5"></path>
+<rect fill="#0f1f18" filter="url(#m17-glow)" height="64" rx="12" stroke="#34d399" stroke-width="2" width="140" x="190" y="100"></rect>
+<text fill="#34d399" font-size="11" font-weight="700" text-anchor="middle" x="260" y="122">2 · AI</text>
+<text fill="#ecfdf5" font-size="13" font-weight="700" text-anchor="middle" x="260" y="141">summarizes and</text>
+<text fill="#a7f3d0" font-size="11" text-anchor="middle" x="260" y="156">classifies urgency</text>
+<path class="m17-flow" d="M332,132 L354,132" fill="none" marker-end="url(#m17-ah)" stroke="#34d399" stroke-width="2.5"></path>
+<rect fill="#0e1b26" height="64" rx="12" stroke="#38bdf8" stroke-width="2" width="140" x="360" y="100"></rect>
+<text fill="#7dd3fc" font-size="11" font-weight="700" text-anchor="middle" x="430" y="122">3 · SPREADSHEET</text>
+<text fill="#e0f2fe" font-size="13" font-weight="700" text-anchor="middle" x="430" y="141">records</text>
+<text fill="#bae6fd" font-size="11" text-anchor="middle" x="430" y="156">one row per request</text>
+<path class="m17-flow" d="M502,132 L524,132" fill="none" marker-end="url(#m17-ahc)" stroke="#38bdf8" stroke-width="2.5"></path>
+<rect fill="#0e1b26" height="64" rx="12" stroke="#38bdf8" stroke-width="2" width="140" x="530" y="100"></rect>
+<text fill="#7dd3fc" font-size="11" font-weight="700" text-anchor="middle" x="600" y="122">4 · DECISION</text>
+<text fill="#e0f2fe" font-size="13" font-weight="700" text-anchor="middle" x="600" y="141">is it urgent?</text>
+<text fill="#bae6fd" font-size="11" text-anchor="middle" x="600" y="156">simple rule (IF)</text>
+<path class="m17-flow" d="M672,118 L716,70" fill="none" marker-end="url(#m17-ahc)" stroke="#38bdf8" stroke-width="2"></path>
+<text fill="#7dd3fc" font-size="12" font-weight="700" x="672" y="82">yes</text>
+<path class="m17-flow" d="M672,148 L716,180" fill="none" marker-end="url(#m17-ah)" stroke="#34d399" stroke-width="2"></path>
+<text fill="#a7f3d0" font-size="12" font-weight="700" x="626" y="196">always</text>
+<rect fill="#0e1b26" height="64" rx="12" stroke="#38bdf8" stroke-width="2" width="160" x="722" y="22"></rect>
+<text fill="#7dd3fc" font-size="11" font-weight="700" text-anchor="middle" x="802" y="44">5a · TELEGRAM</text>
+<text fill="#e0f2fe" font-size="13" font-weight="700" text-anchor="middle" x="802" y="63">alerts the team</text>
+<text fill="#bae6fd" font-size="11" text-anchor="middle" x="802" y="78">with the summary</text>
+<rect fill="#0f1f18" height="64" rx="12" stroke="#34d399" stroke-width="2" width="160" x="722" y="150"></rect>
+<text fill="#34d399" font-size="11" font-weight="700" text-anchor="middle" x="802" y="172">5b · GMAIL</text>
+<text fill="#ecfdf5" font-size="13" font-weight="700" text-anchor="middle" x="802" y="191">creates a draft</text>
+<text fill="#a7f3d0" font-size="11" text-anchor="middle" x="802" y="206">doesn’t send</text>
+<path class="m17-flow" d="M802,216 L802,246" fill="none" marker-end="url(#m17-ah)" stroke="#34d399" stroke-width="2"></path>
+<rect fill="#052e1c" filter="url(#m17-glow)" height="44" rx="22" stroke="#34d399" stroke-width="2.5" width="190" x="707" y="252"></rect>
+<text fill="#ecfdf5" font-size="13" font-weight="700" text-anchor="middle" x="802" y="279">6 · you review and send</text>
+<text fill="#a7f3d0" font-size="12" x="20" y="226">data passed along:</text>
+<text fill="#d1fae5" font-size="12" x="20" y="246">name, contact info, service, city, desired timeline</text>
+<text fill="#d1fae5" font-size="12" x="20" y="266">+ summary, urgency, and draft created by AI</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-emerald-400">How to read:</strong> Follow the arrows from the form. At step 4, the workflow splits: the Telegram alert only happens when the request is urgent; the Gmail draft is always created. Notice that the last step belongs to a person—the automation prepares everything, but nothing goes to the customer without review.</figcaption>
+</figure>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m1-7-t4-p2">Below is the setup in <strong class="text-neutral-100">n8n</strong>. In Make and Zapier, the block names are slightly different, but the sequence is the same. Before you start, create a Google Sheets spreadsheet with these columns: <em>date, name, contact info, service, city, summary, urgency, status</em>.</p>
+<div class="relative border-l-2 border-emerald-500/30 ml-3 pl-6 space-y-5 mb-6">
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-emerald-500/20 border-2 border-emerald-400"></span><p class="text-sm text-neutral-300"><strong class="text-emerald-400">Step 1 · Trigger.</strong> Create a new workflow and add a form trigger (in n8n, the <em>On form submission</em>, which creates its own form; or the Google Forms trigger in Make and Zapier). Fields: name, contact info, service, city, desired timeline, description.</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-emerald-500/20 border-2 border-emerald-400"></span><p class="text-sm text-neutral-300"><strong class="text-emerald-400">Step 2 · AI.</strong> Add a language model node (OpenAI, Anthropic, Gemini, or a local model through Ollama). Connect the credential and paste the prompt from the block below, inserting the form fields into it. Ask for the response in JSON format.</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-emerald-500/20 border-2 border-emerald-400"></span><p class="text-sm text-neutral-300"><strong class="text-emerald-400">Step 3 · Spreadsheet.</strong> Add a Google Sheets node with the “append row” operation. Map each column to the right field: the form fields and the ones returned by AI (summary, urgency). For status, enter “awaiting review.”</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-sky-500/20 border-2 border-sky-400"></span><p class="text-sm text-neutral-300"><strong class="text-sky-400">Step 4 · Decision.</strong> Add an <em>IF</em> node with this rule: urgency equals “high.” Connect the “true” output to Telegram.</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-sky-500/20 border-2 border-sky-400"></span><p class="text-sm text-neutral-300"><strong class="text-sky-400">Step 5 · Alert and draft.</strong> On the “true” output, a Telegram node sends the summary to the team group. Connected to the output of step 3 (so it runs every time, whether urgent or not), a Gmail node creates a <em>draft</em> (draft) for the customer’s contact address, using the text suggested by AI.</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-sky-500/20 border-2 border-sky-400"></span><p class="text-sm text-neutral-300"><strong class="text-sky-400">Step 6 · Test and activate.</strong> Fill out the form with a made-up request, run the workflow once, and check each node. Only then activate the workflow.</p></div>
+</div>
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-emerald-400">Goal:</strong> <span class="text-neutral-300">the prompt to put inside the AI node (step 2).</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copy</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900">You triage quote requests for &lt;company name&gt;, which provides &lt;type of service&gt; in &lt;region&gt;.
+Request received:
+- Name: {{ $json.nome }}
+- Service: {{ $json.servico }}
+- City: {{ $json.cidade }}
+- Desired timeline: {{ $json.prazo }}
+- Description: {{ $json.descricao }}
+
+Respond ONLY with valid JSON, with no text before or after it, in this format:
+{
+  "resumo": "up to 2 sentences describing what the customer needs",
+  "urgencia": "alta" | "media" | "baixa",
+  "motivo_urgencia": "1 sentence",
+  "fora_da_area": true | false,
+  "rascunho_resposta": "a short, friendly email confirming the request and asking for photos of the location"
+}
+Rules: urgency is "alta" only if there is a risk (leak, exposed wiring, water infiltration) or the requested timeline is within 3 days.
+Don’t promise a price or date. If information is missing, ask for it in the draft.</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">How to check:</strong> Run it with three test requests—one with a leak, one with no rush, and one from another city. Check that urgency is “alta” and “baixa,” and that “fora_da_area” is true for the third. The parts between <code>{{ }}</code> are n8n’s way of pulling fields from the previous step—replace the names with the exact fields from your form; in Make and Zapier, you click the field instead of typing it.</p>
+</div>
+<div class="bg-primary/10 border border-primary/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-primary font-semibold mb-1">💡 Tip</p>
+<p class="text-sm text-neutral-300" data-inema-block="m1-7-t4-p3">An AI node connected to a cloud service uses an access key from the model provider, which charges based on usage. To learn at no cost, n8n installed on your computer can connect to a local model through Ollama; the result is a little less refined, but the workflow is identical.</p>
+</div>
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Why learn</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m1-7-t4-p4" data-sum="porque">Seeing a complete workflow, with a decision and human review, shows the pattern repeated in almost every useful automation: input, AI processing, record, rule, and supervised output. Once you build this one, you can adapt it for customer service, finance, or HR.</p>
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Key concepts</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">AI node</div><div class="text-xs text-neutral-400">the model inside the workflow</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">JSON</div><div class="text-xs text-neutral-400">response in fixed fields</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">IF node</div><div class="text-xs text-neutral-400">splits the path</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Draft</div><div class="text-xs text-neutral-400">prepares, doesn’t send</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Mark as read</span>
+<span class="inema-label-done">Read</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 5 -->
+<section class="mb-16" data-inema-topic="modulo-1-7#topico-5" id="topico-5" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="regra fixa onde dá, IA onde precisa">🧠 Where AI fits in the workflow</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Mark this topic as a question" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m1-7-t5-p1">Not every step needs AI. Copying a field to a spreadsheet, comparing a date, or sending an alert are <strong class="text-neutral-100">fixed rules</strong>They always produce the same result, cost nothing extra, and don’t make mistakes because of creativity. AI is worth it when the input is <strong class="text-neutral-100">free-form, varied text</strong> — an email, a description, a complaint — that someone would need to read to understand.</p>
+<div class="bg-gradient-to-br from-emerald-900/30 to-dark-800 rounded-xl border border-emerald-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">What it is</h3>
+<p class="text-neutral-300">It’s a step-by-step choice between fixed rules and AI. AI handles classification, data extraction, summarizing, and drafting text; fixed rules handle copying, comparing, calculating, and sending. When a mistake could be costly, a person approves it.</p>
+</div>
+<!-- SVG 3: matriz regra x IA -->
+<figure class="svg-frame rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="A two-by-two matrix for deciding what to do at each step: the horizontal axis shows whether the input is fixed or varies; the vertical axis shows whether an error has a low or high cost. The four quadrants are: fixed rule, AI on its own, rule with a check, and AI with a person approving." class="w-full h-auto" role="img" viewbox="0 0 800 340">
+<rect fill="url(#m17-grid)" height="340" width="800"></rect>
+<g font-family="Inter,sans-serif">
+<rect fill="#0f1f18" height="120" rx="12" stroke="#34d399" stroke-width="2" width="300" x="140" y="170"></rect>
+<text fill="#34d399" font-size="15" font-weight="700" text-anchor="middle" x="290" y="210">Fixed rule</text>
+<text fill="#d1fae5" font-size="12" text-anchor="middle" x="290" y="236">copy a field, move a file,</text>
+<text fill="#d1fae5" font-size="12" text-anchor="middle" x="290" y="254">send an alert</text>
+<rect fill="#0e1b26" height="120" rx="12" stroke="#38bdf8" stroke-width="2" width="300" x="460" y="170"></rect>
+<text fill="#7dd3fc" font-size="15" font-weight="700" text-anchor="middle" x="610" y="210">AI alone</text>
+<text fill="#e0f2fe" font-size="12" text-anchor="middle" x="610" y="236">classify an email, summarize,</text>
+<text fill="#e0f2fe" font-size="12" text-anchor="middle" x="610" y="254">label a request</text>
+<rect fill="#0f1f18" height="120" rx="12" stroke="#34d399" stroke-dasharray="6 4" stroke-width="2" width="300" x="140" y="30"></rect>
+<text fill="#34d399" font-size="15" font-weight="700" text-anchor="middle" x="290" y="70">Rule + review</text>
+<text fill="#d1fae5" font-size="12" text-anchor="middle" x="290" y="96">issue a charge, record a</text>
+<text fill="#d1fae5" font-size="12" text-anchor="middle" x="290" y="114">payment, change an account</text>
+<rect fill="#0e1b26" filter="url(#m17-glow)" height="120" rx="12" stroke="#38bdf8" stroke-dasharray="6 4" stroke-width="2.5" width="300" x="460" y="30"></rect>
+<text fill="#7dd3fc" font-size="15" font-weight="700" text-anchor="middle" x="610" y="70">AI + human approval</text>
+<text fill="#e0f2fe" font-size="12" text-anchor="middle" x="610" y="96">customer response, proposal,</text>
+<text fill="#e0f2fe" font-size="12" text-anchor="middle" x="610" y="114">message about health or money</text>
+<path d="M140,312 L760,312" fill="none" marker-end="url(#m17-ahc)" stroke="#38bdf8" stroke-width="2"></path>
+<text fill="#bae6fd" font-size="12" text-anchor="middle" x="290" y="332">fixed input (fields, dates)</text>
+<text fill="#bae6fd" font-size="12" text-anchor="middle" x="610" y="332">variable input (free-form text)</text>
+<path d="M118,290 L118,30" fill="none" marker-end="url(#m17-ah)" stroke="#34d399" stroke-width="2"></path>
+<text fill="#a7f3d0" font-size="12" text-anchor="middle" x="60" y="236">error</text>
+<text fill="#a7f3d0" font-size="12" text-anchor="middle" x="60" y="252">low cost</text>
+<text fill="#a7f3d0" font-size="12" text-anchor="middle" x="60" y="86">error</text>
+<text fill="#a7f3d0" font-size="12" text-anchor="middle" x="60" y="102">high cost</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-emerald-400">How to read:</strong> For each step in the workflow, find its quadrant. Move right when the input is free-form text (that’s where AI helps); move up when an error could be costly (that’s where human review comes in, shown with a dashed border). In the example from Topic 4, triage is in the lower-right, and the customer response is in the upper-right.</figcaption>
+</figure>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ Good tasks for AI in the workflow</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-emerald-400">✓</span><span>Classify messages by subject, urgency, or sentiment.</span></li>
+<li class="flex items-start gap-2"><span class="text-emerald-400">✓</span><span>Extract data from an email or invoice into fields.</span></li>
+<li class="flex items-start gap-2"><span class="text-emerald-400">✓</span><span>Summarize long texts and draft responses.</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Don’t let AI decide on its own</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Payments, discounts, and charges.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Responses about health, contracts, or legal matters.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Delete or change important records.</span></li>
+</ul>
+</div>
+</div>
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Why learn</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m1-7-t5-p2" data-sum="porque">Putting AI in every step makes the workflow more expensive, slower, and less predictable. Using it only where needed—and requiring human approval where errors matter—gives you the best of both worlds: the machine reads, the rule executes, and the person decides.</p>
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Key concepts</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Fixed rule</div><div class="text-xs text-neutral-400">same result every time</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Classify</div><div class="text-xs text-neutral-400">label the text</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Extract</div><div class="text-xs text-neutral-400">pull data from the text</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Human approval</div><div class="text-xs text-neutral-400">where errors matter most</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Mark as read</span>
+<span class="inema-label-done">Read</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 6 -->
+<section class="mb-16" data-inema-topic="modulo-1-7#topico-6" id="topico-6" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="dados falsos, aviso de erro e LGPD">🛡️ Test, monitor, and protect</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Mark this topic as a question" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m1-7-t6-p1">An automation runs when no one is watching — and that’s exactly why it can fail silently for weeks. An account password expires, a form field changes its name, or AI returns text in the wrong format. A well-built workflow <strong class="text-neutral-100">alerts you when it breaks</strong>, keeps a record of what it did, and protects the data that passes through it.</p>
+<div class="bg-gradient-to-br from-emerald-900/30 to-dark-800 rounded-xl border border-emerald-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">What it is</h3>
+<p class="text-neutral-300">These safeguards make an automation reliable: test with fake data, get an alert when something goes wrong, check the execution history, limit AI costs, and handle personal data in accordance with the LGPD (Brazil’s data protection law).</p>
+</div>
+<div class="overflow-x-auto mb-6">
+<table class="w-full text-sm border border-dark-600 rounded-xl overflow-hidden">
+<thead><tr class="bg-dark-700"><th class="text-left p-3 text-emerald-400">Risk</th><th class="text-left p-3 text-emerald-400">What it looks like</th><th class="text-left p-3 text-emerald-400">Protection</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr><td class="p-3 font-semibold">Silent failure</td><td class="p-3 text-neutral-300">The workflow stopped, and no one noticed.</td><td class="p-3 text-neutral-300">An error workflow that sends an alert (in n8n, the <em>Error Trigger</em>; in Make and Zapier, failure alerts).</td></tr>
+<tr><td class="p-3 font-semibold">AI returns the wrong format</td><td class="p-3 text-neutral-300">The JSON came back malformed, so the next step fails.</td><td class="p-3 text-neutral-300">Request JSON only, check the fields, and send it for review if any are missing.</td></tr>
+<tr><td class="p-3 font-semibold">Loop or repetition</td><td class="p-3 text-neutral-300">The same email gets sent several times.</td><td class="p-3 text-neutral-300">A “status” column in the spreadsheet and a “only if not processed yet” rule.</td></tr>
+<tr><td class="p-3 font-semibold">AI cost</td><td class="p-3 text-neutral-300">High volume leads to an unexpected bill.</td><td class="p-3 text-neutral-300">Set a spending limit in the provider’s account and use AI only for the steps that need it.</td></tr>
+<tr><td class="p-3 font-semibold">Personal data</td><td class="p-3 text-neutral-300">Names, phone numbers, and CPF numbers moving through several services.</td><td class="p-3 text-neutral-300">Include only the necessary fields, use company accounts, and inform the customer (LGPD).</td></tr>
+</tbody>
+</table>
+</div>
+<div class="bg-dark-800 border border-emerald-500/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-emerald-400 font-semibold mb-1">🌱 New here?</p>
+<p class="text-sm text-neutral-300" data-inema-block="m1-7-t6-p2"><strong>Execution</strong> is each time the workflow runs from beginning to end; the tools keep a history of these runs, including what went in and out at each step. <strong>Error workflow</strong> is a second workflow that runs only when the main one fails, to alert you. <strong>Test data</strong> is invented information (“Test Customer,” “test@example.com”) used to try things out without touching real data.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ Before you turn it on</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-emerald-400">✓</span><span>It ran with at least three different test inputs.</span></li>
+<li class="flex items-start gap-2"><span class="text-emerald-400">✓</span><span>Error alerts reach your phone.</span></li>
+<li class="flex items-start gap-2"><span class="text-emerald-400">✓</span><span>At first, messages to customers go out as drafts.</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Warning signs</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Testing directly with the real customer list.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>No one knows the workflow exists or how to turn it off.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>An employee’s personal password connected to the workflow.</span></li>
+</ul>
+</div>
+</div>
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Why learn</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m1-7-t6-p3" data-sum="porque">An automation without monitoring becomes a hidden risk: it can stop working, send the wrong message, or expose data. These safeguards take little time and make it possible to trust the workflow and let it run for real.</p>
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Key concepts</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Test data</div><div class="text-xs text-neutral-400">try it without risk</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Error workflow</div><div class="text-xs text-neutral-400">alerts you when it breaks</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">History</div><div class="text-xs text-neutral-400">what each run did</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Minimum data</div><div class="text-xs text-neutral-400">only what’s needed (LGPD)</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Mark as read</span>
+<span class="inema-label-done">Read</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 7 -->
+<section class="mb-16" data-inema-topic="modulo-1-7#topico-7" id="topico-7" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">7</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="escolha uma e monte esta semana">🛠️ Your first automation</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Mark this topic as a question" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m1-7-t7-p1">The best first automation is <strong class="text-neutral-100">small, frequent, and low-risk</strong>. Don’t start with the company’s most important process; start with something that’s annoying every week and that you can fix in two minutes if it goes wrong. The five ideas below cover the most common situations for people just getting started.</p>
+<div class="bg-gradient-to-br from-emerald-900/30 to-dark-800 rounded-xl border border-emerald-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">What it is</h3>
+<p class="text-neutral-300">An exercise to choose a simple automation, ask the assistant for the complete workflow specification, and build it in the tool you chose, following the module’s method.</p>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-4"><p class="font-semibold mb-1">📎 Organized attachments</p><p class="text-xs text-neutral-400">Email with an attachment from a sender → save it in the right Drive folder, with the date in the filename.</p></div>
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-4"><p class="font-semibold mb-1">🎯 Qualified contacts</p><p class="text-xs text-neutral-400">Website form → AI classifies the interest → leads spreadsheet with priority.</p></div>
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-4"><p class="font-semibold mb-1">📊 Weekly report</p><p class="text-xs text-neutral-400">Every Monday at 8 a.m. → reads the sales spreadsheet → AI writes the summary → sends it by email.</p></div>
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-4"><p class="font-semibold mb-1">💬 Drafted responses</p><p class="text-xs text-neutral-400">Customer email → AI identifies the subject → response draft for you to review.</p></div>
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-4"><p class="font-semibold mb-1">🚨 Useful alert</p><p class="text-xs text-neutral-400">Negative review or request above a certain amount → immediate alert on Telegram.</p></div>
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-4"><p class="font-semibold mb-1">✍️ Yours</p><p class="text-xs text-neutral-400">The task you mapped in Topic 2, if it passed the good-candidate test.</p></div>
+</div>
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-emerald-400">Goal:</strong> <span class="text-neutral-300">receive the step-by-step specification for your first automation, in the tool you chose.</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copy</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900">I want to build my first no-code automation.
+Tool: &lt;n8n, Make, or Zapier&gt;
+Automation: &lt;choose one of the ideas or describe your own&gt;
+Apps I use: &lt;Gmail, Google Drive, Google Sheets, Telegram...&gt;
+My level: I’ve never built an automation.
+
+Give me:
+1. A step-by-step flow diagram (trigger, actions, decisions).
+2. For each step: the block name in that tool, what to configure, and which fields to connect.
+   If you’re unsure of a block’s exact name, say so and describe what to look for.
+3. Where AI fits (if it does) and the prompt for that step, with a JSON response.
+4. Three test inputs and the expected result for each.
+5. How to configure an error alert.
+6. What NOT to automate in this flow and should stay with a person.</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">How to check:</strong> Open the tool and look for each block mentioned. If one doesn’t exist under that name, ask the assistant, “What’s the current equivalent of X in &lt;tool&gt;?” or check the official documentation—the tools rename blocks over time. Run the three tests and compare the results with what you expected before activating the flow.</p>
+</div>
+<div class="bg-primary/10 border border-primary/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-primary font-semibold mb-1">💡 Tip</p>
+<p class="text-sm text-neutral-300" data-inema-block="m1-7-t7-p2">Keep a simple spreadsheet of every automation you create: its name, what it does, the tool, who is responsible, and how to turn it off. Once you have five or six flows, this list becomes a map that helps prevent surprises—and shows how much repetitive work you’ve taken out of your routine.</p>
+</div>
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Why learn</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m1-7-t7-p3" data-sum="porque">Getting your first automation working changes how you see work: every repeated task becomes a candidate. Starting small helps make that first experience a success instead of a shock.</p>
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Key concepts</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Low risk</div><div class="text-xs text-neutral-400">easy-to-fix error</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Specification</div><div class="text-xs text-neutral-400">the flow described earlier</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Expected result</div><div class="text-xs text-neutral-400">what the test should produce</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Inventory</div><div class="text-xs text-neutral-400">list of your flows</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Mark as read</span>
+<span class="inema-label-done">Read</span>
+</button>
+</div>
+</div>
+</section>
+<!-- RESUMO -->
+<section class="mb-8">
+<div class="bg-gradient-to-br from-emerald-900/40 via-dark-800 to-dark-800 rounded-xl border border-emerald-500/30 p-6 sm:p-8">
+<h2 class="text-2xl font-bold mb-6">✅ Module summary</h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start gap-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-neutral-100">Every automation is a trigger plus actions</strong><span class="text-neutral-400"> — and it starts on paper, with the process mapped out.</span></div></div>
+<div class="flex items-start gap-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-neutral-100">n8n, Make, and Zapier do the same job</strong><span class="text-neutral-400"> — they differ in how you build the flow and where it runs.</span></div></div>
+<div class="flex items-start gap-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-neutral-100">Use AI for free-form text and fixed rules for everything else</strong><span class="text-neutral-400"> — and have a person approve anything where an error could matter.</span></div></div>
+<div class="flex items-start gap-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-neutral-100">Test with fake data and set up an error alert</strong><span class="text-neutral-400"> — only then let it run on its own.</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-emerald-400 mb-2">Next module:</h3>
+<p class="text-neutral-300">1.8 — Advanced Artificial Intelligence 🚀</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="index.html">← Back to Track</a>
+<a class="flex-1 text-center px-6 py-3 bg-emerald-700 text-white rounded-lg font-semibold hover:bg-emerald-600 transition-colors" href="modulo-1-8.html">Next module →</a>
+</div>
+</div>
+</section>
+</article>
+</div>
+</div>
+</main>
+<footer class="border-t border-dark-600 py-8 mt-8">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>FTD — Digital Transformation Training · open and free content · 2026 · <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" rel="noopener" target="_blank">INEMA.CLUB</a> - <a class="text-amber-700 dark:text-slate-300 hover:underline" href="https://inema.pro" rel="noopener" target="_blank">PRO</a></p>
+</div>
+</footer>
+<!-- SCRIPTS NÚCLEO v1 -->
+<script>
+    function toggleTopic(button) {
+      var topicItem = button.closest('.topic-item');
+      if (!topicItem) return;
+      var explanation = topicItem.querySelector('.topic-explanation');
+      var willOpen = !explanation.classList.contains('active');
+      explanation.classList.toggle('active');
+      button.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+    }
+    function openModal(id) { var m = document.getElementById(id); if (m) { m.classList.remove('hidden'); document.body.style.overflow = 'hidden'; } }
+    function closeModal() { document.querySelectorAll('.modal').forEach(function (m) { m.classList.add('hidden'); }); document.body.style.overflow = 'auto'; }
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
+    function copyCode(btn) {
+      var pre = btn.closest('[data-copy-box]').querySelector('pre');
+      var txt = pre ? pre.innerText : '';
+      var done = function () { var o = btn.getAttribute('data-label-ok') || 'Copiado'; var t = btn.textContent; btn.textContent = o; setTimeout(function () { btn.textContent = t; }, 1500); };
+      try { navigator.clipboard.writeText(txt).then(done, done); } catch (e) { done(); }
+    }
+    (function () {
+      var themeToggle = document.getElementById('theme-toggle');
+      var darkIcon = document.getElementById('theme-toggle-dark-icon');
+      var lightIcon = document.getElementById('theme-toggle-light-icon');
+      var html = document.documentElement;
+      function sync() { var isDark = html.classList.contains('dark'); if (darkIcon) darkIcon.classList.toggle('hidden', isDark); if (lightIcon) lightIcon.classList.toggle('hidden', !isDark); }
+      sync();
+      if (themeToggle) themeToggle.addEventListener('click', function () {
+        html.classList.toggle('dark'); var nowDark = html.classList.contains('dark'); html.style.colorScheme = nowDark ? 'dark' : 'light';
+        try { localStorage.setItem('theme', nowDark ? 'dark' : 'light'); } catch (e) {}
+        try { var p = JSON.parse(localStorage.getItem('inema.prefs') || '{}'); p.theme = nowDark ? 'inema-dark' : 'claro'; localStorage.setItem('inema.prefs', JSON.stringify(p)); } catch (e) {}
+        sync();
+      });
+    })();
+  </script>
+<!-- learn.js + INEMA.init() POR ÚLTIMO -->
+<script src="../../assets/learn.js"></script>
+<script>
+    if (window.INEMA && typeof window.INEMA.init === 'function') { window.INEMA.init({ autoResume: true }); }
+  </script>
+</body>
+</html>

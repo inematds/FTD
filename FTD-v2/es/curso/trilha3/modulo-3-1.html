@@ -1,0 +1,1246 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="ftd-v2-es" name="inema-course"/>
+<title>Módulo 3.1 · Arquitectura de IA a gran escala | FTD v2</title>
+<meta content="Enrutamiento de modelos, inferencia, procesamiento por lotes, caché semántica, multirregión y límites de costo a escala." name="description"/>
+<meta content="Módulo 3.1 · Arquitectura de IA a gran escala | FTD v2" property="og:title"/>
+<meta content="Enrutamiento de modelos, inferencia, procesamiento por lotes, caché semántica, multirregión y límites de costo a escala." property="og:description"/>
+<!-- ANTI-FOUC (Erro #18) — primeiro script do head -->
+<script>
+(function () {
+  try {
+    var html = document.documentElement;
+    var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+    function clone(o) { var r = {}; for (var x in o) r[x] = o[x]; return r; }
+    var p = clone(DEF);
+    try {
+      var raw = localStorage.getItem('inema.prefs');
+      if (raw) {
+        var parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === 'object') {
+          for (var k in DEF) if (parsed[k] != null) p[k] = parsed[k];
+        }
+      } else {
+        var legacy = localStorage.getItem('theme');
+        if (legacy === 'light') p.theme = 'claro';
+        else if (legacy === 'dark') p.theme = 'inema-dark';
+      }
+    } catch (e) { p = clone(DEF); }
+
+    var THEMES = {
+      'inema-dark': { dark: true,  attr: null,        cs: 'dark'  },
+      'claro':      { dark: false, attr: null,        cs: 'light' },
+      'sepia':      { dark: false, attr: 'sepia',     cs: 'light' },
+      'foco':       { dark: null,  attr: 'foco',      cs: null    },
+      'contraste':  { dark: true,  attr: 'contraste', cs: 'dark'  }
+    };
+    var t = THEMES[p.theme] || THEMES['inema-dark'];
+
+    if (t.dark === true) html.classList.add('dark');
+    else if (t.dark === false) html.classList.remove('dark');
+
+    if (t.attr) html.setAttribute('data-theme', t.attr);
+    else html.removeAttribute('data-theme');
+
+    html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark') ? 'dark' : 'light'));
+
+    html.setAttribute('data-font', p.font || 'inter');
+    html.setAttribute('data-accent', p.accent || 'emerald');
+
+    var s = html.style;
+    var scale = (+p.fontScale || 100);
+    s.setProperty('--inema-font-scale', (scale / 100).toString());
+    s.setProperty('font-size', scale + '%');
+    s.setProperty('--measure', (+p.lineWidth || 68) + 'ch');
+    s.setProperty('--lh-body', (+p.leading || 1.7).toString());
+    var fam = p.font === 'system'
+      ? 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif'
+      : (p.font === 'leitura'
+        ? '"Atkinson Hyperlegible", "Inter", system-ui, sans-serif'
+        : '"Inter", system-ui, sans-serif');
+    s.setProperty('--font-body', fam);
+
+    var ACC = {
+      emerald: [152, 76, 45], blue: [217, 91, 60], purple: [258, 90, 66],
+      amber: [38, 92, 50], teal: [174, 72, 41], rose: [350, 89, 60]
+    };
+    var a = ACC[p.accent] || ACC.emerald;
+    s.setProperty('--accent-h', a[0] + '');
+    s.setProperty('--accent-s', a[1] + '%');
+    s.setProperty('--accent-l', a[2] + '%');
+    s.setProperty('--accent', 'hsl(' + a[0] + ' ' + a[1] + '% ' + a[2] + '%)');
+  } catch (err) {
+    try { document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme = 'dark'; } catch (e) {}
+  }
+})();
+</script>
+<!-- MANIFESTO do curso (Erro #28) — idêntico em todas as páginas -->
+<script data-inema-manifest="" type="application/json">
+{
+  "course": "ftd-v2-es",
+  "tracks": [
+    {
+      "n": "1",
+      "title": "Principiante",
+      "modules": [
+        {
+          "id": "1-1",
+          "title": "Impacto de la IA",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-1.html"
+        },
+        {
+          "id": "1-2",
+          "title": "Navegar el mundo digital",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-2.html"
+        },
+        {
+          "id": "1-3",
+          "title": "Ingeniería de prompts",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-3.html"
+        },
+        {
+          "id": "1-4",
+          "title": "Asistentes y agentes de IA",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-4.html"
+        },
+        {
+          "id": "1-5",
+          "title": "Creatividad visual con IA",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-5.html"
+        },
+        {
+          "id": "1-6",
+          "title": "Marketing y ventas con IA",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-6.html"
+        },
+        {
+          "id": "1-7",
+          "title": "Automatización de procesos",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-7.html"
+        },
+        {
+          "id": "1-8",
+          "title": "Inteligencia artificial avanzada",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-8.html"
+        },
+        {
+          "id": "1-9",
+          "title": "Negocios y monetización con IA",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-9.html"
+        }
+      ]
+    },
+    {
+      "n": "2",
+      "title": "Técnico",
+      "modules": [
+        {
+          "id": "2-1",
+          "title": "Desarrollo con APIs de IA",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-1.html"
+        },
+        {
+          "id": "2-2",
+          "title": "Arquitectura de aplicaciones con IA",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-2.html"
+        },
+        {
+          "id": "2-3",
+          "title": "RAG y bases de conocimiento",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-3.html"
+        },
+        {
+          "id": "2-4",
+          "title": "Fine-tuning y personalización",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-4.html"
+        },
+        {
+          "id": "2-5",
+          "title": "Agentes y flujos de trabajo complejos",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-5.html"
+        },
+        {
+          "id": "2-6",
+          "title": "Visión artificial avanzada",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-6.html"
+        },
+        {
+          "id": "2-7",
+          "title": "NLP y procesamiento de texto",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-7.html"
+        },
+        {
+          "id": "2-8",
+          "title": "MLOps y producción",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-8.html"
+        },
+        {
+          "id": "2-9",
+          "title": "Ética y gobernanza de IA",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-9.html"
+        }
+      ]
+    },
+    {
+      "n": "3",
+      "title": "Masterclass",
+      "modules": [
+        {
+          "id": "3-1",
+          "title": "Arquitectura de IA a gran escala",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-1.html"
+        },
+        {
+          "id": "3-2",
+          "title": "Modelos personalizados y propietarios",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-2.html"
+        },
+        {
+          "id": "3-3",
+          "title": "IA multimodal avanzada",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-3.html"
+        },
+        {
+          "id": "3-4",
+          "title": "Investigación y artículos de IA",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-4.html"
+        },
+        {
+          "id": "3-5",
+          "title": "Aprendizaje por refuerzo en IA",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-5.html"
+        },
+        {
+          "id": "3-6",
+          "title": "Seguridad y red teaming",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-6.html"
+        },
+        {
+          "id": "3-7",
+          "title": "IA en producción — escala enterprise",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-7.html"
+        },
+        {
+          "id": "3-8",
+          "title": "Liderazgo y estrategia en IA",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-8.html"
+        },
+        {
+          "id": "3-9",
+          "title": "Futuro de la IA y AGI",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-9.html"
+        }
+      ]
+    }
+  ]
+}
+</script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#0c0c10', 800: '#16161e', 700: '#1e1e28', 600: '#272730', 500: '#33333f' } }, fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'], display: ['Sora', 'Inter', 'sans-serif'], mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'] } } } }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Sora:wght@600;700;800&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    h1, h2, h3, h4, .font-display { font-family: 'Sora', 'Inter', sans-serif; }
+    .dark body { background-color: #0c0c10; }
+    .dark .text-neutral-100 { color: #e9e9ee; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+    pre { white-space: pre-wrap; word-break: break-word; }
+    pre, code, .font-mono { font-family: 'JetBrains Mono', ui-monospace, monospace; }
+
+    /* Light mode — Parte 1: base */
+    html:not(.dark) body { background-color: #f6f7f9; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800\/50 { background-color: #f6f7f9; }
+    html:not(.dark) .bg-dark-700 { background-color: #eceef2; }
+    html:not(.dark) .bg-dark-700\/50 { background-color: #f1f2f5; }
+    html:not(.dark) .bg-dark-700\/30 { background-color: #f4f5f7; }
+    html:not(.dark) .bg-dark-600 { background-color: #e1e3ea; }
+    html:not(.dark) .hover\:bg-dark-600:hover { background-color: #d6d9e1; }
+    html:not(.dark) .hover\:bg-dark-700\/50:hover { background-color: #eceef2; }
+    html:not(.dark) .text-neutral-100 { color: #1a1a22; }
+    html:not(.dark) .text-neutral-200 { color: #26262f; }
+    html:not(.dark) .text-neutral-300 { color: #3f3f4a; }
+    html:not(.dark) .text-neutral-400 { color: #5b5b68; }
+    html:not(.dark) .text-neutral-500 { color: #62626e; }
+    html:not(.dark) .border-dark-600 { border-color: #e1e3ea; }
+    html:not(.dark) .border-dark-700 { border-color: #e8e9ee; }
+    html:not(.dark) .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #e1e3ea; }
+    html:not(.dark) .bg-black\/40 { background-color: #f1f2f5; }
+    html:not(.dark) pre.code-dark { background-color: #1a1a22; color: #e9e9ee; }
+
+    /* Light mode — Parte 2: acento das 3 trilhas (texto -700, nunca -400 no claro) */
+    html:not(.dark) .text-emerald-400 { color: #047857; }
+    html:not(.dark) .text-emerald-300 { color: #047857; }
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #047857; }
+    html:not(.dark) .bg-emerald-500\/20 { background-color: rgba(4,120,87,0.12); }
+    html:not(.dark) .bg-emerald-500\/10 { background-color: rgba(4,120,87,0.08); }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(4,120,87,0.08); }
+    html:not(.dark) .bg-emerald-900\/20 { background-color: rgba(4,120,87,0.07); }
+    html:not(.dark) .bg-emerald-900\/30 { background-color: rgba(4,120,87,0.08); }
+    html:not(.dark) .bg-emerald-900\/40 { background-color: rgba(4,120,87,0.09); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(4,120,87,0.28); }
+    html:not(.dark) .hover\:border-emerald-500\/30:hover { border-color: rgba(4,120,87,0.4); }
+    html:not(.dark) .text-blue-400 { color: #1d4ed8; }
+    html:not(.dark) .text-blue-300 { color: #1d4ed8; }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #1d4ed8; }
+    html:not(.dark) .bg-blue-500\/20 { background-color: rgba(29,78,216,0.12); }
+    html:not(.dark) .bg-blue-500\/10 { background-color: rgba(29,78,216,0.08); }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(29,78,216,0.08); }
+    html:not(.dark) .bg-blue-900\/20 { background-color: rgba(29,78,216,0.07); }
+    html:not(.dark) .bg-blue-900\/30 { background-color: rgba(29,78,216,0.08); }
+    html:not(.dark) .bg-blue-900\/40 { background-color: rgba(29,78,216,0.09); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(29,78,216,0.28); }
+    html:not(.dark) .hover\:border-blue-500\/30:hover { border-color: rgba(29,78,216,0.4); }
+    html:not(.dark) .text-purple-400 { color: #6d28d9; }
+    html:not(.dark) .text-purple-300 { color: #6d28d9; }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #6d28d9; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(109,40,217,0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(109,40,217,0.08); }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(109,40,217,0.08); }
+    html:not(.dark) .bg-purple-900\/20 { background-color: rgba(109,40,217,0.07); }
+    html:not(.dark) .bg-purple-900\/30 { background-color: rgba(109,40,217,0.08); }
+    html:not(.dark) .bg-purple-900\/40 { background-color: rgba(109,40,217,0.09); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(109,40,217,0.28); }
+    html:not(.dark) .hover\:border-purple-500\/30:hover { border-color: rgba(109,40,217,0.4); }
+
+    /* Light mode — Parte 3: gradientes + especiais */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #854d0e; }
+    html:not(.dark) .text-yellow-400 { color: #854d0e; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #713f12; }
+    html:not(.dark) .bg-primary\/10 { background-color: #FEF9C3; }
+    html:not(.dark) .border-primary\/30 { border-color: #EAB308; }
+    html:not(.dark) .text-red-400 { color: #b91c1c; }
+    html:not(.dark) .bg-red-900\/20 { background-color: rgba(185,28,28,0.07); }
+    html:not(.dark) .border-red-500\/30 { border-color: rgba(185,28,28,0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #075985; }
+    html:not(.dark) .bg-sky-900\/20 { background-color: rgba(3,105,161,0.07); }
+    html:not(.dark) .border-sky-500\/30 { border-color: rgba(3,105,161,0.25); }
+
+    /* Light mode — Parte 4: nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255,255,255,0.95); }
+
+    /* Parte 5: bordas suavizadas no DARK (Erro #15) */
+    .dark .border-dark-600 { border-color: #2a2a35; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #2a2a35; }
+
+    /* SVG: no claro, um fundo escuro emoldurado mantém o contraste do desenho */
+    html:not(.dark) .svg-frame { background-color: #12121a; }
+    @media (prefers-reduced-motion: reduce) { svg * { animation: none !important; transition: none !important; } }
+  </style>
+<link href="../../../assets/learn.css" rel="stylesheet"/>
+<link href="https://inematds.github.io/FTD/FTD-v2/curso/trilha3/modulo-3-1.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/FTD/FTD-v2/en/curso/trilha3/modulo-3-1.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/FTD/FTD-v2/es/curso/trilha3/modulo-3-1.html" hreflang="es" rel="alternate"/><link href="https://inematds.github.io/FTD/FTD-v2/curso/trilha3/modulo-3-1.html" hreflang="x-default" rel="alternate"/><link href="https://inematds.github.io/FTD/FTD-v2/es/curso/trilha3/modulo-3-1.html" rel="canonical"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(250,204,21,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha3/modulo-3-1.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="../../../en/curso/trilha3/modulo-3-1.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">EN</a><a href="modulo-3-1.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#FACC15">ES</a></div>
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14 gap-2">
+<!-- Logo + INEMA.CLUB -->
+<div class="flex items-center space-x-3 flex-shrink-0">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🚀</span>
+<span class="font-display font-bold text-lg hidden sm:inline">FTD</span>
+</a>
+<span class="text-neutral-600 hidden sm:inline">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium hidden sm:inline" href="https://inema.club" rel="noopener" target="_blank">INEMA.CLUB</a>
+<span class="text-neutral-600 hidden sm:inline">-</span>
+<a class="text-amber-700 dark:text-slate-300 hover:underline text-sm font-medium hidden sm:inline" href="https://inema.pro" rel="noopener" target="_blank">PRO</a>
+</div>
+<!-- Trilhas + controles de aprendizagem + theme toggle -->
+<div class="flex items-center gap-1 sm:gap-1.5">
+<a class="px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors whitespace-nowrap" href="../trilha1/index.html">
+<span class="lg:hidden">T1</span><span class="hidden lg:inline">Principiante</span>
+</a>
+<a class="px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors whitespace-nowrap" href="../trilha2/index.html">
+<span class="lg:hidden">T2</span><span class="hidden lg:inline">Técnico</span>
+</a>
+<a class="px-2.5 py-1.5 rounded-lg text-sm font-semibold text-purple-400 bg-purple-500/10 whitespace-nowrap" href="index.html">
+<span class="lg:hidden">T3</span><span class="hidden lg:inline">Masterclass</span>
+</a>
+<span class="w-px h-6 bg-dark-600 mx-1 hidden sm:inline-block"></span>
+<!-- Minha jornada (abre o painel global; badge = % do curso) -->
+<button class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-300 hover:text-neutral-100 hover:bg-dark-700 transition-colors" data-inema-journey-open="" type="button">
+<svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="16"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+<span class="hidden md:inline">Mi recorrido</span>
+<span class="inema-journey-badge" data-count="0" data-inema-journey-badge=""></span>
+</button>
+<!-- Aparência (gatilho + painel obrigatório) -->
+<div class="relative">
+<button aria-expanded="false" class="inema-appearance-trigger inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-300 hover:text-neutral-100 transition-colors" data-inema-appearance-toggle="#inema-appearance-panel" type="button">
+<svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="16"><circle cx="12" cy="12" r="9"></circle><path d="M12 3v18"></path><path d="M12 3a9 9 0 0 1 0 18" fill="currentColor"></path></svg>
+<span class="hidden md:inline">Apariencia</span>
+</button>
+<div class="inema-appearance-pop right-0" data-inema-appearance="" id="inema-appearance-panel">
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Tema</span>
+<div class="inema-segment">
+<button data-inema-set-theme="inema-dark" type="button">Oscuro</button>
+<button data-inema-set-theme="claro" type="button">Claro</button>
+<button data-inema-set-theme="sepia" type="button">Sepia</button>
+</div>
+<div class="inema-segment">
+<button data-inema-set-theme="foco" type="button">Enfoque</button>
+<button data-inema-set-theme="contraste" type="button">Alto contraste</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Fuente</span>
+<div class="inema-segment">
+<button data-inema-set-font="inter" type="button">Inter</button>
+<button data-inema-set-font="system" type="button">Sistema</button>
+<button data-inema-set-font="leitura" type="button">Lectura</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Tamaño</span>
+<div class="inema-segment">
+<button data-inema-set-fontscale="100" type="button">A</button>
+<button data-inema-set-fontscale="112" type="button">A+</button>
+<button data-inema-set-fontscale="125" type="button">A++</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Ancho</span>
+<div class="inema-segment">
+<button data-inema-set-linewidth="60" type="button">Estrecho</button>
+<button data-inema-set-linewidth="68" type="button">Mediano</button>
+<button data-inema-set-linewidth="75" type="button">Ancho</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Interlineado</span>
+<div class="inema-segment">
+<button data-inema-set-leading="1.45" type="button">Compacto</button>
+<button data-inema-set-leading="1.7" type="button">Cómodo</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Acento</span>
+<div class="inema-accent-grid">
+<button aria-label="Acento esmeralda" data-inema-set-accent="emerald" type="button"></button>
+<button aria-label="Acento azul" data-inema-set-accent="blue" type="button"></button>
+<button aria-label="Acento violeta" data-inema-set-accent="purple" type="button"></button>
+<button aria-label="Acento ámbar" data-inema-set-accent="amber" type="button"></button>
+<button aria-label="Acento verde azulado" data-inema-set-accent="teal" type="button"></button>
+<button aria-label="Acento rosa" data-inema-set-accent="rose" type="button"></button>
+</div>
+</div>
+</div>
+</div>
+<!-- Theme toggle sol/lua (núcleo v1; o JS o mantém coerente com o tema) -->
+<button aria-label="Alternar tema claro/oscuro" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20">
+<path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+</svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20">
+<path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path>
+</svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<main data-inema-module="3-1" data-inema-track="3" id="conteudo">
+<!-- BREADCRUMB -->
+<nav aria-label="Ruta de navegación" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-purple-400" href="../../index.html">Inicio</a><span>/</span>
+<a class="hover:text-purple-400" href="index.html">Ruta 3</a><span>/</span>
+<span class="text-purple-400">Módulo 3.1</span>
+</div>
+</nav>
+<!-- HEADER do módulo -->
+<header class="bg-gradient-to-br from-purple-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-purple-500/20 text-purple-400 text-xs font-semibold rounded-full mb-4">MÓDULO 3.1</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🏛️ Arquitectura de IA a gran escala</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">Un prototipo con una llamada a la API se convierte, en producción, en millones de llamadas al mes, varios modelos, picos de tráfico y una factura que crece sin avisar. Este módulo muestra las piezas que sostienen esa escala —gateway, enrutador de modelos, servidor de inferencia, caché semántica, multirregión y <strong class="text-purple-400">límites de costo</strong> — y te ofrece configuraciones y scripts para que pruebes cada una.</p>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">7</div><div class="text-xs text-neutral-400">Temas</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">~60</div><div class="text-xs text-neutral-400">Minutos</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">Avanzado</div><div class="text-xs text-neutral-400">Nivel</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">Arquitectura</div><div class="text-xs text-neutral-400">Tipo</div></div>
+</div>
+<div class="flex items-center gap-3 mt-8">
+<div aria-label="Progreso del módulo 3.1" class="inema-ring" data-inema-meter="modulo:3-1"><span class="inema-ring__value" data-inema-meter-pct="">0%</span></div>
+<div class="inema-meter-label" data-inema-meter="modulo:3-1"><strong data-inema-meter-frac="">0 de 0</strong> temas leídos · <span data-inema-section-counter="">Sección 1 de 7</span></div>
+</div>
+</div>
+</header>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+<div class="lg:flex lg:gap-10">
+<!-- TOC sticky + scrollspy -->
+<aside class="hidden lg:block lg:w-56 flex-shrink-0">
+<nav aria-label="Índice de la página" class="sticky top-20 self-start" data-inema-toc="">
+<p class="text-xs font-semibold uppercase tracking-wide text-neutral-500 mb-3">En este módulo</p>
+<ol class="space-y-1 text-sm">
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-purple-400" href="#topico-1">1. El mapa de la escala</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-purple-400" href="#topico-2">2. Enrutamiento de modelos</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-purple-400" href="#topico-3">3. Inferencia y procesamiento por lotes</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-purple-400" href="#topico-4">4. Caché semántica</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-purple-400" href="#topico-5">5. Multirregión</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-purple-400" href="#topico-6">6. Límites de costo</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-purple-400" href="#topico-7">7. Revisión de arquitectura</a></li>
+</ol>
+</nav>
+</aside>
+<!-- ARTIGO -->
+<article class="inema-prose flex-1 min-w-0">
+<h2 class="text-2xl font-bold mb-8">Contenido detallado</h2>
+<!-- TÓPICO 1 -->
+<section class="mb-16" data-inema-topic="modulo-3-1#topico-1" id="topico-1" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="as camadas entre o usuário e o modelo">🗺️ El mapa de la escala</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-1-t1-p1">En el prototipo, la aplicación llama directamente al modelo. A escala, esa línea recta se convierte en un problema: cada equipo guarda su propia clave de API, nadie sabe cuánto gasta cada producto, una caída del proveedor lo derriba todo y cambiar de modelo exige modificar decenas de servicios. La respuesta arquitectónica es la misma que la ingeniería ya usó para bases de datos y pagos: <strong class="text-neutral-100">poner capas intermedias</strong>, cada una con una responsabilidad clara.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-1-t1-p2">Dos términos guían todas las decisiones de este módulo. <strong class="text-purple-400">Latencia p95</strong> es el tiempo de respuesta por debajo del cual se encuentran el 95 % de las llamadas; el promedio oculta a los usuarios que esperaron demasiado, el p95 no. <strong class="text-purple-400">Throughput</strong> es la cantidad de trabajo que el sistema entrega por unidad de tiempo (llamadas o tokens por segundo). Escalar significa aumentar el throughput sin dejar que el p95 ni el costo por llamada superen el límite acordado.</p>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">La arquitectura de IA a gran escala es el conjunto de capas entre las aplicaciones y los modelos: un gateway que identifica, limita y registra; un enrutador que elige el modelo adecuado; servidores de inferencia o API; cachés; y observabilidad que mide la latencia, los errores y el costo por cliente.</p>
+</div>
+<!-- SVG 1: camadas -->
+<figure class="svg-frame rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="Diagrama por capas: las aplicaciones y los usuarios envían llamadas al gateway de IA, que se ocupa de la identidad, las cuotas y los registros; el gateway las pasa al enrutador, que elige entre un modelo pequeño local, un modelo mediano y un modelo de frontera por API. Debajo hay una capa de caché y, en la base, la observabilidad, que mide la latencia, los tokens, el costo y los errores." class="w-full h-auto" role="img" viewbox="0 0 860 340">
+<defs>
+<filter height="160%" id="m31-glow" width="160%" x="-30%" y="-30%"><fegaussianblur result="b" stddeviation="2"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="28" id="m31-grid" patternunits="userSpaceOnUse" width="28"><circle cx="1.2" cy="1.2" fill="#8b5cf6" opacity="0.14" r="1.2"></circle></pattern>
+<marker id="m31-ah" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#a78bfa"></path></marker>
+<marker id="m31-ahc" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#38bdf8"></path></marker>
+<style>@keyframes m31dash{to{stroke-dashoffset:-24}} .m31-flow{stroke-dasharray:6 6;animation:m31dash 1.6s linear infinite}</style>
+</defs>
+<rect fill="url(#m31-grid)" height="340" width="860"></rect>
+<g font-family="Inter,sans-serif">
+<rect fill="#1a1430" height="70" rx="12" stroke="#a78bfa" stroke-width="2" width="150" x="20" y="110"></rect>
+<text fill="#ede9fe" font-size="15" font-weight="700" text-anchor="middle" x="95" y="140">Aplicaciones y usuarios</text>
+<text fill="#c4b5fd" font-size="12" text-anchor="middle" x="95" y="160">muchas llamadas</text>
+<path class="m31-flow" d="M172,145 L226,145" fill="none" marker-end="url(#m31-ah)" stroke="#a78bfa" stroke-width="2.5"></path>
+<rect fill="#1a1430" filter="url(#m31-glow)" height="100" rx="14" stroke="#8b5cf6" stroke-width="2.5" width="170" x="230" y="95"></rect>
+<text fill="#ede9fe" font-size="15" font-weight="700" text-anchor="middle" x="315" y="125">Gateway de IA</text>
+<text fill="#c4b5fd" font-size="12" text-anchor="middle" x="315" y="148">identidad · cuotas</text>
+<text fill="#c4b5fd" font-size="12" text-anchor="middle" x="315" y="168">registros · LGPD</text>
+<path class="m31-flow" d="M402,145 L456,145" fill="none" marker-end="url(#m31-ah)" stroke="#a78bfa" stroke-width="2.5"></path>
+<rect fill="#0e1b26" height="100" rx="14" stroke="#38bdf8" stroke-width="2.5" width="150" x="460" y="95"></rect>
+<text fill="#e0f2fe" font-size="15" font-weight="700" text-anchor="middle" x="535" y="125">Enrutador</text>
+<text fill="#bae6fd" font-size="12" text-anchor="middle" x="535" y="148">tarea · costo</text>
+<text fill="#bae6fd" font-size="12" text-anchor="middle" x="535" y="168">fallback</text>
+<path d="M612,130 C640,130 640,55 666,55" fill="none" marker-end="url(#m31-ahc)" stroke="#38bdf8" stroke-width="2"></path>
+<path d="M612,145 L666,150" fill="none" marker-end="url(#m31-ahc)" stroke="#38bdf8" stroke-width="2"></path>
+<path d="M612,160 C640,160 640,245 666,245" fill="none" marker-end="url(#m31-ahc)" stroke="#38bdf8" stroke-width="2"></path>
+<rect fill="#1a1430" height="50" rx="10" stroke="#a78bfa" stroke-width="2" width="170" x="670" y="30"></rect>
+<text fill="#ede9fe" font-size="13" font-weight="700" text-anchor="middle" x="755" y="60">Pequeño · local</text>
+<rect fill="#1a1430" height="50" rx="10" stroke="#a78bfa" stroke-width="2" width="170" x="670" y="125"></rect>
+<text fill="#ede9fe" font-size="13" font-weight="700" text-anchor="middle" x="755" y="155">Mediano</text>
+<rect fill="#0e1b26" height="50" rx="10" stroke="#38bdf8" stroke-width="2" width="170" x="670" y="220"></rect>
+<text fill="#e0f2fe" font-size="13" font-weight="700" text-anchor="middle" x="755" y="250">Frontera · API</text>
+<path d="M315,197 L315,213 M535,197 L535,213" fill="none" stroke="#a78bfa" stroke-dasharray="3 4" stroke-width="2"></path>
+<rect fill="#1a1430" height="40" rx="10" stroke="#a78bfa" stroke-dasharray="5 4" stroke-width="1.5" width="380" x="230" y="215"></rect>
+<text fill="#c4b5fd" font-size="13" text-anchor="middle" x="420" y="240">caché de prompts · caché semántica</text>
+<rect fill="#120e22" height="34" rx="8" stroke="#38bdf8" stroke-opacity="0.6" stroke-width="1.5" width="820" x="20" y="290"></rect>
+<text fill="#bae6fd" font-size="13" text-anchor="middle" x="430" y="312">Observabilidad: latencia p95 · tokens · costo por cliente · tasa de errores</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-purple-400">Cómo leer:</strong> sigue la llamada de izquierda a derecha. Ninguna aplicación se comunica directamente con un modelo: todo pasa por el gateway (quién eres, cuánto puedes gastar) y por el enrutador (qué modelo resuelve esto al menor costo). La franja de abajo lo mide todo; sin ella, las otras capas operan a ciegas.</figcaption>
+</figure>
+<div class="overflow-x-auto mb-6">
+<table class="w-full text-sm border border-dark-600 rounded-xl overflow-hidden">
+<thead><tr class="bg-dark-700"><th class="text-left p-3 text-purple-400">Capa</th><th class="text-left p-3 text-purple-400">Responsabilidad</th><th class="text-left p-3 text-purple-400">Herramientas comunes</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr><td class="p-3 font-semibold">Gateway</td><td class="p-3 text-neutral-300">Autenticar, aplicar cuotas, enmascarar datos personales, registrar llamadas.</td><td class="p-3 text-neutral-300">LiteLLM Proxy, gateways de API (Kong, Envoy) con plugins de IA.</td></tr>
+<tr><td class="p-3 font-semibold">Enrutador</td><td class="p-3 text-neutral-300">Elegir el modelo según la tarea, el costo y la disponibilidad; aplicar un fallback.</td><td class="p-3 text-neutral-300">Reglas en el gateway, clasificador ligero, código propio.</td></tr>
+<tr><td class="p-3 font-semibold">Inferencia</td><td class="p-3 text-neutral-300">Ejecutar el modelo aprovechando mejor la GPU.</td><td class="p-3 text-neutral-300">vLLM, SGLang, TGI, Ollama/llama.cpp, API gestionadas.</td></tr>
+<tr><td class="p-3 font-semibold">Caché</td><td class="p-3 text-neutral-300">No pagar dos veces por el mismo trabajo.</td><td class="p-3 text-neutral-300">Caché de prompts del proveedor, Redis, base de datos vectorial.</td></tr>
+<tr><td class="p-3 font-semibold">Observabilidad</td><td class="p-3 text-neutral-300">Medir la latencia, los errores, los tokens y el costo por cliente y por recurso.</td><td class="p-3 text-neutral-300">OpenTelemetry, Langfuse, Prometheus y Grafana.</td></tr>
+</tbody>
+</table>
+</div>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-1-t1-p3" data-sum="porque">Sin el mapa, cada problema de escala se convierte en un incendio aislado: un equipo agrega caché, otro agrega reintentos, un tercero cambia de modelo. Con el mapa, decides en qué capa resolver cada problema una sola vez para toda la empresa, y puedes cambiar un modelo sin tocar ninguna aplicación.</p>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Gateway</div><div class="text-xs text-neutral-400">punto único de acceso a los modelos</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Latencia p95</div><div class="text-xs text-neutral-400">el tiempo de respuesta del 95 % más rápido</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Throughput</div><div class="text-xs text-neutral-400">trabajo entregado por segundo</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Observabilidad</div><div class="text-xs text-neutral-400">medir antes de optimizar</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 2 -->
+<section class="mb-16" data-inema-topic="modulo-3-1#topico-2" id="topico-2" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="o modelo mais barato que resolve">🔀 Enrutamiento de modelos</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-1-t2-p1">Enviar todas las llamadas al modelo más potente es la forma más rápida de exceder el presupuesto. Gran parte del tráfico de un producto real es simple: clasificar un ticket, extraer tres campos, reescribir una frase. Un modelo pequeño lo resuelve más rápido y a menor costo. El <strong class="text-purple-400">enrutador de modelos</strong> decide, llamada por llamada, qué modelo responde y qué hacer si falla.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-1-t2-p2">Hay tres estrategias que suelen combinarse. <strong class="text-neutral-100">Por regla</strong>: el tipo de ruta define el modelo (el resumen va al modelo pequeño; el análisis jurídico, al potente). <strong class="text-neutral-100">Por clasificador</strong>: un modelo ligero estima de antemano la dificultad. <strong class="text-neutral-100">En cascada</strong>: el modelo pequeño lo intenta primero; un validador comprueba el formato y el nivel de confianza; si no pasa la validación, la llamada pasa al modelo potente. <strong class="text-purple-400">Respaldo</strong> es la ruta alternativa cuando el modelo elegido está fuera de servicio, es lento o no tiene cuota.</p>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">El enrutamiento de modelos es la capa que elige, para cada llamada, el modelo de menor costo capaz de cumplir con la calidad exigida y que redirige la llamada a otro modelo o proveedor cuando el primero falla.</p>
+</div>
+<!-- SVG 2: cascata -->
+<figure class="svg-frame rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="Flujo en cascada: la solicitud pasa por un clasificador; las solicitudes simples van al modelo pequeño, cuya salida pasa por un validador. Si el validador la aprueba, se entrega la respuesta; si la rechaza, la solicitud escala al modelo de frontera. Las solicitudes difíciles van directamente al modelo de frontera." class="w-full h-auto" role="img" viewbox="0 0 860 290">
+<rect fill="url(#m31-grid)" height="290" width="860"></rect>
+<g font-family="Inter,sans-serif">
+<rect fill="#1a1430" height="56" rx="12" stroke="#a78bfa" stroke-width="2" width="110" x="20" y="112"></rect>
+<text fill="#ede9fe" font-size="15" font-weight="700" text-anchor="middle" x="75" y="145">Solicitud</text>
+<path class="m31-flow" d="M132,140 L166,140" fill="none" marker-end="url(#m31-ah)" stroke="#a78bfa" stroke-width="2.5"></path>
+<rect fill="#1a1430" height="76" rx="12" stroke="#8b5cf6" stroke-width="2.5" width="150" x="170" y="102"></rect>
+<text fill="#ede9fe" font-size="15" font-weight="700" text-anchor="middle" x="245" y="134">Clasificar</text>
+<text fill="#c4b5fd" font-size="11" text-anchor="middle" x="245" y="155">regla o modelo ligero</text>
+<path d="M322,120 C345,120 345,58 366,58" fill="none" marker-end="url(#m31-ah)" stroke="#a78bfa" stroke-width="2"></path>
+<text fill="#c4b5fd" font-size="12" x="272" y="46">simple</text>
+<path d="M322,160 C345,160 345,228 366,228" fill="none" marker-end="url(#m31-ahc)" stroke="#38bdf8" stroke-width="2"></path>
+<text fill="#bae6fd" font-size="12" x="272" y="250">difícil</text>
+<rect fill="#1a1430" height="56" rx="12" stroke="#a78bfa" stroke-width="2" width="170" x="370" y="30"></rect>
+<text fill="#ede9fe" font-size="14" font-weight="700" text-anchor="middle" x="455" y="63">Modelo pequeño</text>
+<path d="M542,58 L586,58" fill="none" marker-end="url(#m31-ah)" stroke="#a78bfa" stroke-width="2"></path>
+<rect fill="#1a1430" height="56" rx="12" stroke="#8b5cf6" stroke-width="2.5" width="120" x="590" y="30"></rect>
+<text fill="#ede9fe" font-size="14" font-weight="700" text-anchor="middle" x="650" y="63">Validar</text>
+<path d="M712,58 C745,58 760,100 778,108" fill="none" marker-end="url(#m31-ah)" stroke="#a78bfa" stroke-width="2"></path>
+<text fill="#c4b5fd" font-size="12" x="728" y="44">aprobó</text>
+<path d="M650,88 C650,150 600,200 546,214" fill="none" marker-end="url(#m31-ahc)" stroke="#38bdf8" stroke-dasharray="5 4" stroke-width="2"></path>
+<text fill="#bae6fd" font-size="12" x="662" y="150">no aprobó: escala</text>
+<rect fill="#0e1b26" height="56" rx="12" stroke="#38bdf8" stroke-width="2.5" width="170" x="370" y="200"></rect>
+<text fill="#e0f2fe" font-size="14" font-weight="700" text-anchor="middle" x="455" y="233">Modelo de frontera</text>
+<path d="M542,228 C680,228 760,190 782,172" fill="none" marker-end="url(#m31-ahc)" stroke="#38bdf8" stroke-width="2"></path>
+<rect fill="#1a1430" filter="url(#m31-glow)" height="56" rx="12" stroke="#a78bfa" stroke-width="2" width="70" x="780" y="112"></rect>
+<text fill="#ede9fe" font-size="12" font-weight="700" text-anchor="middle" x="815" y="145">Salida</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-purple-400">Cómo leer:</strong> El camino de arriba es el económico y debería recibir la mayor parte del tráfico; el de abajo es costoso y debería ser la excepción. El punto crítico es «Validar»: sin una prueba objetiva (JSON válido, campos presentes, confianza por encima de un umbral), la cascada entrega respuestas incorrectas del modelo pequeño como si fueran buenas.</figcaption>
+</figure>
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-purple-400">Objetivo:</strong> <span class="text-neutral-300">levantar un gateway local con dos modelos, fallback y caché (LiteLLM Proxy).</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copiar</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900"># config.yaml — instálalo con:  pip install 'litellm[proxy]'
+# ejecútalo con:              litellm --config config.yaml --port 4000
+model_list:
+  - model_name: rapido                     # nombre que usan las apps
+    litellm_params:
+      model: ollama/qwen2.5:7b             # local y gratuito (ollama pull qwen2.5:7b)
+      api_base: http://localhost:11434
+  - model_name: forte
+    litellm_params:
+      model: anthropic/claude-sonnet-5-5   # u otro proveedor: cambia el prefijo y la clave
+      api_key: os.environ/ANTHROPIC_API_KEY
+
+router_settings:
+  num_retries: 2                           # vuelve a intentar ante errores transitorios
+  timeout: 30                              # segundos por llamada
+  fallbacks: [{"rapido": ["forte"]}]       # si "rapido" falla, usa "forte"
+
+litellm_settings:
+  cache: true
+  cache_params:
+    type: redis                            # requiere Redis en localhost:6379
+    host: localhost
+    port: 6379
+    ttl: 3600                              # segundos; ajústalo según cuánto envejece la respuesta
+
+# Prueba (en otra terminal):
+# curl http://localhost:4000/v1/chat/completions -H "Content-Type: application/json" \
+#   -d '{"model":"rapido","messages":[{"role":"user","content":"Clasifica: quiero cancelar"}]}'</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">Cómo verificar:</strong> ejecuta el <code>curl</code> dos veces con el mismo cuerpo; la segunda respuesta debe llegar mucho más rápido (caché). Luego detén Ollama y repite: la llamada a "rapido" debe ser atendida por "forte" (fallback); si no tienes una clave de pago, el error debe mencionar el modelo "forte", lo que demuestra que se intentó el fallback. La sintaxis de LiteLLM cambia entre versiones; consulta la documentación de la versión instalada.</p>
+</div>
+<div class="bg-primary/10 border border-primary/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-primary font-semibold mb-1">💡 Consejo</p>
+<p class="text-sm text-neutral-300" data-inema-block="m3-1-t2-p3">Dales a los modelos nombres de función ("rapido", "forte", "vision"), no nombres de producto. Así, cuando salga un modelo nuevo, cambias una línea en el gateway y ninguna aplicación lo nota; además, puedes hacer pruebas A/B enviando parte del tráfico de "forte" al candidato.</p>
+</div>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-1-t2-p4" data-sum="porque">El enrutamiento es la palanca de costos con mayor efecto y menor riesgo: no cambias el producto, solo dejas de pagar el precio de un modelo de frontera por una tarea sencilla. Y el fallback convierte la caída de un proveedor, que hoy hace caer el producto, en un aumento temporal de costos.</p>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Enrutador</div><div class="text-xs text-neutral-400">elige el modelo en cada llamada</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Cascada</div><div class="text-xs text-neutral-400">primero el barato, el caro si falla</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Validador</div><div class="text-xs text-neutral-400">prueba objetiva de la salida</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Respaldo</div><div class="text-xs text-neutral-400">ruta alternativa en caso de falla</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 3 -->
+<section class="mb-16" data-inema-topic="modulo-3-1#topico-3" id="topico-3" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="tirar mais de cada GPU">⚡ Inferencia y procesamiento por lotes</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-1-t3-p1"><strong class="text-purple-400">Inferencia</strong> es ejecutar un modelo ya entrenado para generar una respuesta. En un modelo de lenguaje tiene dos fases: el <strong class="text-neutral-100">prefill</strong>, que lee todo el prompt de una vez, y el <strong class="text-neutral-100">decode</strong>, que genera un token por vez. El prefill determina el <strong class="text-purple-400">TTFT</strong> (<em>time to first token</em>, cuánto espera el usuario hasta ver la primera palabra); el decode determina la velocidad en tokens por segundo después de eso.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-1-t3-p2">Generar un token por vez deja la GPU subutilizada si atiende a un solo usuario. Por eso los servidores agrupan solicitudes en <strong class="text-purple-400">lotes</strong> (batching). El avance que cambió la economía del autoalojamiento fue el <strong class="text-neutral-100">batching continuo</strong>: en vez de esperar a que termine todo el lote, cada espacio que queda libre recibe una solicitud nueva en el siguiente paso. A esto se suma la gestión de la <strong class="text-purple-400">KV cache</strong> —la memoria donde el modelo guarda lo que ya leyó de cada conversación—, conocida en vLLM como PagedAttention.</p>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">Es la ingeniería de servir modelos: agrupar solicitudes, gestionar la memoria de contexto, elegir la cuantización y el hardware, y decidir entre una API administrada y un servidor propio, midiendo siempre el TTFT, los tokens por segundo y el costo por millón de tokens.</p>
+</div>
+<!-- SVG 3: batching -->
+<figure class="svg-frame rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="Comparación de dos líneas de tiempo de una GPU con cuatro espacios. En el lote estático, los espacios que terminan pronto quedan inactivos, en gris, hasta que termina la solicitud más larga. En el lote continuo, cada espacio que se libera recibe una nueva solicitud de inmediato y casi no hay tiempo inactivo." class="w-full h-auto" role="img" viewbox="0 0 860 330">
+<rect fill="url(#m31-grid)" height="330" width="860"></rect>
+<g font-family="Inter,sans-serif">
+<text fill="#ede9fe" font-size="14" font-weight="700" x="130" y="34">Lote estático: espacios ociosos esperando a la solicitud más larga</text>
+<text fill="#c4b5fd" font-size="13" font-weight="700" x="20" y="100">Estático</text>
+<rect fill="#8b5cf6" height="20" rx="4" width="570" x="130" y="48"></rect>
+<rect fill="#8b5cf6" height="20" rx="4" width="200" x="130" y="76"></rect><rect fill="none" height="20" rx="4" stroke="#525252" stroke-dasharray="4 4" width="365" x="335" y="76"></rect>
+<rect fill="#8b5cf6" height="20" rx="4" width="350" x="130" y="104"></rect><rect fill="none" height="20" rx="4" stroke="#525252" stroke-dasharray="4 4" width="215" x="485" y="104"></rect>
+<rect fill="#8b5cf6" height="20" rx="4" width="130" x="130" y="132"></rect><rect fill="none" height="20" rx="4" stroke="#525252" stroke-dasharray="4 4" width="435" x="265" y="132"></rect>
+<rect fill="#38bdf8" fill-opacity="0.75" height="104" rx="4" width="120" x="710" y="48"></rect>
+<text fill="#082f49" font-size="12" font-weight="700" text-anchor="middle" x="770" y="104">lote 2</text>
+<text fill="#ede9fe" font-size="14" font-weight="700" x="130" y="182">Lote continuo: el espacio que queda libre recibe una solicitud nueva de inmediato</text>
+<text fill="#c4b5fd" font-size="13" font-weight="700" x="20" y="248">Continuo</text>
+<rect fill="#8b5cf6" height="20" rx="4" width="570" x="130" y="196"></rect><rect fill="#38bdf8" fill-opacity="0.75" height="20" rx="4" width="125" x="705" y="196"></rect>
+<rect fill="#8b5cf6" height="20" rx="4" width="200" x="130" y="224"></rect><rect fill="#38bdf8" fill-opacity="0.75" height="20" rx="4" width="225" x="335" y="224"></rect><rect fill="#8b5cf6" height="20" rx="4" width="265" x="565" y="224"></rect>
+<rect fill="#8b5cf6" height="20" rx="4" width="350" x="130" y="252"></rect><rect fill="#38bdf8" fill-opacity="0.75" height="20" rx="4" width="345" x="485" y="252"></rect>
+<rect fill="#8b5cf6" height="20" rx="4" width="130" x="130" y="280"></rect><rect fill="#38bdf8" fill-opacity="0.75" height="20" rx="4" width="155" x="265" y="280"></rect><rect fill="#8b5cf6" height="20" rx="4" width="215" x="425" y="280"></rect><rect fill="#38bdf8" fill-opacity="0.75" height="20" rx="4" width="185" x="645" y="280"></rect>
+<path d="M130,316 L820,316" fill="none" marker-end="url(#m31-ahc)" stroke="#38bdf8" stroke-opacity="0.7" stroke-width="1.5"></path>
+<text fill="#bae6fd" font-size="12" x="20" y="320">tiempo</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-purple-400">Cómo leer:</strong> cada línea es un espacio de la GPU; cada barra de color es una solicitud. Arriba, los rectángulos grises con líneas discontinuas representan una GPU pagada y detenida. Abajo, los colores se alternan porque una solicitud nueva entra en cuanto sale otra. La misma GPU atiende más solicitudes en el mismo tiempo: de ahí viene la diferencia de costos del autoalojamiento.</figcaption>
+</figure>
+<div class="overflow-x-auto mb-6">
+<table class="w-full text-sm border border-dark-600 rounded-xl overflow-hidden">
+<thead><tr class="bg-dark-700"><th class="text-left p-3 text-purple-400">Opción</th><th class="text-left p-3 text-purple-400">Cuándo tiene sentido</th><th class="text-left p-3 text-purple-400">Qué pasas a operar</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr><td class="p-3 font-semibold">API administrada</td><td class="p-3 text-neutral-300">Tráfico variable, modelos de frontera, equipo pequeño.</td><td class="p-3 text-neutral-300">Casi nada: claves, cuotas, contrato y datos enviados.</td></tr>
+<tr><td class="p-3 font-semibold">vLLM / SGLang / TGI</td><td class="p-3 text-neutral-300">Tráfico alto y estable con un modelo abierto; datos que no pueden salir.</td><td class="p-3 text-neutral-300">GPU, autoescalado, actualizaciones, monitoreo, guardias.</td></tr>
+<tr><td class="p-3 font-semibold">Ollama / llama.cpp</td><td class="p-3 text-neutral-300">Desarrollo, edge, uso interno de bajo volumen.</td><td class="p-3 text-neutral-300">Una máquina; pocos usuarios simultáneos.</td></tr>
+</tbody>
+</table>
+</div>
+<div class="bg-primary/10 border border-primary/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-primary font-semibold mb-1">💡 Consejo</p>
+<p class="text-sm text-neutral-300" data-inema-block="m3-1-t3-p3">Compara las opciones por el <strong>costo por millón de tokens en tu tráfico real</strong>, no por el precio de la GPU por hora. Una GPU barata ociosa por la noche puede costar más que la API; una GPU ocupada todo el día, con batching continuo, puede costar menos. Mide una semana de tráfico antes de decidir.</p>
+</div>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-1-t3-p4" data-sum="porque">La decisión «API o servidor propio» es una de las más costosas de tomar mal en IA. Entender prefill, decode, procesamiento por lotes y KV cache permite leer con criterio un benchmark de un proveedor y hacer bien los cálculos, además de saber por qué los prompts largos encarecen y retrasan todo.</p>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">TTFT</div><div class="text-xs text-neutral-400">espera hasta el primer token</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Batching continuo</div><div class="text-xs text-neutral-400">el espacio libre recibe una solicitud nueva</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">KV cache</div><div class="text-xs text-neutral-400">memoria de lo que ya se leyó</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Cuantización</div><div class="text-xs text-neutral-400">pesos más pequeños, menos memoria</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 4 -->
+<section class="mb-16" data-inema-topic="modulo-3-1#topico-4" id="topico-4" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="não pagar duas vezes pela mesma resposta">🧠 Caché de prompt y caché semántica</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-1-t4-p1">Hay dos cachés diferentes, y confundirlos lleva a tomar una decisión equivocada. El <strong class="text-purple-400">caché de prompt</strong> lo ofrecen los proveedores y servidores de inferencia: cuando el inicio del prompt se repite (instrucciones del sistema, un manual extenso, la definición de las herramientas), se reutiliza el procesamiento de ese prefijo y se cobra menos. No cambia la respuesta: solo acelera el prefill y reduce el costo. Funciona cuando la parte fija va <strong class="text-neutral-100">antes</strong> antes de la parte variable.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-1-t4-p2">O <strong class="text-purple-400">caché semántica</strong> es tuyo: transformas la pregunta en un <strong class="text-neutral-100">embedding</strong> (un vector de números que representa el significado) y buscas preguntas anteriores con un significado parecido. Si la <strong class="text-neutral-100">similitud del coseno</strong> supera un umbral, devuelve la respuesta guardada sin llamar al modelo. Ahorra la llamada completa y, por eso, también puede devolver una respuesta incorrecta si el umbral es demasiado flexible o si la respuesta depende de quién pregunta.</p>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">El caché de prompt reutiliza el procesamiento de un prefijo repetido y conserva la respuesta nueva; el caché semántico reutiliza la respuesta completa a una pregunta parecida, según la similitud entre embeddings y un umbral calibrado.</p>
+</div>
+<!-- SVG 4: cache semântico -->
+<figure class="svg-frame rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="A la izquierda, el flujo de la caché semántica: pregunta nueva, cálculo del embedding y prueba de similitud frente al umbral; si lo supera, devuelve la respuesta guardada; si no, llama al modelo y la guarda. A la derecha, un espacio de embeddings con la pregunta nueva en el centro de un círculo punteado: los puntos dentro del círculo son aciertos de caché; los de afuera no." class="w-full h-auto" role="img" viewbox="0 0 860 280">
+<rect fill="url(#m31-grid)" height="280" width="860"></rect>
+<g font-family="Inter,sans-serif">
+<rect fill="#1a1430" height="46" rx="10" stroke="#a78bfa" stroke-width="2" width="190" x="20" y="20"></rect>
+<text fill="#ede9fe" font-size="14" font-weight="700" text-anchor="middle" x="115" y="48">Pregunta nueva</text>
+<path d="M115,68 L115,92" fill="none" marker-end="url(#m31-ah)" stroke="#a78bfa" stroke-width="2"></path>
+<rect fill="#1a1430" height="46" rx="10" stroke="#a78bfa" stroke-width="2" width="190" x="20" y="96"></rect>
+<text fill="#ede9fe" font-size="14" font-weight="700" text-anchor="middle" x="115" y="124">Embedding</text>
+<path d="M115,144 L115,168" fill="none" marker-end="url(#m31-ah)" stroke="#a78bfa" stroke-width="2"></path>
+<rect fill="#0e1b26" height="46" rx="10" stroke="#38bdf8" stroke-width="2.5" width="190" x="20" y="172"></rect>
+<text fill="#e0f2fe" font-size="13" font-weight="700" text-anchor="middle" x="115" y="200">¿similitud ≥ umbral?</text>
+<text fill="#bae6fd" font-size="12" x="20" y="242">sí → devuelve la respuesta guardada</text>
+<text fill="#c4b5fd" font-size="12" x="20" y="262">no → llama al modelo y la guarda</text>
+<rect fill="#120e22" height="236" rx="14" stroke="#8b5cf6" stroke-opacity="0.5" stroke-width="1.5" width="420" x="410" y="20"></rect>
+<text fill="#c4b5fd" font-size="12" x="428" y="44">espacio de embeddings (2D, ilustrativo)</text>
+<circle cx="620" cy="145" fill="#38bdf8" fill-opacity="0.06" r="62" stroke="#38bdf8" stroke-dasharray="5 4" stroke-width="1.8"></circle>
+<circle cx="620" cy="145" fill="#38bdf8" filter="url(#m31-glow)" r="7"></circle>
+<circle cx="590" cy="122" fill="#7dd3fc" r="5"></circle>
+<circle cx="650" cy="170" fill="#7dd3fc" r="5"></circle>
+<circle cx="480" cy="90" fill="#8b5cf6" r="5"></circle>
+<circle cx="770" cy="80" fill="#8b5cf6" r="5"></circle>
+<circle cx="500" cy="220" fill="#8b5cf6" r="5"></circle>
+<circle cx="760" cy="215" fill="#8b5cf6" r="5"></circle>
+<text fill="#bae6fd" font-size="12" x="688" y="132">umbral</text>
+<text fill="#e0f2fe" font-size="11" x="430" y="246">● claro = dentro del radio (acierto) ● morado = fuera (llama al modelo)</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-purple-400">Cómo leer:</strong> el círculo punteado es el umbral. Aumentar el umbral reduce el círculo: menos aciertos y menos riesgo de una respuesta incorrecta. Disminuirlo agranda el círculo: más ahorro y más posibilidades de responder «plazo para cambiar» a quien preguntó «plazo de entrega». El radio adecuado se obtiene probando con preguntas reales, no usando un valor predeterminado.</figcaption>
+</figure>
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-purple-400">Prueba:</strong> <span class="text-neutral-300">un caché semántico mínimo, local y gratuito para calibrar el umbral.</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copiar</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900">"""cache_semantico.py — caché por significado con Ollama local.
+Antes: ollama pull nomic-embed-text &amp;&amp; ollama pull llama3.2
+Ejecuta:  python3 cache_semantico.py"""
+import json, math, time, urllib.request
+
+OLLAMA = "http://localhost:11434"
+LIMIAR = 0.90   # calibra con tus datos: alto = pocos aciertos; bajo = respuesta incorrecta
+cache = []      # lista de (vector, pregunta, respuesta). En producción: base de datos vectorial, separada por cliente.
+
+def chamar(rota, corpo):
+    req = urllib.request.Request(OLLAMA + rota, data=json.dumps(corpo).encode(),
+                                 headers={"Content-Type": "application/json"})
+    with urllib.request.urlopen(req, timeout=120) as r:
+        return json.loads(r.read())
+
+def vetor(texto):
+    return chamar("/api/embed", {"model": "nomic-embed-text", "input": texto})["embeddings"][0]
+
+def cosseno(a, b):
+    num = sum(x * y for x, y in zip(a, b))
+    return num / (math.sqrt(sum(x * x for x in a)) * math.sqrt(sum(y * y for y in b)))
+
+def perguntar(pergunta):
+    t0 = time.time()
+    v = vetor(pergunta)
+    sim, melhor = -1.0, None
+    for item in cache:
+        s = cosseno(v, item[0])
+        if s &gt; sim:
+            sim, melhor = s, item
+    if melhor and sim &gt;= LIMIAR:
+        return f"CACHE  sim={sim:.3f} {time.time()-t0:.2f}s (igual a: {melhor[1]!r})", melhor[2]
+    resp = chamar("/api/generate", {"model": "llama3.2", "prompt": pergunta, "stream": False})["response"]
+    cache.append((v, pergunta, resp))
+    return f"MODELO melhor_sim={sim:.3f} {time.time()-t0:.2f}s", resp
+
+for p in ["¿Cuál es el plazo para cambiar un producto?",
+          "¿En cuántos días puedo cambiar un producto?",
+          "¿Cuál es el plazo de entrega en el noreste?",
+          "¿Cómo emito una copia del recibo de pago?"]:
+    origem, resp = perguntar(p)
+    print(f"{origem}\n  {p}\n  -&gt; {resp[:90]!r}\n")</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">Cómo verificar:</strong> la primera pregunta sale como «MODELO» y tarda; la segunda (mismo sentido, otras palabras) debería salir como «CACHE» en una fracción de segundo. La tercera es la trampa: «plazo de entrega» se parece a «plazo para cambiar». Observa el <code>mejor_sim</code> impreso y ajusta <code>LIMIAR</code> hasta que la segunda acierte y la tercera no. Este número sirve para este modelo de embedding y este tipo de pregunta: cambia cualquiera de los dos y vuelve a calibrarlo.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6">
+<h4 class="font-bold text-purple-400 mb-4">✓ El caché semántico es adecuado para</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-purple-400">✓</span><span>Preguntas frecuentes con la misma respuesta para todos (políticas, horarios, cómo hacer algo).</span></li>
+<li class="flex items-start gap-2"><span class="text-purple-400">✓</span><span>Contenido que cambia poco, con un tiempo de expiración definido.</span></li>
+<li class="flex items-start gap-2"><span class="text-purple-400">✓</span><span>Caché separado por cliente (tenant) y por versión del prompt.</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ No uses el caché semántico para</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Respuestas que dependen de los datos de una persona (saldo, pedido, expediente médico).</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Caché compartido entre clientes: filtra datos de uno a otro e infringe la LGPD.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Agentes que ejecutan acciones: repetir la respuesta no repite la acción correcta.</span></li>
+</ul>
+</div>
+</div>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-1-t4-p3" data-sum="porque">Los dos cachés reducen el costo de maneras distintas: el de prompt abarata el contexto extenso que se repite en cada llamada; el semántico elimina llamadas completas. Saber cuál usar —y cómo ordenar el prompt para que funcione el caché de prompt— suele generar ahorros sin cambiar de modelo.</p>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Caché del prompt</div><div class="text-xs text-neutral-400">prefijo fijo reutilizado</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Embedding</div><div class="text-xs text-neutral-400">significado en vector</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Umbral</div><div class="text-xs text-neutral-400">qué tan parecido es suficiente</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">TTL</div><div class="text-xs text-neutral-400">cuánto tiempo es válida la respuesta</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 5 -->
+<section class="mb-16" data-inema-topic="modulo-3-1#topico-5" id="topico-5" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="quando um provedor ou região cai">🌎 Multirregión y resiliencia</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-1-t5-p1">Los proveedores de modelos fallan, se vuelven lentos y aplican límites de tasa en horas pico: esto forma parte de la operación, no es una excepción. Cuando la IA está en el camino crítico (atención al cliente, checkout, triaje), la arquitectura necesita un plan para estas situaciones. Los componentes son conocidos en la ingeniería de sistemas: <strong class="text-purple-400">health check</strong> (prueba periódica para verificar que un destino responde), <strong class="text-purple-400">circuit breaker</strong> (después de fallas consecutivas, el sistema deja de insistir en un destino durante un tiempo y usa la alternativa) y <strong class="text-purple-400">degradación gradual</strong> (ofrecer una versión reducida de la función en vez de mostrar un error).</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-1-t5-p2">En IA hay un factor adicional: <strong class="text-neutral-100">dónde se pueden procesar los datos</strong>. Enviar el prompt a una región de otro país durante un failover puede constituir una transferencia internacional de datos personales, que la LGPD regula. Por eso, la ruta alternativa debe aprobarse antes del incidente, por parte del equipo legal y de seguridad; no decidirse a las apuradas a las tres de la mañana. Dos números orientan el diseño: <strong class="text-purple-400">RTO</strong>, cuánto tiempo puede estar fuera de servicio el servicio, y <strong class="text-purple-400">RPO</strong>, cuántos datos (conversaciones, memoria, índices) se acepta perder.</p>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">La resiliencia multirregional consiste en mantener funcionando el servicio de IA cuando falla un proveedor, modelo o región: destinos alternativos aprobados, verificación de salud, circuit breaker, réplica de los datos de contexto y un modo degradado previsto.</p>
+</div>
+<!-- SVG 5: multi-região -->
+<figure class="svg-frame rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="Un balanceador global en la parte superior envía el tráfico a la región primaria mediante una línea continua y mantiene una línea punteada de failover hacia la región secundaria. Ambas regiones tienen gateway, modelos y caché, e intercambian datos mediante replicación asíncrona. En la base, la regla: comprobación de estado frecuente y circuito abierto después de fallas consecutivas." class="w-full h-auto" role="img" viewbox="0 0 860 290">
+<rect fill="url(#m31-grid)" height="290" width="860"></rect>
+<g font-family="Inter,sans-serif">
+<rect fill="#1a1430" filter="url(#m31-glow)" height="46" rx="12" stroke="#8b5cf6" stroke-width="2.5" width="260" x="300" y="18"></rect>
+<text fill="#ede9fe" font-size="14" font-weight="700" text-anchor="middle" x="430" y="47">Balanceador global</text>
+<path class="m31-flow" d="M380,66 L230,106" fill="none" marker-end="url(#m31-ah)" stroke="#a78bfa" stroke-width="2.5"></path>
+<path d="M480,66 L630,106" fill="none" marker-end="url(#m31-ahc)" stroke="#38bdf8" stroke-dasharray="6 5" stroke-width="2"></path>
+<text fill="#bae6fd" font-size="12" x="590" y="74">failover</text>
+<rect fill="#1a1430" height="130" rx="14" stroke="#a78bfa" stroke-width="2" width="340" x="40" y="110"></rect>
+<text fill="#ede9fe" font-size="14" font-weight="700" x="60" y="136">Región primaria</text>
+<text fill="#c4b5fd" font-size="12" x="60" y="162">gateway · réplicas del modelo</text>
+<text fill="#c4b5fd" font-size="12" x="60" y="184">caché · índice vectorial</text>
+<text fill="#c4b5fd" font-size="12" x="60" y="206">datos personales: donde lo permite el contrato</text>
+<rect fill="#0e1b26" height="130" rx="14" stroke="#38bdf8" stroke-width="2" width="340" x="480" y="110"></rect>
+<text fill="#e0f2fe" font-size="14" font-weight="700" x="500" y="136">Región secundaria (activa)</text>
+<text fill="#bae6fd" font-size="12" x="500" y="162">misma configuración, menor escala</text>
+<text fill="#bae6fd" font-size="12" x="500" y="184">u otro proveedor aprobado</text>
+<text fill="#bae6fd" font-size="12" x="500" y="206">ruta validada por el equipo legal</text>
+<path d="M384,222 L476,222" fill="none" marker-end="url(#m31-ahc)" stroke="#38bdf8" stroke-dasharray="3 4" stroke-width="1.8"></path>
+<text fill="#bae6fd" font-size="11" text-anchor="middle" x="430" y="214">réplica</text>
+<text fill="#c4b5fd" font-size="12" text-anchor="middle" x="430" y="272">verificación de salud frecuente · el circuito se abre después de fallas consecutivas · modo degradado previsto</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-purple-400">Cómo leer:</strong> la línea continua es la ruta normal; la punteada solo se usa cuando la verificación de salud rechaza la región primaria. Observa la última línea de cada región: la secundaria solo sirve si el destino también está permitido para los datos que se transmiten; de lo contrario, el failover resuelve la disponibilidad y crea un problema legal.</figcaption>
+</figure>
+<div class="relative border-l-2 border-purple-500/30 ml-3 pl-6 space-y-5 mb-6">
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-purple-500/20 border-2 border-purple-400"></span><p class="text-sm text-neutral-300"><strong class="text-purple-400">Nivel 1 · Reintentos con espera creciente.</strong> Resuelve errores transitorios y límites de tasa de corta duración. Siempre con un máximo de intentos.</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-purple-500/20 border-2 border-purple-400"></span><p class="text-sm text-neutral-300"><strong class="text-purple-400">Nivel 2 · Fallback de modelo.</strong> Otro modelo del mismo proveedor o un modelo local para tareas sencillas.</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-sky-500/20 border-2 border-sky-400"></span><p class="text-sm text-neutral-300"><strong class="text-sky-400">Nivel 3 · Fallback de proveedor o región.</strong> Requiere contrato, evaluación de la calidad del modelo alternativo y aprobación de la residencia de datos.</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-sky-500/20 border-2 border-sky-400"></span><p class="text-sm text-neutral-300"><strong class="text-sky-400">Nivel 4 · Modo degradado.</strong> Respuestas predefinidas, una cola para procesar más tarde o derivación a atención humana, con un aviso honesto al usuario.</p></div>
+</div>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-1-t5-p3" data-sum="porque">Cuanto más entra la IA en procesos críticos, más una caída del proveedor se convierte en una caída del negocio. Un plan de resiliencia escrito antes del incidente, con rutas aprobadas, RTO y RPO definidos y un modo degradado probado, es lo que marca la diferencia entre una hora de lentitud y un día de operación detenida.</p>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Disyuntor</div><div class="text-xs text-neutral-400">deja de insistir en lo que falla</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">RTO / RPO</div><div class="text-xs text-neutral-400">tiempo fuera de servicio / datos perdidos</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Residencia de datos</div><div class="text-xs text-neutral-400">dónde pueden ir los datos</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Modo degradado</div><div class="text-xs text-neutral-400">menos funciones, sin interrupción total</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 6 -->
+<section class="mb-16" data-inema-topic="modulo-3-1#topico-6" id="topico-6" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="orçamento por cliente, corte automático">💰 Límites de costos a escala</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-1-t6-p1">En IA, el costo varía por llamada y quien decide el tamaño de la llamada es, en parte, el usuario: un documento enorme que pega, una conversación que nunca termina, un agente que entra en un ciclo llamando herramientas. Sin límites, un solo cliente o un error de programación puede consumir el presupuesto del mes durante un fin de semana. <strong class="text-purple-400">FinOps de IA</strong> es la práctica de medir, asignar y controlar ese gasto con la misma disciplina que se aplica a la nube.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-1-t6-p2">Los límites funcionan por capas, todas en el gateway: <strong class="text-neutral-100">límite de tasa</strong> (llamadas o tokens por minuto, por clave), <strong class="text-neutral-100">límite por llamada</strong> (máximo de tokens de entrada y de salida), <strong class="text-neutral-100">presupuesto por tenant</strong> (monto mensual, con alertas antes de agotarse) y <strong class="text-neutral-100">límite de pasos</strong> para agentes. <strong class="text-purple-400">Tenant</strong> es cada cliente, área o producto que usa la plataforma y necesita tener sus gastos separados. Al alcanzar el límite, la mejor respuesta rara vez es mostrar un error sin más: es pasar a un modelo más barato y avisar.</p>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">Los límites de costos son reglas que se aplican antes de cada llamada —tasa, tamaño, presupuesto por tenant y pasos del agente—, junto con un registro del costo real después de cada llamada, para que el gasto sea previsible, atribuible y se detenga automáticamente cuando supera lo acordado.</p>
+</div>
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-purple-400">Objetivo:</strong> <span class="text-neutral-300">un control del presupuesto por tenant, con límite por minuto y paso a un modelo más barato.</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copiar</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900">"""guarda_orcamento.py — límites por tenant antes de cada llamada. Ejecuta: python3 guarda_orcamento.py"""
+import time
+from collections import defaultdict
+
+# R$ por 1 millón de tokens. VALORES DE EJEMPLO: cámbialos por los de tu contrato.
+PRECOS = {"rapido": {"entrada": 0.0, "saida": 0.0},    # local: el costo es la máquina, no el token
+          "forte":  {"entrada": 15.0, "saida": 60.0}}
+ORCAMENTO_MES = {"cliente-a": 50.0, "cliente-b": 0.12}   # R$ por mes
+LIMITE_MINUTO = {"cliente-a": 60, "cliente-b": 3}        # llamadas por minuto
+
+gasto = defaultdict(float)
+janela = defaultdict(list)
+
+class Bloqueado(Exception):
+    pass
+
+def custo(modelo, tok_in, tok_out):
+    p = PRECOS[modelo]
+    return (tok_in * p["entrada"] + tok_out * p["saida"]) / 1_000_000
+
+def autorizar(tenant, modelo, tok_in, tok_out_max):
+    agora = time.time()
+    janela[tenant] = [t for t in janela[tenant] if agora - t &lt; 60]
+    if len(janela[tenant]) &gt;= LIMITE_MINUTO[tenant]:
+        raise Bloqueado(f"{tenant}: límite por minuto (responde HTTP 429)")
+    escolhido = modelo
+    if gasto[tenant] + custo(modelo, tok_in, tok_out_max) &gt; ORCAMENTO_MES[tenant]:
+        if modelo == "rapido":
+            raise Bloqueado(f"{tenant}: presupuesto del mes agotado")
+        escolhido = "rapido"            # baja de nivel en vez de rechazar
+    janela[tenant].append(agora)
+    return escolhido
+
+def registrar(tenant, modelo, tok_in, tok_out):
+    gasto[tenant] += custo(modelo, tok_in, tok_out)   # usa el consumo REAL devuelto por la API
+
+if __name__ == "__main__":
+    for i in range(1, 6):
+        for tenant in ("cliente-a", "cliente-b"):
+            try:
+                m = autorizar(tenant, "forte", tok_in=2000, tok_out_max=800)
+                registrar(tenant, m, 2000, 500)
+                print(f"{tenant} llamada {i}: vía {m:6} | gasto R$ {gasto[tenant]:.4f}")
+            except Bloqueado as e:
+                print(f"{tenant} llamada {i}: BLOQUEADO — {e}")</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">Cómo verificar:</strong> el cliente-a debe realizar las 5 llamadas mediante «fuerte». El cliente-b debe realizar la 1.ª mediante «fuerte», la 2.ª y la 3.ª mediante «rápido» (el presupuesto está casi agotado) y quedar BLOQUEADO en la 4.ª y la 5.ª (límite de 3 por minuto). Si el resultado es ese, las tres capas —presupuesto, degradación y tasa— están funcionando. En producción, guarda <code>gasto</code> e <code>ventana</code> en Redis o en la base de datos, no en la memoria del proceso.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6">
+<h4 class="font-bold text-purple-400 mb-4">✓ Límites que funcionan</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-purple-400">✓</span><span>Aplicados en el gateway, iguales para todas las aplicaciones.</span></li>
+<li class="flex items-start gap-2"><span class="text-purple-400">✓</span><span>Alertas por niveles (por ejemplo, la mitad, tres cuartos y el presupuesto total).</span></li>
+<li class="flex items-start gap-2"><span class="text-purple-400">✓</span><span>Límite de pasos y de tokens para cada ejecución del agente.</span></li>
+<li class="flex items-start gap-2"><span class="text-purple-400">✓</span><span>Costo por recurso del producto, no solo por factura del proveedor.</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Límites que fallan</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Solo la alerta de facturación del proveedor, que llega después del gasto.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Una única clave de API compartida por todos los equipos.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Error directo al exceder el límite, sin degradación ni aviso.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Costo estimado según el prompt, sin verificar el uso real devuelto.</span></li>
+</ul>
+</div>
+</div>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-1-t6-p3" data-sum="porque">Los gestores aprueban la IA a escala cuando el costo es predecible. Con un presupuesto por tenant, degradación automática y costo atribuido a cada recurso del producto, la conversación pasa de «la factura llegó alta» a «este recurso cuesta tanto por usuario y vale la pena», que es la base de cualquier decisión de inversión.</p>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Tenant</div><div class="text-xs text-neutral-400">quién tiene el gasto por separado</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Límite de tasa</div><div class="text-xs text-neutral-400">llamadas por minuto</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Degradación</div><div class="text-xs text-neutral-400">modelo económico al llegar al límite</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">FinOps de IA</div><div class="text-xs text-neutral-400">medir, atribuir, controlar</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 7 -->
+<section class="mb-16" data-inema-topic="modulo-3-1#topico-7" id="topico-7" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">7</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="checklist e prompt para revisar um desenho">🧭 Revisión de arquitectura en la práctica</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-1-t7-p1">Todo lo que viste se reúne en una <strong class="text-purple-400">revisión de arquitectura</strong>: antes de que un sistema de IA pase a producción, o cuando empieza a crecer, alguien revisa las capas con preguntas concretas. El orden importa: medir va antes de optimizar, y el límite de costos va antes de abrirlo a todos los clientes.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-1-t7-p2">Un asistente de IA ayuda a hacer una revisión más completa, siempre que le proporciones el contexto real y le prohíbas inventar cifras. No sustituye la medición; sirve para plantear preguntas que el equipo no hizo, organizar los riesgos y proponer un orden de trabajo que tú validarás.</p>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">Una guía de revisión en siete pasos, desde las métricas hasta los límites de costos, más un prompt de análisis que convierte la descripción de tu sistema en una lista priorizada de decisiones, cada una con una forma de medirla.</p>
+</div>
+<div class="relative border-l-2 border-purple-500/30 ml-3 pl-6 space-y-5 mb-6">
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-purple-500/20 border-2 border-purple-400"></span><p class="text-sm text-neutral-300"><strong class="text-purple-400">1 · Métricas.</strong> ¿Hay un panel con p95, TTFT, tasa de errores, tokens y costo por tenant y por recurso?</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-purple-500/20 border-2 border-purple-400"></span><p class="text-sm text-neutral-300"><strong class="text-purple-400">2 · Gateway.</strong> ¿Alguna aplicación llama directamente al modelo con su propia clave? Si es así, ese es el primer trabajo.</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-purple-500/20 border-2 border-purple-400"></span><p class="text-sm text-neutral-300"><strong class="text-purple-400">3 · Enrutamiento.</strong> ¿Qué parte del tráfico es sencilla? ¿Hay un conjunto de evaluación para demostrar que el modelo pequeño puede manejarla?</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-purple-500/20 border-2 border-purple-400"></span><p class="text-sm text-neutral-300"><strong class="text-purple-400">4 · Caché.</strong> ¿El prefijo fijo va antes que el variable? ¿Hay preguntas repetidas que justifiquen una caché semántica separada por tenant?</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-sky-500/20 border-2 border-sky-400"></span><p class="text-sm text-neutral-300"><strong class="text-sky-400">5 · Inferencia.</strong> ¿El volumen es lo suficientemente estable como para comparar la API con un servidor propio según el costo por millón de tokens?</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-sky-500/20 border-2 border-sky-400"></span><p class="text-sm text-neutral-300"><strong class="text-sky-400">6 · Resiliencia.</strong> ¿Están definidos el RTO y el RPO? ¿Hay una ruta alternativa aprobada para los datos que se transmiten? ¿Se probó el modo degradado?</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-sky-500/20 border-2 border-sky-400"></span><p class="text-sm text-neutral-300"><strong class="text-sky-400">7 · Costo.</strong> ¿Hay un presupuesto por tenant, un límite por llamada, un límite de pasos del agente y una alerta antes de que termine el mes?</p></div>
+</div>
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-purple-400">Objetivo:</strong> <span class="text-neutral-300">revisar la arquitectura de tu sistema de IA con un asistente (Claude, ChatGPT, Gemini).</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copiar</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900">Eres arquitecto sénior de sistemas de IA y estás revisando un diseño antes de escalarlo.
+Regla: no inventes precios, latencias ni porcentajes. Cuando necesites un número,
+escribe la fórmula con variables y explica cómo mido el valor.
+
+CONTEXTO
+- Qué hace el sistema: &lt;descripción en 3 líneas&gt;
+- Volumen: &lt;llamadas por día, pico por minuto, tamaño promedio del prompt y de la respuesta&gt;
+- Latencia aceptable: &lt;p95 deseado, si la respuesta es en streaming&gt;
+- Modelos y proveedores actuales: &lt;lista&gt;
+- Datos que circulan: &lt;tipos; ¿hay datos personales? ¿Dónde se pueden procesar (LGPD, ley brasileña de protección de datos)?&gt;
+- Clientes/tenants: &lt;cuántos, si el gasto debe separarse&gt;
+- Presupuesto mensual: &lt;valor o "no definido"&gt;
+- Qué existe ya: &lt;¿gateway? ¿caché? ¿métricas? ¿fallback?&gt;
+
+TAREA
+1. Antes de analizar, haz hasta 5 preguntas sobre lo que falte.
+2. Evalúa cada capa: métricas, gateway, enrutamiento, caché, inferencia, resiliencia, costo.
+   Para cada una: situación actual, riesgo principal, recomendación.
+3. Enumera los 3 riesgos principales (técnico, financiero, legal), del más grave al menos grave.
+4. Entrega una tabla con 5 decisiones priorizadas:
+   Decisión | Capa | Esfuerzo (bajo/medio/alto) | Impacto | Cómo medir antes y después
+5. Di qué NO puedes evaluar solo con esta información.</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">Cómo verificar:</strong> La respuesta debe comenzar con preguntas, no con recomendaciones; cada decisión de la tabla debe tener una métrica concreta (p95, costo por tenant, tasa de aciertos de caché). Busca números sin fórmula: si aparece alguno, pide su origen o que lo sustituyan por una variable. Lleva la tabla al equipo y valida cada fila con datos reales antes de ejecutarla.</p>
+</div>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-1-t7-p3" data-sum="porque">Los líderes técnicos rara vez diseñan el sistema solos; dirigen las revisiones. Una guía fija garantiza que no se olvide ninguna capa, y el prompt de análisis acelera la primera versión sin sustituir la medición real por la opinión del modelo.</p>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Revisión de arquitectura</div><div class="text-xs text-neutral-400">preguntas por capa</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Medir antes</div><div class="text-xs text-neutral-400">optimizar sin métricas es adivinar</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Priorización</div><div class="text-xs text-neutral-400">esfuerzo × impacto</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Fórmula, no suposición</div><div class="text-xs text-neutral-400">números con origen</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- RESUMO -->
+<section class="mb-8">
+<div class="bg-gradient-to-br from-purple-900/40 via-dark-800 to-dark-800 rounded-xl border border-purple-500/30 p-6 sm:p-8">
+<h2 class="text-2xl font-bold mb-6">✅ Resumen del módulo</h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start gap-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">Capas intermedias</strong><span class="text-neutral-400"> — gateway, enrutador, inferencia, caché y observabilidad; ninguna aplicación habla directamente con el modelo.</span></div></div>
+<div class="flex items-start gap-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">El modelo más barato que resuelve el problema</strong><span class="text-neutral-400"> — enrutamiento en cascada con validador y fallback.</span></div></div>
+<div class="flex items-start gap-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">GPU ocupada y trabajo sin repetir</strong><span class="text-neutral-400"> — batching continuo, caché de prompts y caché semántica calibrada.</span></div></div>
+<div class="flex items-start gap-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">Falla prevista y gasto controlado</strong><span class="text-neutral-400"> — rutas aprobadas según la LGPD, modo degradado y presupuesto por tenant.</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-purple-400 mb-2">Siguiente módulo:</h3>
+<p class="text-neutral-300">3.2 — Modelos personalizados y propietarios 🧬</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="index.html">← Volver a la Ruta</a>
+<a class="flex-1 text-center px-6 py-3 bg-purple-700 text-white rounded-lg font-semibold hover:bg-purple-600 transition-colors" href="modulo-3-2.html">Siguiente módulo →</a>
+</div>
+</div>
+</section>
+</article>
+</div>
+</div>
+</main>
+<footer class="border-t border-dark-600 py-8 mt-8">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>FTD — Formación en Transformación Digital · contenido abierto y gratuito · 2026 · <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" rel="noopener" target="_blank">INEMA.CLUB</a> - <a class="text-amber-700 dark:text-slate-300 hover:underline" href="https://inema.pro" rel="noopener" target="_blank">PRO</a></p>
+</div>
+</footer>
+<!-- SCRIPTS NÚCLEO v1 -->
+<script>
+    function toggleTopic(button) {
+      var topicItem = button.closest('.topic-item');
+      if (!topicItem) return;
+      var explanation = topicItem.querySelector('.topic-explanation');
+      var willOpen = !explanation.classList.contains('active');
+      explanation.classList.toggle('active');
+      button.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+    }
+    function openModal(id) { var m = document.getElementById(id); if (m) { m.classList.remove('hidden'); document.body.style.overflow = 'hidden'; } }
+    function closeModal() { document.querySelectorAll('.modal').forEach(function (m) { m.classList.add('hidden'); }); document.body.style.overflow = 'auto'; }
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
+    function copyCode(btn) {
+      var pre = btn.closest('[data-copy-box]').querySelector('pre');
+      var txt = pre ? pre.innerText : '';
+      var done = function () { var o = btn.getAttribute('data-label-ok') || 'Copiado'; var t = btn.textContent; btn.textContent = o; setTimeout(function () { btn.textContent = t; }, 1500); };
+      try { navigator.clipboard.writeText(txt).then(done, done); } catch (e) { done(); }
+    }
+    (function () {
+      var themeToggle = document.getElementById('theme-toggle');
+      var darkIcon = document.getElementById('theme-toggle-dark-icon');
+      var lightIcon = document.getElementById('theme-toggle-light-icon');
+      var html = document.documentElement;
+      function sync() { var isDark = html.classList.contains('dark'); if (darkIcon) darkIcon.classList.toggle('hidden', isDark); if (lightIcon) lightIcon.classList.toggle('hidden', !isDark); }
+      sync();
+      if (themeToggle) themeToggle.addEventListener('click', function () {
+        html.classList.toggle('dark'); var nowDark = html.classList.contains('dark'); html.style.colorScheme = nowDark ? 'dark' : 'light';
+        try { localStorage.setItem('theme', nowDark ? 'dark' : 'light'); } catch (e) {}
+        try { var p = JSON.parse(localStorage.getItem('inema.prefs') || '{}'); p.theme = nowDark ? 'inema-dark' : 'claro'; localStorage.setItem('inema.prefs', JSON.stringify(p)); } catch (e) {}
+        sync();
+      });
+    })();
+  </script>
+<!-- learn.js + INEMA.init() POR ÚLTIMO -->
+<script src="../../assets/learn.js"></script>
+<script>
+    if (window.INEMA && typeof window.INEMA.init === 'function') { window.INEMA.init({ autoResume: true }); }
+  </script>
+</body>
+</html>

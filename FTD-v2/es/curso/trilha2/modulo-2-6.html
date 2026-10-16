@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="ftd-v2-es" name="inema-course"/>
+<title>Módulo 2.6 · Computer Vision Avanzada | FTD v2</title>
+<meta content="Clasificación, detección, segmentación, OCR y modelos de visión y lenguaje aplicados a problemas reales." name="description"/>
+<meta content="Módulo 2.6 · Computer Vision Avanzada | FTD v2" property="og:title"/>
+<meta content="Clasificación, detección, segmentación, OCR y modelos de visión y lenguaje aplicados a problemas reales." property="og:description"/>
+<!-- ANTI-FOUC (Erro #18) — primeiro script do head -->
+<script>
+(function () {
+  try {
+    var html = document.documentElement;
+    var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+    function clone(o) { var r = {}; for (var x in o) r[x] = o[x]; return r; }
+    var p = clone(DEF);
+    try {
+      var raw = localStorage.getItem('inema.prefs');
+      if (raw) {
+        var parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === 'object') {
+          for (var k in DEF) if (parsed[k] != null) p[k] = parsed[k];
+        }
+      } else {
+        var legacy = localStorage.getItem('theme');
+        if (legacy === 'light') p.theme = 'claro';
+        else if (legacy === 'dark') p.theme = 'inema-dark';
+      }
+    } catch (e) { p = clone(DEF); }
+
+    var THEMES = {
+      'inema-dark': { dark: true,  attr: null,        cs: 'dark'  },
+      'claro':      { dark: false, attr: null,        cs: 'light' },
+      'sepia':      { dark: false, attr: 'sepia',     cs: 'light' },
+      'foco':       { dark: null,  attr: 'foco',      cs: null    },
+      'contraste':  { dark: true,  attr: 'contraste', cs: 'dark'  }
+    };
+    var t = THEMES[p.theme] || THEMES['inema-dark'];
+
+    if (t.dark === true) html.classList.add('dark');
+    else if (t.dark === false) html.classList.remove('dark');
+
+    if (t.attr) html.setAttribute('data-theme', t.attr);
+    else html.removeAttribute('data-theme');
+
+    html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark') ? 'dark' : 'light'));
+
+    html.setAttribute('data-font', p.font || 'inter');
+    html.setAttribute('data-accent', p.accent || 'emerald');
+
+    var s = html.style;
+    var scale = (+p.fontScale || 100);
+    s.setProperty('--inema-font-scale', (scale / 100).toString());
+    s.setProperty('font-size', scale + '%');
+    s.setProperty('--measure', (+p.lineWidth || 68) + 'ch');
+    s.setProperty('--lh-body', (+p.leading || 1.7).toString());
+    var fam = p.font === 'system'
+      ? 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif'
+      : (p.font === 'leitura'
+        ? '"Atkinson Hyperlegible", "Inter", system-ui, sans-serif'
+        : '"Inter", system-ui, sans-serif');
+    s.setProperty('--font-body', fam);
+
+    var ACC = {
+      emerald: [152, 76, 45], blue: [217, 91, 60], purple: [258, 90, 66],
+      amber: [38, 92, 50], teal: [174, 72, 41], rose: [350, 89, 60]
+    };
+    var a = ACC[p.accent] || ACC.emerald;
+    s.setProperty('--accent-h', a[0] + '');
+    s.setProperty('--accent-s', a[1] + '%');
+    s.setProperty('--accent-l', a[2] + '%');
+    s.setProperty('--accent', 'hsl(' + a[0] + ' ' + a[1] + '% ' + a[2] + '%)');
+  } catch (err) {
+    try { document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme = 'dark'; } catch (e) {}
+  }
+})();
+</script>
+<!-- MANIFESTO do curso (Erro #28) — idêntico em todas as páginas -->
+<script data-inema-manifest="" type="application/json">
+{
+  "course": "ftd-v2-es",
+  "tracks": [
+    {
+      "n": "1",
+      "title": "Principiante",
+      "modules": [
+        {
+          "id": "1-1",
+          "title": "Impacto de la IA",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-1.html"
+        },
+        {
+          "id": "1-2",
+          "title": "Navegar el mundo digital",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-2.html"
+        },
+        {
+          "id": "1-3",
+          "title": "Ingeniería de prompts",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-3.html"
+        },
+        {
+          "id": "1-4",
+          "title": "Asistentes y agentes de IA",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-4.html"
+        },
+        {
+          "id": "1-5",
+          "title": "Creatividad visual con IA",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-5.html"
+        },
+        {
+          "id": "1-6",
+          "title": "Marketing y ventas con IA",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-6.html"
+        },
+        {
+          "id": "1-7",
+          "title": "Automatización de procesos",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-7.html"
+        },
+        {
+          "id": "1-8",
+          "title": "Inteligencia artificial avanzada",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-8.html"
+        },
+        {
+          "id": "1-9",
+          "title": "Negocios y monetización con IA",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-9.html"
+        }
+      ]
+    },
+    {
+      "n": "2",
+      "title": "Técnico",
+      "modules": [
+        {
+          "id": "2-1",
+          "title": "Desarrollo con APIs de IA",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-1.html"
+        },
+        {
+          "id": "2-2",
+          "title": "Arquitectura de aplicaciones con IA",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-2.html"
+        },
+        {
+          "id": "2-3",
+          "title": "RAG y bases de conocimiento",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-3.html"
+        },
+        {
+          "id": "2-4",
+          "title": "Fine-tuning y personalización",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-4.html"
+        },
+        {
+          "id": "2-5",
+          "title": "Agentes y flujos de trabajo complejos",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-5.html"
+        },
+        {
+          "id": "2-6",
+          "title": "Visión artificial avanzada",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-6.html"
+        },
+        {
+          "id": "2-7",
+          "title": "NLP y procesamiento de texto",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-7.html"
+        },
+        {
+          "id": "2-8",
+          "title": "MLOps y producción",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-8.html"
+        },
+        {
+          "id": "2-9",
+          "title": "Ética y gobernanza de IA",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-9.html"
+        }
+      ]
+    },
+    {
+      "n": "3",
+      "title": "Masterclass",
+      "modules": [
+        {
+          "id": "3-1",
+          "title": "Arquitectura de IA a gran escala",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-1.html"
+        },
+        {
+          "id": "3-2",
+          "title": "Modelos personalizados y propietarios",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-2.html"
+        },
+        {
+          "id": "3-3",
+          "title": "IA multimodal avanzada",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-3.html"
+        },
+        {
+          "id": "3-4",
+          "title": "Investigación y artículos de IA",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-4.html"
+        },
+        {
+          "id": "3-5",
+          "title": "Aprendizaje por refuerzo en IA",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-5.html"
+        },
+        {
+          "id": "3-6",
+          "title": "Seguridad y red teaming",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-6.html"
+        },
+        {
+          "id": "3-7",
+          "title": "IA en producción — escala enterprise",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-7.html"
+        },
+        {
+          "id": "3-8",
+          "title": "Liderazgo y estrategia en IA",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-8.html"
+        },
+        {
+          "id": "3-9",
+          "title": "Futuro de la IA y AGI",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-9.html"
+        }
+      ]
+    }
+  ]
+}
+</script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#0c0c10', 800: '#16161e', 700: '#1e1e28', 600: '#272730', 500: '#33333f' } }, fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'], display: ['Sora', 'Inter', 'sans-serif'], mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'] } } } }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Sora:wght@600;700;800&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    h1, h2, h3, h4, .font-display { font-family: 'Sora', 'Inter', sans-serif; }
+    .dark body { background-color: #0c0c10; }
+    .dark .text-neutral-100 { color: #e9e9ee; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+    pre { white-space: pre-wrap; word-break: break-word; }
+    pre, code, .font-mono { font-family: 'JetBrains Mono', ui-monospace, monospace; }
+
+    /* Light mode — Parte 1: base */
+    html:not(.dark) body { background-color: #f6f7f9; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800\/50 { background-color: #f6f7f9; }
+    html:not(.dark) .bg-dark-700 { background-color: #eceef2; }
+    html:not(.dark) .bg-dark-700\/50 { background-color: #f1f2f5; }
+    html:not(.dark) .bg-dark-700\/30 { background-color: #f4f5f7; }
+    html:not(.dark) .bg-dark-600 { background-color: #e1e3ea; }
+    html:not(.dark) .hover\:bg-dark-600:hover { background-color: #d6d9e1; }
+    html:not(.dark) .hover\:bg-dark-700\/50:hover { background-color: #eceef2; }
+    html:not(.dark) .text-neutral-100 { color: #1a1a22; }
+    html:not(.dark) .text-neutral-200 { color: #26262f; }
+    html:not(.dark) .text-neutral-300 { color: #3f3f4a; }
+    html:not(.dark) .text-neutral-400 { color: #5b5b68; }
+    html:not(.dark) .text-neutral-500 { color: #62626e; }
+    html:not(.dark) .border-dark-600 { border-color: #e1e3ea; }
+    html:not(.dark) .border-dark-700 { border-color: #e8e9ee; }
+    html:not(.dark) .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #e1e3ea; }
+    html:not(.dark) .bg-black\/40 { background-color: #f1f2f5; }
+    html:not(.dark) pre.code-dark { background-color: #1a1a22; color: #e9e9ee; }
+
+    /* Light mode — Parte 2: acento das 3 trilhas (texto -700, nunca -400 no claro) */
+    html:not(.dark) .text-emerald-400 { color: #047857; }
+    html:not(.dark) .text-emerald-300 { color: #047857; }
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #047857; }
+    html:not(.dark) .bg-emerald-500\/20 { background-color: rgba(4,120,87,0.12); }
+    html:not(.dark) .bg-emerald-500\/10 { background-color: rgba(4,120,87,0.08); }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(4,120,87,0.08); }
+    html:not(.dark) .bg-emerald-900\/20 { background-color: rgba(4,120,87,0.07); }
+    html:not(.dark) .bg-emerald-900\/30 { background-color: rgba(4,120,87,0.08); }
+    html:not(.dark) .bg-emerald-900\/40 { background-color: rgba(4,120,87,0.09); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(4,120,87,0.28); }
+    html:not(.dark) .hover\:border-emerald-500\/30:hover { border-color: rgba(4,120,87,0.4); }
+    html:not(.dark) .text-blue-400 { color: #1d4ed8; }
+    html:not(.dark) .text-blue-300 { color: #1d4ed8; }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #1d4ed8; }
+    html:not(.dark) .bg-blue-500\/20 { background-color: rgba(29,78,216,0.12); }
+    html:not(.dark) .bg-blue-500\/10 { background-color: rgba(29,78,216,0.08); }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(29,78,216,0.08); }
+    html:not(.dark) .bg-blue-900\/20 { background-color: rgba(29,78,216,0.07); }
+    html:not(.dark) .bg-blue-900\/30 { background-color: rgba(29,78,216,0.08); }
+    html:not(.dark) .bg-blue-900\/40 { background-color: rgba(29,78,216,0.09); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(29,78,216,0.28); }
+    html:not(.dark) .hover\:border-blue-500\/30:hover { border-color: rgba(29,78,216,0.4); }
+    html:not(.dark) .text-purple-400 { color: #6d28d9; }
+    html:not(.dark) .text-purple-300 { color: #6d28d9; }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #6d28d9; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(109,40,217,0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(109,40,217,0.08); }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(109,40,217,0.08); }
+    html:not(.dark) .bg-purple-900\/20 { background-color: rgba(109,40,217,0.07); }
+    html:not(.dark) .bg-purple-900\/30 { background-color: rgba(109,40,217,0.08); }
+    html:not(.dark) .bg-purple-900\/40 { background-color: rgba(109,40,217,0.09); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(109,40,217,0.28); }
+    html:not(.dark) .hover\:border-purple-500\/30:hover { border-color: rgba(109,40,217,0.4); }
+
+    /* Light mode — Parte 3: gradientes + especiais */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #854d0e; }
+    html:not(.dark) .text-yellow-400 { color: #854d0e; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #713f12; }
+    html:not(.dark) .bg-primary\/10 { background-color: #FEF9C3; }
+    html:not(.dark) .border-primary\/30 { border-color: #EAB308; }
+    html:not(.dark) .text-red-400 { color: #b91c1c; }
+    html:not(.dark) .bg-red-900\/20 { background-color: rgba(185,28,28,0.07); }
+    html:not(.dark) .border-red-500\/30 { border-color: rgba(185,28,28,0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #075985; }
+    html:not(.dark) .bg-sky-900\/20 { background-color: rgba(3,105,161,0.07); }
+    html:not(.dark) .border-sky-500\/30 { border-color: rgba(3,105,161,0.25); }
+
+    /* Light mode — Parte 4: nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255,255,255,0.95); }
+
+    /* Parte 5: bordas suavizadas no DARK (Erro #15) */
+    .dark .border-dark-600 { border-color: #2a2a35; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #2a2a35; }
+
+    /* SVG: no claro, um fundo escuro emoldurado mantém o contraste do desenho */
+    html:not(.dark) .svg-frame { background-color: #12121a; }
+    @media (prefers-reduced-motion: reduce) { svg * { animation: none !important; transition: none !important; } }
+  </style>
+<link href="../../../assets/learn.css" rel="stylesheet"/>
+<link href="https://inematds.github.io/FTD/FTD-v2/curso/trilha2/modulo-2-6.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/FTD/FTD-v2/en/curso/trilha2/modulo-2-6.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/FTD/FTD-v2/es/curso/trilha2/modulo-2-6.html" hreflang="es" rel="alternate"/><link href="https://inematds.github.io/FTD/FTD-v2/curso/trilha2/modulo-2-6.html" hreflang="x-default" rel="alternate"/><link href="https://inematds.github.io/FTD/FTD-v2/es/curso/trilha2/modulo-2-6.html" rel="canonical"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(250,204,21,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha2/modulo-2-6.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="../../../en/curso/trilha2/modulo-2-6.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">EN</a><a href="modulo-2-6.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#FACC15">ES</a></div>
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14 gap-2">
+<!-- Logo + INEMA.CLUB -->
+<div class="flex items-center space-x-3 flex-shrink-0">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🚀</span>
+<span class="font-display font-bold text-lg hidden sm:inline">FTD</span>
+</a>
+<span class="text-neutral-600 hidden sm:inline">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium hidden sm:inline" href="https://inema.club" rel="noopener" target="_blank">INEMA.CLUB</a>
+<span class="text-neutral-600 hidden sm:inline">-</span>
+<a class="text-amber-700 dark:text-slate-300 hover:underline text-sm font-medium hidden sm:inline" href="https://inema.pro" rel="noopener" target="_blank">PRO</a>
+</div>
+<!-- Trilhas + controles de aprendizagem + theme toggle -->
+<div class="flex items-center gap-1 sm:gap-1.5">
+<a class="px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors whitespace-nowrap" href="../trilha1/index.html">
+<span class="lg:hidden">T1</span><span class="hidden lg:inline">Principiante</span>
+</a>
+<a class="px-2.5 py-1.5 rounded-lg text-sm font-semibold text-blue-400 bg-blue-500/10 whitespace-nowrap" href="index.html">
+<span class="lg:hidden">T2</span><span class="hidden lg:inline">Técnico</span>
+</a>
+<a class="px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors whitespace-nowrap" href="../trilha3/index.html">
+<span class="lg:hidden">T3</span><span class="hidden lg:inline">Masterclass</span>
+</a>
+<span class="w-px h-6 bg-dark-600 mx-1 hidden sm:inline-block"></span>
+<!-- Minha jornada (abre o painel global; badge = % do curso) -->
+<button class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-300 hover:text-neutral-100 hover:bg-dark-700 transition-colors" data-inema-journey-open="" type="button">
+<svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="16"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+<span class="hidden md:inline">Mi recorrido</span>
+<span class="inema-journey-badge" data-count="0" data-inema-journey-badge=""></span>
+</button>
+<!-- Aparência (gatilho + painel obrigatório) -->
+<div class="relative">
+<button aria-expanded="false" class="inema-appearance-trigger inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-300 hover:text-neutral-100 transition-colors" data-inema-appearance-toggle="#inema-appearance-panel" type="button">
+<svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="16"><circle cx="12" cy="12" r="9"></circle><path d="M12 3v18"></path><path d="M12 3a9 9 0 0 1 0 18" fill="currentColor"></path></svg>
+<span class="hidden md:inline">Apariencia</span>
+</button>
+<div class="inema-appearance-pop right-0" data-inema-appearance="" id="inema-appearance-panel">
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Tema</span>
+<div class="inema-segment">
+<button data-inema-set-theme="inema-dark" type="button">Oscuro</button>
+<button data-inema-set-theme="claro" type="button">Claro</button>
+<button data-inema-set-theme="sepia" type="button">Sepia</button>
+</div>
+<div class="inema-segment">
+<button data-inema-set-theme="foco" type="button">Enfoque</button>
+<button data-inema-set-theme="contraste" type="button">Alto contraste</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Fuente</span>
+<div class="inema-segment">
+<button data-inema-set-font="inter" type="button">Inter</button>
+<button data-inema-set-font="system" type="button">Sistema</button>
+<button data-inema-set-font="leitura" type="button">Lectura</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Tamaño</span>
+<div class="inema-segment">
+<button data-inema-set-fontscale="100" type="button">A</button>
+<button data-inema-set-fontscale="112" type="button">A+</button>
+<button data-inema-set-fontscale="125" type="button">A++</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Ancho</span>
+<div class="inema-segment">
+<button data-inema-set-linewidth="60" type="button">Estrecho</button>
+<button data-inema-set-linewidth="68" type="button">Mediano</button>
+<button data-inema-set-linewidth="75" type="button">Ancho</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Interlineado</span>
+<div class="inema-segment">
+<button data-inema-set-leading="1.45" type="button">Compacto</button>
+<button data-inema-set-leading="1.7" type="button">Cómodo</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Acento</span>
+<div class="inema-accent-grid">
+<button aria-label="Acento esmeralda" data-inema-set-accent="emerald" type="button"></button>
+<button aria-label="Acento azul" data-inema-set-accent="blue" type="button"></button>
+<button aria-label="Acento violeta" data-inema-set-accent="purple" type="button"></button>
+<button aria-label="Acento ámbar" data-inema-set-accent="amber" type="button"></button>
+<button aria-label="Acento verde azulado" data-inema-set-accent="teal" type="button"></button>
+<button aria-label="Acento rosa" data-inema-set-accent="rose" type="button"></button>
+</div>
+</div>
+</div>
+</div>
+<!-- Theme toggle sol/lua (núcleo v1; o JS o mantém coerente com o tema) -->
+<button aria-label="Alternar tema claro/oscuro" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20">
+<path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+</svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20">
+<path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path>
+</svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<main data-inema-module="2-6" data-inema-track="2" id="conteudo">
+<!-- BREADCRUMB -->
+<nav aria-label="Ruta de navegación" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-blue-400" href="../../index.html">Inicio</a><span>/</span>
+<a class="hover:text-blue-400" href="index.html">Ruta 2</a><span>/</span>
+<span class="text-blue-400">Módulo 2.6</span>
+</div>
+</nav>
+<!-- HEADER do módulo -->
+<header class="bg-gradient-to-br from-blue-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-blue-500/20 text-blue-400 text-xs font-semibold rounded-full mb-4">MÓDULO 2.6</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">👁️ Computer Vision avanzada</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">Cómo las máquinas extraen información de imágenes: clasificar, detectar, segmentar, leer texto y —con los <strong class="text-blue-400">modelos de visión y lenguaje</strong> — responder preguntas sobre una foto. Vas a ejecutar detección con YOLO, extraer datos de una imagen con un VLM local en Ollama, entrenar con tu propio dataset y medir con las métricas adecuadas.</p>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">7</div><div class="text-xs text-neutral-400">Temas</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">~55</div><div class="text-xs text-neutral-400">Minutos</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">Avanzado</div><div class="text-xs text-neutral-400">Nivel</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">Práctico</div><div class="text-xs text-neutral-400">Tipo</div></div>
+</div>
+<div class="flex items-center gap-3 mt-8">
+<div aria-label="Progreso del módulo 2.6" class="inema-ring" data-inema-meter="modulo:2-6"><span class="inema-ring__value" data-inema-meter-pct="">0%</span></div>
+<div class="inema-meter-label" data-inema-meter="modulo:2-6"><strong data-inema-meter-frac="">0 de 0</strong> temas leídos · <span data-inema-section-counter="">Sección 1 de 7</span></div>
+</div>
+</div>
+</header>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+<div class="lg:flex lg:gap-10">
+<!-- TOC sticky + scrollspy -->
+<aside class="hidden lg:block lg:w-56 flex-shrink-0">
+<nav aria-label="Índice de la página" class="sticky top-20 self-start" data-inema-toc="">
+<p class="text-xs font-semibold uppercase tracking-wide text-neutral-500 mb-3">En este módulo</p>
+<ol class="space-y-1 text-sm">
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-blue-400" href="#topico-1">1. Mapa de tareas</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-blue-400" href="#topico-2">2. Detección con YOLO</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-blue-400" href="#topico-3">3. Segmentación</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-blue-400" href="#topico-4">4. OCR y documentos</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-blue-400" href="#topico-5">5. Visión y lenguaje</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-blue-400" href="#topico-6">6. Entrenar y medir</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-blue-400" href="#topico-7">7. Producción y ética</a></li>
+</ol>
+</nav>
+</aside>
+<!-- ARTIGO -->
+<article class="inema-prose flex-1 min-w-0">
+<h2 class="text-2xl font-bold mb-8">Contenido detallado</h2>
+<!-- TÓPICO 1 -->
+<section class="mb-16" data-inema-topic="modulo-2-6#topico-1" id="topico-1" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="o que, onde, qual pixel, o que diz">🧭 El mapa de las tareas de visión</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-6-t1-p1"><strong class="text-blue-400">Visión computacional</strong> es el área que permite que los programas extraigan información de imágenes y videos. Para la computadora, una foto es una cuadrícula de <strong class="text-neutral-100">píxeles</strong> —cada uno con tres números de color (rojo, verde, azul). El trabajo del modelo es transformar esa cuadrícula en una respuesta útil. El tipo de respuesta define la tarea, y elegir la tarea adecuada es la mitad del proyecto.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-6-t1-p2">A <strong class="text-neutral-100">clasificación</strong> responde «¿qué hay en la imagen?» con una etiqueta. La <strong class="text-neutral-100">detección</strong> responde «¿qué hay y dónde?» con cajas. La <strong class="text-neutral-100">segmentación</strong> responde «¿qué corresponde a cada píxel?» con máscaras. El <strong class="text-neutral-100">OCR</strong> lee el texto. Y los <strong class="text-neutral-100">VLM</strong> (<em>modelos de visión y lenguaje</em>, modelos de visión y lenguaje) responden preguntas en lenguaje natural sobre la imagen. Cuanto más detallada sea la salida, más cuesta anotar los datos y ejecutar el modelo.</p>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">Es la clasificación de las tareas de visión según el tipo de salida: etiqueta (clasificación), cajas (detección), máscaras (segmentación), texto (OCR) y respuesta libre o JSON (VLM). Cada una tiene sus propios modelos, formatos de anotación y métricas.</p>
+</div>
+<!-- SVG 1: quatro saídas -->
+<figure class="svg-frame rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="La misma escena con un auto y una persona analizada de cuatro maneras: la clasificación devuelve una etiqueta, la detección dibuja cuadros, la segmentación colorea los píxeles de cada objeto y el VLM responde una pregunta en texto." class="w-full h-auto" role="img" viewbox="0 0 860 300">
+<defs>
+<filter height="160%" id="m26-glow" width="160%" x="-30%" y="-30%"><fegaussianblur result="b" stddeviation="2"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="28" id="m26-grid" patternunits="userSpaceOnUse" width="28"><circle cx="1.2" cy="1.2" fill="#3b82f6" opacity="0.14" r="1.2"></circle></pattern>
+<marker id="m26-ah" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#60a5fa"></path></marker>
+<style>@keyframes m26pulse{0%,100%{opacity:.55}50%{opacity:1}} .m26-pulse{animation:m26pulse 2.4s ease-in-out infinite}</style>
+</defs>
+<rect fill="url(#m26-grid)" height="300" width="860"></rect>
+<g font-family="Inter,sans-serif">
+<!-- painel 1 -->
+<rect fill="#0b1220" height="180" rx="12" stroke="#60a5fa" stroke-width="2" width="190" x="15" y="20"></rect>
+<rect fill="#1e293b" height="34" rx="8" width="90" x="40" y="130"></rect><circle cx="58" cy="166" fill="#334155" r="9"></circle><circle cx="112" cy="166" fill="#334155" r="9"></circle>
+<circle cx="160" cy="105" fill="#334155" r="10"></circle><rect fill="#334155" height="50" rx="6" width="18" x="151" y="117"></rect>
+<rect fill="#1d4ed8" height="28" rx="6" width="150" x="35" y="40"></rect><text fill="#eff6ff" font-size="13" font-weight="700" text-anchor="middle" x="110" y="59">«calle» · 0,91</text>
+<text fill="#eff6ff" font-size="14" font-weight="700" text-anchor="middle" x="110" y="228">Clasificación</text>
+<text fill="#bfdbfe" font-size="12" text-anchor="middle" x="110" y="247">¿qué hay?</text>
+<!-- painel 2 -->
+<rect fill="#0b1220" height="180" rx="12" stroke="#60a5fa" stroke-width="2" width="190" x="225" y="20"></rect>
+<rect fill="#1e293b" height="34" rx="8" width="90" x="250" y="130"></rect><circle cx="268" cy="166" fill="#334155" r="9"></circle><circle cx="322" cy="166" fill="#334155" r="9"></circle>
+<circle cx="370" cy="105" fill="#334155" r="10"></circle><rect fill="#334155" height="50" rx="6" width="18" x="361" y="117"></rect>
+<rect class="m26-pulse" fill="none" height="58" stroke="#38bdf8" stroke-width="2.5" width="104" x="243" y="120"></rect>
+<text fill="#7dd3fc" font-size="11" font-weight="700" x="245" y="114">auto</text>
+<rect class="m26-pulse" fill="none" height="80" stroke="#93c5fd" stroke-width="2.5" width="36" x="352" y="90"></rect>
+<text fill="#bfdbfe" font-size="11" font-weight="700" x="342" y="84">persona</text>
+<text fill="#eff6ff" font-size="14" font-weight="700" text-anchor="middle" x="320" y="228">Detección</text>
+<text fill="#bfdbfe" font-size="12" text-anchor="middle" x="320" y="247">¿qué hay y dónde?</text>
+<!-- painel 3 -->
+<rect fill="#0b1220" height="180" rx="12" stroke="#60a5fa" stroke-width="2" width="190" x="435" y="20"></rect>
+<rect fill="#38bdf8" fill-opacity="0.75" height="34" rx="8" width="90" x="460" y="130"></rect><circle cx="478" cy="166" fill="#38bdf8" fill-opacity="0.75" r="9"></circle><circle cx="532" cy="166" fill="#38bdf8" fill-opacity="0.75" r="9"></circle>
+<circle cx="580" cy="105" fill="#60a5fa" fill-opacity="0.85" r="10"></circle><rect fill="#60a5fa" fill-opacity="0.85" height="50" rx="6" width="18" x="571" y="117"></rect>
+<text fill="#eff6ff" font-size="14" font-weight="700" text-anchor="middle" x="530" y="228">Segmentación</text>
+<text fill="#bfdbfe" font-size="12" text-anchor="middle" x="530" y="247">¿qué píxeles?</text>
+<!-- painel 4 -->
+<rect fill="#0b1220" height="180" rx="12" stroke="#38bdf8" stroke-width="2.5" width="200" x="645" y="20"></rect>
+<text fill="#94a3b8" font-size="12" x="660" y="48">pregunta:</text>
+<text fill="#e0f2fe" font-size="12" x="660" y="68">«¿La persona está en el</text>
+<text fill="#e0f2fe" font-size="12" x="660" y="86">cruce peatonal?»</text>
+<text fill="#94a3b8" font-size="12" x="660" y="120">respuesta:</text>
+<text fill="#7dd3fc" font-size="12" x="660" y="140">«No. Está en la</text>
+<text fill="#7dd3fc" font-size="12" x="660" y="158">acera, al lado</text>
+<text fill="#7dd3fc" font-size="12" x="660" y="176">del auto.»</text>
+<text fill="#eff6ff" font-size="14" font-weight="700" text-anchor="middle" x="745" y="228">VLM</text>
+<text fill="#bfdbfe" font-size="12" text-anchor="middle" x="745" y="247">responde en texto</text>
+<text fill="#94a3b8" font-size="11" text-anchor="middle" x="430" y="285">más detalle en la salida → más costo para anotar y para ejecutar (valores de confianza ilustrativos)</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-blue-400">Cómo leer:</strong> de izquierda a derecha, la misma escena da respuestas cada vez más completas. Pregúntate cuál es la salida mínima que resuelve tu problema: para contar autos en un estacionamiento, bastan las cajas; para medir el área de una mancha en una pieza, necesitas una máscara.</figcaption>
+</figure>
+<div class="overflow-x-auto mb-6">
+<table class="w-full text-sm border border-dark-600 rounded-xl overflow-hidden">
+<thead><tr class="bg-dark-700"><th class="text-left p-3 text-blue-400">Tarea</th><th class="text-left p-3 text-blue-400">Salida</th><th class="text-left p-3 text-blue-400">Ejemplo de uso</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr><td class="p-3 font-semibold">Clasificación</td><td class="p-3 text-neutral-300">Etiqueta + confianza</td><td class="p-3 text-neutral-300">Pieza buena o defectuosa.</td></tr>
+<tr><td class="p-3 font-semibold">Detección</td><td class="p-3 text-neutral-300">Cajas con clase</td><td class="p-3 text-neutral-300">Contar productos en el estante.</td></tr>
+<tr><td class="p-3 font-semibold">Segmentación</td><td class="p-3 text-neutral-300">Máscara por píxel</td><td class="p-3 text-neutral-300">Medir el área de óxido, recortar el fondo.</td></tr>
+<tr><td class="p-3 font-semibold">Pose</td><td class="p-3 text-neutral-300">Puntos del cuerpo (keypoints)</td><td class="p-3 text-neutral-300">Postura durante ejercicios, ergonomía.</td></tr>
+<tr><td class="p-3 font-semibold">OCR</td><td class="p-3 text-neutral-300">Texto + posición</td><td class="p-3 text-neutral-300">Leer facturas y matrículas.</td></tr>
+<tr><td class="p-3 font-semibold">VLM</td><td class="p-3 text-neutral-300">Texto libre o JSON</td><td class="p-3 text-neutral-300">Describir, responder, extraer campos.</td></tr>
+</tbody>
+</table>
+</div>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-6-t1-p3" data-sum="porque">Los proyectos de visión suelen fallar por elegir la tarea equivocada: segmentar cuando bastaban los cuadros o usar un VLM lento cuando un detector pequeño funciona en tiempo real. Este mapa ayuda a dimensionar los datos, el hardware y el plazo antes de escribir código.</p>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Píxel</div><div class="text-xs text-neutral-400">tres números de color</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Detección</div><div class="text-xs text-neutral-400">clase + caja</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Máscara</div><div class="text-xs text-neutral-400">píxel a píxel</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">VLM</div><div class="text-xs text-neutral-400">imagen + lenguaje</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 2 -->
+<section class="mb-16" data-inema-topic="modulo-2-6#topico-2" id="topico-2" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="caixas, confiança, IoU e NMS">📦 Detección con YOLO</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-6-t2-p1">O <strong class="text-blue-400">YOLO</strong> (<em>You Only Look Once</em>, primera versión en 2015) es la familia de detectores más usada en la práctica: analiza la imagen una vez y devuelve, de una sola vez, todas las cajas con su clase y <strong class="text-neutral-100">confianza</strong> (un número de 0 a 1 que indica cuánto cree el modelo en esa detección). La biblioteca <strong class="text-neutral-100">ultralytics</strong> agrupa varias generaciones de YOLO con la misma interfaz en Python y en la línea de comandos; los modelos preentrenados reconocen las 80 clases del dataset COCO (persona, auto, perro, botella…).</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-6-t2-p2">Dos conceptos explican casi todos los ajustes de un detector. La <strong class="text-neutral-100">IoU</strong> (<em>Intersección sobre unión</em>) mide cuánto se superponen dos cajas: el área de la intersección dividida por el área de la unión, de 0 a 1. La <strong class="text-neutral-100">NMS</strong> (<em>Supresión de no máximos</em>) usa la IoU para eliminar duplicados: cuando varias cajas cubren el mismo objeto, se conserva la de mayor confianza y se descartan las que se superponen demasiado. Los dos controles que más ajustas son el umbral de confianza (<code>conf</code>) y el umbral de IoU del NMS (<code>iou</code>).</p>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">La detección de objetos consiste en localizar cada objeto con una caja (coordenadas x1, y1, x2, y2), una clase y una confianza. YOLO lo hace en tiempo real en GPU y con una velocidad aceptable en CPU en las versiones pequeñas.</p>
+</div>
+<!-- SVG 2: IoU e NMS -->
+<figure class="svg-frame rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="A la izquierda, dos cuadros superpuestos ilustran la IoU: intersección dividida por unión. A la derecha, tres cuadros candidatos sobre el mismo objeto con confianza de 0,92, 0,81 y 0,40; NMS conserva el de 0,92 y descarta los demás." class="w-full h-auto" role="img" viewbox="0 0 860 300">
+<rect fill="url(#m26-grid)" height="300" width="860"></rect>
+<g font-family="Inter,sans-serif">
+<text fill="#eff6ff" font-size="15" font-weight="700" x="30" y="36">IoU = intersección ÷ unión</text>
+<rect fill="#60a5fa" fill-opacity="0.18" height="130" stroke="#60a5fa" stroke-width="2.5" width="170" x="40" y="70"></rect>
+<rect fill="#38bdf8" fill-opacity="0.18" height="130" stroke="#38bdf8" stroke-width="2.5" width="170" x="120" y="110"></rect>
+<rect class="m26-pulse" fill="#e0f2fe" fill-opacity="0.45" height="90" width="90" x="120" y="110"></rect>
+<text fill="#bfdbfe" font-size="12" x="44" y="64">caja predicha</text>
+<text fill="#bae6fd" font-size="12" x="200" y="258">caja correcta</text>
+<text fill="#0b1220" font-size="12" font-weight="700" text-anchor="middle" x="165" y="160">∩</text>
+<text fill="#94a3b8" font-size="12" x="30" y="285">IoU cerca de 1 = cajas casi iguales</text>
+<path d="M420,30 L420,280" fill="none" stroke="#334155" stroke-dasharray="4 6" stroke-width="2"></path>
+<text fill="#eff6ff" font-size="15" font-weight="700" x="460" y="36">NMS: conserva la mejor caja</text>
+<rect fill="#1e293b" height="120" rx="10" width="120" x="500" y="100"></rect>
+<rect fill="none" height="136" stroke="#93c5fd" stroke-dasharray="5 4" stroke-opacity="0.7" stroke-width="2" width="140" x="488" y="92"></rect>
+<rect fill="none" height="126" stroke="#94a3b8" stroke-dasharray="5 4" stroke-opacity="0.6" stroke-width="2" width="150" x="476" y="88"></rect>
+<rect fill="none" filter="url(#m26-glow)" height="128" stroke="#38bdf8" stroke-width="3" width="130" x="495" y="96"></rect>
+<text fill="#7dd3fc" font-size="13" font-weight="700" x="660" y="110">0,92 → conserva</text>
+<text fill="#93c5fd" font-size="13" x="660" y="150">0,81 → descarta</text>
+<text fill="#94a3b8" font-size="13" x="660" y="190">0,40 → descarta</text>
+<text fill="#94a3b8" font-size="12" x="460" y="285">descarta las cajas que se superponen con la ganadora por encima del umbral de IoU</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-blue-400">Cómo leer:</strong> a la izquierda, el área clara del centro es la intersección; la IoU compara esa área con todo lo que cubren juntas las dos cajas. A la derecha, tres cajas señalan el mismo objeto; el NMS conserva la de mayor confianza (línea continua) y elimina las discontinuas que se superponen demasiado con ella. Los números son ilustrativos.</figcaption>
+</figure>
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-blue-400">Prueba:</strong> <span class="text-neutral-300">detectar y contar objetos en una imagen, localmente.</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copiar</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900"># detectar.py — instalar: pip install ultralytics
+# uso: python3 detectar.py &lt;foto.jpg o URL&gt;
+import sys
+from collections import Counter
+from ultralytics import YOLO
+
+imagen = sys.argv[1] if len(sys.argv) &gt; 1 else "https://ultralytics.com/images/bus.jpg"
+modelo = YOLO("yolo11n.pt")          # versión "nano"; descarga los pesos la primera vez
+
+resultado = modelo(imagen, conf=0.25, iou=0.7)[0]
+contagem = Counter()
+for caixa in resultado.boxes:
+    classe = resultado.names[int(caixa.cls)]
+    conf = float(caixa.conf)
+    x1, y1, x2, y2 = [round(v) for v in caixa.xyxy[0].tolist()]
+    contagem[classe] += 1
+    print(f"{classe:12s} conf={conf:.2f}  caixa=({x1},{y1})-({x2},{y2})")
+
+print("\nCONTAGEM:", dict(contagem))
+resultado.save(filename="detectado.jpg")   # imagen con las cajas dibujadas
+print("imagen guardada en detectado.jpg")</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">Cómo verificar:</strong> con la imagen de ejemplo (un autobús en la calle), el conteo debe incluir <code>bus</code> y algunas <code>person</code>. Abre <code>detectado.jpg</code> y comprueba si las cajas coinciden con los objetos. Vuelve a ejecutar con <code>conf=0.6</code>: aparecen menos cajas, y las que desaparecen son las de menor confianza.</p>
+</div>
+<div class="bg-primary/10 border border-primary/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-primary font-semibold mb-1">💡 Consejo</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-6-t2-p3">La familia YOLO recibe versiones nuevas con frecuencia, y ultralytics suele mantener la misma interfaz. Cambia <code>yolo11n.pt</code> por el nombre de una versión más reciente de la documentación y compárala en tu propia prueba. El sufijo indica el tamaño: <code>n</code> (nano) y <code>s</code> se ejecutan en CPU; <code>m</code>, <code>l</code> e <code>x</code> requieren GPU. Consulta también la licencia de ultralytics (AGPL) antes de integrar la herramienta en un producto cerrado.</p>
+</div>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-6-t2-p4" data-sum="porque">La detección es la tarea de visión con más aplicaciones directas: conteo, inventario, seguridad laboral y control de calidad. Entender la confianza, IoU y NMS te permite ajustar un detector existente a tu escenario sin entrenar nada.</p>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Confianza</div><div class="text-xs text-neutral-400">certeza de 0 a 1</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">IoU</div><div class="text-xs text-neutral-400">superposición de cajas</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">NMS</div><div class="text-xs text-neutral-400">elimina duplicados</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">COCO</div><div class="text-xs text-neutral-400">80 clases de referencia</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 3 -->
+<section class="mb-16" data-inema-topic="modulo-2-6#topico-3" id="topico-3" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="semântica, instância e Segment Anything">🧩 Segmentación</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-6-t3-p1">Cuando la caja es demasiado imprecisa, entra en juego la <strong class="text-blue-400">segmentación</strong>: cada píxel recibe una etiqueta. En la <strong class="text-neutral-100">segmentación semántica</strong>, todos los píxeles de «persona» tienen el mismo color, sin distinguir quién es quién. En la <strong class="text-neutral-100">segmentación de instancias</strong>, cada persona recibe su propia máscara. La <strong class="text-neutral-100">panóptica</strong> combina ambas: objetos contables separados y el fondo (cielo, calle) por clase.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-6-t3-p2">Un cambio importante llegó con <strong class="text-neutral-100">Segment Anything</strong> (SAM), de Meta, en 2023, y SAM 2, de 2024, que extiende la idea al video. Son modelos <strong class="text-neutral-100">que aceptan instrucciones</strong>: haces clic en un punto o dibujas una caja y el modelo devuelve la máscara del objeto, incluso si pertenece a clases que nunca vio durante el entrenamiento. En la práctica, un flujo común consiste en detectar con YOLO y pasar las cajas a SAM para obtener recortes precisos, o usar directamente un modelo de segmentación de instancias como <code>yolo11n-seg.pt</code>, que entrega la caja y la máscara de una vez.</p>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">La segmentación clasifica cada píxel de la imagen. El resultado es una máscara (una imagen del mismo tamaño en la que cada píxel indica a qué objeto o clase pertenece), útil cuando importan la forma y el área del objeto.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-4"><p class="text-blue-400 font-semibold text-sm mb-1">Semántica</p><p class="text-xs text-neutral-300" data-inema-block="m2-6-t3-p3">Un color por clase. Es útil para medir áreas: qué parte del cultivo está seca, qué parte de la pared tiene humedad.</p></div>
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-4"><p class="text-blue-400 font-semibold text-sm mb-1">Instancia</p><p class="text-xs text-neutral-300" data-inema-block="m2-6-t3-p4">Una máscara por objeto. Es útil para contar y medir cada elemento: frutas en una cinta transportadora, células en una lámina.</p></div>
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-4"><p class="text-blue-400 font-semibold text-sm mb-1">Que acepta instrucciones (SAM)</p><p class="text-xs text-neutral-300" data-inema-block="m2-6-t3-p5">Máscara a partir de un clic o una caja. Es útil para anotar datos rápidamente y para hacer recortes bajo demanda.</p></div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
+<h4 class="font-bold text-blue-400 mb-4">✓ Conviene segmentar</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>La respuesta depende del área, el contorno o la forma.</span></li>
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Objetos que se tocan o se superponen y que las cajas mezclan.</span></li>
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Recorte del fondo para un catálogo de productos.</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Basta con una caja</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Solo necesitas contar o saber si existe.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Presupuesto limitado para anotaciones: etiquetar una máscara cuesta más.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Hardware de borde limitado y necesidad de tiempo real.</span></li>
+</ul>
+</div>
+</div>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-6-t3-p6" data-sum="porque">La segmentación permite hacer mediciones que la detección no ofrece: área, contorno y recorte limpio. Los modelos que aceptan instrucciones redujeron mucho el trabajo de anotar datos. Saber cuándo usarla evita asumir el costo de la máscara cuando no hace falta.</p>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Semántica</div><div class="text-xs text-neutral-400">color por clase</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Instancia</div><div class="text-xs text-neutral-400">máscara por objeto</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">SAM</div><div class="text-xs text-neutral-400">segmenta con un clic</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Panóptica</div><div class="text-xs text-neutral-400">objetos + fondo</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 4 -->
+<section class="mb-16" data-inema-topic="modulo-2-6#topico-4" id="topico-4" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="do OCR clássico à leitura de layout">🔤 OCR y documentos</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-6-t4-p1"><strong class="text-blue-400">OCR</strong> (<em>Reconocimiento óptico de caracteres</em>) transforma la imagen de un texto en texto real, que puedes copiar, buscar y procesar. El OCR clásico funciona en dos etapas: <strong class="text-neutral-100">detectar</strong> dónde hay texto y <strong class="text-neutral-100">reconocer</strong> los caracteres de cada fragmento. Herramientas abiertas como Tesseract, PaddleOCR y docTR lo hacen localmente y funcionan bien con documentos escaneados nítidos.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-6-t4-p2">El problema real casi nunca es leer las letras: es entender el <strong class="text-neutral-100">diseño</strong> — qué número es el total y qué fila pertenece a qué columna de la tabla; qué es un encabezado. Por eso crecieron dos enfoques: modelos especializados en la disposición de documentos y los VLM, que reciben la imagen y devuelven directamente los campos solicitados en JSON. El VLM es más flexible; el OCR clásico es más predecible, más rápido y dice exactamente dónde está cada palabra.</p>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">El OCR convierte una imagen de texto en texto. La extracción de documentos va más allá: identifica campos (fecha, CNPJ, valor total) y estructuras (tablas, secciones), combinando OCR, análisis de disposición y, cada vez más, VLM.</p>
+</div>
+<div class="overflow-x-auto mb-6">
+<table class="w-full text-sm border border-dark-600 rounded-xl overflow-hidden">
+<thead><tr class="bg-dark-700"><th class="text-left p-3 text-blue-400">Enfoque</th><th class="text-left p-3 text-blue-400">Fortalezas</th><th class="text-left p-3 text-blue-400">Ten cuidado con</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr><td class="p-3 font-semibold">OCR clásico (Tesseract)</td><td class="p-3 text-neutral-300">Texto impreso limpio; funciona en cualquier máquina.</td><td class="p-3 text-neutral-300">Fotos torcidas, escritura a mano, tablas complejas.</td></tr>
+<tr><td class="p-3 font-semibold">OCR con aprendizaje profundo (PaddleOCR, docTR)</td><td class="p-3 text-neutral-300">Fotos de celular, fuentes variadas, ubicación de las palabras.</td><td class="p-3 text-neutral-300">Todavía necesita reglas para armar los campos.</td></tr>
+<tr><td class="p-3 font-semibold">VLM (qwen2.5vl, llava, modelos comerciales)</td><td class="p-3 text-neutral-300">Extraer campos directamente en JSON, entender el contexto.</td><td class="p-3 text-neutral-300">Puede inventar un valor ilegible; es más lento.</td></tr>
+</tbody>
+</table>
+</div>
+<div class="bg-primary/10 border border-primary/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-primary font-semibold mb-1">💡 Consejo</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-6-t4-p3">En documentos que afectan el dinero o las decisiones (facturas, boletos de pago, informes médicos), valida lo extraído con reglas: dígito verificador del CNPJ, suma de los artículos igual al total, fecha dentro de un intervalo plausible. Cuando una regla falla, envíalo a revisión humana en vez de confiar en la lectura.</p>
+</div>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-6-t4-p4" data-sum="porque">Gran parte de la información de las empresas todavía está en PDF escaneados, fotos y papel. Automatizar la lectura con validación es uno de los proyectos de visión con resultados más rápidos, y también uno de los que más cuidado exige para evitar errores silenciosos.</p>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">OCR</div><div class="text-xs text-neutral-400">la imagen se convierte en texto</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Disposición</div><div class="text-xs text-neutral-400">la estructura de la página</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Extracción de campos</div><div class="text-xs text-neutral-400">valor, fecha, CNPJ</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Validación mediante reglas</div><div class="text-xs text-neutral-400">verifica lo que leyó</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 5 -->
+<section class="mb-16" data-inema-topic="modulo-2-6#topico-5" id="topico-5" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="perguntar à imagem e receber JSON">🗣️ Modelos de visión y lenguaje</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-6-t5-p1">Un <strong class="text-blue-400">VLM</strong> combina un <strong class="text-neutral-100">codificador de imágenes</strong> (un modelo que transforma la foto en vectores) con un modelo de lenguaje. La imagen se divide en partes (<em>parches</em>), cada parte se convierte en un vector y esos vectores entran en el LLM como si fueran tokens, junto con tu texto. Entonces, el LLM responde sobre todo en conjunto. Así es como ChatGPT, Claude y Gemini «ven» imágenes, al igual que los modelos abiertos que se ejecutan en Ollama, como <code>llava</code> e <code>qwen2.5vl</code>.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-6-t5-p2">El uso más útil en sistemas no es la conversación: es la <strong class="text-neutral-100">extracción estructurada</strong>. Envías la imagen con una solicitud de salida en JSON (campos definidos, valores nulos cuando no se puedan ver) y tratas la respuesta como un dato. En la ruta compatible con OpenAI de Ollama, la imagen se envía como <code>image_url</code> con el archivo codificado en base64, el mismo formato de las API de pago.</p>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">Un modelo de visión y lenguaje recibe imagen y texto en la misma entrada y genera texto. Sirve para describir, responder preguntas, comparar imágenes y extraer información en formato estructurado, sin entrenar un modelo para cada tarea.</p>
+</div>
+<!-- SVG 3: VLM -->
+<figure class="svg-frame rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="Arquitectura de un VLM: la imagen se divide en parches, pasa por un codificador de imágenes y una proyección que genera tokens visuales; esos tokens se unen a los tokens del texto de la pregunta en el modelo de lenguaje, que devuelve la respuesta en JSON." class="w-full h-auto" role="img" viewbox="0 0 860 300">
+<defs>
+<style>@keyframes m26dash{to{stroke-dashoffset:-24}} .m26-flow{stroke-dasharray:6 6;animation:m26dash 1.6s linear infinite}</style>
+</defs>
+<rect fill="url(#m26-grid)" height="300" width="860"></rect>
+<g font-family="Inter,sans-serif">
+<rect fill="#0b1220" height="120" rx="10" stroke="#60a5fa" stroke-width="2" width="120" x="20" y="40"></rect>
+<path d="M60,40 L60,160 M100,40 L100,160 M20,80 L140,80 M20,120 L140,120" fill="none" stroke="#60a5fa" stroke-opacity="0.5" stroke-width="1.5"></path>
+<text fill="#eff6ff" font-size="13" font-weight="700" text-anchor="middle" x="80" y="186">imagen en parches</text>
+<path class="m26-flow" d="M142,100 L196,100" fill="none" marker-end="url(#m26-ah)" stroke="#60a5fa" stroke-width="2.5"></path>
+<rect fill="#0d1729" height="76" rx="12" stroke="#60a5fa" stroke-width="2" width="160" x="200" y="62"></rect>
+<text fill="#eff6ff" font-size="14" font-weight="700" text-anchor="middle" x="280" y="94">codificador</text>
+<text fill="#bfdbfe" font-size="12" text-anchor="middle" x="280" y="114">+ proyección</text>
+<path class="m26-flow" d="M362,100 L416,100" fill="none" marker-end="url(#m26-ah)" stroke="#60a5fa" stroke-width="2.5"></path>
+<rect fill="#1d4ed8" fill-opacity="0.5" height="22" rx="4" stroke="#93c5fd" width="22" x="420" y="89"></rect>
+<rect fill="#1d4ed8" fill-opacity="0.5" height="22" rx="4" stroke="#93c5fd" width="22" x="447" y="89"></rect>
+<rect fill="#1d4ed8" fill-opacity="0.5" height="22" rx="4" stroke="#93c5fd" width="22" x="474" y="89"></rect>
+<text fill="#bfdbfe" font-size="12" text-anchor="middle" x="458" y="80">tokens visuales</text>
+<rect fill="#0e1b26" height="52" rx="10" stroke="#38bdf8" stroke-width="2" width="250" x="20" y="222"></rect>
+<text fill="#e0f2fe" font-size="13" text-anchor="middle" x="145" y="245">«Extrae la fecha y el total</text>
+<text fill="#e0f2fe" font-size="13" text-anchor="middle" x="145" y="263">en JSON»</text>
+<path class="m26-flow" d="M272,248 C460,248 570,230 583,160" fill="none" marker-end="url(#m26-ah)" stroke="#38bdf8" stroke-width="2.5"></path>
+<text fill="#bae6fd" font-size="12" x="290" y="278">tokens de texto</text>
+<rect fill="#0e1b26" filter="url(#m26-glow)" height="110" rx="14" stroke="#38bdf8" stroke-width="2.5" width="130" x="520" y="45"></rect>
+<text fill="#e0f2fe" font-size="16" font-weight="700" text-anchor="middle" x="585" y="96">LLM</text>
+<text fill="#bae6fd" font-size="12" text-anchor="middle" x="585" y="116">lo lee todo en conjunto</text>
+<path d="M500,100 L516,100" fill="none" marker-end="url(#m26-ah)" stroke="#60a5fa" stroke-width="2.5"></path>
+<path class="m26-flow" d="M652,100 L696,100" fill="none" marker-end="url(#m26-ah)" stroke="#38bdf8" stroke-width="2.5"></path>
+<rect fill="#0b1220" height="96" rx="10" stroke="#93c5fd" stroke-width="2" width="140" x="700" y="52"></rect>
+<text fill="#93c5fd" font-size="12" x="712" y="76">{</text>
+<text fill="#e0f2fe" font-size="12" x="722" y="94">«fecha»: «…»,</text>
+<text fill="#e0f2fe" font-size="12" x="722" y="112">«total»: 0.0</text>
+<text fill="#93c5fd" font-size="12" x="712" y="130">}</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-blue-400">Cómo leer:</strong> son dos entradas —la imagen (arriba) y tu solicitud (abajo)— que se convierten en tokens y se encuentran dentro del LLM. Como la imagen también ocupa tokens, las imágenes grandes consumen contexto y tiempo; cambiarles el tamaño antes de enviarlas suele ser el ajuste de rendimiento más sencillo.</figcaption>
+</figure>
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-blue-400">Prueba:</strong> <span class="text-neutral-300">extraer campos de la foto de un recibo o una factura con un VLM local.</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copiar</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900"># extrair_imagem.py — VLM local no Ollama pela rota /v1
+# preparar: ollama pull qwen2.5vl:7b   (ou: ollama pull llava)
+#           pip install openai
+# uso: python3 extrair_imagem.py &lt;foto_do_cupom.jpg&gt;
+import base64, json, mimetypes, sys
+from openai import OpenAI
+
+client = OpenAI(base_url="http://localhost:11434/v1", api_key="ollama")  # API de pago: cambia la URL y la clave
+MODELO = "qwen2.5vl:7b"
+
+caminho = sys.argv[1]
+tipo = mimetypes.guess_type(caminho)[0] or "image/jpeg"
+b64 = base64.b64encode(open(caminho, "rb").read()).decode()
+
+pedido = """Extrae los datos de esta imagen y responde SOLAMENTE con JSON:
+{"estabelecimento": str|null, "data": "AAAA-MM-DD"|null,
+ "total": number|null, "itens": [{"descricao": str, "valor": number}]}
+Si un campo es ilegible, usa null. No inventes valores."""
+
+resp = client.chat.completions.create(
+    model=MODELO,
+    temperature=0,
+    response_format={"type": "json_object"},
+    messages=[{"role": "user", "content": [
+        {"type": "text", "text": pedido},
+        {"type": "image_url", "image_url": {"url": f"data:{tipo};base64,{b64}"}},
+    ]}],
+)
+dados = json.loads(resp.choices[0].message.content)
+print(json.dumps(dados, ensure_ascii=False, indent=2))
+
+soma = round(sum(i.get("valor") or 0 for i in dados.get("itens", [])), 2)
+if dados.get("total") is not None and abs(soma - dados["total"]) &gt; 0.01:
+    print(f"ATENCIÓN: la suma de los artículos ({soma}) difiere del total; revísalo manualmente")</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">Cómo verificar:</strong> fotografía un recibo real y ejecuta el script. El JSON debe abrirse sin errores y los campos deben coincidir con el papel. Cubre el total con el dedo y vuelve a tomar la foto: el campo <code>total</code> debe ser <code>null</code>. Si aparece un número, el modelo lo inventó, y la comprobación de la suma al final está precisamente para detectar este tipo de error.</p>
+</div>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-6-t5-p3" data-sum="porque">Los VLMs reemplazaron semanas de entrenamiento por una instrucción para muchas tareas de bajo volumen: clasificar fotos de inspección, leer documentos variados y describir imágenes para accesibilidad. Saber pedir JSON y validar la salida es lo que hace que esto sea confiable dentro de un sistema.</p>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Codificador</div><div class="text-xs text-neutral-400">la imagen se convierte en vectores</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Parche</div><div class="text-xs text-neutral-400">parte de la imagen</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Base64</div><div class="text-xs text-neutral-400">imagen como texto</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Salida JSON</div><div class="text-xs text-neutral-400">la respuesta se convierte en un dato</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 6 -->
+<section class="mb-16" data-inema-topic="modulo-2-6#topico-6" id="topico-6" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="anotar, ajustar e ler precisão, recall e mAP">🎯 Entrenar con tus datos y medir</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-6-t6-p1">Cuando la clase que necesitas no está en COCO —un defecto específico de tu pieza, una plaga de tu cultivo—, el camino es la <strong class="text-neutral-100">transferencia de aprendizaje</strong>: partir de un modelo preentrenado y ajustarlo con unos cientos de imágenes anotadas. El modelo ya sabe reconocer bordes, texturas y formas; tú solo le enseñas tus clases. Herramientas como Label Studio y CVAT ayudan a <strong class="text-neutral-100">anotar</strong> (dibujar las cajas o máscaras correctas), y el formato YOLO guarda cada caja como una línea de texto: clase, centro x, centro y, ancho y alto, normalizados de 0 a 1.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-6-t6-p2">Para medir, tres números. La <strong class="text-blue-400">precisión</strong> indica, de las detecciones realizadas, cuántas fueron correctas. El <strong class="text-blue-400">recall</strong> indica, de los objetos que existían, cuántos encontró el modelo. El <strong class="text-blue-400">mAP</strong> (<em>mean Average Precision</em>) resume el equilibrio entre ambos en todas las clases; el <code>mAP50</code> cuenta una detección como correcta si la IoU con la caja correcta es de al menos 0,5, y el <code>mAP50-95</code> es más exigente, con el promedio de varios umbrales de IoU. Cuál pesa más depende del costo del error: en una inspección de seguridad, pasar por alto un defecto (recall bajo) suele ser peor que una falsa alarma.</p>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">Este es el ciclo de personalización en visión: recopilar y anotar imágenes de tu entorno, ajustar un modelo preentrenado y medir la precisión, el recall y el mAP en un conjunto de validación que represente el uso real.</p>
+</div>
+<div class="relative border-l-2 border-blue-500/30 ml-3 pl-6 space-y-5 mb-6">
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-blue-500/20 border-2 border-blue-400"></span><p class="text-sm text-neutral-300"><strong class="text-blue-400">Recopilar.</strong> Fotos del entorno real: la misma cámara, iluminación de día y de noche, también ángulos difíciles.</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-blue-500/20 border-2 border-blue-400"></span><p class="text-sm text-neutral-300"><strong class="text-blue-400">Anotar.</strong> Reglas de anotación por escrito (¿qué cuenta como defecto?) y una segunda persona que revise una muestra.</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-sky-500/20 border-2 border-sky-400"></span><p class="text-sm text-neutral-300"><strong class="text-sky-400">Ajustar.</strong> Entrenar a partir de pesos preentrenados, con aumento de datos (rotación, brillo, recorte) realizado por la propia biblioteca.</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-sky-500/20 border-2 border-sky-400"></span><p class="text-sm text-neutral-300"><strong class="text-sky-400">Medir y equivocarse a propósito.</strong> Revisar las imágenes en las que el modelo se equivocó; casi siempre, la solución es anotar más casos parecidos.</p></div>
+</div>
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-blue-400">Objetivo:</strong> <span class="text-neutral-300">ejecutar un entrenamiento corto de principio a fin y leer las métricas.</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copiar</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900"># 1) entrenamiento de prueba con coco8 (8 imágenes, descargado automáticamente)
+yolo detect train data=coco8.yaml model=yolo11n.pt epochs=3 imgsz=640
+
+# 2) validar el mejor checkpoint y ver precisión (P), recall (R), mAP50 y mAP50-95
+yolo detect val model=runs/detect/train/weights/best.pt data=coco8.yaml
+
+# 3) con TU conjunto de datos: crea meu_dataset.yaml así
+#    path: &lt;carpeta del conjunto de datos&gt;
+#    train: images/train
+#    val: images/val
+#    names:
+#      0: &lt;clase_0, ej. rayado&gt;
+#      1: &lt;clase_1, ej. abollado&gt;
+#    (cada imagen tiene un .txt en labels/ con líneas: clase cx cy ancho alto)
+yolo detect train data=meu_dataset.yaml model=yolo11n.pt epochs=50 imgsz=640</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">Cómo verificar:</strong> al final del paso 2, la terminal muestra una tabla con las columnas <code>P</code>, <code>R</code>, <code>mAP50</code> e <code>mAP50-95</code>, por clase y en total (<code>all</code>). La carpeta <code>runs/detect/</code> guarda gráficos y la matriz de confusión. Con solo 3 épocas en coco8, los números serán bajos: el objetivo aquí es ver el ciclo en funcionamiento, no el resultado.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
+<h4 class="font-bold text-blue-400 mb-4">✓ Validación honesta</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Imágenes de validación de días y cámaras diferentes a las del entrenamiento.</span></li>
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Métrica elegida según el costo del error en el negocio.</span></li>
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Revisar los errores, no solo el promedio.</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Métrica engañosa</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Cuadros casi iguales del mismo video en el entrenamiento y en la validación.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>mAP alto en una clase rara con tres ejemplos.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Probar solo con fotos bonitas tomadas para el proyecto.</span></li>
+</ul>
+</div>
+</div>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-6-t6-p3" data-sum="porque">El modelo existente resuelve el caso general; el valor del proyecto está en las clases y condiciones de tu escenario. Saber anotar, ajustar y leer precisión y recall te permite prometer un resultado y saber cuándo todavía no es lo bastante bueno.</p>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Transferencia</div><div class="text-xs text-neutral-400">parte de pesos ya preparados</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Precisión</div><div class="text-xs text-neutral-400">aciertos entre las alarmas</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Recall</div><div class="text-xs text-neutral-400">objetos encontrados entre los reales</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">mAP</div><div class="text-xs text-neutral-400">resumen por clase e IoU</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 7 -->
+<section class="mb-16" data-inema-topic="modulo-2-6#topico-7" id="topico-7" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">7</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="borda × nuvem, rastreamento, biometria e LGPD">⚖️ Producción, ética y LGPD</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-6-t7-p1">Poner la visión en producción implica tomar decisiones que no aparecen en el notebook. Dónde se ejecuta el modelo: en el <strong class="text-neutral-100">borde</strong> (<em>edge</em> — en el propio dispositivo, cerca de la cámara, con baja latencia y sin enviar imágenes al exterior) o en la nube (más potencia, mayor costo de red). Cómo procesar video: en lugar de detectar cuadro por cuadro sin memoria, el <strong class="text-neutral-100">seguimiento</strong> (<em>tracking</em>, con algoritmos como ByteTrack, que ultralytics ya incluye) mantiene la identidad de cada objeto entre cuadros; esto permite contar a las personas que cruzan una línea sin contar dos veces a la misma.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-6-t7-p2">Y está el <strong class="text-neutral-100">drift</strong> (deriva): el mundo cambia y el modelo no. Una cámara nueva, la iluminación de otra estación, un envase rediseñado: la precisión cae en silencio. Guarda una muestra de las imágenes de producción, revísala periódicamente y vuelve a entrenar cuando bajen las métricas. En cuanto al aspecto humano, la regla más importante en Brasil: según la LGPD, <strong class="text-red-400">un dato biométrico</strong> — como el rostro usado para identificar a alguien — es un <strong class="text-neutral-100">dato personal sensible</strong>, sujeto a requisitos más estrictos de base legal, transparencia y seguridad.</p>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">Es el conjunto de decisiones para operar la visión en el mundo real: dónde ejecutarla, cómo hacer seguimiento en video, cómo detectar y corregir la deriva, y cómo tratar las imágenes de personas de acuerdo con la LGPD y con respeto por quienes aparecen en ellas.</p>
+</div>
+<!-- SVG 4: pipeline -->
+<figure class="svg-frame rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="Pipeline de visión en producción: cámara, modelo en el borde, regla de negocio y decisión; los casos con baja confianza pasan a revisión humana; una muestra de las imágenes vuelve para su anotación y reentrenamiento, cerrando el ciclo contra la deriva." class="w-full h-auto" role="img" viewbox="0 0 860 300">
+<rect fill="url(#m26-grid)" height="300" width="860"></rect>
+<g font-family="Inter,sans-serif">
+<rect fill="#0d1729" height="60" rx="12" stroke="#60a5fa" stroke-width="2" width="140" x="20" y="60"></rect>
+<text fill="#eff6ff" font-size="14" font-weight="700" text-anchor="middle" x="90" y="86">Cámara</text>
+<text fill="#bfdbfe" font-size="12" text-anchor="middle" x="90" y="105">cuadros</text>
+<path class="m26-flow" d="M162,90 L206,90" fill="none" marker-end="url(#m26-ah)" stroke="#60a5fa" stroke-width="2.5"></path>
+<rect fill="#0e1b26" filter="url(#m26-glow)" height="60" rx="12" stroke="#38bdf8" stroke-width="2.5" width="160" x="210" y="60"></rect>
+<text fill="#e0f2fe" font-size="14" font-weight="700" text-anchor="middle" x="290" y="86">Modelo en el borde</text>
+<text fill="#bae6fd" font-size="12" text-anchor="middle" x="290" y="105">detecta + hace seguimiento</text>
+<path class="m26-flow" d="M372,90 L416,90" fill="none" marker-end="url(#m26-ah)" stroke="#60a5fa" stroke-width="2.5"></path>
+<rect fill="#0d1729" height="60" rx="12" stroke="#60a5fa" stroke-width="2" width="160" x="420" y="60"></rect>
+<text fill="#eff6ff" font-size="14" font-weight="700" text-anchor="middle" x="500" y="86">Regla de negocio</text>
+<text fill="#bfdbfe" font-size="12" text-anchor="middle" x="500" y="105">umbral, conteo, zona</text>
+<path class="m26-flow" d="M582,90 L646,90" fill="none" marker-end="url(#m26-ah)" stroke="#60a5fa" stroke-width="2.5"></path>
+<text fill="#bfdbfe" font-size="11" text-anchor="middle" x="614" y="80">confianza alta</text>
+<rect fill="#0d1729" height="60" rx="12" stroke="#93c5fd" stroke-width="2" width="180" x="650" y="60"></rect>
+<text fill="#eff6ff" font-size="14" font-weight="700" text-anchor="middle" x="740" y="86">Decisión</text>
+<text fill="#bfdbfe" font-size="12" text-anchor="middle" x="740" y="105">alerta, registro</text>
+<path class="m26-flow" d="M500,122 L500,176" fill="none" marker-end="url(#m26-ah)" stroke="#38bdf8" stroke-width="2.5"></path>
+<text fill="#bae6fd" font-size="11" x="510" y="152">confianza baja</text>
+<rect fill="#0e1b26" height="56" rx="12" stroke="#38bdf8" stroke-width="2" width="160" x="420" y="180"></rect>
+<text fill="#e0f2fe" font-size="14" font-weight="700" text-anchor="middle" x="500" y="204">Revisión humana</text>
+<text fill="#bae6fd" font-size="12" text-anchor="middle" x="500" y="223">decide y corrige</text>
+<path class="m26-flow" d="M418,208 L254,208" fill="none" marker-end="url(#m26-ah)" stroke="#38bdf8" stroke-width="2.5"></path>
+<rect fill="#0e1b26" height="56" rx="12" stroke="#38bdf8" stroke-width="2" width="200" x="50" y="180"></rect>
+<text fill="#e0f2fe" font-size="14" font-weight="700" text-anchor="middle" x="150" y="204">Anotar + volver a entrenar</text>
+<text fill="#bae6fd" font-size="12" text-anchor="middle" x="150" y="223">muestra de producción</text>
+<path class="m26-flow" d="M200,178 C230,150 250,140 270,124" fill="none" marker-end="url(#m26-ah)" stroke="#38bdf8" stroke-width="2"></path>
+<text fill="#94a3b8" font-size="12" text-anchor="middle" x="430" y="280">el ciclo de abajo es lo que mantiene la precisión cuando el mundo cambia (drift)</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-blue-400">Cómo leer:</strong> la línea de arriba es el recorrido automático para los casos de confianza alta. Los casos dudosos pasan a una persona para que decida, y sus correcciones se convierten en nuevos ejemplos anotados que vuelven al modelo. Un sistema de visión sin este ciclo de abajo empeorará con el tiempo sin que nadie lo note.</figcaption>
+</figure>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
+<h4 class="font-bold text-blue-400 mb-4">✓ Uso responsable</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Procesar en el borde y guardar solo el resultado (conteo, alerta), no la imagen.</span></li>
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Desenfocar rostros y matrículas cuando no sea necesario identificar a nadie.</span></li>
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Aviso visible de que el lugar está siendo monitoreado y con qué propósito.</span></li>
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Probar el modelo con distintos grupos de personas antes de usarlo.</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Línea roja</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Reconocimiento facial sin base legal ni evaluación de impacto.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Decisión automática sobre personas sin posibilidad de revisión humana.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Guardar video «por si acaso», sin plazo de eliminación.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Inferir las emociones, la salud o el origen de alguien a partir de su imagen.</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-primary/10 border border-primary/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-primary font-semibold mb-1">💡 Consejo</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-6-t7-p3">Antes de proponer cualquier sistema que identifique personas, habla con el responsable de protección de datos (DPO) de la empresa y elabora un informe de impacto sobre la protección de datos. Muchas veces, el objetivo del negocio —contar el flujo de personas, medir una fila— se puede alcanzar sin identificar a nadie, y ese es el diseño más económico y seguro.</p>
+</div>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-6-t7-p4" data-sum="porque">La mayoría de los sistemas de visión no falla por el modelo: falla por la latencia, por la deriva no monitoreada o por un problema legal que se descubre tarde. Diseñar el ciclo completo y la privacidad desde el inicio es lo que permite que el proyecto supere su primer año.</p>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Borde</div><div class="text-xs text-neutral-400">funciona cerca de la cámara</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Seguimiento</div><div class="text-xs text-neutral-400">misma identidad entre fotogramas</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Deriva</div><div class="text-xs text-neutral-400">el mundo cambia, el modelo no</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Dato sensible</div><div class="text-xs text-neutral-400">datos biométricos en la LGPD</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- RESUMO -->
+<section class="mb-8">
+<div class="bg-gradient-to-br from-blue-900/40 via-dark-800 to-dark-800 rounded-xl border border-blue-500/30 p-6 sm:p-8">
+<h2 class="text-2xl font-bold mb-6">✅ Resumen del módulo</h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start gap-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">Elige la salida mínima</strong><span class="text-neutral-400"> — etiqueta, cuadro, máscara, texto o JSON.</span></div></div>
+<div class="flex items-start gap-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">La detección se ajusta con confianza, IoU y NMS</strong><span class="text-neutral-400"> — antes de entrenar cualquier cosa.</span></div></div>
+<div class="flex items-start gap-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">El VLM extrae en JSON y la regla valida</strong><span class="text-neutral-400"> — nulo cuando no se puede ver.</span></div></div>
+<div class="flex items-start gap-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">Producción es un ciclo</strong><span class="text-neutral-400"> — revisión humana, reentrenamiento contra la deriva y LGPD desde el diseño.</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-blue-400 mb-2">Siguiente módulo:</h3>
+<p class="text-neutral-300">2.7 — NLP y procesamiento de texto 📝</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="index.html">← Volver a la Ruta</a>
+<a class="flex-1 text-center px-6 py-3 bg-blue-700 text-white rounded-lg font-semibold hover:bg-blue-600 transition-colors" href="modulo-2-7.html">Siguiente módulo →</a>
+</div>
+</div>
+</section>
+</article>
+</div>
+</div>
+</main>
+<footer class="border-t border-dark-600 py-8 mt-8">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>FTD — Formación en Transformación Digital · contenido abierto y gratuito · 2026 · <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" rel="noopener" target="_blank">INEMA.CLUB</a> - <a class="text-amber-700 dark:text-slate-300 hover:underline" href="https://inema.pro" rel="noopener" target="_blank">PRO</a></p>
+</div>
+</footer>
+<!-- SCRIPTS NÚCLEO v1 -->
+<script>
+    function toggleTopic(button) {
+      var topicItem = button.closest('.topic-item');
+      if (!topicItem) return;
+      var explanation = topicItem.querySelector('.topic-explanation');
+      var willOpen = !explanation.classList.contains('active');
+      explanation.classList.toggle('active');
+      button.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+    }
+    function openModal(id) { var m = document.getElementById(id); if (m) { m.classList.remove('hidden'); document.body.style.overflow = 'hidden'; } }
+    function closeModal() { document.querySelectorAll('.modal').forEach(function (m) { m.classList.add('hidden'); }); document.body.style.overflow = 'auto'; }
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
+    function copyCode(btn) {
+      var pre = btn.closest('[data-copy-box]').querySelector('pre');
+      var txt = pre ? pre.innerText : '';
+      var done = function () { var o = btn.getAttribute('data-label-ok') || 'Copiado'; var t = btn.textContent; btn.textContent = o; setTimeout(function () { btn.textContent = t; }, 1500); };
+      try { navigator.clipboard.writeText(txt).then(done, done); } catch (e) { done(); }
+    }
+    (function () {
+      var themeToggle = document.getElementById('theme-toggle');
+      var darkIcon = document.getElementById('theme-toggle-dark-icon');
+      var lightIcon = document.getElementById('theme-toggle-light-icon');
+      var html = document.documentElement;
+      function sync() { var isDark = html.classList.contains('dark'); if (darkIcon) darkIcon.classList.toggle('hidden', isDark); if (lightIcon) lightIcon.classList.toggle('hidden', !isDark); }
+      sync();
+      if (themeToggle) themeToggle.addEventListener('click', function () {
+        html.classList.toggle('dark'); var nowDark = html.classList.contains('dark'); html.style.colorScheme = nowDark ? 'dark' : 'light';
+        try { localStorage.setItem('theme', nowDark ? 'dark' : 'light'); } catch (e) {}
+        try { var p = JSON.parse(localStorage.getItem('inema.prefs') || '{}'); p.theme = nowDark ? 'inema-dark' : 'claro'; localStorage.setItem('inema.prefs', JSON.stringify(p)); } catch (e) {}
+        sync();
+      });
+    })();
+  </script>
+<!-- learn.js + INEMA.init() POR ÚLTIMO -->
+<script src="../../assets/learn.js"></script>
+<script>
+    if (window.INEMA && typeof window.INEMA.init === 'function') { window.INEMA.init({ autoResume: true }); }
+  </script>
+</body>
+</html>

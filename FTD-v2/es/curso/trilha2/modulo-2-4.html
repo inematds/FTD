@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="ftd-v2-es" name="inema-course"/>
+<title>Módulo 2.4 · Fine-tuning y personalización | FTD v2</title>
+<meta content="Prompt, RAG o fine-tuning: la escalera de decisión, LoRA, preparación de datos, evaluación y costos." name="description"/>
+<meta content="Módulo 2.4 · Fine-tuning y personalización | FTD v2" property="og:title"/>
+<meta content="Prompt, RAG o fine-tuning: la escalera de decisión, LoRA, preparación de datos, evaluación y costos." property="og:description"/>
+<!-- ANTI-FOUC (Erro #18) — primeiro script do head -->
+<script>
+(function () {
+  try {
+    var html = document.documentElement;
+    var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+    function clone(o) { var r = {}; for (var x in o) r[x] = o[x]; return r; }
+    var p = clone(DEF);
+    try {
+      var raw = localStorage.getItem('inema.prefs');
+      if (raw) {
+        var parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === 'object') {
+          for (var k in DEF) if (parsed[k] != null) p[k] = parsed[k];
+        }
+      } else {
+        var legacy = localStorage.getItem('theme');
+        if (legacy === 'light') p.theme = 'claro';
+        else if (legacy === 'dark') p.theme = 'inema-dark';
+      }
+    } catch (e) { p = clone(DEF); }
+
+    var THEMES = {
+      'inema-dark': { dark: true,  attr: null,        cs: 'dark'  },
+      'claro':      { dark: false, attr: null,        cs: 'light' },
+      'sepia':      { dark: false, attr: 'sepia',     cs: 'light' },
+      'foco':       { dark: null,  attr: 'foco',      cs: null    },
+      'contraste':  { dark: true,  attr: 'contraste', cs: 'dark'  }
+    };
+    var t = THEMES[p.theme] || THEMES['inema-dark'];
+
+    if (t.dark === true) html.classList.add('dark');
+    else if (t.dark === false) html.classList.remove('dark');
+
+    if (t.attr) html.setAttribute('data-theme', t.attr);
+    else html.removeAttribute('data-theme');
+
+    html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark') ? 'dark' : 'light'));
+
+    html.setAttribute('data-font', p.font || 'inter');
+    html.setAttribute('data-accent', p.accent || 'emerald');
+
+    var s = html.style;
+    var scale = (+p.fontScale || 100);
+    s.setProperty('--inema-font-scale', (scale / 100).toString());
+    s.setProperty('font-size', scale + '%');
+    s.setProperty('--measure', (+p.lineWidth || 68) + 'ch');
+    s.setProperty('--lh-body', (+p.leading || 1.7).toString());
+    var fam = p.font === 'system'
+      ? 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif'
+      : (p.font === 'leitura'
+        ? '"Atkinson Hyperlegible", "Inter", system-ui, sans-serif'
+        : '"Inter", system-ui, sans-serif');
+    s.setProperty('--font-body', fam);
+
+    var ACC = {
+      emerald: [152, 76, 45], blue: [217, 91, 60], purple: [258, 90, 66],
+      amber: [38, 92, 50], teal: [174, 72, 41], rose: [350, 89, 60]
+    };
+    var a = ACC[p.accent] || ACC.emerald;
+    s.setProperty('--accent-h', a[0] + '');
+    s.setProperty('--accent-s', a[1] + '%');
+    s.setProperty('--accent-l', a[2] + '%');
+    s.setProperty('--accent', 'hsl(' + a[0] + ' ' + a[1] + '% ' + a[2] + '%)');
+  } catch (err) {
+    try { document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme = 'dark'; } catch (e) {}
+  }
+})();
+</script>
+<!-- MANIFESTO do curso (Erro #28) — idêntico em todas as páginas -->
+<script data-inema-manifest="" type="application/json">
+{
+  "course": "ftd-v2-es",
+  "tracks": [
+    {
+      "n": "1",
+      "title": "Principiante",
+      "modules": [
+        {
+          "id": "1-1",
+          "title": "Impacto de la IA",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-1.html"
+        },
+        {
+          "id": "1-2",
+          "title": "Navegar el mundo digital",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-2.html"
+        },
+        {
+          "id": "1-3",
+          "title": "Ingeniería de prompts",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-3.html"
+        },
+        {
+          "id": "1-4",
+          "title": "Asistentes y agentes de IA",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-4.html"
+        },
+        {
+          "id": "1-5",
+          "title": "Creatividad visual con IA",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-5.html"
+        },
+        {
+          "id": "1-6",
+          "title": "Marketing y ventas con IA",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-6.html"
+        },
+        {
+          "id": "1-7",
+          "title": "Automatización de procesos",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-7.html"
+        },
+        {
+          "id": "1-8",
+          "title": "Inteligencia artificial avanzada",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-8.html"
+        },
+        {
+          "id": "1-9",
+          "title": "Negocios y monetización con IA",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-9.html"
+        }
+      ]
+    },
+    {
+      "n": "2",
+      "title": "Técnico",
+      "modules": [
+        {
+          "id": "2-1",
+          "title": "Desarrollo con APIs de IA",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-1.html"
+        },
+        {
+          "id": "2-2",
+          "title": "Arquitectura de aplicaciones con IA",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-2.html"
+        },
+        {
+          "id": "2-3",
+          "title": "RAG y bases de conocimiento",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-3.html"
+        },
+        {
+          "id": "2-4",
+          "title": "Fine-tuning y personalización",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-4.html"
+        },
+        {
+          "id": "2-5",
+          "title": "Agentes y flujos de trabajo complejos",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-5.html"
+        },
+        {
+          "id": "2-6",
+          "title": "Visión artificial avanzada",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-6.html"
+        },
+        {
+          "id": "2-7",
+          "title": "NLP y procesamiento de texto",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-7.html"
+        },
+        {
+          "id": "2-8",
+          "title": "MLOps y producción",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-8.html"
+        },
+        {
+          "id": "2-9",
+          "title": "Ética y gobernanza de IA",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-9.html"
+        }
+      ]
+    },
+    {
+      "n": "3",
+      "title": "Masterclass",
+      "modules": [
+        {
+          "id": "3-1",
+          "title": "Arquitectura de IA a gran escala",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-1.html"
+        },
+        {
+          "id": "3-2",
+          "title": "Modelos personalizados y propietarios",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-2.html"
+        },
+        {
+          "id": "3-3",
+          "title": "IA multimodal avanzada",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-3.html"
+        },
+        {
+          "id": "3-4",
+          "title": "Investigación y artículos de IA",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-4.html"
+        },
+        {
+          "id": "3-5",
+          "title": "Aprendizaje por refuerzo en IA",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-5.html"
+        },
+        {
+          "id": "3-6",
+          "title": "Seguridad y red teaming",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-6.html"
+        },
+        {
+          "id": "3-7",
+          "title": "IA en producción — escala enterprise",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-7.html"
+        },
+        {
+          "id": "3-8",
+          "title": "Liderazgo y estrategia en IA",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-8.html"
+        },
+        {
+          "id": "3-9",
+          "title": "Futuro de la IA y AGI",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-9.html"
+        }
+      ]
+    }
+  ]
+}
+</script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#0c0c10', 800: '#16161e', 700: '#1e1e28', 600: '#272730', 500: '#33333f' } }, fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'], display: ['Sora', 'Inter', 'sans-serif'], mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'] } } } }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Sora:wght@600;700;800&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    h1, h2, h3, h4, .font-display { font-family: 'Sora', 'Inter', sans-serif; }
+    .dark body { background-color: #0c0c10; }
+    .dark .text-neutral-100 { color: #e9e9ee; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+    pre { white-space: pre-wrap; word-break: break-word; }
+    pre, code, .font-mono { font-family: 'JetBrains Mono', ui-monospace, monospace; }
+
+    /* Light mode — Parte 1: base */
+    html:not(.dark) body { background-color: #f6f7f9; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800\/50 { background-color: #f6f7f9; }
+    html:not(.dark) .bg-dark-700 { background-color: #eceef2; }
+    html:not(.dark) .bg-dark-700\/50 { background-color: #f1f2f5; }
+    html:not(.dark) .bg-dark-700\/30 { background-color: #f4f5f7; }
+    html:not(.dark) .bg-dark-600 { background-color: #e1e3ea; }
+    html:not(.dark) .hover\:bg-dark-600:hover { background-color: #d6d9e1; }
+    html:not(.dark) .hover\:bg-dark-700\/50:hover { background-color: #eceef2; }
+    html:not(.dark) .text-neutral-100 { color: #1a1a22; }
+    html:not(.dark) .text-neutral-200 { color: #26262f; }
+    html:not(.dark) .text-neutral-300 { color: #3f3f4a; }
+    html:not(.dark) .text-neutral-400 { color: #5b5b68; }
+    html:not(.dark) .text-neutral-500 { color: #62626e; }
+    html:not(.dark) .border-dark-600 { border-color: #e1e3ea; }
+    html:not(.dark) .border-dark-700 { border-color: #e8e9ee; }
+    html:not(.dark) .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #e1e3ea; }
+    html:not(.dark) .bg-black\/40 { background-color: #f1f2f5; }
+    html:not(.dark) pre.code-dark { background-color: #1a1a22; color: #e9e9ee; }
+
+    /* Light mode — Parte 2: acento das 3 trilhas (texto -700, nunca -400 no claro) */
+    html:not(.dark) .text-emerald-400 { color: #047857; }
+    html:not(.dark) .text-emerald-300 { color: #047857; }
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #047857; }
+    html:not(.dark) .bg-emerald-500\/20 { background-color: rgba(4,120,87,0.12); }
+    html:not(.dark) .bg-emerald-500\/10 { background-color: rgba(4,120,87,0.08); }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(4,120,87,0.08); }
+    html:not(.dark) .bg-emerald-900\/20 { background-color: rgba(4,120,87,0.07); }
+    html:not(.dark) .bg-emerald-900\/30 { background-color: rgba(4,120,87,0.08); }
+    html:not(.dark) .bg-emerald-900\/40 { background-color: rgba(4,120,87,0.09); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(4,120,87,0.28); }
+    html:not(.dark) .hover\:border-emerald-500\/30:hover { border-color: rgba(4,120,87,0.4); }
+    html:not(.dark) .text-blue-400 { color: #1d4ed8; }
+    html:not(.dark) .text-blue-300 { color: #1d4ed8; }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #1d4ed8; }
+    html:not(.dark) .bg-blue-500\/20 { background-color: rgba(29,78,216,0.12); }
+    html:not(.dark) .bg-blue-500\/10 { background-color: rgba(29,78,216,0.08); }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(29,78,216,0.08); }
+    html:not(.dark) .bg-blue-900\/20 { background-color: rgba(29,78,216,0.07); }
+    html:not(.dark) .bg-blue-900\/30 { background-color: rgba(29,78,216,0.08); }
+    html:not(.dark) .bg-blue-900\/40 { background-color: rgba(29,78,216,0.09); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(29,78,216,0.28); }
+    html:not(.dark) .hover\:border-blue-500\/30:hover { border-color: rgba(29,78,216,0.4); }
+    html:not(.dark) .text-purple-400 { color: #6d28d9; }
+    html:not(.dark) .text-purple-300 { color: #6d28d9; }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #6d28d9; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(109,40,217,0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(109,40,217,0.08); }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(109,40,217,0.08); }
+    html:not(.dark) .bg-purple-900\/20 { background-color: rgba(109,40,217,0.07); }
+    html:not(.dark) .bg-purple-900\/30 { background-color: rgba(109,40,217,0.08); }
+    html:not(.dark) .bg-purple-900\/40 { background-color: rgba(109,40,217,0.09); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(109,40,217,0.28); }
+    html:not(.dark) .hover\:border-purple-500\/30:hover { border-color: rgba(109,40,217,0.4); }
+
+    /* Light mode — Parte 3: gradientes + especiais */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #854d0e; }
+    html:not(.dark) .text-yellow-400 { color: #854d0e; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #713f12; }
+    html:not(.dark) .bg-primary\/10 { background-color: #FEF9C3; }
+    html:not(.dark) .border-primary\/30 { border-color: #EAB308; }
+    html:not(.dark) .text-red-400 { color: #b91c1c; }
+    html:not(.dark) .bg-red-900\/20 { background-color: rgba(185,28,28,0.07); }
+    html:not(.dark) .border-red-500\/30 { border-color: rgba(185,28,28,0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #075985; }
+    html:not(.dark) .bg-sky-900\/20 { background-color: rgba(3,105,161,0.07); }
+    html:not(.dark) .border-sky-500\/30 { border-color: rgba(3,105,161,0.25); }
+
+    /* Light mode — Parte 4: nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255,255,255,0.95); }
+
+    /* Parte 5: bordas suavizadas no DARK (Erro #15) */
+    .dark .border-dark-600 { border-color: #2a2a35; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #2a2a35; }
+
+    /* SVG: no claro, um fundo escuro emoldurado mantém o contraste do desenho */
+    html:not(.dark) .svg-frame { background-color: #12121a; }
+    @media (prefers-reduced-motion: reduce) { svg * { animation: none !important; transition: none !important; } }
+  </style>
+<link href="../../../assets/learn.css" rel="stylesheet"/>
+<link href="https://inematds.github.io/FTD/FTD-v2/curso/trilha2/modulo-2-4.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/FTD/FTD-v2/en/curso/trilha2/modulo-2-4.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/FTD/FTD-v2/es/curso/trilha2/modulo-2-4.html" hreflang="es" rel="alternate"/><link href="https://inematds.github.io/FTD/FTD-v2/curso/trilha2/modulo-2-4.html" hreflang="x-default" rel="alternate"/><link href="https://inematds.github.io/FTD/FTD-v2/es/curso/trilha2/modulo-2-4.html" rel="canonical"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(250,204,21,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha2/modulo-2-4.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="../../../en/curso/trilha2/modulo-2-4.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">EN</a><a href="modulo-2-4.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#FACC15">ES</a></div>
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14 gap-2">
+<!-- Logo + INEMA.CLUB -->
+<div class="flex items-center space-x-3 flex-shrink-0">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🚀</span>
+<span class="font-display font-bold text-lg hidden sm:inline">FTD</span>
+</a>
+<span class="text-neutral-600 hidden sm:inline">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium hidden sm:inline" href="https://inema.club" rel="noopener" target="_blank">INEMA.CLUB</a>
+<span class="text-neutral-600 hidden sm:inline">-</span>
+<a class="text-amber-700 dark:text-slate-300 hover:underline text-sm font-medium hidden sm:inline" href="https://inema.pro" rel="noopener" target="_blank">PRO</a>
+</div>
+<!-- Trilhas + controles de aprendizagem + theme toggle -->
+<div class="flex items-center gap-1 sm:gap-1.5">
+<a class="px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors whitespace-nowrap" href="../trilha1/index.html">
+<span class="lg:hidden">T1</span><span class="hidden lg:inline">Principiante</span>
+</a>
+<a class="px-2.5 py-1.5 rounded-lg text-sm font-semibold text-blue-400 bg-blue-500/10 whitespace-nowrap" href="index.html">
+<span class="lg:hidden">T2</span><span class="hidden lg:inline">Técnico</span>
+</a>
+<a class="px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors whitespace-nowrap" href="../trilha3/index.html">
+<span class="lg:hidden">T3</span><span class="hidden lg:inline">Masterclass</span>
+</a>
+<span class="w-px h-6 bg-dark-600 mx-1 hidden sm:inline-block"></span>
+<!-- Minha jornada (abre o painel global; badge = % do curso) -->
+<button class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-300 hover:text-neutral-100 hover:bg-dark-700 transition-colors" data-inema-journey-open="" type="button">
+<svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="16"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+<span class="hidden md:inline">Mi recorrido</span>
+<span class="inema-journey-badge" data-count="0" data-inema-journey-badge=""></span>
+</button>
+<!-- Aparência (gatilho + painel obrigatório) -->
+<div class="relative">
+<button aria-expanded="false" class="inema-appearance-trigger inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-300 hover:text-neutral-100 transition-colors" data-inema-appearance-toggle="#inema-appearance-panel" type="button">
+<svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="16"><circle cx="12" cy="12" r="9"></circle><path d="M12 3v18"></path><path d="M12 3a9 9 0 0 1 0 18" fill="currentColor"></path></svg>
+<span class="hidden md:inline">Apariencia</span>
+</button>
+<div class="inema-appearance-pop right-0" data-inema-appearance="" id="inema-appearance-panel">
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Tema</span>
+<div class="inema-segment">
+<button data-inema-set-theme="inema-dark" type="button">Oscuro</button>
+<button data-inema-set-theme="claro" type="button">Claro</button>
+<button data-inema-set-theme="sepia" type="button">Sepia</button>
+</div>
+<div class="inema-segment">
+<button data-inema-set-theme="foco" type="button">Enfoque</button>
+<button data-inema-set-theme="contraste" type="button">Alto contraste</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Fuente</span>
+<div class="inema-segment">
+<button data-inema-set-font="inter" type="button">Inter</button>
+<button data-inema-set-font="system" type="button">Sistema</button>
+<button data-inema-set-font="leitura" type="button">Lectura</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Tamaño</span>
+<div class="inema-segment">
+<button data-inema-set-fontscale="100" type="button">A</button>
+<button data-inema-set-fontscale="112" type="button">A+</button>
+<button data-inema-set-fontscale="125" type="button">A++</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Ancho</span>
+<div class="inema-segment">
+<button data-inema-set-linewidth="60" type="button">Estrecho</button>
+<button data-inema-set-linewidth="68" type="button">Mediano</button>
+<button data-inema-set-linewidth="75" type="button">Ancho</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Interlineado</span>
+<div class="inema-segment">
+<button data-inema-set-leading="1.45" type="button">Compacto</button>
+<button data-inema-set-leading="1.7" type="button">Cómodo</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Acento</span>
+<div class="inema-accent-grid">
+<button aria-label="Acento esmeralda" data-inema-set-accent="emerald" type="button"></button>
+<button aria-label="Acento azul" data-inema-set-accent="blue" type="button"></button>
+<button aria-label="Acento violeta" data-inema-set-accent="purple" type="button"></button>
+<button aria-label="Acento ámbar" data-inema-set-accent="amber" type="button"></button>
+<button aria-label="Acento verde azulado" data-inema-set-accent="teal" type="button"></button>
+<button aria-label="Acento rosa" data-inema-set-accent="rose" type="button"></button>
+</div>
+</div>
+</div>
+</div>
+<!-- Theme toggle sol/lua (núcleo v1; o JS o mantém coerente com o tema) -->
+<button aria-label="Alternar tema claro/oscuro" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20">
+<path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+</svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20">
+<path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path>
+</svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<main data-inema-module="2-4" data-inema-track="2" id="conteudo">
+<!-- BREADCRUMB -->
+<nav aria-label="Ruta de navegación" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-blue-400" href="../../index.html">Inicio</a><span>/</span>
+<a class="hover:text-blue-400" href="index.html">Ruta 2</a><span>/</span>
+<span class="text-blue-400">Módulo 2.4</span>
+</div>
+</nav>
+<!-- HEADER do módulo -->
+<header class="bg-gradient-to-br from-blue-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-blue-500/20 text-blue-400 text-xs font-semibold rounded-full mb-4">MÓDULO 2.4</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🎛️ Fine-tuning y personalización</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">Cuándo conviene entrenar un modelo y cuándo bastan un mejor prompt o un RAG. Entenderás la escala de decisión, qué es lo <strong class="text-blue-400">LoRA</strong> cambia por dentro, cómo montar un dataset que sirva, entrenar un adaptador de verdad con Hugging Face y medir si quedó mejor que el modelo base.</p>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">7</div><div class="text-xs text-neutral-400">Temas</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">~60</div><div class="text-xs text-neutral-400">Minutos</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">Avanzado</div><div class="text-xs text-neutral-400">Nivel</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">Práctico</div><div class="text-xs text-neutral-400">Tipo</div></div>
+</div>
+<div class="flex items-center gap-3 mt-8">
+<div aria-label="Progreso del módulo 2.4" class="inema-ring" data-inema-meter="modulo:2-4"><span class="inema-ring__value" data-inema-meter-pct="">0%</span></div>
+<div class="inema-meter-label" data-inema-meter="modulo:2-4"><strong data-inema-meter-frac="">0 de 0</strong> temas leídos · <span data-inema-section-counter="">Sección 1 de 7</span></div>
+</div>
+</div>
+</header>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+<div class="lg:flex lg:gap-10">
+<!-- TOC sticky + scrollspy -->
+<aside class="hidden lg:block lg:w-56 flex-shrink-0">
+<nav aria-label="Índice de la página" class="sticky top-20 self-start" data-inema-toc="">
+<p class="text-xs font-semibold uppercase tracking-wide text-neutral-500 mb-3">En este módulo</p>
+<ol class="space-y-1 text-sm">
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-blue-400" href="#topico-1">1. La escalera de decisión</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-blue-400" href="#topico-2">2. Qué cambia el entrenamiento</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-blue-400" href="#topico-3">3. LoRA y QLoRA</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-blue-400" href="#topico-4">4. Datos que sirven</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-blue-400" href="#topico-5">5. Entrenar un LoRA</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-blue-400" href="#topico-6">6. Evaluar de verdad</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-blue-400" href="#topico-7">7. Costos y mantenimiento</a></li>
+</ol>
+</nav>
+</aside>
+<!-- ARTIGO -->
+<article class="inema-prose flex-1 min-w-0">
+<h2 class="text-2xl font-bold mb-8">Contenido detallado</h2>
+<!-- TÓPICO 1 -->
+<section class="mb-16" data-inema-topic="modulo-2-4#topico-1" id="topico-1" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="prompt, RAG ou treino — nessa ordem">🪜 La escalera de decisión</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-4-t1-p1"><strong class="text-blue-400">Fine-tuning</strong> (ajuste fino) es continuar el entrenamiento de un modelo ya listo con tus ejemplos para que cambie su forma de responder. Es la herramienta más cara de la caja y la más solicitada por quienes todavía no probaron las otras. Antes de entrenar, sube la escalera peldaño por peldaño: casi siempre el problema se resuelve en uno más bajo, más barato y más fácil de mantener.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-4-t1-p2">La pregunta decisiva es <strong class="text-neutral-100">qué le falta al modelo</strong>. Si le falta una instrucción clara, el peldaño es el prompt. Si le falta <em>conocimiento</em> (el catálogo de la empresa, la norma interna, el precio de hoy), el peldaño es <strong class="text-neutral-100">RAG</strong> : buscar el fragmento correcto y agregarlo al contexto, como viste en el módulo 2.3. Solo cuando le falta <em>comportamiento</em> —un formato rígido, un tono constante, una tarea acotada que se repite miles de veces— entra en juego el entrenamiento.</p>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">La escalera de decisión es el orden en que pruebas personalizar un modelo: un prompt bien escrito, luego ejemplos en el prompt (few-shot), después RAG y, solo entonces, fine-tuning. Cada peldaño cuesta más que el anterior, tanto para implementarlo como para mantenerlo.</p>
+</div>
+<!-- SVG 1: escada -->
+<figure class="svg-frame rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="Escalera de cuatro peldaños para personalizar un modelo: 1 prompt claro, 2 ejemplos en el prompt, 3 RAG para conocimiento, 4 fine-tuning para comportamiento. El costo y el esfuerzo de mantenimiento aumentan con cada peldaño." class="w-full h-auto" role="img" viewbox="0 0 860 300">
+<defs>
+<filter height="160%" id="m24-glow" width="160%" x="-30%" y="-30%"><fegaussianblur result="b" stddeviation="2"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="28" id="m24-grid" patternunits="userSpaceOnUse" width="28"><circle cx="1.2" cy="1.2" fill="#3b82f6" opacity="0.14" r="1.2"></circle></pattern>
+<marker id="m24-ah" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#38bdf8"></path></marker>
+</defs>
+<rect fill="url(#m24-grid)" height="300" width="860"></rect>
+<g filter="url(#m24-glow)" font-family="Inter,sans-serif">
+<rect fill="#0d1729" height="56" rx="10" stroke="#60a5fa" stroke-width="2" width="190" x="20" y="220"></rect>
+<text fill="#eff6ff" font-size="14" font-weight="700" x="34" y="243">1 · Prompt claro</text><text fill="#bfdbfe" font-size="12" x="34" y="262">falta una instrucción</text>
+<rect fill="#0d1729" height="56" rx="10" stroke="#60a5fa" stroke-width="2" width="190" x="230" y="160"></rect>
+<text fill="#eff6ff" font-size="14" font-weight="700" x="244" y="183">2 · Few-shot</text><text fill="#bfdbfe" font-size="12" x="244" y="202">falta mostrar el formato</text>
+<rect fill="#0e1b26" height="56" rx="10" stroke="#38bdf8" stroke-width="2" width="190" x="440" y="100"></rect>
+<text fill="#e0f2fe" font-size="14" font-weight="700" x="454" y="123">3 · RAG</text><text fill="#bae6fd" font-size="12" x="454" y="142">falta conocimiento</text>
+<rect fill="#0e1b26" height="56" rx="10" stroke="#38bdf8" stroke-width="2.5" width="190" x="650" y="40"></rect>
+<text fill="#e0f2fe" font-size="14" font-weight="700" x="664" y="63">4 · Fine-tuning</text><text fill="#bae6fd" font-size="12" x="664" y="82">falta comportamiento</text>
+</g>
+<path d="M115,215 L320,215 M320,155 L535,155 M535,95 L745,95" fill="none" stroke="#60a5fa" stroke-dasharray="4 6" stroke-opacity="0.5" stroke-width="2"></path>
+<path d="M40,40 L40,190" fill="none" marker-end="url(#m24-ah)" stroke="#38bdf8" stroke-width="2" transform="rotate(180 40 115)"></path>
+<text fill="#7dd3fc" font-family="Inter,sans-serif" font-size="12" x="56" y="50">el costo y el mantenimiento</text>
+<text fill="#7dd3fc" font-family="Inter,sans-serif" font-size="12" x="56" y="66">aumentan en cada peldaño</text>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-blue-400">Cómo leer:</strong> Empieza abajo, a la izquierda. Sube solo cuando hayas probado el peldaño actual con ejemplos reales y haya fallado. La línea debajo de cada recuadro indica qué le falta al modelo: ese diagnóstico, no la moda, es lo que determina el peldaño.</figcaption>
+</figure>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
+<h4 class="font-bold text-blue-400 mb-4">✓ Fine-tuning tiene sentido</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Salida con formato rígido (JSON de un sistema heredado, informe estandarizado).</span></li>
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Tarea acotada y repetida en grandes volúmenes, donde un modelo pequeño entrenado reemplaza a uno grande.</span></li>
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Un tono o estilo que el prompt no logra mantener de forma constante.</span></li>
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Ejecutarlo de forma local o sin conexión, sin enviar datos afuera.</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ No entrenes para esto</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Enseñar datos que cambian (precios, inventario, normas): usa RAG.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Corregir un prompt que nadie probó bien.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Tener un «modelo de la empresa» solo para decir que lo tienes.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Cuando no tienes un conjunto de prueba para comparar.</span></li>
+</ul>
+</div>
+</div>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-4-t1-p3" data-sum="porque">Entrenar sin necesidad genera un modelo que tienes que versionar, alojar y volver a entrenar cada vez que cambias el modelo base. Saber bajar la escalera ahorra semanas, y saber subirla en el momento adecuado permite conseguir lo que ningún prompt puede lograr.</p>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Few-shot</div><div class="text-xs text-neutral-400">ejemplos dentro del prompt</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">RAG</div><div class="text-xs text-neutral-400">conocimiento recuperado en el momento</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Fine-tuning</div><div class="text-xs text-neutral-400">comportamiento incorporado en los pesos</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Diagnóstico</div><div class="text-xs text-neutral-400">qué le falta al modelo</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 2 -->
+<section class="mb-16" data-inema-topic="modulo-2-4#topico-2" id="topico-2" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="SFT, preferências e o que se perde">🧬 Qué cambia el entrenamiento</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-4-t2-p1">Un modelo es un montón de <strong class="text-neutral-100">pesos</strong> (los números ajustados durante el entrenamiento). El fine-tuning muestra ejemplos de entrada y la salida deseada, mide el error (la <strong class="text-neutral-100">loss</strong>, o pérdida) y empuja los pesos un poco en la dirección que reduce ese error. Al repetir el proceso con todos los ejemplos durante algunas <strong class="text-neutral-100">épocas</strong> (recorridos completos del dataset), el modelo empieza a imitar el patrón de tus datos.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-4-t2-p2">Hay dos familias de ajuste que encontrarás. El <strong class="text-blue-400">SFT</strong> (<em>supervised fine-tuning</em>) enseña con pares de pregunta → respuesta ideal. El ajuste por <strong class="text-blue-400">preferencia</strong> —como DPO (<em>Direct Preference Optimization</em>, de 2023)— muestra dos respuestas a la misma pregunta e indica cuál es mejor; sirve para refinar el tono y las decisiones cuando no puedes escribir la respuesta perfecta, pero sabes reconocerla. En la práctica, empieza por SFT.</p>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">Fine-tuning es continuar el entrenamiento de un modelo preentrenado con tus propios ejemplos. El modelo no «memoriza un documento»: ajusta los pesos para reproducir el patrón de comportamiento de los ejemplos: formato, tono y decisiones.</p>
+</div>
+<div class="overflow-x-auto mb-6">
+<table class="w-full text-sm border border-dark-600 rounded-xl overflow-hidden">
+<thead><tr class="bg-dark-700"><th class="text-left p-3 text-blue-400">Tipo</th><th class="text-left p-3 text-blue-400">El dato de entrenamiento</th><th class="text-left p-3 text-blue-400">Cuándo usarla</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr><td class="p-3 font-semibold">SFT</td><td class="p-3 text-neutral-300">Conversaciones con la respuesta ideal escrita.</td><td class="p-3 text-neutral-300">Formato, tarea acotada, estilo. Es el punto de partida.</td></tr>
+<tr><td class="p-3 font-semibold">Preferencia (DPO y similares)</td><td class="p-3 text-neutral-300">Pregunta + respuesta elegida + respuesta rechazada.</td><td class="p-3 text-neutral-300">Refinar el tono y las decisiones después del SFT.</td></tr>
+<tr><td class="p-3 font-semibold">Preentrenamiento continuo</td><td class="p-3 text-neutral-300">Texto sin procesar del dominio, sin preguntas.</td><td class="p-3 text-neutral-300">Vocabulario muy específico; costoso y poco común fuera de los laboratorios.</td></tr>
+<tr><td class="p-3 font-semibold">Destilación</td><td class="p-3 text-neutral-300">Respuestas de un modelo grande que se usan para entrenar uno pequeño.</td><td class="p-3 text-neutral-300">Reducir costos y latencia; revisa los términos de uso del modelo profesor.</td></tr>
+</tbody>
+</table>
+</div>
+<div class="bg-primary/10 border border-primary/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-primary font-semibold mb-1">💡 Consejo</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-4-t2-p3">El entrenamiento también quita. El efecto tiene nombre: <strong>olvido catastrófico</strong> : el modelo se vuelve excelente en tu tarea y empeora en otras que hacía bien. Por eso, tu conjunto de prueba necesita incluir algunos casos generales, no solo los de la tarea nueva.</p>
+</div>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-4-t2-p4" data-sum="porque">Saber qué cambia con el entrenamiento evita la expectativa equivocada más común: «voy a entrenarlo con los PDF de la empresa y lo va a saber todo». Fine-tuning graba comportamientos; los hechos que deben ser correctos y estar actualizados siguen en el RAG.</p>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Loss</div><div class="text-xs text-neutral-400">el error que reduce el entrenamiento</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">SFT</div><div class="text-xs text-neutral-400">pares con respuesta ideal</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">DPO</div><div class="text-xs text-neutral-400">mejor respuesta × peor respuesta</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Olvido</div><div class="text-xs text-neutral-400">gana aquí, pierde allá</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 3 -->
+<section class="mb-16" data-inema-topic="modulo-2-4#topico-3" id="topico-3" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="treinar 1% dos pesos e caber na sua GPU">🧩 LoRA y QLoRA</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-4-t3-p1">Ajustar los miles de millones de pesos ( <em>full fine-tuning</em>) requiere mucha memoria de GPU y genera una copia completa del modelo para cada versión. Low-Rank Adaptation ( <strong class="text-blue-400">LoRA</strong> (<em>Low-Rank Adaptation</em>, publicado en 2021) congela el modelo original y entrena solo dos matrices pequeñas junto a algunas capas. El resultado es un <strong class="text-neutral-100">adaptador</strong>: un archivo de unos megabytes que se acopla al modelo base, en lugar de ocupar gigabytes.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-4-t3-p2">El truco está en el <strong class="text-neutral-100">rank</strong> (o <code>r</code>). En lugar de aprender un cambio enorme de tamaño <code>d × d</code>, LoRA aprende dos matrices delgadas, <code>B</code> (<code>d × r</code>) e <code>A</code> (<code>r × d</code>), cuyo producto tiene el mismo formato. Con un <code>r</code> rank de entre 8 y 64, la cantidad de pesos entrenables se reduce a una pequeña fracción del total. QLoRA <strong class="text-blue-400">QLoRA</strong> (2023) va más allá: carga el modelo congelado <strong class="text-neutral-100">cuantizado</strong> a 4 bits —cada peso se guarda con menos precisión y ocupa menos memoria— y entrena LoRA encima.</p>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">LoRA es una técnica de ajuste eficiente (PEFT, <em>parameter-efficient fine-tuning</em>) que mantiene intacto el modelo original y entrena un adaptador pequeño de bajo rango. QLoRA es lo mismo, pero con el modelo base cuantizado a 4 bits para que ocupe menos memoria.</p>
+</div>
+<!-- SVG 2: LoRA -->
+<figure class="svg-frame rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="Diagrama de LoRA: la entrada x pasa por la matriz de pesos W congelada y, en paralelo, por las matrices pequeñas A y B entrenables. Las dos salidas se suman. Solo A y B se entrenan y se guardan como adaptador." class="w-full h-auto" role="img" viewbox="0 0 860 320">
+<defs>
+<style>@keyframes m24dash{to{stroke-dashoffset:-24}} .m24-flow{stroke-dasharray:6 6;animation:m24dash 1.6s linear infinite}</style>
+<marker id="m24-ahb" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#60a5fa"></path></marker>
+</defs>
+<rect fill="url(#m24-grid)" height="320" width="860"></rect>
+<g font-family="Inter,sans-serif">
+<rect fill="#0d1729" height="56" rx="12" stroke="#60a5fa" stroke-width="2" width="110" x="20" y="132"></rect>
+<text fill="#eff6ff" font-size="18" font-weight="700" text-anchor="middle" x="75" y="158">x</text>
+<text fill="#bfdbfe" font-size="12" text-anchor="middle" x="75" y="176">entrada</text>
+<path class="m24-flow" d="M132,150 C180,150 190,85 236,85" fill="none" marker-end="url(#m24-ahb)" stroke="#60a5fa" stroke-width="2.5"></path>
+<path class="m24-flow" d="M132,170 C180,170 190,235 236,235" fill="none" marker-end="url(#m24-ahb)" stroke="#38bdf8" stroke-width="2.5"></path>
+<rect fill="#111827" height="110" rx="12" stroke="#64748b" stroke-width="2" width="200" x="240" y="30"></rect>
+<text fill="#e2e8f0" font-size="20" font-weight="700" text-anchor="middle" x="340" y="74">W</text>
+<text fill="#cbd5e1" font-size="13" text-anchor="middle" x="340" y="96">pesos originales d × d</text>
+<text fill="#94a3b8" font-size="12" text-anchor="middle" x="340" y="118">congelados (no se entrenan)</text>
+<rect fill="#0e1b26" height="70" rx="10" stroke="#38bdf8" stroke-width="2.5" width="90" x="240" y="200"></rect>
+<text fill="#e0f2fe" font-size="18" font-weight="700" text-anchor="middle" x="285" y="232">A</text>
+<text fill="#bae6fd" font-size="12" text-anchor="middle" x="285" y="252">r × d</text>
+<path d="M332,235 L346,235" fill="none" marker-end="url(#m24-ahb)" stroke="#38bdf8" stroke-width="2"></path>
+<rect fill="#0e1b26" height="70" rx="10" stroke="#38bdf8" stroke-width="2.5" width="90" x="350" y="200"></rect>
+<text fill="#e0f2fe" font-size="18" font-weight="700" text-anchor="middle" x="395" y="232">B</text>
+<text fill="#bae6fd" font-size="12" text-anchor="middle" x="395" y="252">d × r</text>
+<text fill="#7dd3fc" font-size="12" text-anchor="middle" x="340" y="295">adaptador LoRA (solo se entrena y se guarda esto)</text>
+<path class="m24-flow" d="M442,85 C500,85 505,150 548,155" fill="none" marker-end="url(#m24-ahb)" stroke="#60a5fa" stroke-width="2.5"></path>
+<path class="m24-flow" d="M442,235 C500,235 505,170 548,165" fill="none" marker-end="url(#m24-ahb)" stroke="#38bdf8" stroke-width="2.5"></path>
+<circle cx="575" cy="160" fill="#0d1729" r="24" stroke="#60a5fa" stroke-width="2.5"></circle>
+<text fill="#eff6ff" font-size="22" font-weight="700" text-anchor="middle" x="575" y="168">+</text>
+<path d="M601,160 L668,160" fill="none" marker-end="url(#m24-ahb)" stroke="#60a5fa" stroke-width="2.5"></path>
+<rect fill="#0d1729" height="76" rx="12" stroke="#60a5fa" stroke-width="2" width="170" x="672" y="122"></rect>
+<text fill="#eff6ff" font-size="15" font-weight="700" text-anchor="middle" x="757" y="152">salida</text>
+<text fill="#bfdbfe" font-size="13" text-anchor="middle" x="757" y="174">W·x + B·A·x</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-blue-400">Cómo leer:</strong> La entrada sigue dos caminos. Arriba, el camino original, en gris porque está congelado. Abajo, el desvío fino A → B, en cian, que es lo único que se entrena. Las dos salidas se suman. Quita el adaptador y recuperas el modelo original; cambia el adaptador y cambias de «especialidad».</figcaption>
+</figure>
+<div class="overflow-x-auto mb-6">
+<table class="w-full text-sm border border-dark-600 rounded-xl overflow-hidden">
+<thead><tr class="bg-dark-700"><th class="text-left p-3 text-blue-400">Enfoque</th><th class="text-left p-3 text-blue-400">Qué se entrena</th><th class="text-left p-3 text-blue-400">Memoria</th><th class="text-left p-3 text-blue-400">Qué guardas</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr><td class="p-3 font-semibold">Ajuste fino completo</td><td class="p-3 text-neutral-300">Todos los pesos</td><td class="p-3 text-neutral-300">La más alta</td><td class="p-3 text-neutral-300">Una copia completa del modelo</td></tr>
+<tr><td class="p-3 font-semibold">LoRA</td><td class="p-3 text-neutral-300">Matrices A y B</td><td class="p-3 text-neutral-300">Mucho menor</td><td class="p-3 text-neutral-300">Adaptador de unos pocos megabytes</td></tr>
+<tr><td class="p-3 font-semibold">QLoRA</td><td class="p-3 text-neutral-300">A y B sobre una base de 4 bits</td><td class="p-3 text-neutral-300">La menor de las tres</td><td class="p-3 text-neutral-300">Adaptador de unos pocos megabytes</td></tr>
+</tbody>
+</table>
+</div>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-4-t3-p3" data-sum="porque">LoRA es lo que hizo accesible el fine-tuning fuera de los grandes laboratorios: los modelos pequeños se entrenan en una GPU de consumo o en Colab, y versionas los adaptadores igual que el código. En 2026, es el camino habitual para quienes personalizan modelos abiertos.</p>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Adaptador</div><div class="text-xs text-neutral-400">archivo pequeño que se acopla</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Rango (r)</div><div class="text-xs text-neutral-400">ancho del desvío entrenable</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Cuantización</div><div class="text-xs text-neutral-400">pesos con menos bits</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">PEFT</div><div class="text-xs text-neutral-400">entrenar poco, obtener mucho</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 4 -->
+<section class="mb-16" data-inema-topic="modulo-2-4#topico-4" id="topico-4" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="JSONL limpo, variado e sem dado pessoal">🗂️ Datos de calidad</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-4-t4-p1">El modelo aprende exactamente lo que muestran los ejemplos, incluidos sus defectos. Una respuesta perezosa en el dataset se convierte en una respuesta perezosa del modelo. Por eso, el trabajo pesado del ajuste fino no es el entrenamiento: es <strong class="text-neutral-100">armar y revisar los ejemplos</strong>. Unas pocas centenas de buenos ejemplos variados suelen enseñar más que miles de ejemplos repetitivos.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-4-t4-p2">El formato más usado es <strong class="text-blue-400">JSONL</strong>: un archivo de texto con <strong class="text-neutral-100">un objeto JSON por línea</strong>. Para los modelos de chat, cada línea tiene una lista <code>messages</code> con los roles <code>system</code>, <code>user</code> e <code>assistant</code> —el mismo formato de la API de chat. El entrenamiento aprende a generar el mensaje del <code>assistant</code>. Separa siempre una parte de los ejemplos para <strong class="text-neutral-100">validación</strong>: datos que el modelo nunca ve durante el entrenamiento y que sirven para medir si generalizó.</p>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">Preparar datos consiste en recopilar, limpiar, estandarizar y dividir ejemplos de entrada y salida ideal en un formato que el entrenador pueda entender (JSONL de mensajes), con una parte separada para validación y prueba.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
+<h4 class="font-bold text-blue-400 mb-4">✓ Dataset de calidad</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Cubre los casos difíciles y los casos límite, no solo los fáciles.</span></li>
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Respuestas revisadas por personas que conocen el tema.</span></li>
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>El mismo system prompt y el mismo formato en todas las líneas.</span></li>
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Datos personales eliminados o reemplazados por marcadores.</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Dataset de mala calidad</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Duplicados y casi duplicados (el modelo los memoriza).</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Ejemplos de prueba filtrados al entrenamiento.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Respuestas generadas por IA sin revisión humana.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>CPF, teléfono y nombre de cliente dentro de los ejemplos.</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-primary/10 border border-primary/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-primary font-semibold mb-1">💡 Consejo</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-4-t4-p3">Un modelo entrenado puede repetir fragmentos de los datos de entrenamiento. Según la LGPD (ley brasileña de protección de datos), incluir datos personales en un dataset constituye tratamiento de datos personales: se necesita una base legal y una finalidad. Lo más sencillo es anonimizar los datos antes —«Cliente A», «CPF-X»— y guardar el dataset con el mismo cuidado que una base de datos de clientes.</p>
+</div>
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-blue-400">Objetivo:</strong> <span class="text-neutral-300">validar, deduplicar y dividir tu JSONL en entrenamiento y validación.</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copiar</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900"># preparar_dados.py — solo biblioteca estándar de Python 3
+# uso: python3 preparar_dados.py &lt;ejemplos.jsonl&gt;
+import json, random, re, sys
+
+entrada = sys.argv[1]
+CPF = re.compile(r"\d{3}\.?\d{3}\.?\d{3}-?\d{2}")
+validos, vistos, problemas = [], set(), []
+
+with open(entrada, encoding="utf-8") as f:
+    for n, linha in enumerate(f, 1):
+        linha = linha.strip()
+        if not linha:
+            continue
+        try:
+            ex = json.loads(linha)
+            msgs = ex["messages"]
+            papeis = [m["role"] for m in msgs]
+            assert papeis[-1] == "assistant", "última mensagem precisa ser do assistant"
+            assert all(m["content"].strip() for m in msgs), "mensagem vazia"
+        except Exception as e:
+            problemas.append(f"linha {n}: {e}")
+            continue
+        texto = json.dumps(msgs, ensure_ascii=False)
+        if CPF.search(texto):
+            problemas.append(f"linha {n}: parece ter CPF — anonimize")
+            continue
+        chave = texto.lower()
+        if chave in vistos:
+            problemas.append(f"linha {n}: duplicada")
+            continue
+        vistos.add(chave)
+        validos.append(ex)
+
+random.seed(42)
+random.shuffle(validos)
+corte = max(1, int(len(validos) * 0.1))   # 10% para validação
+for nome, parte in (("val.jsonl", validos[:corte]), ("train.jsonl", validos[corte:])):
+    with open(nome, "w", encoding="utf-8") as f:
+        for ex in parte:
+            f.write(json.dumps(ex, ensure_ascii=False) + "\n")
+
+print(f"válidos: {len(validos)}  treino: {len(validos) - corte}  validação: {corte}")
+print("\n".join(problemas[:20]) or "nenhum problema encontrado")
+
+# formato de cada linha do &lt;exemplos.jsonl&gt;:
+# {"messages": [{"role": "system", "content": "Você classifica chamados."},
+#               {"role": "user", "content": "A impressora não liga."},
+#               {"role": "assistant", "content": "{\"categoria\": \"hardware\"}"}]}</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">Cómo verificar:</strong> el script crea <code>train.jsonl</code> e <code>val.jsonl</code> e imprime los conteos. Agrega a propósito una línea repetida y otra con un CPF falso al archivo de entrada: ambas deben aparecer en la lista de problemas y quedar fuera de los archivos generados.</p>
+</div>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-4-t4-p4" data-sum="porque">La calidad del conjunto de datos determina el resultado más que cualquier hiperparámetro. Quien domina la preparación de datos necesita menos entrenamientos a ciegas y consigue un mejor modelo con menos ejemplos, sin filtrar datos personales a los pesos.</p>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">JSONL</div><div class="text-xs text-neutral-400">un ejemplo por línea</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Validación</div><div class="text-xs text-neutral-400">datos que el entrenamiento no ve</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Deduplicación</div><div class="text-xs text-neutral-400">evitar la memorización</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Anonimización</div><div class="text-xs text-neutral-400">LGPD antes del entrenamiento</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 5 -->
+<section class="mb-16" data-inema-topic="modulo-2-4#topico-5" id="topico-5" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="Hugging Face, PEFT e TRL num script">🏋️ Entrenar un LoRA en la práctica</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-4-t5-p1">Con los datos listos, el entrenamiento en sí cabe en un script breve. Vas a usar tres bibliotecas del ecosistema Hugging Face: <strong class="text-neutral-100">transformers</strong> (carga el modelo), <strong class="text-neutral-100">PEFT</strong> (crea el adaptador LoRA) y <strong class="text-neutral-100">TRL</strong> (trae el <code>SFTTrainer</code>, que ya entiende el formato <code>messages</code>). El modelo de ejemplo es Qwen2.5 0.5B Instruct: lo bastante pequeño para entrenarlo en una GPU modesta o en un Colab gratuito, y funciona lentamente incluso en CPU.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-4-t5-p2">Tres <strong class="text-neutral-100">hiperparámetros</strong> (configuraciones que eliges tú, no aprendidas) son más importantes al principio: la <strong class="text-neutral-100">tasa de aprendizaje</strong> (el tamaño de cada paso de ajuste; para LoRA, algo cercano a <code>2e-4</code> es un punto de partida habitual), el número de épocas (empieza con 2 o 3) y el rango <code>r</code>. Cambia uno a la vez y anota el resultado de cada ronda.</p>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">Un entrenamiento de LoRA local: cargar el modelo base, activar el adaptador con <code>LoraConfig</code>, pasar los archivos <code>train.jsonl</code> e <code>val.jsonl</code> a <code>SFTTrainer</code> y guardar el adaptador en una carpeta.</p>
+</div>
+<div class="relative border-l-2 border-blue-500/30 ml-3 pl-6 space-y-5 mb-6">
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-blue-500/20 border-2 border-blue-400"></span><p class="text-sm text-neutral-300"><strong class="text-blue-400">Paso 1.</strong> Crea un entorno virtual: <code>python3 -m venv .venv &amp;&amp; source .venv/bin/activate</code>.</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-blue-500/20 border-2 border-blue-400"></span><p class="text-sm text-neutral-300"><strong class="text-blue-400">Paso 2.</strong> Instala: <code>pip install torch transformers datasets peft trl accelerate</code>.</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-blue-500/20 border-2 border-blue-400"></span><p class="text-sm text-neutral-300"><strong class="text-blue-400">Paso 3.</strong> Deja <code>train.jsonl</code> e <code>val.jsonl</code> (del tema 4) en la misma carpeta que el script.</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-blue-500/20 border-2 border-blue-400"></span><p class="text-sm text-neutral-300"><strong class="text-blue-400">Paso 4.</strong> Ejecuta <code>python3 treinar_lora.py</code> y sigue la loss de entrenamiento y de validación en la terminal.</p></div>
+</div>
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-blue-400">Prueba:</strong> <span class="text-neutral-300">entrenar tu primer adaptador LoRA.</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copiar</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900"># treinar_lora.py — LoRA con Hugging Face (transformers + peft + trl)
+from datasets import load_dataset
+from peft import LoraConfig
+from trl import SFTConfig, SFTTrainer
+
+BASE = "Qwen/Qwen2.5-0.5B-Instruct"   # cámbialo por &lt;otro modelo abierto&gt; si quieres
+
+dados = load_dataset("json", data_files={"train": "train.jsonl",
+                                         "validation": "val.jsonl"})
+
+lora = LoraConfig(
+    r=16,                         # rango del adaptador
+    lora_alpha=32,                # escala de la desviación (suele ser 2 × r)
+    lora_dropout=0.05,
+    target_modules="all-linear",  # aplica LoRA a las capas lineales
+    task_type="CAUSAL_LM",
+)
+
+config = SFTConfig(
+    output_dir="saida-lora",
+    num_train_epochs=3,
+    per_device_train_batch_size=2,
+    gradient_accumulation_steps=4,
+    learning_rate=2e-4,
+    logging_steps=5,
+    eval_strategy="epoch",        # mide la loss de validación en cada época
+    save_strategy="epoch",
+    report_to="none",
+)
+
+trainer = SFTTrainer(
+    model=BASE,
+    args=config,
+    train_dataset=dados["train"],
+    eval_dataset=dados["validation"],
+    peft_config=lora,
+)
+trainer.model.print_trainable_parameters()   # muestra cuántos pesos se entrenan
+trainer.train()
+trainer.save_model("saida-lora/adapter")
+print("adaptador guardado en saida-lora/adapter")</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">Cómo verificar:</strong> la línea de <code>print_trainable_parameters</code> debe mostrar un porcentaje pequeño de parámetros entrenables. La carpeta <code>saida-lora/adapter</code> debe contener <code>adapter_config.json</code> e <code>adapter_model.safetensors</code>, que ocupa unos pocos megabytes. Si aparece un error de argumento, cambió el nombre de algún parámetro en tu versión de TRL: consulta la documentación de <code>SFTConfig</code> — los nombres cambian, el método se mantiene.</p>
+</div>
+<!-- SVG 3: curvas de loss -->
+<figure class="svg-frame rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="Gráfico ilustrativo de la pérdida por época: la pérdida de entrenamiento siempre baja; la de validación baja hasta la época 3 y luego sube, lo que marca el inicio del sobreajuste. El mejor checkpoint es el punto más bajo de la validación." class="w-full h-auto" role="img" viewbox="0 0 860 320">
+<rect fill="url(#m24-grid)" height="320" width="860"></rect>
+<g font-family="Inter,sans-serif">
+<path d="M90,40 L90,260 L800,260" fill="none" stroke="#475569" stroke-width="2"></path>
+<text fill="#cbd5e1" font-size="12" x="20" y="48">loss</text>
+<text fill="#cbd5e1" font-size="12" text-anchor="end" x="800" y="290">épocas</text>
+<text fill="#94a3b8" font-size="12" text-anchor="middle" x="190" y="280">1</text>
+<text fill="#94a3b8" font-size="12" text-anchor="middle" x="330" y="280">2</text>
+<text fill="#94a3b8" font-size="12" text-anchor="middle" x="470" y="280">3</text>
+<text fill="#94a3b8" font-size="12" text-anchor="middle" x="610" y="280">4</text>
+<text fill="#94a3b8" font-size="12" text-anchor="middle" x="750" y="280">5</text>
+<path d="M100,70 C190,140 330,190 470,215 C610,232 700,240 750,244" fill="none" filter="url(#m24-glow)" stroke="#60a5fa" stroke-width="3"></path>
+<path d="M100,80 C190,145 330,180 470,190 C560,188 650,160 750,120" fill="none" filter="url(#m24-glow)" stroke="#38bdf8" stroke-dasharray="8 5" stroke-width="3"></path>
+<circle cx="470" cy="190" fill="#0e1b26" r="7" stroke="#e0f2fe" stroke-width="2.5"></circle>
+<text fill="#e0f2fe" font-size="13" font-weight="700" text-anchor="middle" x="470" y="172">mejor checkpoint</text>
+<rect fill="#0e1b26" height="40" rx="8" stroke="#38bdf8" stroke-opacity="0.6" width="178" x="600" y="60"></rect>
+<text fill="#bae6fd" font-size="12" text-anchor="middle" x="689" y="85">la validación sube: sobreajuste</text>
+<rect fill="#3b82f6" height="4" width="26" x="120" y="300"></rect><text fill="#bfdbfe" font-size="12" x="154" y="305">entrenamiento</text>
+<rect fill="#38bdf8" height="4" width="26" x="240" y="300"></rect><text fill="#bae6fd" font-size="12" x="274" y="305">validación</text>
+<text fill="#94a3b8" font-size="11" text-anchor="end" x="800" y="305">(curvas ilustrativas)</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-blue-400">Cómo leer:</strong> la línea continua (entrenamiento) siempre baja; solo indica que el modelo está memorizando los ejemplos. La línea discontinua (validación) es la que importa: cuando deja de bajar y empieza a subir, el modelo empezó a memorizar en vez de aprender. Quédate con el checkpoint del punto más bajo de la línea discontinua.</figcaption>
+</figure>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-4-t5-p3" data-sum="porque">Ejecutar un entrenamiento pequeño de principio a fin saca el fine-tuning del terreno teórico. Aprendes a leer las curvas de loss, a reconocer el overfitting (cuando el modelo memoriza los ejemplos de entrenamiento) y a decidir con datos si conviene escalar a un modelo más grande.</p>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Hiperparámetro</div><div class="text-xs text-neutral-400">elegido por ti</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Tasa de aprendizaje</div><div class="text-xs text-neutral-400">tamaño del paso</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Sobreajuste</div><div class="text-xs text-neutral-400">memorizó, no aprendió</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Checkpoint</div><div class="text-xs text-neutral-400">instantánea del modelo en una época</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 6 -->
+<section class="mb-16" data-inema-topic="modulo-2-4#topico-6" id="topico-6" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="base contra ajustado, no mesmo teste">📏 Evaluar de verdad</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-4-t6-p1">Una loss baja no demuestra que el modelo haya quedado útil. La pregunta real es: <strong class="text-neutral-100">en tu conjunto de prueba, ¿el modelo ajustado acierta más que el modelo base con un buen prompt?</strong> Para responder, necesitas una <strong class="text-blue-400">eval</strong> — un conjunto fijo de casos con la respuesta esperada y un criterio de acierto que un script pueda comprobar.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-4-t6-p2">Cuando la salida está estructurada (una categoría, un JSON), el criterio es sencillo: acierto exacto o JSON válido con el campo correcto. Cuando la salida es texto libre, combina una rúbrica (lista de criterios) con una revisión humana por muestreo, o usa otro modelo como evaluador, sabiendo que ese evaluador también se equivoca. Lo importante es que <strong class="text-neutral-100">la prueba no cambie entre rondas</strong>; de lo contrario, no comparas nada.</p>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">Evaluar consiste en ejecutar el modelo base y el modelo ajustado con el mismo conjunto de prueba, usando el mismo criterio, y comparar la tasa de acierto; incluye también algunos casos generales para detectar el olvido.</p>
+</div>
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-blue-400">Prueba:</strong> <span class="text-neutral-300">comparar el modelo base y el adaptador en la misma prueba, con LoRA activado y desactivado.</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copiar</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900"># evaluar_lora.py — compara el modelo base × el adaptador en &lt;teste.jsonl&gt; (el mismo formato que el entrenamiento)
+import json, sys
+import torch
+from transformers import AutoModelForCausalLM, AutoTokenizer
+from peft import PeftModel
+
+BASE = "Qwen/Qwen2.5-0.5B-Instruct"
+ADAPTER = "saida-lora/adapter"
+tok = AutoTokenizer.from_pretrained(BASE)
+modelo = PeftModel.from_pretrained(AutoModelForCausalLM.from_pretrained(BASE), ADAPTER)
+modelo.eval()
+
+def responder(msgs):
+    prompt = tok.apply_chat_template(msgs, tokenize=False, add_generation_prompt=True)
+    ids = tok(prompt, return_tensors="pt").to(modelo.device)
+    with torch.no_grad():
+        out = modelo.generate(**ids, max_new_tokens=128, do_sample=False)
+    return tok.decode(out[0][ids["input_ids"].shape[1]:], skip_special_tokens=True).strip()
+
+casos = [json.loads(l) for l in open(sys.argv[1], encoding="utf-8") if l.strip()]
+placar = {"base": 0, "lora": 0}
+for c in casos:
+    entrada, esperado = c["messages"][:-1], c["messages"][-1]["content"].strip()
+    with modelo.disable_adapter():          # desactiva LoRA: modelo base puro
+        r_base = responder(entrada)
+    r_lora = responder(entrada)             # LoRA activado
+    placar["base"] += r_base == esperado
+    placar["lora"] += r_lora == esperado
+
+n = len(casos)
+print(f"casos: {n}")
+print(f"base: {placar['base']}/{n}   lora: {placar['lora']}/{n}")</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">Cómo verificar:</strong> ejecuta <code>python3 avaliar_lora.py val.jsonl</code> y después en un <code>teste.jsonl</code> separado que nunca se usó en el entrenamiento. El puntaje de LoRA debe superar al del modelo base en la prueba. Si solo mejora en el <code>val.jsonl</code> y empata en la prueba, o si empeora en los casos generales, el adaptador memorizó: vuelve a los datos.</p>
+</div>
+<div class="bg-primary/10 border border-primary/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-primary font-semibold mb-1">💡 Consejo</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-4-t6-p3">Incluye en la comparación a un tercer competidor: el modelo base con el mejor prompt few-shot que puedas escribir. Si empata con LoRA, no necesitas entrenar y acabas de ahorrarte el mantenimiento.</p>
+</div>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-4-t6-p4" data-sum="porque">Sin eval, el fine-tuning es una apuesta. Con eval, cada ronda se convierte en una cifra que puedes comparar, defender en una reunión y repetir cuando cambie el modelo base. Es el mismo hábito que distingue un prototipo de un sistema en producción.</p>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Eval</div><div class="text-xs text-neutral-400">prueba fija con criterio</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Conjunto de prueba</div><div class="text-xs text-neutral-400">nunca visto en el entrenamiento</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Rúbrica</div><div class="text-xs text-neutral-400">criterios para texto libre</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Línea de base</div><div class="text-xs text-neutral-400">qué debe coincidir</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 7 -->
+<section class="mb-16" data-inema-topic="modulo-2-4#topico-7" id="topico-7" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">7</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="servir, versionar e retreinar">💰 Costos, servicio y mantenimiento</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-4-t7-p1">El costo de un fine-tuning no es solo la hora de GPU del entrenamiento. Suma el tiempo de preparar y revisar el dataset, las rondas que salieron mal, la <strong class="text-neutral-100">inferencia</strong> (ejecutar el modelo para responder, todos los días) y el reentrenamiento cuando salga un mejor modelo base. Un modelo pequeño ajustado puede costar menos por respuesta que uno grande genérico, pero solo si el volumen justifica el trabajo de mantenerlo.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-4-t7-p2">Para servir el adaptador, hay dos caminos. Puedes <strong class="text-neutral-100">fusionar</strong> LoRA en los pesos (<code>merge_and_unload()</code> en PEFT) y exportar un modelo único; por ejemplo, convertido a GGUF e importado en Ollama con un <code>Modelfile</code>. O mantener el adaptador separado en un servidor que carga varios LoRA sobre el mismo modelo base, como vLLM; Ollama también acepta la instrucción <code>ADAPTER</code> para algunas arquitecturas. Antes, consulta la documentación de la herramienta: la compatibilidad cambia de una versión a otra.</p>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">Es el ciclo de vida del modelo ajustado: costo total (datos, entrenamiento, inferencia, reentrenamiento), forma de servirlo (fusionado o con adaptador), versionado junto con el dataset y la evaluación, y licencia del modelo base.</p>
+</div>
+<div class="overflow-x-auto mb-6">
+<table class="w-full text-sm border border-dark-600 rounded-xl overflow-hidden">
+<thead><tr class="bg-dark-700"><th class="text-left p-3 text-blue-400">Partida de costo</th><th class="text-left p-3 text-blue-400">Qué pesa</th><th class="text-left p-3 text-blue-400">Cómo reducirlo</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr><td class="p-3 font-semibold">Datos</td><td class="p-3 text-neutral-300">Horas de especialistas revisando ejemplos.</td><td class="p-3 text-neutral-300">Empieza con poco y amplía solo donde falla la evaluación.</td></tr>
+<tr><td class="p-3 font-semibold">Entrenamiento</td><td class="p-3 text-neutral-300">GPU por hora, rondas fallidas.</td><td class="p-3 text-neutral-300">LoRA/QLoRA, modelo pequeño, un hiperparámetro a la vez.</td></tr>
+<tr><td class="p-3 font-semibold">Inferencia</td><td class="p-3 text-neutral-300">Servidor encendido o costo por token.</td><td class="p-3 text-neutral-300">Cuantiza para servir; usa un modelo más pequeño cuando la evaluación lo permita.</td></tr>
+<tr><td class="p-3 font-semibold">Mantenimiento</td><td class="p-3 text-neutral-300">Reentrenar con cada nuevo modelo base.</td><td class="p-3 text-neutral-300">Dataset y evaluación versionados y reutilizables.</td></tr>
+</tbody>
+</table>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
+<h4 class="font-bold text-blue-400 mb-4">✓ Versiona en conjunto</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Dataset, script de entrenamiento e hiperparámetros.</span></li>
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Nombre y versión exactos del modelo base.</span></li>
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Resultado de la evaluación de cada adaptador.</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Errores comunes</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Ignorar la licencia del modelo base y de los datos.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Adaptador sin registro de qué modelo base usó.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Reentrenar sin ejecutar la misma evaluación de antes.</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-primary/10 border border-primary/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-primary font-semibold mb-1">💡 Consejo</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-4-t7-p3">Los proveedores de API (OpenAI, Google y otros) también ofrecen fine-tuning alojado: subes el JSONL y recibes un modelo ajustado. El formato de datos que aprendiste aquí es prácticamente el mismo. Los precios y modelos disponibles cambian con frecuencia; consulta la página oficial antes de calcular el presupuesto.</p>
+</div>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-4-t7-p4" data-sum="porque">Lo más común es que el fine-tuning funcione en el notebook y falle en producción. Pensar en el ciclo de vida desde el principio —cómo ponerlo en servicio, cuánto cuesta al mes y cómo volver a entrenarlo— es lo que convierte el experimento en un activo que el equipo puede mantener.</p>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Inferencia</div><div class="text-xs text-neutral-400">costo de cada respuesta</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Fusión</div><div class="text-xs text-neutral-400">LoRA fusionado en los pesos</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">GGUF</div><div class="text-xs text-neutral-400">formato para ejecutar localmente</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Licencia</div><div class="text-xs text-neutral-400">lo que permite el modelo base</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- RESUMO -->
+<section class="mb-8">
+<div class="bg-gradient-to-br from-blue-900/40 via-dark-800 to-dark-800 rounded-xl border border-blue-500/30 p-6 sm:p-8">
+<h2 class="text-2xl font-bold mb-6">✅ Resumen del módulo</h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start gap-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">Sube la escalera en orden</strong><span class="text-neutral-400"> — prompt, few-shot, RAG; entrenamiento solo cuando falta comportamiento.</span></div></div>
+<div class="flex items-start gap-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">LoRA entrena una pequeña desviación</strong><span class="text-neutral-400"> — el modelo base queda intacto y el adaptador pesa megabytes.</span></div></div>
+<div class="flex items-start gap-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">Los datos deciden</strong><span class="text-neutral-400"> — limpios, variados, divididos y sin datos personales.</span></div></div>
+<div class="flex items-start gap-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">Sin evaluación no hay fine-tuning</strong><span class="text-neutral-400"> — modelo base contra modelo ajustado, en la misma prueba, en cada ronda.</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-blue-400 mb-2">Siguiente módulo:</h3>
+<p class="text-neutral-300">2.5 — Agentes y flujos de trabajo complejos 🕸️</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="index.html">← Volver a la Ruta</a>
+<a class="flex-1 text-center px-6 py-3 bg-blue-700 text-white rounded-lg font-semibold hover:bg-blue-600 transition-colors" href="modulo-2-5.html">Siguiente módulo →</a>
+</div>
+</div>
+</section>
+</article>
+</div>
+</div>
+</main>
+<footer class="border-t border-dark-600 py-8 mt-8">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>FTD — Formación en Transformación Digital · contenido abierto y gratuito · 2026 · <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" rel="noopener" target="_blank">INEMA.CLUB</a> - <a class="text-amber-700 dark:text-slate-300 hover:underline" href="https://inema.pro" rel="noopener" target="_blank">PRO</a></p>
+</div>
+</footer>
+<!-- SCRIPTS NÚCLEO v1 -->
+<script>
+    function toggleTopic(button) {
+      var topicItem = button.closest('.topic-item');
+      if (!topicItem) return;
+      var explanation = topicItem.querySelector('.topic-explanation');
+      var willOpen = !explanation.classList.contains('active');
+      explanation.classList.toggle('active');
+      button.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+    }
+    function openModal(id) { var m = document.getElementById(id); if (m) { m.classList.remove('hidden'); document.body.style.overflow = 'hidden'; } }
+    function closeModal() { document.querySelectorAll('.modal').forEach(function (m) { m.classList.add('hidden'); }); document.body.style.overflow = 'auto'; }
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
+    function copyCode(btn) {
+      var pre = btn.closest('[data-copy-box]').querySelector('pre');
+      var txt = pre ? pre.innerText : '';
+      var done = function () { var o = btn.getAttribute('data-label-ok') || 'Copiado'; var t = btn.textContent; btn.textContent = o; setTimeout(function () { btn.textContent = t; }, 1500); };
+      try { navigator.clipboard.writeText(txt).then(done, done); } catch (e) { done(); }
+    }
+    (function () {
+      var themeToggle = document.getElementById('theme-toggle');
+      var darkIcon = document.getElementById('theme-toggle-dark-icon');
+      var lightIcon = document.getElementById('theme-toggle-light-icon');
+      var html = document.documentElement;
+      function sync() { var isDark = html.classList.contains('dark'); if (darkIcon) darkIcon.classList.toggle('hidden', isDark); if (lightIcon) lightIcon.classList.toggle('hidden', !isDark); }
+      sync();
+      if (themeToggle) themeToggle.addEventListener('click', function () {
+        html.classList.toggle('dark'); var nowDark = html.classList.contains('dark'); html.style.colorScheme = nowDark ? 'dark' : 'light';
+        try { localStorage.setItem('theme', nowDark ? 'dark' : 'light'); } catch (e) {}
+        try { var p = JSON.parse(localStorage.getItem('inema.prefs') || '{}'); p.theme = nowDark ? 'inema-dark' : 'claro'; localStorage.setItem('inema.prefs', JSON.stringify(p)); } catch (e) {}
+        sync();
+      });
+    })();
+  </script>
+<!-- learn.js + INEMA.init() POR ÚLTIMO -->
+<script src="../../assets/learn.js"></script>
+<script>
+    if (window.INEMA && typeof window.INEMA.init === 'function') { window.INEMA.init({ autoResume: true }); }
+  </script>
+</body>
+</html>

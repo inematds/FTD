@@ -1,0 +1,1226 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="ftd-v2-en" name="inema-course"/>
+<title>Module 2.9 · AI Ethics and Governance | FTD v2</title>
+<meta content="Bias, privacy, LGPD, transparency, copyright, and a simple governance process." name="description"/>
+<meta content="Module 2.9 · AI Ethics and Governance | FTD v2" property="og:title"/>
+<meta content="Bias, privacy, LGPD, transparency, copyright, and a simple governance process." property="og:description"/>
+<!-- ANTI-FOUC (Erro #18) — primeiro script do head -->
+<script>
+(function () {
+  try {
+    var html = document.documentElement;
+    var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+    function clone(o) { var r = {}; for (var x in o) r[x] = o[x]; return r; }
+    var p = clone(DEF);
+    try {
+      var raw = localStorage.getItem('inema.prefs');
+      if (raw) {
+        var parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === 'object') {
+          for (var k in DEF) if (parsed[k] != null) p[k] = parsed[k];
+        }
+      } else {
+        var legacy = localStorage.getItem('theme');
+        if (legacy === 'light') p.theme = 'claro';
+        else if (legacy === 'dark') p.theme = 'inema-dark';
+      }
+    } catch (e) { p = clone(DEF); }
+
+    var THEMES = {
+      'inema-dark': { dark: true,  attr: null,        cs: 'dark'  },
+      'claro':      { dark: false, attr: null,        cs: 'light' },
+      'sepia':      { dark: false, attr: 'sepia',     cs: 'light' },
+      'foco':       { dark: null,  attr: 'foco',      cs: null    },
+      'contraste':  { dark: true,  attr: 'contraste', cs: 'dark'  }
+    };
+    var t = THEMES[p.theme] || THEMES['inema-dark'];
+
+    if (t.dark === true) html.classList.add('dark');
+    else if (t.dark === false) html.classList.remove('dark');
+
+    if (t.attr) html.setAttribute('data-theme', t.attr);
+    else html.removeAttribute('data-theme');
+
+    html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark') ? 'dark' : 'light'));
+
+    html.setAttribute('data-font', p.font || 'inter');
+    html.setAttribute('data-accent', p.accent || 'emerald');
+
+    var s = html.style;
+    var scale = (+p.fontScale || 100);
+    s.setProperty('--inema-font-scale', (scale / 100).toString());
+    s.setProperty('font-size', scale + '%');
+    s.setProperty('--measure', (+p.lineWidth || 68) + 'ch');
+    s.setProperty('--lh-body', (+p.leading || 1.7).toString());
+    var fam = p.font === 'system'
+      ? 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif'
+      : (p.font === 'leitura'
+        ? '"Atkinson Hyperlegible", "Inter", system-ui, sans-serif'
+        : '"Inter", system-ui, sans-serif');
+    s.setProperty('--font-body', fam);
+
+    var ACC = {
+      emerald: [152, 76, 45], blue: [217, 91, 60], purple: [258, 90, 66],
+      amber: [38, 92, 50], teal: [174, 72, 41], rose: [350, 89, 60]
+    };
+    var a = ACC[p.accent] || ACC.emerald;
+    s.setProperty('--accent-h', a[0] + '');
+    s.setProperty('--accent-s', a[1] + '%');
+    s.setProperty('--accent-l', a[2] + '%');
+    s.setProperty('--accent', 'hsl(' + a[0] + ' ' + a[1] + '% ' + a[2] + '%)');
+  } catch (err) {
+    try { document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme = 'dark'; } catch (e) {}
+  }
+})();
+</script>
+<!-- MANIFESTO do curso (Erro #28) — idêntico em todas as páginas -->
+<script data-inema-manifest="" type="application/json">
+{
+  "course": "ftd-v2-en",
+  "tracks": [
+    {
+      "n": "1",
+      "title": "Beginner",
+      "modules": [
+        {
+          "id": "1-1",
+          "title": "The Impact of AI",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-1.html"
+        },
+        {
+          "id": "1-2",
+          "title": "Navigating the Digital World",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-2.html"
+        },
+        {
+          "id": "1-3",
+          "title": "Prompt Engineering",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-3.html"
+        },
+        {
+          "id": "1-4",
+          "title": "AI Assistants and Agents",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-4.html"
+        },
+        {
+          "id": "1-5",
+          "title": "Visual Creativity with AI",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-5.html"
+        },
+        {
+          "id": "1-6",
+          "title": "Marketing and Sales with AI",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-6.html"
+        },
+        {
+          "id": "1-7",
+          "title": "Process Automation",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-7.html"
+        },
+        {
+          "id": "1-8",
+          "title": "Advanced Artificial Intelligence",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-8.html"
+        },
+        {
+          "id": "1-9",
+          "title": "Business and Monetization with AI",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-9.html"
+        }
+      ]
+    },
+    {
+      "n": "2",
+      "title": "Technical",
+      "modules": [
+        {
+          "id": "2-1",
+          "title": "Developing with AI APIs",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-1.html"
+        },
+        {
+          "id": "2-2",
+          "title": "AI Application Architecture",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-2.html"
+        },
+        {
+          "id": "2-3",
+          "title": "RAG and Knowledge Bases",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-3.html"
+        },
+        {
+          "id": "2-4",
+          "title": "Fine-Tuning and Customization",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-4.html"
+        },
+        {
+          "id": "2-5",
+          "title": "Agents and Complex Workflows",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-5.html"
+        },
+        {
+          "id": "2-6",
+          "title": "Advanced Computer Vision",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-6.html"
+        },
+        {
+          "id": "2-7",
+          "title": "NLP and Text Processing",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-7.html"
+        },
+        {
+          "id": "2-8",
+          "title": "MLOps and Production",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-8.html"
+        },
+        {
+          "id": "2-9",
+          "title": "AI Ethics and Governance",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-9.html"
+        }
+      ]
+    },
+    {
+      "n": "3",
+      "title": "Masterclass",
+      "modules": [
+        {
+          "id": "3-1",
+          "title": "Large-Scale AI Architecture",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-1.html"
+        },
+        {
+          "id": "3-2",
+          "title": "Custom and Proprietary Models",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-2.html"
+        },
+        {
+          "id": "3-3",
+          "title": "Advanced Multimodal AI",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-3.html"
+        },
+        {
+          "id": "3-4",
+          "title": "AI Research and Papers",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-4.html"
+        },
+        {
+          "id": "3-5",
+          "title": "Reinforcement Learning for AI",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-5.html"
+        },
+        {
+          "id": "3-6",
+          "title": "Security and Red Teaming",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-6.html"
+        },
+        {
+          "id": "3-7",
+          "title": "AI in Production — Enterprise Scale",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-7.html"
+        },
+        {
+          "id": "3-8",
+          "title": "AI Leadership and Strategy",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-8.html"
+        },
+        {
+          "id": "3-9",
+          "title": "The Future of AI and AGI",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-9.html"
+        }
+      ]
+    }
+  ]
+}
+</script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#0c0c10', 800: '#16161e', 700: '#1e1e28', 600: '#272730', 500: '#33333f' } }, fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'], display: ['Sora', 'Inter', 'sans-serif'], mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'] } } } }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Sora:wght@600;700;800&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    h1, h2, h3, h4, .font-display { font-family: 'Sora', 'Inter', sans-serif; }
+    .dark body { background-color: #0c0c10; }
+    .dark .text-neutral-100 { color: #e9e9ee; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+    pre { white-space: pre-wrap; word-break: break-word; }
+    pre, code, .font-mono { font-family: 'JetBrains Mono', ui-monospace, monospace; }
+
+    /* Light mode — Parte 1: base */
+    html:not(.dark) body { background-color: #f6f7f9; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800\/50 { background-color: #f6f7f9; }
+    html:not(.dark) .bg-dark-700 { background-color: #eceef2; }
+    html:not(.dark) .bg-dark-700\/50 { background-color: #f1f2f5; }
+    html:not(.dark) .bg-dark-700\/30 { background-color: #f4f5f7; }
+    html:not(.dark) .bg-dark-600 { background-color: #e1e3ea; }
+    html:not(.dark) .hover\:bg-dark-600:hover { background-color: #d6d9e1; }
+    html:not(.dark) .hover\:bg-dark-700\/50:hover { background-color: #eceef2; }
+    html:not(.dark) .text-neutral-100 { color: #1a1a22; }
+    html:not(.dark) .text-neutral-200 { color: #26262f; }
+    html:not(.dark) .text-neutral-300 { color: #3f3f4a; }
+    html:not(.dark) .text-neutral-400 { color: #5b5b68; }
+    html:not(.dark) .text-neutral-500 { color: #62626e; }
+    html:not(.dark) .border-dark-600 { border-color: #e1e3ea; }
+    html:not(.dark) .border-dark-700 { border-color: #e8e9ee; }
+    html:not(.dark) .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #e1e3ea; }
+    html:not(.dark) .bg-black\/40 { background-color: #f1f2f5; }
+    html:not(.dark) pre.code-dark { background-color: #1a1a22; color: #e9e9ee; }
+
+    /* Light mode — Parte 2: acento das 3 trilhas (texto -700, nunca -400 no claro) */
+    html:not(.dark) .text-emerald-400 { color: #047857; }
+    html:not(.dark) .text-emerald-300 { color: #047857; }
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #047857; }
+    html:not(.dark) .bg-emerald-500\/20 { background-color: rgba(4,120,87,0.12); }
+    html:not(.dark) .bg-emerald-500\/10 { background-color: rgba(4,120,87,0.08); }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(4,120,87,0.08); }
+    html:not(.dark) .bg-emerald-900\/20 { background-color: rgba(4,120,87,0.07); }
+    html:not(.dark) .bg-emerald-900\/30 { background-color: rgba(4,120,87,0.08); }
+    html:not(.dark) .bg-emerald-900\/40 { background-color: rgba(4,120,87,0.09); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(4,120,87,0.28); }
+    html:not(.dark) .hover\:border-emerald-500\/30:hover { border-color: rgba(4,120,87,0.4); }
+    html:not(.dark) .text-blue-400 { color: #1d4ed8; }
+    html:not(.dark) .text-blue-300 { color: #1d4ed8; }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #1d4ed8; }
+    html:not(.dark) .bg-blue-500\/20 { background-color: rgba(29,78,216,0.12); }
+    html:not(.dark) .bg-blue-500\/10 { background-color: rgba(29,78,216,0.08); }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(29,78,216,0.08); }
+    html:not(.dark) .bg-blue-900\/20 { background-color: rgba(29,78,216,0.07); }
+    html:not(.dark) .bg-blue-900\/30 { background-color: rgba(29,78,216,0.08); }
+    html:not(.dark) .bg-blue-900\/40 { background-color: rgba(29,78,216,0.09); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(29,78,216,0.28); }
+    html:not(.dark) .hover\:border-blue-500\/30:hover { border-color: rgba(29,78,216,0.4); }
+    html:not(.dark) .text-purple-400 { color: #6d28d9; }
+    html:not(.dark) .text-purple-300 { color: #6d28d9; }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #6d28d9; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(109,40,217,0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(109,40,217,0.08); }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(109,40,217,0.08); }
+    html:not(.dark) .bg-purple-900\/20 { background-color: rgba(109,40,217,0.07); }
+    html:not(.dark) .bg-purple-900\/30 { background-color: rgba(109,40,217,0.08); }
+    html:not(.dark) .bg-purple-900\/40 { background-color: rgba(109,40,217,0.09); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(109,40,217,0.28); }
+    html:not(.dark) .hover\:border-purple-500\/30:hover { border-color: rgba(109,40,217,0.4); }
+
+    /* Light mode — Parte 3: gradientes + especiais */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #854d0e; }
+    html:not(.dark) .text-yellow-400 { color: #854d0e; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #713f12; }
+    html:not(.dark) .bg-primary\/10 { background-color: #FEF9C3; }
+    html:not(.dark) .border-primary\/30 { border-color: #EAB308; }
+    html:not(.dark) .text-red-400 { color: #b91c1c; }
+    html:not(.dark) .bg-red-900\/20 { background-color: rgba(185,28,28,0.07); }
+    html:not(.dark) .border-red-500\/30 { border-color: rgba(185,28,28,0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #075985; }
+    html:not(.dark) .bg-sky-900\/20 { background-color: rgba(3,105,161,0.07); }
+    html:not(.dark) .border-sky-500\/30 { border-color: rgba(3,105,161,0.25); }
+
+    /* Light mode — Parte 4: nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255,255,255,0.95); }
+
+    /* Parte 5: bordas suavizadas no DARK (Erro #15) */
+    .dark .border-dark-600 { border-color: #2a2a35; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #2a2a35; }
+
+    /* SVG: no claro, um fundo escuro emoldurado mantém o contraste do desenho */
+    html:not(.dark) .svg-frame { background-color: #12121a; }
+    @media (prefers-reduced-motion: reduce) { svg * { animation: none !important; transition: none !important; } }
+  </style>
+<link href="../../../assets/learn.css" rel="stylesheet"/>
+<link href="https://inematds.github.io/FTD/FTD-v2/curso/trilha2/modulo-2-9.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/FTD/FTD-v2/en/curso/trilha2/modulo-2-9.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/FTD/FTD-v2/es/curso/trilha2/modulo-2-9.html" hreflang="es" rel="alternate"/><link href="https://inematds.github.io/FTD/FTD-v2/curso/trilha2/modulo-2-9.html" hreflang="x-default" rel="alternate"/><link href="https://inematds.github.io/FTD/FTD-v2/en/curso/trilha2/modulo-2-9.html" rel="canonical"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(250,204,21,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha2/modulo-2-9.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="modulo-2-9.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#FACC15">EN</a><a href="../../../es/curso/trilha2/modulo-2-9.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14 gap-2">
+<!-- Logo + INEMA.CLUB -->
+<div class="flex items-center space-x-3 flex-shrink-0">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🚀</span>
+<span class="font-display font-bold text-lg hidden sm:inline">FTD</span>
+</a>
+<span class="text-neutral-600 hidden sm:inline">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium hidden sm:inline" href="https://inema.club" rel="noopener" target="_blank">INEMA.CLUB</a>
+<span class="text-neutral-600 hidden sm:inline">-</span>
+<a class="text-amber-700 dark:text-slate-300 hover:underline text-sm font-medium hidden sm:inline" href="https://inema.pro" rel="noopener" target="_blank">PRO</a>
+</div>
+<!-- Trilhas + controles de aprendizagem + theme toggle -->
+<div class="flex items-center gap-1 sm:gap-1.5">
+<a class="px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors whitespace-nowrap" href="../trilha1/index.html">
+<span class="lg:hidden">T1</span><span class="hidden lg:inline">Beginner</span>
+</a>
+<a class="px-2.5 py-1.5 rounded-lg text-sm font-semibold text-blue-400 bg-blue-500/10 whitespace-nowrap" href="index.html">
+<span class="lg:hidden">T2</span><span class="hidden lg:inline">Technical</span>
+</a>
+<a class="px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors whitespace-nowrap" href="../trilha3/index.html">
+<span class="lg:hidden">T3</span><span class="hidden lg:inline">Masterclass</span>
+</a>
+<span class="w-px h-6 bg-dark-600 mx-1 hidden sm:inline-block"></span>
+<!-- Minha jornada (abre o painel global; badge = % do curso) -->
+<button class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-300 hover:text-neutral-100 hover:bg-dark-700 transition-colors" data-inema-journey-open="" type="button">
+<svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="16"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+<span class="hidden md:inline">My journey</span>
+<span class="inema-journey-badge" data-count="0" data-inema-journey-badge=""></span>
+</button>
+<!-- Aparência (gatilho + painel obrigatório) -->
+<div class="relative">
+<button aria-expanded="false" class="inema-appearance-trigger inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-300 hover:text-neutral-100 transition-colors" data-inema-appearance-toggle="#inema-appearance-panel" type="button">
+<svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="16"><circle cx="12" cy="12" r="9"></circle><path d="M12 3v18"></path><path d="M12 3a9 9 0 0 1 0 18" fill="currentColor"></path></svg>
+<span class="hidden md:inline">Appearance</span>
+</button>
+<div class="inema-appearance-pop right-0" data-inema-appearance="" id="inema-appearance-panel">
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Theme</span>
+<div class="inema-segment">
+<button data-inema-set-theme="inema-dark" type="button">Dark</button>
+<button data-inema-set-theme="claro" type="button">Light</button>
+<button data-inema-set-theme="sepia" type="button">Sepia</button>
+</div>
+<div class="inema-segment">
+<button data-inema-set-theme="foco" type="button">Focus</button>
+<button data-inema-set-theme="contraste" type="button">High contrast</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Font</span>
+<div class="inema-segment">
+<button data-inema-set-font="inter" type="button">Inter</button>
+<button data-inema-set-font="system" type="button">System</button>
+<button data-inema-set-font="leitura" type="button">Reading</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Size</span>
+<div class="inema-segment">
+<button data-inema-set-fontscale="100" type="button">A</button>
+<button data-inema-set-fontscale="112" type="button">A+</button>
+<button data-inema-set-fontscale="125" type="button">A++</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Width</span>
+<div class="inema-segment">
+<button data-inema-set-linewidth="60" type="button">Narrow</button>
+<button data-inema-set-linewidth="68" type="button">Medium</button>
+<button data-inema-set-linewidth="75" type="button">Wide</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Line spacing</span>
+<div class="inema-segment">
+<button data-inema-set-leading="1.45" type="button">Compact</button>
+<button data-inema-set-leading="1.7" type="button">Comfortable</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Accent</span>
+<div class="inema-accent-grid">
+<button aria-label="Emerald accent" data-inema-set-accent="emerald" type="button"></button>
+<button aria-label="Blue accent" data-inema-set-accent="blue" type="button"></button>
+<button aria-label="Purple accent" data-inema-set-accent="purple" type="button"></button>
+<button aria-label="Amber accent" data-inema-set-accent="amber" type="button"></button>
+<button aria-label="Teal accent" data-inema-set-accent="teal" type="button"></button>
+<button aria-label="Pink accent" data-inema-set-accent="rose" type="button"></button>
+</div>
+</div>
+</div>
+</div>
+<!-- Theme toggle sol/lua (núcleo v1; o JS o mantém coerente com o tema) -->
+<button aria-label="Toggle light/dark theme" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20">
+<path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+</svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20">
+<path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path>
+</svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<main data-inema-module="2-9" data-inema-track="2" id="conteudo">
+<!-- BREADCRUMB -->
+<nav aria-label="Navigation track" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-blue-400" href="../../index.html">Home</a><span>/</span>
+<a class="hover:text-blue-400" href="index.html">Track 2</a><span>/</span>
+<span class="text-blue-400">Module 2.9</span>
+</div>
+</nav>
+<!-- HEADER do módulo -->
+<header class="bg-gradient-to-br from-blue-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-blue-500/20 text-blue-400 text-xs font-semibold rounded-full mb-4">MODULE 2.9</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">⚖️ AI Ethics and Governance</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">Bias, privacy and LGPD (Brazil’s data protection law), transparency, copyright, and human oversight — treated as engineering requirements, with code and processes, not as a paragraph at the end of the project. <strong class="text-blue-400">Trust is designed</strong>: you’ll leave with tests you can run and a governance checklist to copy.</p>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">7</div><div class="text-xs text-neutral-400">Topics</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">~50</div><div class="text-xs text-neutral-400">Minutes</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">Technical</div><div class="text-xs text-neutral-400">Level</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">Process</div><div class="text-xs text-neutral-400">Type</div></div>
+</div>
+<div class="flex items-center gap-3 mt-8">
+<div aria-label="Module 2.9 progress" class="inema-ring" data-inema-meter="modulo:2-9"><span class="inema-ring__value" data-inema-meter-pct="">0%</span></div>
+<div class="inema-meter-label" data-inema-meter="modulo:2-9"><strong data-inema-meter-frac="">0 of 0</strong> topics read · <span data-inema-section-counter="">Section 1 of 7</span></div>
+</div>
+</div>
+</header>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+<div class="lg:flex lg:gap-10">
+<!-- TOC sticky + scrollspy -->
+<aside class="hidden lg:block lg:w-56 flex-shrink-0">
+<nav aria-label="Page index" class="sticky top-20 self-start" data-inema-toc="">
+<p class="text-xs font-semibold uppercase tracking-wide text-neutral-500 mb-3">In this module</p>
+<ol class="space-y-1 text-sm">
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-blue-400" href="#topico-1">1. Why govern AI</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-blue-400" href="#topico-2">2. Bias and fairness</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-blue-400" href="#topico-3">3. Privacy and LGPD</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-blue-400" href="#topico-4">4. Transparency</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-blue-400" href="#topico-5">5. Copyright</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-blue-400" href="#topico-6">6. Risk and oversight</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-blue-400" href="#topico-7">7. Governance process</a></li>
+</ol>
+</nav>
+</aside>
+<!-- ARTIGO -->
+<article class="inema-prose flex-1 min-w-0">
+<h2 class="text-2xl font-bold mb-8">Detailed content</h2>
+<!-- TÓPICO 1 -->
+<section class="mb-16" data-inema-topic="modulo-2-9#topico-1" id="topico-1" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="do princípio ao controle verificável">🧭 Why govern AI</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Mark this topic as a question" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-9-t1-p1">AI systems make or influence decisions about people: who gets credit, which résumé gets read, what response a patient receives, which customer gets served first. When they fail, they fail at scale and in ways that are hard to see. <strong class="text-blue-400">AI governance</strong> is the set of rules, roles, and controls that ensures these systems are used legally, fairly, safely, and transparently — and that someone is accountable for them.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-9-t1-p2">For people who write code, the key point is that ethics isn’t just talk. Each principle needs to become something you can verify: a bias test that runs in CI, a function that removes personal data before a model call, a log that lets you explain a decision, an approval recorded before deployment. Public references help organize this work, such as the <strong class="text-neutral-100">NIST AI Risk Management Framework</strong> (Govern, Map, Measure, and Manage functions) and the <strong class="text-neutral-100">ISO/IEC 42001</strong>, the standard for AI management systems.</p>
+<div class="bg-dark-800 border border-blue-500/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-blue-400 font-semibold mb-1">📘 New terms</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-9-t1-p3"><strong>Responsible AI</strong> is an umbrella term for developing and using AI in ways that respect rights, safety, and transparency. <strong>Accountability</strong> means having a person or team responsible for the system and answerable for it. <strong>Control</strong>, in governance, is a concrete check that reduces a risk and leaves evidence.</p>
+</div>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-blue-400 mb-3">What it is</h3>
+<p class="text-neutral-300">A chain from principles (what the organization promises) to policies (written rules), processes (who does what and when), and technical controls (what the code checks), with each layer leaving evidence for the one above it.</p>
+</div>
+<!-- SVG 1: camadas de governança -->
+<figure class="svg-frame rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="Four stacked layers of governance, from abstract to verifiable: principles, policies, processes, and technical controls, each with examples; a side arrow shows evidence rising from controls to principles." class="w-full h-auto" role="img" viewbox="0 0 900 290">
+<defs>
+<filter height="160%" id="m29-glow" width="160%" x="-30%" y="-30%"><fegaussianblur result="b" stddeviation="2"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="28" id="m29-grid" patternunits="userSpaceOnUse" width="28"><circle cx="1.2" cy="1.2" fill="#3b82f6" opacity="0.14" r="1.2"></circle></pattern>
+<marker id="m29-ah" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#60a5fa"></path></marker>
+<marker id="m29-ahc" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#38bdf8"></path></marker>
+<style>@keyframes m29dash{to{stroke-dashoffset:-24}} .m29-flow{stroke-dasharray:6 6;animation:m29dash 1.6s linear infinite}</style>
+</defs>
+<rect fill="url(#m29-grid)" height="290" width="900"></rect>
+<g font-family="Inter,sans-serif">
+<g filter="url(#m29-glow)" stroke-width="2">
+<rect fill="#0e1626" height="52" rx="12" stroke="#60a5fa" stroke-opacity="0.6" width="760" x="110" y="20"></rect>
+<rect fill="#0e1626" height="52" rx="12" stroke="#60a5fa" stroke-opacity="0.8" width="760" x="110" y="84"></rect>
+<rect fill="#0e1b26" height="52" rx="12" stroke="#38bdf8" stroke-opacity="0.8" width="760" x="110" y="148"></rect>
+<rect fill="#0e1b26" height="52" rx="12" stroke="#38bdf8" width="760" x="110" y="212"></rect>
+</g>
+<text fill="#bfdbfe" font-size="15" font-weight="700" x="130" y="51">Principles</text>
+<text fill="#dbeafe" font-size="13" x="330" y="51">what you promise: fairness, privacy, transparency</text>
+<text fill="#bfdbfe" font-size="15" font-weight="700" x="130" y="115">Policies</text>
+<text fill="#dbeafe" font-size="13" x="330" y="115">written rules: what’s allowed, what isn’t, who approves</text>
+<text fill="#bae6fd" font-size="15" font-weight="700" x="130" y="179">Processes</text>
+<text fill="#e0f2fe" font-size="13" x="330" y="179">inventory, risk assessment, periodic review</text>
+<text fill="#bae6fd" font-size="15" font-weight="700" x="130" y="243">Technical controls</text>
+<text fill="#e0f2fe" font-size="13" x="330" y="243">bias test, anonymization, logs, human approval</text>
+<path class="m29-flow" d="M60,262 L60,30" fill="none" marker-end="url(#m29-ahc)" stroke="#38bdf8" stroke-width="2.5"></path>
+<text fill="#7dd3fc" font-size="12" font-weight="700" text-anchor="middle" transform="rotate(-90 40 146)" x="40" y="146">evidence flows upward</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-blue-400">How to read:</strong> From top to bottom, each layer becomes more concrete. The arrow shows the reverse path: an auditor asks, "How do you ensure privacy?" The answer is convincing only when it points to a technical control with a record — not to a paragraph in a policy.</figcaption>
+</figure>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
+<h4 class="font-bold text-blue-400 mb-4">✓ Governance that works</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Proportional to risk: more control where the impact is greater.</span></li>
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Built into the development workflow, not handled by a distant committee.</span></li>
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>With a named owner for each system.</span></li>
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Reviewed when the system, model, or law changes.</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Governance in name only</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>A principles document that no one on the team has read.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>The same bureaucracy for an internal summary and a credit score.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Approval granted once and never reviewed again.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>"The AI decided" as an answer to the customer.</span></li>
+</ul>
+</div>
+</div>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Why learn</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-9-t1-p4" data-sum="porque">Laws, contracts, and clients increasingly demand explanations of how AI is used. If you can code and understand governance, you can turn vague requirements into concrete controls—and avoid costly rework when the questions come after launch.</p>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Key concepts</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Governance</div><div class="text-xs text-neutral-400">rules, roles, controls</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Accountability</div><div class="text-xs text-neutral-400">someone is accountable</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Control</div><div class="text-xs text-neutral-400">evidence-backed check</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Proportionality</div><div class="text-xs text-neutral-400">effort matches risk</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Mark as read</span>
+<span class="inema-label-done">Read</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 2 -->
+<section class="mb-16" data-inema-topic="modulo-2-9#topico-2" id="topico-2" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="medir diferenças entre grupos antes de publicar">⚖️ Bias and fairness</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Mark this topic as a question" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-9-t2-p1"><strong class="text-blue-400">Bias</strong>, in AI, is a systematic error that harms or favors groups of people. It rarely comes from someone with bad intentions; it comes from the data. If a company’s hiring history favored a certain profile, a model trained on that history learns to repeat the pattern — and does so with an appearance of objectivity. LLMs also carry stereotypes from the texts they were trained on.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-9-t2-p2">The most common sources are <strong class="text-neutral-100">historical bias</strong> (the past was unequal), <strong class="text-neutral-100">selection bias</strong> (the data doesn’t represent the entire audience), <strong class="text-neutral-100">measurement bias</strong> (the label measures something else — "was promoted" instead of "performs well"), and <strong class="text-neutral-100">aggregation bias</strong> (one model for groups that behave differently). Libraries such as Fairlearn help with measurement; the essentials, however, fit in a few lines of pandas.</p>
+<div class="bg-dark-800 border border-blue-500/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-blue-400 font-semibold mb-1">📘 New terms</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-9-t2-p3"><strong>Demographic parity</strong>: the positive outcome rate (approval, for example) is similar across groups. <strong>Equal opportunity</strong>: among people who deserved a positive outcome, the approval rate is similar across groups. <strong>Protected attribute</strong>: a characteristic that can’t be used as a basis for discrimination, such as race, gender, age, or disability. Metrics can conflict with one another; choosing which one to use is a documented business decision.</p>
+</div>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-blue-400 mb-3">What it is</h3>
+<p class="text-neutral-300">Measure the system’s outcome and error rates by group, compare them against an agreed threshold, and investigate differences before release — then repeat the checks periodically in production.</p>
+</div>
+<!-- SVG 2: taxa por grupo -->
+<figure class="svg-frame rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="Bar chart with fictional data: group A has a 70 percent approval rate and group B has a 30 percent rate; a dashed line at 56 percent marks four-fifths of the higher rate, and group B falls below it, signaling a need to investigate." class="w-full h-auto" role="img" viewbox="0 0 900 280">
+<rect fill="url(#m29-grid)" height="280" width="900"></rect>
+<g font-family="Inter,sans-serif">
+<path d="M150,230 L860,230 M150,230 L150,30" fill="none" stroke="#475569" stroke-width="1.5"></path>
+<text fill="#94a3b8" font-size="11" text-anchor="end" x="142" y="234">0%</text>
+<text fill="#94a3b8" font-size="11" text-anchor="end" x="142" y="134">50%</text>
+<text fill="#94a3b8" font-size="11" text-anchor="end" x="142" y="34">100%</text>
+<rect fill="#3b82f6" fill-opacity="0.8" filter="url(#m29-glow)" height="140" rx="4" width="130" x="220" y="90"></rect>
+<rect fill="#38bdf8" fill-opacity="0.75" filter="url(#m29-glow)" height="60" rx="4" width="130" x="440" y="170"></rect>
+<text fill="#eff6ff" font-size="16" font-weight="700" text-anchor="middle" x="285" y="80">70%</text>
+<text fill="#e0f2fe" font-size="16" font-weight="700" text-anchor="middle" x="505" y="160">30%</text>
+<text fill="#bfdbfe" font-size="13" font-weight="700" text-anchor="middle" x="285" y="252">Group A</text>
+<text fill="#bae6fd" font-size="13" font-weight="700" text-anchor="middle" x="505" y="252">Group B</text>
+<path d="M150,118 L860,118" fill="none" stroke="#e0f2fe" stroke-dasharray="6 5" stroke-width="1.8"></path>
+<text fill="#e0f2fe" font-size="12" font-weight="700" x="610" y="108">4/5 of the highest rate = 56%</text>
+<text fill="#7dd3fc" font-size="12" x="610" y="160">B below the line:</text>
+<text fill="#7dd3fc" font-size="12" x="610" y="178">investigate before release</text>
+<text fill="#94a3b8" font-size="11" text-anchor="middle" x="505" y="272">fictional data, the same data used in the code below</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-blue-400">How to read:</strong> Compare the height of the bars with the dashed line. The four-fifths rule, used as a reference in hiring assessments in the United States, treats a group’s rate falling below 80% of the most favored group’s rate as a warning sign. It is a trigger to investigate, not proof of discrimination or a guarantee of fairness.</figcaption>
+</figure>
+<!-- COPY-RUN: medir viés -->
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-blue-400">Try this:</strong> <span class="text-neutral-300">measure parity and equal opportunity by group (<code>bias.py</code>).</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copy</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900"># Installation: pip install pandas
+import pandas as pd
+
+# Mock data. Replace with: df = pd.read_csv("&lt;decisoes.csv&gt;")
+# columns: group, approved (0/1 = system decision), good_payer (0/1 = what actually happened)
+df = pd.DataFrame({
+    "grupo":       ["A"] * 10 + ["B"] * 10,
+    "aprovado":    [1, 1, 1, 0, 1, 1, 0, 1, 1, 0,   1, 0, 0, 1, 0, 0, 1, 0, 0, 0],
+    "bom_pagador": [1, 1, 1, 0, 1, 1, 1, 1, 1, 0,   1, 1, 0, 1, 1, 0, 1, 1, 0, 0],
+})
+
+# 1) Demographic parity: approval rate by group
+rate = df.groupby("grupo")["aprovado"].mean()
+ratio = rate.min() / rate.max()
+print("Approval rate:", rate.round(2).to_dict())
+print(f"Lower/higher ratio = {ratio:.2f} -&gt;", "ALERT (below 0,8)" if ratio &lt; 0.8 else "ok")
+
+# 2) Equal opportunity: among those who were good payers, how many were approved?
+opp = df[df["bom_pagador"] == 1].groupby("grupo")["aprovado"].mean()
+print("Approval among good payers:", opp.round(3).to_dict())
+
+# 3) How many good payers did each group lose (false negatives)?
+fn = df[(df["bom_pagador"] == 1) &amp; (df["aprovado"] == 0)].groupby("grupo").size()
+print("Good payers denied:", fn.to_dict())</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">How to check:</strong> With the mock data, the output should show rate A = 0.7 and B = 0.3, ratio 0.43 with ALERT, approval among good payers A = 0.875 and B = 0.5, and one good payer denied in A versus three in B. In other words, the system denies more good payers in group B. With real data, save this output alongside the release (module 2.8).</p>
+</div>
+<div class="bg-primary/10 border border-primary/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-primary font-semibold mb-1">💡 Tip</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-9-t2-p4">Removing the “gender” or “race” column from the model does not eliminate bias: ZIP code, school, name, and purchase history can act as proxies. To measure it, you need the attribute; to protect it, you need a legal basis and care—data about racial or ethnic origin is sensitive under the LGPD.</p>
+</div>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Why learn</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-9-t2-p5" data-sum="porque">A model with high overall accuracy can make far more errors for a specific group, and the average hides that. Measuring by group is the only way to find out before the problem harms people, leads to a lawsuit, or makes headlines.</p>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Key concepts</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Historical bias</div><div class="text-xs text-neutral-400">the past was unequal</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Parity</div><div class="text-xs text-neutral-400">similar rates</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Opportunity</div><div class="text-xs text-neutral-400">similar errors</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Proxy</div><div class="text-xs text-neutral-400">ZIP code in place of race</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Mark as read</span>
+<span class="inema-label-done">Read</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 3 -->
+<section class="mb-16" data-inema-topic="modulo-2-9#topico-3" id="topico-3" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="base legal, minimização e dado fora do prompt">🔒 Privacy and LGPD</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Mark this topic as a question" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-9-t3-p1">A <strong class="text-blue-400">LGPD</strong> (Law No. 13,709/2018) governs the processing of personal data in Brazil and is overseen by the ANPD (National Data Protection Authority). For AI systems, it matters at three points: the data used to train or evaluate, the data sent to the model with each call (including to providers abroad), and automated decisions about people. All processing needs a <strong class="text-neutral-100">legal basis</strong> and a defined purpose.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-9-t3-p2">Two articles deserve special attention.  <strong class="text-neutral-100">Art. 20</strong> guarantees data subjects the right to request a review of decisions made solely on the basis of automated processing that affect their interests, and to receive clear information about the criteria used. And <strong class="text-neutral-100">Art. 52</strong> provides for penalties ranging from a warning to a fine of up to 2% of the company’s revenue in Brazil, capped at R$ 50 million per violation, as well as blocking and deletion of data.</p>
+<div class="bg-dark-800 border border-blue-500/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-blue-400 font-semibold mb-1">📘 New terms</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-9-t3-p3"><strong>Sensitive personal data</strong> includes racial or ethnic origin, religion, political opinion, union membership, health, sex life, and genetic and biometric data—it has stricter rules. <strong>Anonymization</strong> makes it impossible to identify the person by reasonable means; anonymized data is no longer personal data. <strong>Pseudonymization</strong> replaces identifiers with codes, but anyone with the lookup table can reverse it—so it remains personal data. <strong>Data protection officer</strong> is the person appointed to communicate with data subjects and the ANPD.</p>
+</div>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-blue-400 mb-3">What it is</h3>
+<p class="text-neutral-300">Apply the LGPD throughout the AI lifecycle: know which personal data is used, its legal basis and purpose, minimize what goes to the model, protect what remains in logs, and ensure human review and explanations for automated decisions.</p>
+</div>
+<!-- SVG 3: fluxo com anonimizador -->
+<figure class="svg-frame rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="Data flow with pseudonymization: text containing a CPF number and email passes through a pseudonymizer on your server, which replaces the data with markers; the external LLM provider sees only the markers; the response comes back and, if needed, the data is restored locally using the table that never leaves your environment." class="w-full h-auto" role="img" viewbox="0 0 900 280">
+<rect fill="url(#m29-grid)" height="280" width="900"></rect>
+<g font-family="Inter,sans-serif">
+<rect fill="none" height="236" rx="16" stroke="#60a5fa" stroke-dasharray="6 5" stroke-opacity="0.7" stroke-width="1.5" width="520" x="14" y="28"></rect>
+<text fill="#93c5fd" font-size="12" font-weight="700" x="30" y="20">your environment</text>
+<rect fill="none" height="236" rx="16" stroke="#38bdf8" stroke-dasharray="6 5" stroke-opacity="0.7" stroke-width="1.5" width="330" x="556" y="28"></rect>
+<text fill="#7dd3fc" font-size="12" font-weight="700" x="572" y="20">external provider (if using an API)</text>
+<g filter="url(#m29-glow)" stroke-width="2">
+<rect fill="#0e1626" height="64" rx="12" stroke="#60a5fa" width="200" x="34" y="50"></rect>
+<rect fill="#0e1626" height="64" rx="12" stroke="#60a5fa" width="230" x="284" y="50"></rect>
+<rect fill="#0e1b26" height="64" rx="12" stroke="#38bdf8" width="270" x="586" y="50"></rect>
+<rect fill="#0e1b26" height="64" rx="12" stroke="#38bdf8" width="270" x="586" y="180"></rect>
+<rect fill="#0e1626" height="64" rx="12" stroke="#60a5fa" width="230" x="284" y="180"></rect>
+</g>
+<text fill="#eff6ff" font-size="14" font-weight="700" text-anchor="middle" x="134" y="76">original text</text>
+<text fill="#93c5fd" font-size="12" text-anchor="middle" x="134" y="96">CPF, email, phone</text>
+<text fill="#eff6ff" font-size="14" font-weight="700" text-anchor="middle" x="399" y="76">pseudonymizer</text>
+<text fill="#93c5fd" font-size="12" text-anchor="middle" x="399" y="96">CPF becomes [CPF_1]</text>
+<text fill="#e0f2fe" font-size="14" font-weight="700" text-anchor="middle" x="721" y="76">LLM</text>
+<text fill="#bae6fd" font-size="12" text-anchor="middle" x="721" y="96">only sees placeholders</text>
+<text fill="#e0f2fe" font-size="14" font-weight="700" text-anchor="middle" x="721" y="206">answer</text>
+<text fill="#bae6fd" font-size="12" text-anchor="middle" x="721" y="226">with [CPF_1], without the CPF</text>
+<text fill="#eff6ff" font-size="14" font-weight="700" text-anchor="middle" x="399" y="206">restore if needed</text>
+<text fill="#93c5fd" font-size="12" text-anchor="middle" x="399" y="226">table stays here</text>
+<path class="m29-flow" d="M236,82 L278,82" fill="none" marker-end="url(#m29-ah)" stroke="#60a5fa" stroke-width="2.5"></path>
+<path class="m29-flow" d="M516,82 L580,82" fill="none" marker-end="url(#m29-ahc)" stroke="#38bdf8" stroke-width="2.5"></path>
+<path class="m29-flow" d="M721,116 L721,174" fill="none" marker-end="url(#m29-ahc)" stroke="#38bdf8" stroke-width="2.5"></path>
+<path class="m29-flow" d="M584,212 L520,212" fill="none" marker-end="url(#m29-ah)" stroke="#60a5fa" stroke-width="2.5"></path>
+<path d="M399,116 L399,174" fill="none" stroke="#60a5fa" stroke-dasharray="3 4" stroke-opacity="0.7" stroke-width="1.5"></path>
+<text fill="#94a3b8" font-size="11" text-anchor="end" x="390" y="150">lookup table</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-blue-400">How to read:</strong> The blue dashed line marks the boundary of your environment; nothing containing a CPF or email crosses it. The table linking [CPF_1] to the real CPF stays on this side. This is pseudonymization—it reduces risk, but the data remains personal under the LGPD. Free-form names and addresses call for NER (module 2.7), not just regular expressions.</figcaption>
+</figure>
+<!-- COPY-RUN: pseudonimizar -->
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-blue-400">Goal:</strong> <span class="text-neutral-300">remove CPF, CNPJ, email, phone, and ZIP code before sending text to a model (<code>privacy.py</code>).</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copy</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900"># No external dependencies. Order matters: CNPJ before CPF, phone number before ZIP code.
+import re
+
+PADROES = {
+    "CNPJ":     r"\b\d{2}\.?\d{3}\.?\d{3}/?\d{4}-?\d{2}\b",
+    "CPF":      r"\b\d{3}\.?\d{3}\.?\d{3}-?\d{2}\b",
+    "EMAIL":    r"\b[\w.+-]+@[\w-]+(?:\.[\w-]+)+\b",
+    "TELEFONE": r"(?:\+?55\s?)?\(?\b\d{2}\)?\s?9?\d{4}-?\d{4}\b",
+    "CEP":      r"\b\d{5}-?\d{3}\b",
+}
+
+def pseudonimizar(texto: str) -&gt; tuple[str, dict]:
+    tabela = {}
+    for tipo, padrao in PADROES.items():
+        def troca(m, tipo=tipo):
+            chave = f"[{tipo}_{len(tabela) + 1}]"
+            tabela[chave] = m.group(0)
+            return chave
+        texto = re.sub(padrao, troca, texto)
+    return texto, tabela          # the table NEVER goes to the model or the log
+
+def repor(texto: str, tabela: dict) -&gt; str:
+    for chave, valor in tabela.items():
+        texto = texto.replace(chave, valor)
+    return texto
+
+original = ("Cliente Maria Souza, CPF 123.456.789-09, e-mail maria@exemplo.com, "
+            "tel (11) 98765-4321, CEP 01310-100, pediu revisão da fatura.")
+seguro, tabela = pseudonimizar(original)
+print(seguro)
+# ... here 'seguro' goes to the LLM (classify, summarize) ...
+assert repor(seguro, tabela) == original</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">How to check:</strong> the output should be <code>Customer Maria Souza, CPF [CPF_1], email [EMAIL_2], phone [TELEFONE_3], ZIP code [CEP_4], requested a bill review.</code> e o <code>assert</code> should pass. Notice that the name "Maria Souza" got through: regular expressions don't catch names. Combine this with the entity extraction from Module 2.7 and test it with real texts from your system before relying on it.</p>
+</div>
+<div class="overflow-x-auto mb-6">
+<table class="w-full text-sm border border-dark-600 rounded-xl overflow-hidden">
+<thead><tr class="bg-dark-700"><th class="text-left p-3 text-blue-400">Question</th><th class="text-left p-3 text-blue-400">What to do in the system</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr><td class="p-3 font-semibold">What is the legal basis and purpose?</td><td class="p-3 text-neutral-300">Record it in the system inventory with the data protection officer.</td></tr>
+<tr><td class="p-3 font-semibold">Does the model need this data?</td><td class="p-3 text-neutral-300">Minimize: pseudonymize or remove it before the call.</td></tr>
+<tr><td class="p-3 font-semibold">Does the provider use the data for training?</td><td class="p-3 text-neutral-300">Check the contract and settings; prefer plans that neither retain data nor use it for training, or use a local model.</td></tr>
+<tr><td class="p-3 font-semibold">Does the data leave the country?</td><td class="p-3 text-neutral-300">International transfers have specific rules under the LGPD (Brazil's data protection law); document them.</td></tr>
+<tr><td class="p-3 font-semibold">What goes into the logs, and for how long?</td><td class="p-3 text-neutral-300">Keep logs free of personal data whenever possible; define a retention period.</td></tr>
+<tr><td class="p-3 font-semibold">Is the decision automated?</td><td class="p-3 text-neutral-300">A review channel (Article 20) and an explanation of the criteria.</td></tr>
+</tbody>
+</table>
+</div>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Why learn</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-9-t3-p4" data-sum="porque">Every model call involves data processing. As a programmer, you decide, line by line, what leaves the system and what gets recorded. Understanding the LGPD turns that decision from an invisible legal risk into a simple, testable, documented control.</p>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Key concepts</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Legal basis</div><div class="text-xs text-neutral-400">every processing activity needs one</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Minimization</div><div class="text-xs text-neutral-400">only what’s necessary</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Pseudonymization</div><div class="text-xs text-neutral-400">reversible, still personal</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Article 20</div><div class="text-xs text-neutral-400">review of an automated decision</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Mark as read</span>
+<span class="inema-label-done">Read</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 4 -->
+<section class="mb-16" data-inema-topic="modulo-2-9#topico-4" id="topico-4" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="avisar, documentar e explicar decisões">🔍 Transparency and explainability</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Mark this topic as a question" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-9-t4-p1">Transparency has three audiences. The <strong class="text-neutral-100">user</strong> needs to know they're talking to AI and what to do if the answer isn't helpful. The <strong class="text-neutral-100">person affected by a decision</strong> needs to understand, in plain language, which factors mattered and how to request a review. And the <strong class="text-neutral-100">team and auditors</strong> need documentation: what the system does, what data it uses, and its known limitations.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-9-t4-p2">Explaining how an LLM works internally is still a research problem. In practice, explainability comes from how the system is designed: ask the model to provide a rationale along with its answer, cite the source passages that support each claim (RAG with sources), record the release and inputs for each decision, and, with classic tabular models, use techniques such as SHAP to show how much each variable contributed.</p>
+<div class="bg-dark-800 border border-blue-500/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-blue-400 font-semibold mb-1">📘 New terms</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-9-t4-p3"><strong>Model card</strong> (<em>model card</em>) is a short document that describes a model or system: intended use, data, metrics by group, and limitations. <strong>Explainability</strong> is the ability to explain, in an understandable way, why the system reached a result. <strong>Traceability</strong> is the ability to link a decision to the inputs, version, and sources used.</p>
+</div>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-blue-400 mb-3">What it is</h3>
+<p class="text-neutral-300">Make it clear when AI is involved, document the system in a model card, record what is needed to reconstruct each decision, and offer an explanation and review to anyone affected.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
+<h4 class="font-bold text-blue-400 mb-4">✓ Transparent in practice</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>"This response was generated by AI and may contain errors" displayed visibly, not hidden.</span></li>
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>An easy way to talk to a person.</span></li>
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Answers with the source for each claim.</span></li>
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Synthetic images and videos identified as such.</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Opaque</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>An assistant that presents itself with the name and photo of a real person.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Credit denial without a reason or a review channel.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>No record of which version responded to the customer.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Known limitations kept only in the team's heads.</span></li>
+</ul>
+</div>
+</div>
+<!-- COPY-RUN: ficha do sistema -->
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-blue-400">Goal:</strong> <span class="text-neutral-300">a system card (<code>FICHA.md</code>) to store in the repository and update with each release.</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copy</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900"># System card — &lt;name&gt;   (release &lt;x.y.z&gt;, updated &lt;date&gt;)
+
+## What it’s for
+Intended use: &lt;e.g., triaging customer messages into 5 categories&gt;
+Out of scope: &lt;e.g., deciding refunds; responding to health or legal questions&gt;
+Who is affected: &lt;customers, employees, third parties&gt;    Owner: &lt;name/team&gt;
+
+## How it works
+Model: &lt;exact name + version&gt;   Local or API: &lt;which provider, region&gt;
+Prompt: &lt;path in repository&gt;   Knowledge base consulted (RAG): &lt;which one, updated when&gt;
+Final decision: &lt;automatic | AI suggests and a person decides&gt;
+
+## Personal data (LGPD)
+Which data: &lt;...&gt;   Legal basis: &lt;...&gt;   Minimization: &lt;pseudonymization before the call?&gt;
+Log retention: &lt;period&gt;   Does the provider train on the data? &lt;no / verified on&gt;
+
+## Quality and fairness
+Test set: &lt;path, number of cases&gt;   Current result: &lt;metrics&gt;
+Metrics by group: &lt;which groups, results, date&gt;
+Known limitations: &lt;e.g., performance worsens with transcribed audio and regional slang&gt;
+
+## Transparency and appeals
+Notice to the user: &lt;displayed text&gt;   Human review: &lt;channel and timeframe&gt;</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">How to check:</strong> Give the completed card to someone outside the team (legal, customer support) and ask them to answer, using only the card: “What should this system not do?” and “How can a customer challenge a decision?” If they can’t answer, the card is missing information.</p>
+</div>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Why learn</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-9-t4-p4" data-sum="porque">Transparency lets users trust the system to the right degree, affected people exercise their rights, and the team investigate problems. Without it, a system error can become a trust crisis that is hard to reverse.</p>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Key concepts</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">AI Notice</div><div class="text-xs text-neutral-400">the user knows</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Model card</div><div class="text-xs text-neutral-400">use, data, limits</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Explainability</div><div class="text-xs text-neutral-400">why this result</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Traceability</div><div class="text-xs text-neutral-400">decision linked to version</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Mark as read</span>
+<span class="inema-label-done">Read</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 5 -->
+<section class="mb-16" data-inema-topic="modulo-2-9#topico-5" id="topico-5" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="dados de treino, licenças e autoria do que a IA gera">©️ Copyright</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Mark this topic as a question" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-9-t5-p1">Copyright issues come up at three points in AI work. During <strong class="text-neutral-100">tokens</strong>: what you use to train, fine-tune, or feed a RAG knowledge base may be protected work (in Brazil, under Law No. 9,610/1998). During <strong class="text-neutral-100">tool</strong>: open models come with different licenses—some permissive, such as Apache 2.0 and MIT, others with restrictions on use or scale. And during <strong class="text-neutral-100">tokens</strong>: what the model generates may too closely resemble an existing work, and protection for the output itself is uncertain.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-9-t5-p2">For authorship of AI-generated content, the trend in several countries is to require substantial human contribution: in the United States, the Copyright Office has refused to register material produced without sufficient human authorship. Lawsuits over the use of works to train models are ongoing, and the issue is part of the debate over Brazil’s AI legal framework (Bill 2338/2023). <strong class="text-blue-400">This situation changes quickly</strong>: the approach is to document sources, respect licenses, and consult legal counsel in cases with significant impact.</p>
+<div class="bg-dark-800 border border-blue-500/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-blue-400 font-semibold mb-1">📘 New terms</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-9-t5-p3"><strong>Model license</strong> is the agreement that sets out how the weights of an open model may be used—read it before putting the model into a product. <strong>Provenance</strong> is the record of where each piece of data or content came from. <strong>Regurgitation</strong> is when a model reproduces long, nearly verbatim passages from its training material.</p>
+</div>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-blue-400 mb-3">What it is</h3>
+<p class="text-neutral-300">Manage the origins and rights of what goes into the system, the licenses for the models and tools used, and the risk that outputs copy third-party works. Keep provenance records and have a person review anything that will be published.</p>
+</div>
+<div class="overflow-x-auto mb-6">
+<table class="w-full text-sm border border-dark-600 rounded-xl overflow-hidden">
+<thead><tr class="bg-dark-700"><th class="text-left p-3 text-blue-400">Point</th><th class="text-left p-3 text-blue-400">Risk</th><th class="text-left p-3 text-blue-400">Practical control</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr><td class="p-3 font-semibold">RAG knowledge base and fine-tuning</td><td class="p-3 text-neutral-300">Using content without usage rights (websites, books, customer materials)</td><td class="p-3 text-neutral-300">List sources with their origins and permissions; prefer original or licensed content</td></tr>
+<tr><td class="p-3 font-semibold">Open model</td><td class="p-3 text-neutral-300">License with restrictions on use, scale, or attribution</td><td class="p-3 text-neutral-300">Record the license in the system card; get legal review before product release</td></tr>
+<tr><td class="p-3 font-semibold">Generated text and code</td><td class="p-3 text-neutral-300">Passage copied from a work or code under an incompatible license</td><td class="p-3 text-neutral-300">Human review; similarity-checking tools and license checks for code</td></tr>
+<tr><td class="p-3 font-semibold">Image, voice, and video</td><td class="p-3 text-neutral-300">Style or image of a real person, a third-party brand, voice without permission</td><td class="p-3 text-neutral-300">Prohibit requests that name artists and real people; get written permission for voice and image</td></tr>
+</tbody>
+</table>
+</div>
+<div class="bg-primary/10 border border-primary/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-primary font-semibold mb-1">💡 Tip</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-9-t5-p4">Read the terms of the provider you use: some offer clauses protecting against copyright claims about outputs, subject to conditions. Note in the system card what your plan covers and what it doesn’t.</p>
+</div>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Why learn</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-9-t5-p5" data-sum="porque">A model with the wrong license or a dataset assembled from third-party content can force you to rebuild an entire product. Recording origins and licenses from the start costs little and helps avoid disputes that no technical benefit can justify.</p>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Key concepts</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Law 9,610/1998</div><div class="text-xs text-neutral-400">copyright in Brazil</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Model license</div><div class="text-xs text-neutral-400">read before use</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Provenance</div><div class="text-xs text-neutral-400">where each piece of data came from</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Human authorship</div><div class="text-xs text-neutral-400">basis for protection</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Mark as read</span>
+<span class="inema-label-done">Read</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 6 -->
+<section class="mb-16" data-inema-topic="modulo-2-9#topico-6" id="topico-6" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="impacto, autonomia e quem aprova">🛡️ Risk and human oversight</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Mark this topic as a question" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-9-t6-p1">Not every use of AI calls for the same level of care. European regulations (the AI Act, in force since 2024, with obligations taking effect in stages) and Brazil’s bill follow the same approach: <strong class="text-blue-400">classify by risk</strong>. Some uses are prohibited, some are high-risk (such as candidate selection, credit, and access to essential services), some require transparency (such as chatbots and synthetic content), and others pose minimal risk. Check the timeline and current status of the rules before each project.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-9-t6-p2">For people building these systems, two questions resolve much of the classification: <strong class="text-neutral-100">what is the impact</strong> of an error on someone’s life, and <strong class="text-neutral-100">how much autonomy</strong> does the AI have—it only suggests, makes decisions subject to review, or acts on its own? With agents that use tools, autonomy increases and new risks arise, such as hidden instructions injected into documents and pages the agent reads.</p>
+<div class="bg-dark-800 border border-blue-500/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-blue-400 font-semibold mb-1">📘 New terms</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-9-t6-p3"><strong>Human in the loop</strong> (<em>human-in-the-loop</em>): a person approves each decision before it takes effect. <strong>Human overseeing</strong> (<em>on-the-loop</em>): the system acts while a person monitors it and can intervene. <strong>Prompt injection</strong>: malicious text inside the data (an email, a PDF, a page) that tries to change the model’s instructions. <strong>Least privilege</strong>: give the agent only the permissions it strictly needs.</p>
+</div>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-blue-400 mb-3">What it is</h3>
+<p class="text-neutral-300">Classify each system by the impact of an error and the AI’s autonomy, then choose a level of human oversight, testing, and approval proportionate to that classification.</p>
+</div>
+<!-- SVG 4: matriz impacto × autonomia -->
+<figure class="svg-frame rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="Risk matrix with two axes, impact on the person and AI autonomy, forming four quadrants: low impact and low autonomy, unrestricted use with review; low impact and high autonomy, automate with limits; high impact and low autonomy, AI suggests and a person decides; high impact and high autonomy, avoid or require approval and auditing." class="w-full h-auto" role="img" viewbox="0 0 900 310">
+<rect fill="url(#m29-grid)" height="310" width="900"></rect>
+<g font-family="Inter,sans-serif">
+<rect fill="#0e1626" height="120" rx="10" stroke="#60a5fa" stroke-opacity="0.6" stroke-width="1.5" width="350" x="140" y="150"></rect>
+<rect fill="#0e1626" height="120" rx="10" stroke="#60a5fa" stroke-opacity="0.8" stroke-width="1.5" width="350" x="505" y="150"></rect>
+<rect fill="#0e1b26" height="120" rx="10" stroke="#38bdf8" stroke-opacity="0.8" stroke-width="1.5" width="350" x="140" y="20"></rect>
+<rect fill="#1e1530" filter="url(#m29-glow)" height="120" rx="10" stroke="#f87171" stroke-width="2" width="350" x="505" y="20"></rect>
+<text fill="#bae6fd" font-size="15" font-weight="700" x="160" y="52">AI suggests, a person decides</text>
+<text fill="#e0f2fe" font-size="12" x="160" y="76">credit, hiring, health, legal</text>
+<text fill="#e0f2fe" font-size="12" x="160" y="96">human in the loop + explanation</text>
+<text fill="#e0f2fe" font-size="12" x="160" y="116">bias testing and review (Art. 20)</text>
+<text fill="#fecaca" font-size="15" font-weight="700" x="525" y="52">Avoid, or require formal approval</text>
+<text fill="#fee2e2" font-size="12" x="525" y="76">agent that makes decisions about people</text>
+<text fill="#fee2e2" font-size="12" x="525" y="96">or handles money without review</text>
+<text fill="#fee2e2" font-size="12" x="525" y="116">auditing, limits, quick shutdown</text>
+<text fill="#bfdbfe" font-size="15" font-weight="700" x="160" y="182">Free use with review</text>
+<text fill="#dbeafe" font-size="12" x="160" y="206">drafts, internal summaries</text>
+<text fill="#dbeafe" font-size="12" x="160" y="226">the user reviews the result</text>
+<text fill="#dbeafe" font-size="12" x="160" y="246">use and data policy</text>
+<text fill="#bfdbfe" font-size="15" font-weight="700" x="525" y="182">Automate with limits</text>
+<text fill="#dbeafe" font-size="12" x="525" y="206">triage, file organization</text>
+<text fill="#dbeafe" font-size="12" x="525" y="226">human supervision + logs</text>
+<text fill="#dbeafe" font-size="12" x="525" y="246">least privilege, rollback</text>
+<path d="M120,284 L120,24" fill="none" marker-end="url(#m29-ah)" stroke="#60a5fa" stroke-width="2"></path>
+<text fill="#93c5fd" font-size="12" font-weight="700" text-anchor="middle" transform="rotate(-90 100 150)" x="100" y="150">impact on the person</text>
+<path d="M140,288 L850,288" fill="none" marker-end="url(#m29-ahc)" stroke="#38bdf8" stroke-width="2"></path>
+<text fill="#7dd3fc" font-size="12" font-weight="700" text-anchor="middle" x="497" y="304">AI autonomy: suggests → decides → acts on its own</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-blue-400">How to read:</strong> locate your system along both axes. The farther up and to the right, the more controls apply. The red quadrant is not automatically prohibited, but it requires justification, formal approval, and auditing. The same product may have functions in different quadrants—classify by function, not by product.</figcaption>
+</figure>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-4"><p class="text-blue-400 font-semibold text-sm mb-1">Minimum permissions</p><p class="text-xs text-neutral-300" data-inema-block="m2-9-t6-p4">An agent that reads emails doesn’t need to send them. One that queries the database doesn’t need to delete anything.</p></div>
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-4"><p class="text-blue-400 font-semibold text-sm mb-1">Confirmation for irreversible actions</p><p class="text-xs text-neutral-300" data-inema-block="m2-9-t6-p5">Payments, deletions, external messages: always require explicit human approval.</p></div>
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-4"><p class="text-blue-400 font-semibold text-sm mb-1">Data is data, not an instruction</p><p class="text-xs text-neutral-300" data-inema-block="m2-9-t6-p6">Content read from documents and pages never changes the agent’s instructions.</p></div>
+</div>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Why learn</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-9-t6-p7" data-sum="porque">Risk classification helps avoid two costly mistakes: imposing heavy bureaucracy on trivial uses, which leads the team to work around the rules, and unchecked automation in decisions that affect people’s lives. As agents become more autonomous, designing oversight is part of the code.</p>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Key concepts</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Risk class</div><div class="text-xs text-neutral-400">impact × autonomy</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Human in the loop</div><div class="text-xs text-neutral-400">approve first</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Prompt injection</div><div class="text-xs text-neutral-400">hidden instruction in the data</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Least privilege</div><div class="text-xs text-neutral-400">only what’s necessary</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Mark as read</span>
+<span class="inema-label-done">Read</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 7 -->
+<section class="mb-16" data-inema-topic="modulo-2-9#topico-7" id="topico-7" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">7</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="inventário, aprovação, revisão e checklist">📋 Governance process</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Mark this topic as a question" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-9-t7-p1">A governance process doesn’t need a new department to get started. The minimum that works has four parts: an <strong class="text-neutral-100">inventory</strong> of all AI systems (including tools employees use on their own), a <strong class="text-neutral-100">risk assessment</strong> before each launch, documented <strong class="text-neutral-100">approval</strong> by whoever is responsible for the system, and a <strong class="text-neutral-100">periodic review</strong> — and whenever the model, data, or purpose changes.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-9-t7-p2">The key is to fit this into the workflow the team already uses. The checklist below can become the pull request template, a step in the module 2.8 pipeline, or a page in the repository. What matters is that it’s completed before deployment, with evidence, rather than reconstructed after a problem occurs.</p>
+<div class="bg-dark-800 border border-blue-500/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-blue-400 font-semibold mb-1">📘 New terms</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-9-t7-p3"><strong>AI inventory</strong> is a list of AI systems and tools in use, with an owner, purpose, and risk class. <strong>RIPD</strong> (Personal Data Protection Impact Report) is the LGPD (Brazil’s data protection law) document describing data processing that may pose risks to data subjects, along with mitigation measures. <strong>Shadow AI</strong> is the use of AI tools without the organization’s knowledge.</p>
+</div>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-blue-400 mb-3">What it is</h3>
+<p class="text-neutral-300">A lightweight, repeatable cycle—record, assess, approve, monitor, and review—with a checklist that follows each system from its first prototype to retirement.</p>
+</div>
+<!-- PASSO A PASSO -->
+<div class="relative border-l-2 border-blue-500/30 ml-3 pl-6 space-y-5 mb-6">
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-blue-500/20 border-2 border-blue-400"></span><p class="text-sm text-neutral-300"><strong class="text-blue-400">1 · Record.</strong> Every system enters the inventory when it becomes a prototype, with an owner and purpose.</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-blue-500/20 border-2 border-blue-400"></span><p class="text-sm text-neutral-300"><strong class="text-blue-400">2 · Assess.</strong> Risk class (Topic 6), personal data (Topic 3), bias (Topic 2), rights (Topic 5).</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-sky-500/20 border-2 border-sky-400"></span><p class="text-sm text-neutral-300"><strong class="text-sky-400">3 · Approve.</strong> The owner signs off on the checklist; high risk also requires legal counsel and the data protection officer.</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-sky-500/20 border-2 border-sky-400"></span><p class="text-sm text-neutral-300"><strong class="text-sky-400">4 · Monitor.</strong> Quality, group-specific bias, complaints, and incidents, using the module 2.8 dashboard.</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-sky-500/20 border-2 border-sky-400"></span><p class="text-sm text-neutral-300"><strong class="text-sky-400">5 · Review.</strong> At a fixed interval and whenever the model, data, purpose, or applicable law changes.</p></div>
+</div>
+<!-- COPY-RUN: checklist de governança -->
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-blue-400">Goal:</strong> <span class="text-neutral-300">governance checklist to paste into the repository or pull request template.</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copy</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900"># AI Governance Checklist — &lt;system&gt; · release &lt;x.y.z&gt; · &lt;date&gt;
+Owner: &lt;name/area&gt;   Risk class: &lt;minimal | transparency | high&gt;
+
+## 1. Registration
+- [ ] System is in the AI inventory, with its purpose and owner
+- [ ] System record (FICHA.md) updated for this release
+
+## 2. Personal data (LGPD)
+- [ ] Legal basis and purpose recorded with the data protection officer
+- [ ] Minimization: personal data removed or pseudonymized before reaching the model
+- [ ] Provider does not train on the data (contract/settings checked on &lt;date&gt;)
+- [ ] International transfer assessed, if applicable
+- [ ] Logs contain no unnecessary personal data; retention period: &lt;period&gt;
+- [ ] RIPD completed or updated if the risk to data subjects is significant
+
+## 3. Quality and fairness
+- [ ] Test suite passed the gate (result: &lt;...&gt;)
+- [ ] Metrics measured by group; differences explained or corrected
+- [ ] Known limitations documented in the system record
+
+## 4. Transparency and rights
+- [ ] User is told they are interacting with AI or receiving AI-generated content
+- [ ] Human review channel for automated decisions (LGPD art. 20)
+- [ ] Data sources and licenses, RAG knowledge base, and model recorded
+
+## 5. Security and oversight
+- [ ] Level of human oversight defined according to the risk class
+- [ ] Agent has minimum permissions; irreversible actions require confirmation
+- [ ] Tested against prompt injection using sample malicious documents
+- [ ] Runbook includes rollback and rapid shutdown (module 2.8)
+
+## 6. Approval and review
+- [ ] Approved by: &lt;owner&gt;  (+ legal/data protection officer if high risk) on &lt;date&gt;
+- [ ] Next review: &lt;date&gt; or when the model, data, or purpose changes</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">How to check:</strong> Apply the checklist to a system you already have — the classifier from modules 2.7 and 2.8 will work. Each checked item must point to evidence (file, test output, contract, approval email). A checked item without evidence counts as not done.</p>
+</div>
+<div class="bg-primary/10 border border-primary/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-primary font-semibold mb-1">💡 Tip</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-9-t7-p4">Start with the inventory. Ask teams which AI tools they use in their day-to-day work and what data they use them with. The first list usually reveals uses no one had assessed — and those are where the simplest risks to fix are.</p>
+</div>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Why learn</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-9-t7-p5" data-sum="porque">Governance done upfront costs a few hours per system; done after an incident or an audit, it costs weeks and reputation. If you master this process, you can bring AI projects safely into sensitive areas — and that is exactly the perspective Track 3 develops at scale.</p>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Key concepts</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Inventory</div><div class="text-xs text-neutral-400">what exists, and who owns it</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">RIPD</div><div class="text-xs text-neutral-400">impact on data subjects</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Approval recorded</div><div class="text-xs text-neutral-400">before deployment</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Periodic review</div><div class="text-xs text-neutral-400">and with every change</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Mark as read</span>
+<span class="inema-label-done">Read</span>
+</button>
+</div>
+</div>
+</section>
+<!-- RESUMO -->
+<section class="mb-8">
+<div class="bg-gradient-to-br from-blue-900/40 via-dark-800 to-dark-800 rounded-xl border border-blue-500/30 p-6 sm:p-8">
+<h2 class="text-2xl font-bold mb-6">✅ Module summary</h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start gap-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">A principle only matters when backed by a control</strong><span class="text-neutral-400"> — a test, function, or approval that leaves evidence.</span></div></div>
+<div class="flex items-start gap-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">Measure bias by group and protect personal data</strong><span class="text-neutral-400"> — parity, opportunity, minimization, and LGPD.</span></div></div>
+<div class="flex items-start gap-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">Be transparent and respect rights</strong><span class="text-neutral-400"> — AI notice, system record, human review, licenses, and sources.</span></div></div>
+<div class="flex items-start gap-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">Oversight proportional to risk</strong><span class="text-neutral-400"> — inventory, checklist, approval, and periodic review.</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-blue-400 mb-2">Next module:</h3>
+<p class="text-neutral-300">Track 3 — Masterclass 👑</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="index.html">← Back to Track</a>
+<a class="flex-1 text-center px-6 py-3 bg-blue-700 text-white rounded-lg font-semibold hover:bg-blue-600 transition-colors" href="../trilha3/index.html">Next module →</a>
+</div>
+</div>
+</section>
+</article>
+</div>
+</div>
+</main>
+<footer class="border-t border-dark-600 py-8 mt-8">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>FTD — Digital Transformation Training · open and free content · 2026 · <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" rel="noopener" target="_blank">INEMA.CLUB</a> - <a class="text-amber-700 dark:text-slate-300 hover:underline" href="https://inema.pro" rel="noopener" target="_blank">PRO</a></p>
+</div>
+</footer>
+<!-- SCRIPTS NÚCLEO v1 -->
+<script>
+    function toggleTopic(button) {
+      var topicItem = button.closest('.topic-item');
+      if (!topicItem) return;
+      var explanation = topicItem.querySelector('.topic-explanation');
+      var willOpen = !explanation.classList.contains('active');
+      explanation.classList.toggle('active');
+      button.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+    }
+    function openModal(id) { var m = document.getElementById(id); if (m) { m.classList.remove('hidden'); document.body.style.overflow = 'hidden'; } }
+    function closeModal() { document.querySelectorAll('.modal').forEach(function (m) { m.classList.add('hidden'); }); document.body.style.overflow = 'auto'; }
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
+    function copyCode(btn) {
+      var pre = btn.closest('[data-copy-box]').querySelector('pre');
+      var txt = pre ? pre.innerText : '';
+      var done = function () { var o = btn.getAttribute('data-label-ok') || 'Copiado'; var t = btn.textContent; btn.textContent = o; setTimeout(function () { btn.textContent = t; }, 1500); };
+      try { navigator.clipboard.writeText(txt).then(done, done); } catch (e) { done(); }
+    }
+    (function () {
+      var themeToggle = document.getElementById('theme-toggle');
+      var darkIcon = document.getElementById('theme-toggle-dark-icon');
+      var lightIcon = document.getElementById('theme-toggle-light-icon');
+      var html = document.documentElement;
+      function sync() { var isDark = html.classList.contains('dark'); if (darkIcon) darkIcon.classList.toggle('hidden', isDark); if (lightIcon) lightIcon.classList.toggle('hidden', !isDark); }
+      sync();
+      if (themeToggle) themeToggle.addEventListener('click', function () {
+        html.classList.toggle('dark'); var nowDark = html.classList.contains('dark'); html.style.colorScheme = nowDark ? 'dark' : 'light';
+        try { localStorage.setItem('theme', nowDark ? 'dark' : 'light'); } catch (e) {}
+        try { var p = JSON.parse(localStorage.getItem('inema.prefs') || '{}'); p.theme = nowDark ? 'inema-dark' : 'claro'; localStorage.setItem('inema.prefs', JSON.stringify(p)); } catch (e) {}
+        sync();
+      });
+    })();
+  </script>
+<!-- learn.js + INEMA.init() POR ÚLTIMO -->
+<script src="../../assets/learn.js"></script>
+<script>
+    if (window.INEMA && typeof window.INEMA.init === 'function') { window.INEMA.init({ autoResume: true }); }
+  </script>
+</body>
+</html>

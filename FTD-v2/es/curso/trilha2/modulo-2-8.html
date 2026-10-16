@@ -1,0 +1,1296 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="ftd-v2-es" name="inema-course"/>
+<title>Módulo 2.8 · MLOps y producción | FTD v2</title>
+<meta content="Control de versiones, evaluación continua, despliegue, monitoreo, costos e incidentes en sistemas con IA." name="description"/>
+<meta content="Módulo 2.8 · MLOps y producción | FTD v2" property="og:title"/>
+<meta content="Control de versiones, evaluación continua, despliegue, monitoreo, costos e incidentes en sistemas con IA." property="og:description"/>
+<!-- ANTI-FOUC (Erro #18) — primeiro script do head -->
+<script>
+(function () {
+  try {
+    var html = document.documentElement;
+    var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+    function clone(o) { var r = {}; for (var x in o) r[x] = o[x]; return r; }
+    var p = clone(DEF);
+    try {
+      var raw = localStorage.getItem('inema.prefs');
+      if (raw) {
+        var parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === 'object') {
+          for (var k in DEF) if (parsed[k] != null) p[k] = parsed[k];
+        }
+      } else {
+        var legacy = localStorage.getItem('theme');
+        if (legacy === 'light') p.theme = 'claro';
+        else if (legacy === 'dark') p.theme = 'inema-dark';
+      }
+    } catch (e) { p = clone(DEF); }
+
+    var THEMES = {
+      'inema-dark': { dark: true,  attr: null,        cs: 'dark'  },
+      'claro':      { dark: false, attr: null,        cs: 'light' },
+      'sepia':      { dark: false, attr: 'sepia',     cs: 'light' },
+      'foco':       { dark: null,  attr: 'foco',      cs: null    },
+      'contraste':  { dark: true,  attr: 'contraste', cs: 'dark'  }
+    };
+    var t = THEMES[p.theme] || THEMES['inema-dark'];
+
+    if (t.dark === true) html.classList.add('dark');
+    else if (t.dark === false) html.classList.remove('dark');
+
+    if (t.attr) html.setAttribute('data-theme', t.attr);
+    else html.removeAttribute('data-theme');
+
+    html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark') ? 'dark' : 'light'));
+
+    html.setAttribute('data-font', p.font || 'inter');
+    html.setAttribute('data-accent', p.accent || 'emerald');
+
+    var s = html.style;
+    var scale = (+p.fontScale || 100);
+    s.setProperty('--inema-font-scale', (scale / 100).toString());
+    s.setProperty('font-size', scale + '%');
+    s.setProperty('--measure', (+p.lineWidth || 68) + 'ch');
+    s.setProperty('--lh-body', (+p.leading || 1.7).toString());
+    var fam = p.font === 'system'
+      ? 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif'
+      : (p.font === 'leitura'
+        ? '"Atkinson Hyperlegible", "Inter", system-ui, sans-serif'
+        : '"Inter", system-ui, sans-serif');
+    s.setProperty('--font-body', fam);
+
+    var ACC = {
+      emerald: [152, 76, 45], blue: [217, 91, 60], purple: [258, 90, 66],
+      amber: [38, 92, 50], teal: [174, 72, 41], rose: [350, 89, 60]
+    };
+    var a = ACC[p.accent] || ACC.emerald;
+    s.setProperty('--accent-h', a[0] + '');
+    s.setProperty('--accent-s', a[1] + '%');
+    s.setProperty('--accent-l', a[2] + '%');
+    s.setProperty('--accent', 'hsl(' + a[0] + ' ' + a[1] + '% ' + a[2] + '%)');
+  } catch (err) {
+    try { document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme = 'dark'; } catch (e) {}
+  }
+})();
+</script>
+<!-- MANIFESTO do curso (Erro #28) — idêntico em todas as páginas -->
+<script data-inema-manifest="" type="application/json">
+{
+  "course": "ftd-v2-es",
+  "tracks": [
+    {
+      "n": "1",
+      "title": "Principiante",
+      "modules": [
+        {
+          "id": "1-1",
+          "title": "Impacto de la IA",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-1.html"
+        },
+        {
+          "id": "1-2",
+          "title": "Navegar el mundo digital",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-2.html"
+        },
+        {
+          "id": "1-3",
+          "title": "Ingeniería de prompts",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-3.html"
+        },
+        {
+          "id": "1-4",
+          "title": "Asistentes y agentes de IA",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-4.html"
+        },
+        {
+          "id": "1-5",
+          "title": "Creatividad visual con IA",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-5.html"
+        },
+        {
+          "id": "1-6",
+          "title": "Marketing y ventas con IA",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-6.html"
+        },
+        {
+          "id": "1-7",
+          "title": "Automatización de procesos",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-7.html"
+        },
+        {
+          "id": "1-8",
+          "title": "Inteligencia artificial avanzada",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-8.html"
+        },
+        {
+          "id": "1-9",
+          "title": "Negocios y monetización con IA",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-9.html"
+        }
+      ]
+    },
+    {
+      "n": "2",
+      "title": "Técnico",
+      "modules": [
+        {
+          "id": "2-1",
+          "title": "Desarrollo con APIs de IA",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-1.html"
+        },
+        {
+          "id": "2-2",
+          "title": "Arquitectura de aplicaciones con IA",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-2.html"
+        },
+        {
+          "id": "2-3",
+          "title": "RAG y bases de conocimiento",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-3.html"
+        },
+        {
+          "id": "2-4",
+          "title": "Fine-tuning y personalización",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-4.html"
+        },
+        {
+          "id": "2-5",
+          "title": "Agentes y flujos de trabajo complejos",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-5.html"
+        },
+        {
+          "id": "2-6",
+          "title": "Visión artificial avanzada",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-6.html"
+        },
+        {
+          "id": "2-7",
+          "title": "NLP y procesamiento de texto",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-7.html"
+        },
+        {
+          "id": "2-8",
+          "title": "MLOps y producción",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-8.html"
+        },
+        {
+          "id": "2-9",
+          "title": "Ética y gobernanza de IA",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-9.html"
+        }
+      ]
+    },
+    {
+      "n": "3",
+      "title": "Masterclass",
+      "modules": [
+        {
+          "id": "3-1",
+          "title": "Arquitectura de IA a gran escala",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-1.html"
+        },
+        {
+          "id": "3-2",
+          "title": "Modelos personalizados y propietarios",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-2.html"
+        },
+        {
+          "id": "3-3",
+          "title": "IA multimodal avanzada",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-3.html"
+        },
+        {
+          "id": "3-4",
+          "title": "Investigación y artículos de IA",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-4.html"
+        },
+        {
+          "id": "3-5",
+          "title": "Aprendizaje por refuerzo en IA",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-5.html"
+        },
+        {
+          "id": "3-6",
+          "title": "Seguridad y red teaming",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-6.html"
+        },
+        {
+          "id": "3-7",
+          "title": "IA en producción — escala enterprise",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-7.html"
+        },
+        {
+          "id": "3-8",
+          "title": "Liderazgo y estrategia en IA",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-8.html"
+        },
+        {
+          "id": "3-9",
+          "title": "Futuro de la IA y AGI",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-9.html"
+        }
+      ]
+    }
+  ]
+}
+</script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#0c0c10', 800: '#16161e', 700: '#1e1e28', 600: '#272730', 500: '#33333f' } }, fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'], display: ['Sora', 'Inter', 'sans-serif'], mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'] } } } }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Sora:wght@600;700;800&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    h1, h2, h3, h4, .font-display { font-family: 'Sora', 'Inter', sans-serif; }
+    .dark body { background-color: #0c0c10; }
+    .dark .text-neutral-100 { color: #e9e9ee; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+    pre { white-space: pre-wrap; word-break: break-word; }
+    pre, code, .font-mono { font-family: 'JetBrains Mono', ui-monospace, monospace; }
+
+    /* Light mode — Parte 1: base */
+    html:not(.dark) body { background-color: #f6f7f9; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800\/50 { background-color: #f6f7f9; }
+    html:not(.dark) .bg-dark-700 { background-color: #eceef2; }
+    html:not(.dark) .bg-dark-700\/50 { background-color: #f1f2f5; }
+    html:not(.dark) .bg-dark-700\/30 { background-color: #f4f5f7; }
+    html:not(.dark) .bg-dark-600 { background-color: #e1e3ea; }
+    html:not(.dark) .hover\:bg-dark-600:hover { background-color: #d6d9e1; }
+    html:not(.dark) .hover\:bg-dark-700\/50:hover { background-color: #eceef2; }
+    html:not(.dark) .text-neutral-100 { color: #1a1a22; }
+    html:not(.dark) .text-neutral-200 { color: #26262f; }
+    html:not(.dark) .text-neutral-300 { color: #3f3f4a; }
+    html:not(.dark) .text-neutral-400 { color: #5b5b68; }
+    html:not(.dark) .text-neutral-500 { color: #62626e; }
+    html:not(.dark) .border-dark-600 { border-color: #e1e3ea; }
+    html:not(.dark) .border-dark-700 { border-color: #e8e9ee; }
+    html:not(.dark) .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #e1e3ea; }
+    html:not(.dark) .bg-black\/40 { background-color: #f1f2f5; }
+    html:not(.dark) pre.code-dark { background-color: #1a1a22; color: #e9e9ee; }
+
+    /* Light mode — Parte 2: acento das 3 trilhas (texto -700, nunca -400 no claro) */
+    html:not(.dark) .text-emerald-400 { color: #047857; }
+    html:not(.dark) .text-emerald-300 { color: #047857; }
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #047857; }
+    html:not(.dark) .bg-emerald-500\/20 { background-color: rgba(4,120,87,0.12); }
+    html:not(.dark) .bg-emerald-500\/10 { background-color: rgba(4,120,87,0.08); }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(4,120,87,0.08); }
+    html:not(.dark) .bg-emerald-900\/20 { background-color: rgba(4,120,87,0.07); }
+    html:not(.dark) .bg-emerald-900\/30 { background-color: rgba(4,120,87,0.08); }
+    html:not(.dark) .bg-emerald-900\/40 { background-color: rgba(4,120,87,0.09); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(4,120,87,0.28); }
+    html:not(.dark) .hover\:border-emerald-500\/30:hover { border-color: rgba(4,120,87,0.4); }
+    html:not(.dark) .text-blue-400 { color: #1d4ed8; }
+    html:not(.dark) .text-blue-300 { color: #1d4ed8; }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #1d4ed8; }
+    html:not(.dark) .bg-blue-500\/20 { background-color: rgba(29,78,216,0.12); }
+    html:not(.dark) .bg-blue-500\/10 { background-color: rgba(29,78,216,0.08); }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(29,78,216,0.08); }
+    html:not(.dark) .bg-blue-900\/20 { background-color: rgba(29,78,216,0.07); }
+    html:not(.dark) .bg-blue-900\/30 { background-color: rgba(29,78,216,0.08); }
+    html:not(.dark) .bg-blue-900\/40 { background-color: rgba(29,78,216,0.09); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(29,78,216,0.28); }
+    html:not(.dark) .hover\:border-blue-500\/30:hover { border-color: rgba(29,78,216,0.4); }
+    html:not(.dark) .text-purple-400 { color: #6d28d9; }
+    html:not(.dark) .text-purple-300 { color: #6d28d9; }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #6d28d9; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(109,40,217,0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(109,40,217,0.08); }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(109,40,217,0.08); }
+    html:not(.dark) .bg-purple-900\/20 { background-color: rgba(109,40,217,0.07); }
+    html:not(.dark) .bg-purple-900\/30 { background-color: rgba(109,40,217,0.08); }
+    html:not(.dark) .bg-purple-900\/40 { background-color: rgba(109,40,217,0.09); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(109,40,217,0.28); }
+    html:not(.dark) .hover\:border-purple-500\/30:hover { border-color: rgba(109,40,217,0.4); }
+
+    /* Light mode — Parte 3: gradientes + especiais */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #854d0e; }
+    html:not(.dark) .text-yellow-400 { color: #854d0e; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #713f12; }
+    html:not(.dark) .bg-primary\/10 { background-color: #FEF9C3; }
+    html:not(.dark) .border-primary\/30 { border-color: #EAB308; }
+    html:not(.dark) .text-red-400 { color: #b91c1c; }
+    html:not(.dark) .bg-red-900\/20 { background-color: rgba(185,28,28,0.07); }
+    html:not(.dark) .border-red-500\/30 { border-color: rgba(185,28,28,0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #075985; }
+    html:not(.dark) .bg-sky-900\/20 { background-color: rgba(3,105,161,0.07); }
+    html:not(.dark) .border-sky-500\/30 { border-color: rgba(3,105,161,0.25); }
+
+    /* Light mode — Parte 4: nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255,255,255,0.95); }
+
+    /* Parte 5: bordas suavizadas no DARK (Erro #15) */
+    .dark .border-dark-600 { border-color: #2a2a35; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #2a2a35; }
+
+    /* SVG: no claro, um fundo escuro emoldurado mantém o contraste do desenho */
+    html:not(.dark) .svg-frame { background-color: #12121a; }
+    @media (prefers-reduced-motion: reduce) { svg * { animation: none !important; transition: none !important; } }
+  </style>
+<link href="../../../assets/learn.css" rel="stylesheet"/>
+<link href="https://inematds.github.io/FTD/FTD-v2/curso/trilha2/modulo-2-8.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/FTD/FTD-v2/en/curso/trilha2/modulo-2-8.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/FTD/FTD-v2/es/curso/trilha2/modulo-2-8.html" hreflang="es" rel="alternate"/><link href="https://inematds.github.io/FTD/FTD-v2/curso/trilha2/modulo-2-8.html" hreflang="x-default" rel="alternate"/><link href="https://inematds.github.io/FTD/FTD-v2/es/curso/trilha2/modulo-2-8.html" rel="canonical"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(250,204,21,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha2/modulo-2-8.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="../../../en/curso/trilha2/modulo-2-8.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">EN</a><a href="modulo-2-8.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#FACC15">ES</a></div>
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14 gap-2">
+<!-- Logo + INEMA.CLUB -->
+<div class="flex items-center space-x-3 flex-shrink-0">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🚀</span>
+<span class="font-display font-bold text-lg hidden sm:inline">FTD</span>
+</a>
+<span class="text-neutral-600 hidden sm:inline">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium hidden sm:inline" href="https://inema.club" rel="noopener" target="_blank">INEMA.CLUB</a>
+<span class="text-neutral-600 hidden sm:inline">-</span>
+<a class="text-amber-700 dark:text-slate-300 hover:underline text-sm font-medium hidden sm:inline" href="https://inema.pro" rel="noopener" target="_blank">PRO</a>
+</div>
+<!-- Trilhas + controles de aprendizagem + theme toggle -->
+<div class="flex items-center gap-1 sm:gap-1.5">
+<a class="px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors whitespace-nowrap" href="../trilha1/index.html">
+<span class="lg:hidden">T1</span><span class="hidden lg:inline">Principiante</span>
+</a>
+<a class="px-2.5 py-1.5 rounded-lg text-sm font-semibold text-blue-400 bg-blue-500/10 whitespace-nowrap" href="index.html">
+<span class="lg:hidden">T2</span><span class="hidden lg:inline">Técnico</span>
+</a>
+<a class="px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors whitespace-nowrap" href="../trilha3/index.html">
+<span class="lg:hidden">T3</span><span class="hidden lg:inline">Masterclass</span>
+</a>
+<span class="w-px h-6 bg-dark-600 mx-1 hidden sm:inline-block"></span>
+<!-- Minha jornada (abre o painel global; badge = % do curso) -->
+<button class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-300 hover:text-neutral-100 hover:bg-dark-700 transition-colors" data-inema-journey-open="" type="button">
+<svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="16"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+<span class="hidden md:inline">Mi recorrido</span>
+<span class="inema-journey-badge" data-count="0" data-inema-journey-badge=""></span>
+</button>
+<!-- Aparência (gatilho + painel obrigatório) -->
+<div class="relative">
+<button aria-expanded="false" class="inema-appearance-trigger inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-300 hover:text-neutral-100 transition-colors" data-inema-appearance-toggle="#inema-appearance-panel" type="button">
+<svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="16"><circle cx="12" cy="12" r="9"></circle><path d="M12 3v18"></path><path d="M12 3a9 9 0 0 1 0 18" fill="currentColor"></path></svg>
+<span class="hidden md:inline">Apariencia</span>
+</button>
+<div class="inema-appearance-pop right-0" data-inema-appearance="" id="inema-appearance-panel">
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Tema</span>
+<div class="inema-segment">
+<button data-inema-set-theme="inema-dark" type="button">Oscuro</button>
+<button data-inema-set-theme="claro" type="button">Claro</button>
+<button data-inema-set-theme="sepia" type="button">Sepia</button>
+</div>
+<div class="inema-segment">
+<button data-inema-set-theme="foco" type="button">Enfoque</button>
+<button data-inema-set-theme="contraste" type="button">Alto contraste</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Fuente</span>
+<div class="inema-segment">
+<button data-inema-set-font="inter" type="button">Inter</button>
+<button data-inema-set-font="system" type="button">Sistema</button>
+<button data-inema-set-font="leitura" type="button">Lectura</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Tamaño</span>
+<div class="inema-segment">
+<button data-inema-set-fontscale="100" type="button">A</button>
+<button data-inema-set-fontscale="112" type="button">A+</button>
+<button data-inema-set-fontscale="125" type="button">A++</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Ancho</span>
+<div class="inema-segment">
+<button data-inema-set-linewidth="60" type="button">Estrecho</button>
+<button data-inema-set-linewidth="68" type="button">Mediano</button>
+<button data-inema-set-linewidth="75" type="button">Ancho</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Interlineado</span>
+<div class="inema-segment">
+<button data-inema-set-leading="1.45" type="button">Compacto</button>
+<button data-inema-set-leading="1.7" type="button">Cómodo</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Acento</span>
+<div class="inema-accent-grid">
+<button aria-label="Acento esmeralda" data-inema-set-accent="emerald" type="button"></button>
+<button aria-label="Acento azul" data-inema-set-accent="blue" type="button"></button>
+<button aria-label="Acento violeta" data-inema-set-accent="purple" type="button"></button>
+<button aria-label="Acento ámbar" data-inema-set-accent="amber" type="button"></button>
+<button aria-label="Acento verde azulado" data-inema-set-accent="teal" type="button"></button>
+<button aria-label="Acento rosa" data-inema-set-accent="rose" type="button"></button>
+</div>
+</div>
+</div>
+</div>
+<!-- Theme toggle sol/lua (núcleo v1; o JS o mantém coerente com o tema) -->
+<button aria-label="Alternar tema claro/oscuro" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20">
+<path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+</svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20">
+<path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path>
+</svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<main data-inema-module="2-8" data-inema-track="2" id="conteudo">
+<!-- BREADCRUMB -->
+<nav aria-label="Ruta de navegación" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-blue-400" href="../../index.html">Inicio</a><span>/</span>
+<a class="hover:text-blue-400" href="index.html">Ruta 2</a><span>/</span>
+<span class="text-blue-400">Módulo 2.8</span>
+</div>
+</nav>
+<!-- HEADER do módulo -->
+<header class="bg-gradient-to-br from-blue-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-blue-500/20 text-blue-400 text-xs font-semibold rounded-full mb-4">MÓDULO 2.8</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🛠️ MLOps y producción</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">Lo que ocurre después de que el prototipo funciona: versionar código, prompts y modelos, evaluar cada cambio, publicar sin sobresaltos, medir la latencia, la calidad y el costo, y responder cuando algo falla. Es la diferencia entre <strong class="text-blue-400">una demostración y un servicio en el que las personas confían</strong>.</p>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">7</div><div class="text-xs text-neutral-400">Temas</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">~60</div><div class="text-xs text-neutral-400">Minutos</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">Técnico</div><div class="text-xs text-neutral-400">Nivel</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">Práctico</div><div class="text-xs text-neutral-400">Tipo</div></div>
+</div>
+<div class="flex items-center gap-3 mt-8">
+<div aria-label="Progreso del módulo 2.8" class="inema-ring" data-inema-meter="modulo:2-8"><span class="inema-ring__value" data-inema-meter-pct="">0%</span></div>
+<div class="inema-meter-label" data-inema-meter="modulo:2-8"><strong data-inema-meter-frac="">0 de 0</strong> temas leídos · <span data-inema-section-counter="">Sección 1 de 7</span></div>
+</div>
+</div>
+</header>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+<div class="lg:flex lg:gap-10">
+<!-- TOC sticky + scrollspy -->
+<aside class="hidden lg:block lg:w-56 flex-shrink-0">
+<nav aria-label="Índice de la página" class="sticky top-20 self-start" data-inema-toc="">
+<p class="text-xs font-semibold uppercase tracking-wide text-neutral-500 mb-3">En este módulo</p>
+<ol class="space-y-1 text-sm">
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-blue-400" href="#topico-1">1. Del notebook al servicio</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-blue-400" href="#topico-2">2. Versionar todo</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-blue-400" href="#topico-3">3. Evaluación continua</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-blue-400" href="#topico-4">4. Deploy y serving</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-blue-400" href="#topico-5">5. Monitoreo</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-blue-400" href="#topico-6">6. Costo y rendimiento</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-blue-400" href="#topico-7">7. Incidentes y rollback</a></li>
+</ol>
+</nav>
+</aside>
+<!-- ARTIGO -->
+<article class="inema-prose flex-1 min-w-0">
+<h2 class="text-2xl font-bold mb-8">Contenido detallado</h2>
+<!-- TÓPICO 1 -->
+<section class="mb-16" data-inema-topic="modulo-2-8#topico-1" id="topico-1" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="o ciclo de vida que nunca fecha">🧭 Del notebook al servicio</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-8-t1-p1"><strong class="text-blue-400">MLOps</strong> es la práctica de llevar sistemas de aprendizaje automático a producción y mantenerlos funcionando, combinando lo que el desarrollo de software ya sabe (control de versiones, pruebas, deploy automatizado, monitoreo) con los problemas propios de la IA: el comportamiento depende de datos y modelos que cambian, y la salida no es determinista.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-8-t1-p2">Con los LLM, mucha gente habla de <strong class="text-neutral-100">LLMOps</strong>. El centro de gravedad cambia: en vez de entrenar modelos, normalmente eliges un modelo ya preparado, escribes prompts, integras la recuperación de documentos y las herramientas. Pero la disciplina es la misma, y también el error más común: tratar el prototipo que "funcionó en mi máquina" como si fuera un producto.</p>
+<div class="bg-dark-800 border border-blue-500/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-blue-400 font-semibold mb-1">📘 Términos nuevos</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-8-t1-p3"><strong>Producción</strong> es el entorno en el que usuarios reales dependen del sistema. <strong>Inferencia</strong> es el uso del modelo para generar una respuesta (lo opuesto al entrenamiento). <strong>No determinista</strong> quiere decir que la misma entrada puede generar salidas diferentes; por eso, las pruebas de IA miden tasas de acierto en vez de comparar un único resultado.</p>
+</div>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">Un ciclo continuo: versionar lo que define el comportamiento, evaluar antes de publicar, publicar poco a poco, observar en producción, responder a incidentes y convertir cada aprendizaje en una nueva versión.</p>
+</div>
+<!-- SVG 1: ciclo de vida -->
+<figure class="svg-frame rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="Ciclo de vida de un sistema con IA en seis etapas conectadas en un bucle: datos y prompts, evaluación offline, despliegue gradual, monitoreo, incidentes y comentarios, y una nueva versión que vuelve al inicio." class="w-full h-auto" role="img" viewbox="0 0 900 290">
+<defs>
+<filter height="160%" id="m28-glow" width="160%" x="-30%" y="-30%"><fegaussianblur result="b" stddeviation="2"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="28" id="m28-grid" patternunits="userSpaceOnUse" width="28"><circle cx="1.2" cy="1.2" fill="#3b82f6" opacity="0.14" r="1.2"></circle></pattern>
+<marker id="m28-ah" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#60a5fa"></path></marker>
+<marker id="m28-ahc" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#38bdf8"></path></marker>
+<style>@keyframes m28dash{to{stroke-dashoffset:-24}} .m28-flow{stroke-dasharray:6 6;animation:m28dash 1.6s linear infinite}</style>
+</defs>
+<rect fill="url(#m28-grid)" height="290" width="900"></rect>
+<g font-family="Inter,sans-serif">
+<g filter="url(#m28-glow)">
+<rect fill="#0e1626" height="56" rx="12" stroke="#60a5fa" stroke-width="2" width="190" x="105" y="30"></rect>
+<rect fill="#0e1626" height="56" rx="12" stroke="#60a5fa" stroke-width="2" width="190" x="355" y="30"></rect>
+<rect fill="#0e1626" height="56" rx="12" stroke="#60a5fa" stroke-width="2" width="190" x="605" y="30"></rect>
+<rect fill="#0e1b26" height="56" rx="12" stroke="#38bdf8" stroke-width="2" width="190" x="605" y="204"></rect>
+<rect fill="#0e1b26" height="56" rx="12" stroke="#38bdf8" stroke-width="2" width="190" x="355" y="204"></rect>
+<rect fill="#0e1b26" height="56" rx="12" stroke="#38bdf8" stroke-width="2" width="190" x="105" y="204"></rect>
+</g>
+<text fill="#eff6ff" font-size="14" font-weight="700" text-anchor="middle" x="200" y="54">1 · Datos y prompts</text>
+<text fill="#93c5fd" font-size="12" text-anchor="middle" x="200" y="73">todo versionado</text>
+<text fill="#eff6ff" font-size="14" font-weight="700" text-anchor="middle" x="450" y="54">2 · Evaluación offline</text>
+<text fill="#93c5fd" font-size="12" text-anchor="middle" x="450" y="73">conjunto de pruebas</text>
+<text fill="#eff6ff" font-size="14" font-weight="700" text-anchor="middle" x="700" y="54">3 · Deploy gradual</text>
+<text fill="#93c5fd" font-size="12" text-anchor="middle" x="700" y="73">canario + rollback</text>
+<text fill="#e0f2fe" font-size="14" font-weight="700" text-anchor="middle" x="700" y="228">4 · Monitoreo</text>
+<text fill="#bae6fd" font-size="12" text-anchor="middle" x="700" y="247">latencia, costo, calidad</text>
+<text fill="#e0f2fe" font-size="14" font-weight="700" text-anchor="middle" x="450" y="228">5 · Incidentes</text>
+<text fill="#bae6fd" font-size="12" text-anchor="middle" x="450" y="247">runbook y análisis posterior al incidente</text>
+<text fill="#e0f2fe" font-size="14" font-weight="700" text-anchor="middle" x="200" y="228">6 · Nueva versión</text>
+<text fill="#bae6fd" font-size="12" text-anchor="middle" x="200" y="247">el aprendizaje se convierte en una prueba</text>
+<path class="m28-flow" d="M297,58 L349,58" fill="none" marker-end="url(#m28-ah)" stroke="#60a5fa" stroke-width="2.5"></path>
+<path class="m28-flow" d="M547,58 L599,58" fill="none" marker-end="url(#m28-ah)" stroke="#60a5fa" stroke-width="2.5"></path>
+<path class="m28-flow" d="M797,58 C865,58 865,232 801,232" fill="none" marker-end="url(#m28-ahc)" stroke="#38bdf8" stroke-width="2.5"></path>
+<path class="m28-flow" d="M603,232 L551,232" fill="none" marker-end="url(#m28-ahc)" stroke="#38bdf8" stroke-width="2.5"></path>
+<path class="m28-flow" d="M353,232 L301,232" fill="none" marker-end="url(#m28-ahc)" stroke="#38bdf8" stroke-width="2.5"></path>
+<path class="m28-flow" d="M103,232 C35,232 35,58 99,58" fill="none" marker-end="url(#m28-ah)" stroke="#60a5fa" stroke-width="2.5"></path>
+<text fill="#7dd3fc" font-size="14" font-weight="700" text-anchor="middle" x="450" y="138">el ciclo no termina con el deploy</text>
+<text fill="#94a3b8" font-size="12" text-anchor="middle" x="450" y="158">cada vuelta agrega una prueba nueva al conjunto</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-blue-400">Cómo leer:</strong> la línea superior (azul) ocurre antes de que los usuarios vean el cambio; la inferior (cian), después. La flecha de la izquierda es la que más falta en los proyectos reales: lo que salió mal en producción tiene que volver como caso de prueba, o el mismo error reaparecerá en la siguiente versión.</figcaption>
+</figure>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
+<h4 class="font-bold text-blue-400 mb-4">✓ Señales de que está listo</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Alguien más, además del autor, puede poner el servicio en marcha siguiendo un README.</span></li>
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Hay un conjunto de pruebas y un valor de referencia.</span></li>
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Hay un registro de cada solicitud con la versión, la latencia y el resultado.</span></li>
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Volver a la versión anterior toma minutos, no horas.</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Señales de que es un prototipo</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>El prompt está en una celda de notebook y cambia sin quedar registrado.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>"Probar" es ejecutar tres ejemplos y pensar que quedó bien.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Nadie sabe cuánto cuesta el sistema al mes.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>El problema solo aparece cuando el cliente se queja.</span></li>
+</ul>
+</div>
+</div>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-8-t1-p4" data-sum="porque">Crear un prototipo con LLM es fácil; mantener un servicio confiable sigue siendo difícil. Quienes dominan el ciclo completo pueden poner la IA en uso real, defender el proyecto con cifras y dormir tranquilos después del despliegue.</p>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">MLOps / LLMOps</div><div class="text-xs text-neutral-400">IA tratada como software</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Producción</div><div class="text-xs text-neutral-400">los usuarios dependen de esto</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Inferencia</div><div class="text-xs text-neutral-400">uso del modelo</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Ciclo continuo</div><div class="text-xs text-neutral-400">el error se convierte en una prueba</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 2 -->
+<section class="mb-16" data-inema-topic="modulo-2-8#topico-2" id="topico-2" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="código, prompt, modelo, dados e configuração">🗂️ Versionar todo</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-8-t2-p1">En un software común, el código define el comportamiento. En un sistema con IA, el comportamiento depende de <strong class="text-neutral-100">cinco cosas al mismo tiempo</strong>: el código, el prompt, el modelo, los datos (de entrenamiento, de evaluación y de la base consultada) y la configuración (temperatura, límites de tokens, herramientas habilitadas). Si cualquiera de estas cambia sin quedar registrado, no puedes explicar por qué la respuesta de hoy es diferente de la de ayer.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-8-t2-p2">La regla práctica: <strong class="text-blue-400">el prompt es código</strong>. Guárdalo en un archivo del repositorio, somételo a revisión y asígnale una versión. El modelo se fija por nombre y versión exacta, nunca con un alias como "latest" o "el más nuevo": los proveedores y el propio Ollama actualizan los alias, y el comportamiento cambia sin que hagas nada.</p>
+<div class="bg-dark-800 border border-blue-500/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-blue-400 font-semibold mb-1">📘 Términos nuevos</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-8-t2-p3"><strong>Registro de modelos</strong> (<em>model registry</em>) es un catálogo de versiones de modelos con métricas y estado (en prueba, en producción, retirado); MLflow tiene uno. <strong>DVC</strong> es una herramienta que versiona archivos de datos grandes junto con git. <strong>Release</strong> es el paquete con nombre único que reúne las versiones de todo lo que va a producción.</p>
+</div>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">Asignar a cada versión en producción un identificador que apunte al commit del código, la versión del prompt, el modelo exacto, la versión de los datos de evaluación y la configuración utilizada, para que cualquier respuesta pueda reproducirse.</p>
+</div>
+<!-- SVG 2: release bundle -->
+<figure class="svg-frame rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="Una versión central llamada clasificador 1.4.2, vinculada a cinco elementos versionados: commit del código, archivo de prompt, modelo con su versión exacta, conjunto de evaluación y configuración con temperatura y límites." class="w-full h-auto" role="img" viewbox="0 0 900 290">
+<rect fill="url(#m28-grid)" height="290" width="900"></rect>
+<g font-family="Inter,sans-serif">
+<g fill="none" stroke="#60a5fa" stroke-opacity="0.65" stroke-width="1.8">
+<path class="m28-flow" d="M450,145 L170,58"></path>
+<path class="m28-flow" d="M450,145 L730,58"></path>
+<path class="m28-flow" d="M450,145 L130,232"></path>
+<path class="m28-flow" d="M450,145 L450,240"></path>
+<path class="m28-flow" d="M450,145 L770,232"></path>
+</g>
+<rect fill="#0e1b26" filter="url(#m28-glow)" height="70" rx="35" stroke="#38bdf8" stroke-width="2.5" width="250" x="325" y="110"></rect>
+<text fill="#e0f2fe" font-size="16" font-weight="700" text-anchor="middle" x="450" y="141">release 1.4.2</text>
+<text fill="#bae6fd" font-size="12" text-anchor="middle" x="450" y="160">un nombre para todo</text>
+<g fill="#0e1626" stroke="#60a5fa" stroke-width="2">
+<rect height="56" rx="10" width="210" x="65" y="30"></rect>
+<rect height="56" rx="10" width="210" x="625" y="30"></rect>
+<rect height="56" rx="10" width="210" x="25" y="204"></rect>
+<rect height="40" rx="10" width="210" x="345" y="236"></rect>
+<rect height="56" rx="10" width="210" x="665" y="204"></rect>
+</g>
+<text fill="#eff6ff" font-size="14" font-weight="700" text-anchor="middle" x="170" y="54">código</text>
+<text fill="#93c5fd" font-size="12" text-anchor="middle" x="170" y="73">commit a3f9c1e (git)</text>
+<text fill="#eff6ff" font-size="14" font-weight="700" text-anchor="middle" x="730" y="54">prompt</text>
+<text fill="#93c5fd" font-size="12" text-anchor="middle" x="730" y="73">prompts/triagem.v7.md</text>
+<text fill="#eff6ff" font-size="14" font-weight="700" text-anchor="middle" x="130" y="228">modelo</text>
+<text fill="#93c5fd" font-size="12" text-anchor="middle" x="130" y="247">nombre + versión exacta</text>
+<text fill="#eff6ff" font-size="13" font-weight="700" text-anchor="middle" x="450" y="261">evaluación · casos v3</text>
+<text fill="#eff6ff" font-size="14" font-weight="700" text-anchor="middle" x="770" y="228">configuración</text>
+<text fill="#93c5fd" font-size="12" text-anchor="middle" x="770" y="247">temperatura, límites</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-blue-400">Cómo leer:</strong> la release del centro es lo que anotas en cada registro y en cada incidente. A partir de ella, cualquier persona puede identificar las cinco piezas exactas que generaron una respuesta. Si uno de los extremos está "suelto" (sin versión), la release no se puede reproducir. Los identificadores son ejemplos.</figcaption>
+</figure>
+<div class="overflow-x-auto mb-6">
+<table class="w-full text-sm border border-dark-600 rounded-xl overflow-hidden">
+<thead><tr class="bg-dark-700"><th class="text-left p-3 text-blue-400">Qué</th><th class="text-left p-3 text-blue-400">Dónde versionarlo</th><th class="text-left p-3 text-blue-400">Error común</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr><td class="p-3 font-semibold">Código</td><td class="p-3 text-neutral-300">git, con una etiqueta por release</td><td class="p-3 text-neutral-300">Hacer deploy de algo que no está en un commit</td></tr>
+<tr><td class="p-3 font-semibold">Prompt</td><td class="p-3 text-neutral-300">Archivo en el repositorio, revisado en un PR</td><td class="p-3 text-neutral-300">Editar el prompt directamente en el panel del proveedor</td></tr>
+<tr><td class="p-3 font-semibold">Modelo</td><td class="p-3 text-neutral-300">Nombre y versión fijos en la configuración; registro de modelos</td><td class="p-3 text-neutral-300">Usar un alias que el proveedor actualiza</td></tr>
+<tr><td class="p-3 font-semibold">Datos</td><td class="p-3 text-neutral-300">DVC, bucket con versión o tabla con fecha</td><td class="p-3 text-neutral-300">Conjunto de pruebas editado sin historial</td></tr>
+<tr><td class="p-3 font-semibold">Configuración</td><td class="p-3 text-neutral-300">Archivo de configuración o variables de entorno versionados</td><td class="p-3 text-neutral-300">Temperatura diferente en cada entorno</td></tr>
+</tbody>
+</table>
+</div>
+<div class="bg-primary/10 border border-primary/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-primary font-semibold mb-1">💡 Consejo</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-8-t2-p4">En Ollama, <code>ollama show &lt;modelo&gt;</code> muestra los detalles del modelo instalado y <code>ollama list</code> muestra el identificador de cada uno. Registra ese identificador junto con la versión: si alguien lo ejecuta <code>ollama pull</code> de nuevo y el modelo cambia, lo notarás.</p>
+</div>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-8-t2-p5" data-sum="porque">Sin un versionado completo, no hay forma de investigar un incidente, comparar dos versiones ni cumplir con una solicitud de auditoría («¿qué sistema decidió esto en marzo?»). Es barato hacerlo al principio y carísimo reconstruirlo después.</p>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">El prompt es código</div><div class="text-xs text-neutral-400">archivo, revisión, versión</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Modelo fijado</div><div class="text-xs text-neutral-400">nunca «latest»</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Release</div><div class="text-xs text-neutral-400">un nombre para las cinco piezas</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Reproducible</div><div class="text-xs text-neutral-400">repetir la misma respuesta</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 3 -->
+<section class="mb-16" data-inema-topic="modulo-2-8#topico-3" id="topico-3" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="o conjunto de testes vira portão automático">🧪 Evaluación continua</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-8-t3-p1">En el módulo 2.7 preparaste un conjunto de pruebas y mediste un clasificador a mano. Aquí se convierte en <strong class="text-blue-400">puerta de calidad</strong>: una prueba automatizada que se ejecuta con cada cambio de prompt, modelo o código y bloquea la publicación si el resultado cae por debajo de la línea de base. Es el mismo principio de las pruebas de software, adaptado a resultados variables.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-8-t3-p2">Hay tres capas de evaluación. <strong class="text-neutral-100">Verificaciones determinísticas</strong>: el JSON es válido, la etiqueta está en la lista y la respuesta no supera el tamaño permitido. <strong class="text-neutral-100">Métricas frente a respuestas correctas</strong>: exactitud, precisión, exhaustividad. Y, para textos abiertos, <strong class="text-neutral-100">LLM como juez</strong> con una rúbrica escrita; es útil, pero hay que contrastarla con evaluaciones humanas sobre una muestra.</p>
+<div class="bg-dark-800 border border-blue-500/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-blue-400 font-semibold mb-1">📘 Términos nuevos</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-8-t3-p3"><strong>CI</strong> (integración continua) consiste en ejecutar pruebas automáticamente con cada commit, en servicios como GitHub Actions o GitLab CI. <strong>Regresión</strong> es cuando algo que funcionaba deja de funcionar después de un cambio. <strong>LLM como juez</strong> consiste en usar un modelo para calificar las respuestas de otro según criterios explícitos.</p>
+</div>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">Ejecutar automáticamente el conjunto de pruebas con cada cambio y tratar una caída de calidad como una prueba fallida: la versión no pasa a producción hasta que alguien lo explique o lo corrija.</p>
+</div>
+<!-- COPY-RUN: portão com pytest -->
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-blue-400">Prueba:</strong> <span class="text-neutral-300">puerta de calidad con pytest, usando el <code>classificador.py</code> del módulo 2.7.</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copiar</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900"># Instalación: pip install pytest openai   |   ollama pull qwen2.5:7b
+# Estructura:  classificador.py   evals/casos.jsonl   test_qualidade.py
+#
+# evals/casos.jsonl — un caso por línea (reemplaza por más de 30 ejemplos reales anonimizados):
+# {"texto": "Mi pedido está detenido desde hace una semana", "esperado": "entrega"}
+# {"texto": "La factura venció y no puedo generar otra", "esperado": "pagamento"}
+
+# test_qualidade.py
+import json
+import pathlib
+from classificador import classificar, ROTULOS
+
+CASOS = [json.loads(l) for l in
+         pathlib.Path("evals/casos.jsonl").read_text(encoding="utf-8").splitlines() if l.strip()]
+LINHA_DE_BASE = 0.80   # &lt;reemplaza por el valor medido en la versión actual en producción&gt;
+
+def test_formato_valido():
+    for caso in CASOS[:5]:
+        saida = classificar(caso["texto"])
+        assert saida["rotulo"] in ROTULOS, saida
+
+def test_acuracia_nao_cai():
+    erros = []
+    for caso in CASOS:
+        previsto = classificar(caso["texto"])["rotulo"]
+        if previsto != caso["esperado"]:
+            erros.append((caso["texto"], caso["esperado"], previsto))
+    acc = 1 - len(erros) / len(CASOS)
+    print(f"\nexactitud={acc:.0%} (línea de base {LINHA_DE_BASE:.0%})")
+    for e in erros:
+        print("  ERROR:", e)
+    assert acc &gt;= LINHA_DE_BASE, f"regresión: {acc:.0%} &lt; {LINHA_DE_BASE:.0%}"</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">Cómo verificar:</strong> ejecuta <code>pytest -q -s test_qualidade.py</code>. Con el prompt actual, las dos pruebas deberían pasar y mostrar la exactitud. Ahora estropea el prompt a propósito (cambia la lista de etiquetas en la instrucción) y vuelve a ejecutarlo: <code>test_acuracia_nao_cai</code> debería fallar con el mensaje «regresión». Esa es la puerta funcionando.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-4"><p class="text-blue-400 font-semibold text-sm mb-1">Determinístico</p><p class="text-xs text-neutral-300" data-inema-block="m2-8-t3-p4">Formato, campos obligatorios, tamaño, palabras prohibidas. Barato y rápido: ejecútalo siempre.</p></div>
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-4"><p class="text-blue-400 font-semibold text-sm mb-1">Con respuestas de referencia</p><p class="text-xs text-neutral-300" data-inema-block="m2-8-t3-p5">Exactitud y métricas por etiqueta frente a respuestas anotadas por personas. Es la puerta principal.</p></div>
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-4"><p class="text-blue-400 font-semibold text-sm mb-1">LLM como juez</p><p class="text-xs text-neutral-300" data-inema-block="m2-8-t3-p6">Para respuestas abiertas. Rúbrica escrita y contraste periódico con evaluaciones humanas.</p></div>
+</div>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-8-t3-p7" data-sum="porque">Los prompts y los modelos cambian todo el tiempo, y una mejora en un caso suele empeorar otro. La barrera automática convierte «creo que quedó mejor» en un número comparable e impide que una regresión silenciosa llegue a los usuarios.</p>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Control de calidad</div><div class="text-xs text-neutral-400">bloquea la regresión</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Línea de base</div><div class="text-xs text-neutral-400">el número de hoy</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">CI</div><div class="text-xs text-neutral-400">prueba con cada commit</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">LLM como juez</div><div class="text-xs text-neutral-400">calificación con rúbrica</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 4 -->
+<section class="mb-16" data-inema-topic="modulo-2-8#topico-4" id="topico-4" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="uma API com limites, fallback e deploy gradual">🚀 Despliegue y serving</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-8-t4-p1"><strong class="text-blue-400">Serving</strong> consiste en poner el modelo detrás de una interfaz estable —casi siempre una API HTTP— a la que llaman otros sistemas. El servicio necesita cosas que el notebook no tenía: validación de la entrada, límite de tiempo para cada llamada, respuesta alternativa cuando falla el modelo, un endpoint de salud y un registro por solicitud.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-8-t4-p2">En cuanto a la forma de ejecutarlo: <strong class="text-neutral-100">en tiempo real</strong> (la respuesta llega enseguida, como en un chat) o <strong class="text-neutral-100">por lotes</strong> (procesa miles de elementos durante la noche, a menor costo y tolerando demoras). El modelo puede ser una API externa o un servidor propio —Ollama para empezar, servidores como vLLM cuando aumenta el volumen—, empaquetado en un contenedor Docker para ejecutarse igual en cualquier máquina.</p>
+<div class="bg-dark-800 border border-blue-500/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-blue-400 font-semibold mb-1">📘 Términos nuevos</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-8-t4-p3"><strong>Respaldo</strong> es la respuesta alternativa cuando falla la principal (una etiqueta «otro», un mensaje estándar, un modelo alternativo). <strong>Despliegue canario</strong> consiste en enviar una pequeña fracción del tráfico a la nueva versión y aumentarla poco a poco si las métricas son buenas. <strong>Rollback</strong> es volver a la versión anterior.</p>
+</div>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">Envolver el modelo en un servicio con un contrato claro (entrada, salida, errores), límites de tiempo y tamaño, respuesta alternativa y publicación gradual con una vía de regreso rápida.</p>
+</div>
+<!-- COPY-RUN: serviço FastAPI -->
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-blue-400">Objetivo:</strong> <span class="text-neutral-300">un servicio de clasificación con timeout, fallback, salud y registro estructurado (<code>app.py</code>).</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copiar</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900"># Instalación: pip install fastapi uvicorn openai   |   ollama pull qwen2.5:7b
+import json, logging, time, uuid
+from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
+from openai import OpenAI
+
+VERSAO = "classificador-1.4.2"          # &lt;la versión publicada&gt;
+MODELO = "qwen2.5:7b"
+ROTULOS = {"entrega", "pagamento", "produto", "elogio", "outro"}
+client = OpenAI(base_url="http://localhost:11434/v1", api_key="ollama",
+                timeout=20, max_retries=1)   # nunca esperes para siempre
+logging.basicConfig(level=logging.INFO, format="%(message)s")
+log = logging.getLogger("servico")
+app = FastAPI()
+
+class Pedido(BaseModel):
+    texto: str
+
+@app.get("/health")
+def health():
+    return {"ok": True, "versao": VERSAO, "modelo": MODELO}
+
+@app.post("/classificar")
+def classificar(p: Pedido):
+    if not p.texto.strip() or len(p.texto) &gt; 4000:
+        raise HTTPException(422, "texto vacío o demasiado largo")
+    rid, t0, tokens = str(uuid.uuid4()), time.perf_counter(), 0
+    try:
+        r = client.chat.completions.create(
+            model=MODELO, temperature=0, response_format={"type": "json_object"},
+            messages=[{"role": "system", "content": "Clasifica en: " + ", ".join(sorted(ROTULOS))
+                       + '. Responde solo {"rotulo": "..."}'},
+                      {"role": "user", "content": p.texto}])
+        rotulo = json.loads(r.choices[0].message.content).get("rotulo")
+        tokens = r.usage.total_tokens if r.usage else 0
+        status = "ok" if rotulo in ROTULOS else "fora_da_lista"
+    except Exception as e:                     # timeout, modelo fuera de servicio, JSON inválido
+        rotulo, status = None, f"erro:{type(e).__name__}"
+    if rotulo not in ROTULOS:
+        rotulo = "outro"                       # alternativa: el sistema nunca devuelve basura
+    ms = round((time.perf_counter() - t0) * 1000)
+    log.info(json.dumps({"rid": rid, "versao": VERSAO, "status": status,
+                         "ms": ms, "tokens": tokens, "rotulo": rotulo}))
+    return {"rotulo": rotulo, "status": status, "versao": VERSAO, "request_id": rid}</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">Cómo verificar:</strong> inícialo con <code>uvicorn app:app --port 8000 2&gt;&amp;1 | tee servico.log</code>. En otra terminal: <code>curl -s localhost:8000/health</code> debe devolver la versión; <code>curl -s -X POST localhost:8000/classificar -H 'Content-Type: application/json' -d '{"texto":"meu pedido não chegou"}'</code> debe devolver <code>"rotulo":"entrega"</code>. Detén Ollama y repite: la respuesta debe venir con <code>"rotulo":"outro"</code> y un estado de error, sin que el servicio se caiga.</p>
+</div>
+<!-- SVG 3: canário -->
+<figure class="svg-frame rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="Despliegue canario: un enrutador envía la mayor parte del tráfico a la versión estable y una pequeña fracción a la nueva; si las métricas se mantienen dentro del límite, la fracción aumenta por etapas hasta llegar al cien por ciento; si no, todo vuelve a la versión estable." class="w-full h-auto" role="img" viewbox="0 0 900 280">
+<rect fill="url(#m28-grid)" height="280" width="900"></rect>
+<g font-family="Inter,sans-serif">
+<rect fill="#0e1626" filter="url(#m28-glow)" height="70" rx="14" stroke="#60a5fa" stroke-width="2" width="150" x="20" y="95"></rect>
+<text fill="#eff6ff" font-size="15" font-weight="700" text-anchor="middle" x="95" y="126">enrutador</text>
+<text fill="#93c5fd" font-size="12" text-anchor="middle" x="95" y="145">divide el tráfico</text>
+<path class="m28-flow" d="M172,118 C230,118 230,62 290,62" fill="none" marker-end="url(#m28-ah)" stroke="#60a5fa" stroke-width="5"></path>
+<path class="m28-flow" d="M172,142 C230,142 230,200 290,200" fill="none" marker-end="url(#m28-ahc)" stroke="#38bdf8" stroke-width="1.8"></path>
+<text fill="#93c5fd" font-size="12" x="190" y="50">mayor parte</text>
+<text fill="#7dd3fc" font-size="12" x="190" y="226">fracción pequeña</text>
+<rect fill="#0e1626" height="56" rx="12" stroke="#60a5fa" stroke-width="2" width="200" x="296" y="34"></rect>
+<text fill="#eff6ff" font-size="14" font-weight="700" text-anchor="middle" x="396" y="58">versión estable 1.4.1</text>
+<text fill="#93c5fd" font-size="12" text-anchor="middle" x="396" y="77">sigue atendiendo</text>
+<rect fill="#0e1b26" filter="url(#m28-glow)" height="56" rx="12" stroke="#38bdf8" stroke-width="2.5" width="200" x="296" y="172"></rect>
+<text fill="#e0f2fe" font-size="14" font-weight="700" text-anchor="middle" x="396" y="196">canario 1.4.2</text>
+<text fill="#bae6fd" font-size="12" text-anchor="middle" x="396" y="215">observado de cerca</text>
+<path d="M498,200 L548,200" fill="none" marker-end="url(#m28-ahc)" stroke="#38bdf8" stroke-width="2"></path>
+<rect fill="#0b1220" height="96" rx="12" stroke="#38bdf8" stroke-dasharray="5 4" stroke-width="1.8" width="320" x="556" y="150"></rect>
+<text fill="#e0f2fe" font-size="13" font-weight="700" x="572" y="174">¿métricas dentro del límite?</text>
+<text fill="#bae6fd" font-size="12" x="572" y="196">sí → aumenta por etapas hasta el 100%</text>
+<text fill="#bae6fd" font-size="12" x="572" y="216">no → vuelve a la versión 1.4.1</text>
+<text fill="#94a3b8" font-size="11" x="572" y="236">errores, latencia, alternativa, evaluación</text>
+<text fill="#bae6fd" font-size="12" font-weight="700" x="560" y="34">fracción del canario, etapa por etapa</text>
+<g font-size="12" font-weight="700">
+<rect fill="#1e3a5f" height="24" rx="6" width="60" x="560" y="46"></rect><text fill="#e0f2fe" text-anchor="middle" x="590" y="62">poco</text>
+<rect fill="#1d4ed8" fill-opacity="0.55" height="24" rx="6" width="70" x="630" y="46"></rect><text fill="#e0f2fe" text-anchor="middle" x="665" y="62">un cuarto</text>
+<rect fill="#2563eb" fill-opacity="0.7" height="24" rx="6" width="70" x="710" y="46"></rect><text fill="#e0f2fe" text-anchor="middle" x="745" y="62">la mitad</text>
+<rect fill="#38bdf8" height="24" rx="6" width="70" x="790" y="46"></rect><text fill="#082f49" text-anchor="middle" x="825" y="62">todo</text>
+</g>
+<text fill="#94a3b8" font-size="11" x="560" y="94">etapas de ejemplo — define las tuyas</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-blue-400">Cómo leer:</strong> El grosor de las flechas muestra cuánto tráfico va a cada versión. El recuadro punteado indica la decisión que se toma en cada etapa, observando las mismas métricas del tema 5. Lo central: la versión estable sigue en funcionamiento todo el tiempo, así que volver atrás solo requiere cambiar la distribución del enrutador.</figcaption>
+</figure>
+<div class="bg-primary/10 border border-primary/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-primary font-semibold mb-1">💡 Consejo</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-8-t4-p4">Antes del canario, hay una etapa aún más segura: el <strong>modo sombra</strong>. La versión nueva recibe una copia de las solicitudes reales, pero su respuesta no llega al usuario: solo se guarda en el registro, donde la comparas con la versión estable.</p>
+</div>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-8-t4-p5" data-sum="porque">Los modelos se vuelven lentos, dejan de estar disponibles y devuelven formatos inesperados. Un servicio con timeout, fallback y despliegue gradual convierte estos fallos en una degradación controlada, en lugar de mostrarle una pantalla de error al cliente.</p>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Tiempo de espera</div><div class="text-xs text-neutral-400">límite por llamada</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Respaldo</div><div class="text-xs text-neutral-400">respuesta de respaldo</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Canario</div><div class="text-xs text-neutral-400">tráfico gradual</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Tiempo real × lote</div><div class="text-xs text-neutral-400">la urgencia define el costo</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 5 -->
+<section class="mb-16" data-inema-topic="modulo-2-8#topico-5" id="topico-5" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="latência, erros, qualidade, custo e drift">📈 Monitoreo</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-8-t5-p1">Un sistema con IA puede estar «en funcionamiento» y, al mismo tiempo, estar equivocado. El servidor responde a tiempo, sin errores HTTP, pero la calidad bajó porque los clientes empezaron a escribir sobre un tema nuevo o porque el proveedor cambió el modelo. Por eso, el monitoreo observa <strong class="text-neutral-100">cuatro familias de señales</strong>: técnicas, de calidad, de costo y de datos.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-8-t5-p2">La base es el registro estructurado que el servicio del tema 4 ya guarda: una línea JSON por solicitud, con la versión, el estado, la latencia y los tokens. A partir de ahí, puedes crear paneles (Grafana), alertas y rastreo entre servicios (OpenTelemetry). Para los LLM hay herramientas específicas de observabilidad, como Langfuse, de código abierto, que guardan el prompt, la respuesta y la evaluación de cada llamada.</p>
+<div class="bg-dark-800 border border-blue-500/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-blue-400 font-semibold mb-1">📘 Términos nuevos</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-8-t5-p3"><strong>Percentil</strong>: el p95 de latencia es el tiempo por debajo del cual se completan el 95% de las solicitudes; muestra la experiencia de los usuarios con menos suerte, que el promedio oculta. <strong>Deriva</strong> (deriva) es el cambio, a lo largo del tiempo, en el tipo de datos que llegan o en la relación entre los datos y la respuesta correcta. <strong>Observabilidad</strong> es poder responder «¿por qué pasó esto?» a partir de los registros.</p>
+</div>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">Vigilar continuamente si el servicio es rápido, está disponible, es correcto y se mantiene dentro del presupuesto, con alertas que avisan antes que el usuario y registros suficientes para investigar cada caso.</p>
+</div>
+<!-- SVG 4: distribuição de latência -->
+<figure class="svg-frame rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="Histograma de latencia de las solicitudes: la mayoría se concentra a la izquierda y hay una cola larga a la derecha; las líneas verticales marcan la mediana p50, el p95 y el p99, y muestran que el promedio oculta las solicitudes lentas." class="w-full h-auto" role="img" viewbox="0 0 900 280">
+<rect fill="url(#m28-grid)" height="280" width="900"></rect>
+<g font-family="Inter,sans-serif">
+<path d="M60,230 L860,230" fill="none" stroke="#475569" stroke-width="1.5"></path>
+<g fill="#3b82f6" fill-opacity="0.75">
+<rect height="60" width="36" x="70" y="170"></rect>
+<rect height="120" width="36" x="110" y="110"></rect>
+<rect height="150" width="36" x="150" y="80"></rect>
+<rect height="128" width="36" x="190" y="102"></rect>
+<rect height="96" width="36" x="230" y="134"></rect>
+<rect height="70" width="36" x="270" y="160"></rect>
+<rect height="50" width="36" x="310" y="180"></rect>
+</g>
+<g fill="#38bdf8" fill-opacity="0.65">
+<rect height="36" width="36" x="350" y="194"></rect>
+<rect height="26" width="36" x="390" y="204"></rect>
+<rect height="20" width="36" x="430" y="210"></rect>
+<rect height="14" width="36" x="470" y="216"></rect>
+<rect height="10" width="36" x="510" y="220"></rect>
+<rect height="8" width="36" x="550" y="222"></rect>
+<rect height="6" width="36" x="590" y="224"></rect>
+<rect height="5" width="36" x="650" y="225"></rect>
+<rect height="4" width="36" x="740" y="226"></rect>
+</g>
+<path d="M208,40 L208,232" stroke="#e0f2fe" stroke-dasharray="4 4" stroke-width="2"></path>
+<text fill="#e0f2fe" font-size="13" font-weight="700" x="216" y="54">p50</text>
+<text fill="#bae6fd" font-size="11" x="216" y="70">la mitad es más rápida</text>
+<path d="M488,40 L488,232" stroke="#7dd3fc" stroke-dasharray="4 4" stroke-width="2"></path>
+<text fill="#7dd3fc" font-size="13" font-weight="700" x="496" y="54">p95</text>
+<text fill="#bae6fd" font-size="11" x="496" y="70">1 de cada 20 es más lenta</text>
+<path d="M700,40 L700,232" stroke="#93c5fd" stroke-dasharray="4 4" stroke-width="2"></path>
+<text fill="#93c5fd" font-size="13" font-weight="700" x="708" y="54">p99</text>
+<text fill="#bae6fd" font-size="11" x="708" y="70">la cola que irrita</text>
+<text fill="#94a3b8" font-size="12" x="70" y="252">rápida</text>
+<text fill="#94a3b8" font-size="12" text-anchor="end" x="850" y="252">lenta (tiempo de respuesta →)</text>
+<text fill="#94a3b8" font-size="11" text-anchor="middle" x="450" y="272">formato ilustrativo, sin escala real</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-blue-400">Cómo leer:</strong> cada barra cuenta cuántas solicitudes tardaron ese tiempo. Las respuestas de LLM tienen una cola larga (barras cian): las respuestas extensas y las colas de GPU hacen que algunas tarden mucho más. Configura alertas según el p95, no el promedio: el promedio puede mantenerse estable mientras la cola empeora.</figcaption>
+</figure>
+<div class="overflow-x-auto mb-6">
+<table class="w-full text-sm border border-dark-600 rounded-xl overflow-hidden">
+<thead><tr class="bg-dark-700"><th class="text-left p-3 text-blue-400">Familia</th><th class="text-left p-3 text-blue-400">Qué medir</th><th class="text-left p-3 text-blue-400">Alerta típica</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr><td class="p-3 font-semibold">Técnico</td><td class="p-3 text-neutral-300">Latencia p50/p95, tasa de errores, tiempos de espera</td><td class="p-3 text-neutral-300">p95 por encima de lo acordado durante 10 minutos</td></tr>
+<tr><td class="p-3 font-semibold">Calidad</td><td class="p-3 text-neutral-300">Tasa de fallback, puntuación del evaluador en una muestra, comentarios del usuario</td><td class="p-3 text-neutral-300">El fallback se duplica en comparación con la semana anterior</td></tr>
+<tr><td class="p-3 font-semibold">Costo</td><td class="p-3 text-neutral-300">Tokens por solicitud, gasto por día y por cliente</td><td class="p-3 text-neutral-300">El gasto diario supera el presupuesto</td></tr>
+<tr><td class="p-3 font-semibold">Datos (drift)</td><td class="p-3 text-neutral-300">Distribución de etiquetas, longitud de los textos, idioma</td><td class="p-3 text-neutral-300">La etiqueta "otro" crece sin explicación</td></tr>
+</tbody>
+</table>
+</div>
+<!-- COPY-RUN: métricas a partir do log -->
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-blue-400">Prueba:</strong> <span class="text-neutral-300">calcular p50, p95, errores y distribución de etiquetas a partir de <code>servico.log</code>.</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copiar</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900"># metricas.py — sin dependencias externas
+import json, statistics, sys
+from collections import Counter
+
+linhas = []
+for l in open(sys.argv[1] if len(sys.argv) &gt; 1 else "servico.log", encoding="utf-8"):
+    l = l.strip()
+    if l.startswith("{"):
+        try:
+            linhas.append(json.loads(l))
+        except json.JSONDecodeError:
+            pass
+
+if len(linhas) &lt; 2:
+    sys.exit("poucas requisições no log; faça algumas chamadas antes")
+
+ms = [x["ms"] for x in linhas]
+q = statistics.quantiles(ms, n=100, method="inclusive")  # q[49] = p50, q[94] = p95
+status = Counter(x["status"] for x in linhas)
+rotulos = Counter(x["rotulo"] for x in linhas)
+nao_ok = sum(v for k, v in status.items() if k != "ok")
+
+print(f"requisições: {len(linhas)}")
+print(f"latência p50={q[49]:.0f} ms  p95={q[94]:.0f} ms  máx={max(ms)} ms")
+print(f"não-ok: {nao_ok / len(linhas):.1%}  {dict(status)}")
+print(f"tokens/req (média): {statistics.mean(x['tokens'] for x in linhas):.0f}")
+print("rótulos:", {k: f"{v / len(linhas):.0%}" for k, v in rotulos.most_common()})</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">Cómo verificar:</strong> con el servicio del tema 4 en funcionamiento, haz unas 20 llamadas con textos variados y ejecuta <code>python3 metricas.py servico.log</code>. Debes ver que p50 es menor que p95, la fracción de respuestas no válidas y la distribución de etiquetas. Detén Ollama, haz más llamadas y vuelve a ejecutar: la fracción de respuestas no válidas debe aumentar. Ese es el número que vigila una alerta.</p>
+</div>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-8-t5-p4" data-sum="porque">Los sistemas de IA se degradan en silencio. Quien mide la latencia, la calidad, el costo y el drift descubre el problema un lunes por la mañana al revisar un panel, y no un viernes por la noche por la queja de un cliente importante.</p>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Percentil p95</div><div class="text-xs text-neutral-400">el caso común más lento</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Registro estructurado</div><div class="text-xs text-neutral-400">una línea JSON por llamada</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Deriva</div><div class="text-xs text-neutral-400">los datos cambiaron</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Alerta</div><div class="text-xs text-neutral-400">avisa antes que el cliente</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 6 -->
+<section class="mb-16" data-inema-topic="modulo-2-8#topico-6" id="topico-6" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="tokens, cache, modelo certo para cada tarefa">💰 Costo y rendimiento</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-8-t6-p1">En las API de pago, el costo es proporcional a los tokens: los de entrada (prompt, documentos, historial) y los de salida (la respuesta), que por lo general tienen precios distintos. En los modelos locales, el costo se traduce en hardware, energía y mantenimiento. En ambos casos, funcionan las mismas medidas: <strong class="text-neutral-100">enviar menos texto, generar menos texto, usar el modelo más pequeño que resuelva la tarea y no repetir trabajo</strong>.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-8-t6-p2">El rendimiento y el costo van de la mano: menos tokens también significan respuestas más rápidas. El orden que suele dar mejores resultados es medir primero (cuánto cuesta cada tipo de solicitud), eliminar el desperdicio evidente (reenviar todo el historial, incluir documentos innecesarios) y solo después cambiar de modelo.</p>
+<div class="bg-dark-800 border border-blue-500/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-blue-400 font-semibold mb-1">📘 Términos nuevos</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-8-t6-p3"><strong>Caché del prompt</strong>: varios proveedores cobran menos cuando el inicio del prompt se repite entre llamadas; por eso, las instrucciones fijas van al principio y el contenido variable al final. <strong>Enrutamiento de modelos</strong>: un modelo pequeño atiende los casos sencillos y solo los difíciles se envían al grande. <strong>Cuantización</strong>: guardar los pesos del modelo con menos bits para que ocupen menos memoria, con cierta pérdida de calidad.</p>
+</div>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">Medir el costo y la latencia por tipo de solicitud y aplicar medidas —prompt conciso, límite de salida, caché, procesamiento por lotes, enrutamiento y un modelo más pequeño—, comprobando en el conjunto de pruebas que la calidad no haya disminuido.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
+<h4 class="font-bold text-blue-400 mb-4">✓ Medidas que funcionan</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Límite de tokens de salida y formato breve (JSON en vez de un párrafo).</span></li>
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Instrucciones fijas al principio del prompt para aprovechar la caché.</span></li>
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Procesar por lotes lo que no necesita una respuesta inmediata.</span></li>
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Guardar las respuestas a preguntas idénticas y repetidas.</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Ahorros que salen caros</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Cambiar de modelo sin ejecutar el conjunto de pruebas.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Reducir el contexto hasta que el modelo empiece a inventar.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Usar caché para respuestas que dependen del usuario o del momento.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Quitar el tiempo de espera y los reintentos para "ganar velocidad".</span></li>
+</ul>
+</div>
+</div>
+<!-- COPY-RUN: estimativa de custo -->
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-blue-400">Objetivo:</strong> <span class="text-neutral-300">estimar el costo mensual de un flujo en una API de pago a partir de los tokens medidos.</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copiar</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900"># custo.py — completa con TUS números (los precios cambian; consulta la página del proveedor)
+PRECO_ENTRADA_POR_MILHAO = 0.0   # &lt;US$ por 1 millón de tokens de entrada&gt;
+PRECO_SAIDA_POR_MILHAO = 0.0     # &lt;US$ por 1 millón de tokens de salida&gt;
+COTACAO_DOLAR = 0.0              # &lt;R$ por US$ del día&gt;
+
+FLUXOS = {  # nombre: (solicitudes por día, tokens de entrada, tokens de salida) — promedios medidos
+    "triagem":  (2000, 350, 20),
+    "resumo":   (150, 6000, 400),
+    "&lt;outro&gt;": (0, 0, 0),
+}
+
+total = 0.0
+for nome, (req, t_in, t_out) in FLUXOS.items():
+    dia = req * (t_in * PRECO_ENTRADA_POR_MILHAO + t_out * PRECO_SAIDA_POR_MILHAO) / 1_000_000
+    mes = dia * 30 * COTACAO_DOLAR
+    total += mes
+    print(f"{nome:10s} R$ {mes:10.2f}/mês   ({req} req/dia, {t_in}+{t_out} tokens)")
+print(f"{'TOTAL':10s} R$ {total:10.2f}/mês")
+# Simule: o que acontece se o resumo cortar a entrada pela metade? E com metade das requisições?</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">Cómo verificar:</strong> toma los promedios de tokens de <code>metricas.py</code> (tema 5) y los precios actuales del proveedor. Ejecuta <code>python3 custo.py</code> y comprueba un flujo a mano con la calculadora. El flujo con mayor costo mensual es donde debes empezar a optimizar; muchas veces no es el que tiene más solicitudes.</p>
+</div>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-8-t6-p4" data-sum="porque">Los proyectos de IA se cancelan con más frecuencia por costos imprevisibles que por falta de calidad. Saber estimar, medir y reducir el gasto sin perder precisión es lo que permite llevar un piloto a toda la empresa.</p>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Entrada × salida</div><div class="text-xs text-neutral-400">precios diferentes</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Caché del prompt</div><div class="text-xs text-neutral-400">fijo al inicio</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Enrutamiento</div><div class="text-xs text-neutral-400">pequeño primero</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Cuantización</div><div class="text-xs text-neutral-400">menos memoria, con cierta pérdida</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 7 -->
+<section class="mb-16" data-inema-topic="modulo-2-8#topico-7" id="topico-7" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">7</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="detectar, conter, corrigir e aprender">🚨 Incidentes y rollback</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar una duda en este tema" type="button"><span aria-hidden="true">?</span><span>Tengo una duda</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-8-t7-p1">Un incidente en un sistema con IA no siempre significa que "se cayó". Puede ser que el asistente responda con un tono inadecuado, que un clasificador envíe todo a "otro", que un agente ejecute una acción que no debía o que el gasto se triplique en una noche. La respuesta sigue el mismo orden: <strong class="text-blue-400">primero contener el daño, después entender la causa</strong>.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-8-t7-p2">Contener suele consistir en una de estas tres acciones: volver a la versión anterior (rollback), desactivar la funcionalidad con una clave de configuración o activar el modo degradado (alternativa con una regla simple o atención humana). Todo eso debe estar listo y probado antes del incidente, en un <strong class="text-neutral-100">runbook</strong>, no en la cabeza de una persona.</p>
+<div class="bg-dark-800 border border-blue-500/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-blue-400 font-semibold mb-1">📘 Términos nuevos</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-8-t7-p3"><strong>Runbook</strong> es la guía escrita de qué hacer ante cada tipo de problema, con comandos listos. <strong>Feature flag</strong> es una clave de configuración que activa o desactiva una funcionalidad sin un nuevo despliegue. <strong>Análisis posterior sin culpas</strong> es el análisis del incidente centrado en las causas y las protecciones, no en buscar culpables; así, las personas cuentan lo que realmente ocurrió.</p>
+</div>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Qué es</h3>
+<p class="text-neutral-300">Un proceso acordado de antemano para detectar, contener, comunicar, corregir y aprender de las fallas, que siempre termina con una nueva protección, por lo general un caso más en el conjunto de pruebas o una alerta más.</p>
+</div>
+<!-- TIMELINE -->
+<div class="relative border-l-2 border-blue-500/30 ml-3 pl-6 space-y-5 mb-6">
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-blue-500/20 border-2 border-blue-400"></span><p class="text-sm text-neutral-300"><strong class="text-blue-400">1 · Detectar.</strong> Alerta del monitoreo o informe de un usuario. Registra la hora y la versión que está en producción.</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-blue-500/20 border-2 border-blue-400"></span><p class="text-sm text-neutral-300"><strong class="text-blue-400">2 · Contener.</strong> Rollback, feature flag o modo degradado. La investigación viene después.</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-sky-500/20 border-2 border-sky-400"></span><p class="text-sm text-neutral-300"><strong class="text-sky-400">3 · Comunicar.</strong> Quiénes están afectados, qué se hizo y cuándo se publicará la próxima actualización.</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-sky-500/20 border-2 border-sky-400"></span><p class="text-sm text-neutral-300"><strong class="text-sky-400">4 · Corregir.</strong> Reproduce el problema con la versión y el registro de la solicitud; corrígelo; pásalo por el control de calidad.</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-sky-500/20 border-2 border-sky-400"></span><p class="text-sm text-neutral-300"><strong class="text-sky-400">5 · Aprender.</strong> Análisis posterior sin culpas y una nueva protección: caso de prueba, alerta o límite.</p></div>
+</div>
+<!-- COPY-RUN: runbook -->
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-blue-400">Objetivo:</strong> <span class="text-neutral-300">un runbook mínimo (<code>RUNBOOK.md</code>) para dejar en el repositorio del servicio.</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copiar</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900"># RUNBOOK — &lt;nombre del servicio&gt;
+Responsable de guardia: &lt;nombre / canal&gt;     Panel: &lt;enlace al panel&gt;
+Versión actual: &lt;ej.: clasificador-1.4.2&gt;  Versión estable anterior: &lt;1.4.1&gt;
+
+## Síntoma A — aumenta la tasa de alternativas o de errores
+1. Comprueba /health y si el modelo responde (ollama ps / estado del proveedor).
+2. Si empezó después de un despliegue: ROLLBACK -&gt; &lt;comando o paso exacto&gt;.
+3. Si el modelo no está disponible: activa el modo degradado -&gt; &lt;flag/variable y valor&gt;.
+
+## Síntoma B — respuestas inadecuadas (tono, contenido, acción incorrecta)
+1. Desactiva la funcionalidad: &lt;feature flag&gt; = off.
+2. Guarda 5 ejemplos (request_id) para reproducir el problema, sin datos personales.
+3. Avisa al &lt;área responsable&gt; y al responsable de protección de datos si hay datos personales.
+
+## Síntoma C — costo diario por encima de &lt;límite&gt;
+1. Revisa los tokens por flujo (metricas.py) y qué flujo cambió.
+2. Reduce el límite de solicitudes: &lt;config&gt;.  3. Investiga si hay un bucle o abuso.
+
+## Después de cada incidente
+- [ ] Análisis posterior sin culpas en un máximo de &lt;N&gt; días hábiles (línea de tiempo, causa, protecciones)
+- [ ] Nuevo caso en evals/casos.jsonl que reproduzca el problema
+- [ ] Nueva alerta o límite, si el problema se detectó tarde</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">Cómo verificar:</strong> haz un ensayo. Pídele a alguien del equipo que no haya escrito el servicio que ejecute el Síntoma A siguiendo solo el runbook, con Ollama detenido a propósito. Si esa persona necesita preguntar algo, la respuesta se agrega al runbook.</p>
+</div>
+<div class="bg-primary/10 border border-primary/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-primary font-semibold mb-1">💡 Consejo</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-8-t7-p4">Lleva un registro de una línea por falla: fecha, qué se rompió, la corrección mínima posible y si la causa fue el prompt o la infraestructura. Después de algunas líneas, aparece el patrón y dejas de reconstruir lo que solo necesitaba una protección.</p>
+</div>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Por qué aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-8-t7-p5" data-sum="porque">Todo sistema en producción va a fallar en algún momento. La diferencia entre un incidente de cinco minutos y uno de cinco horas es tener listo y ensayado el camino de vuelta; y la diferencia entre un equipo que repite errores y uno que mejora es que el análisis posterior se convierta en una protección.</p>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Conceptos clave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Contener primero</div><div class="text-xs text-neutral-400">investigar después</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Runbook</div><div class="text-xs text-neutral-400">guía con comandos</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Feature flag</div><div class="text-xs text-neutral-400">se desactiva sin despliegue</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Análisis posterior</div><div class="text-xs text-neutral-400">sin culpas, con protección</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como leído</span>
+<span class="inema-label-done">Leído</span>
+</button>
+</div>
+</div>
+</section>
+<!-- RESUMO -->
+<section class="mb-8">
+<div class="bg-gradient-to-br from-blue-900/40 via-dark-800 to-dark-800 rounded-xl border border-blue-500/30 p-6 sm:p-8">
+<h2 class="text-2xl font-bold mb-6">✅ Resumen del módulo</h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start gap-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">Versiona las cinco piezas</strong><span class="text-neutral-400"> — código, prompt, modelo, datos y configuración bajo una misma versión.</span></div></div>
+<div class="flex items-start gap-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">El conjunto de pruebas es el control</strong><span class="text-neutral-400"> — ninguna versión pasa si queda por debajo de la línea de base.</span></div></div>
+<div class="flex items-start gap-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">Despliega con límites y publica poco a poco</strong><span class="text-neutral-400"> — timeout, alternativa, canario y rollback.</span></div></div>
+<div class="flex items-start gap-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">Mide, gasta con criterio y aprende de las fallas</strong><span class="text-neutral-400"> — p95, costo por flujo, runbook y análisis posterior.</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-blue-400 mb-2">Siguiente módulo:</h3>
+<p class="text-neutral-300">2.9 — Ética y gobernanza de IA ⚖️</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="index.html">← Volver a la Ruta</a>
+<a class="flex-1 text-center px-6 py-3 bg-blue-700 text-white rounded-lg font-semibold hover:bg-blue-600 transition-colors" href="modulo-2-9.html">Siguiente módulo →</a>
+</div>
+</div>
+</section>
+</article>
+</div>
+</div>
+</main>
+<footer class="border-t border-dark-600 py-8 mt-8">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>FTD — Formación en Transformación Digital · contenido abierto y gratuito · 2026 · <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" rel="noopener" target="_blank">INEMA.CLUB</a> - <a class="text-amber-700 dark:text-slate-300 hover:underline" href="https://inema.pro" rel="noopener" target="_blank">PRO</a></p>
+</div>
+</footer>
+<!-- SCRIPTS NÚCLEO v1 -->
+<script>
+    function toggleTopic(button) {
+      var topicItem = button.closest('.topic-item');
+      if (!topicItem) return;
+      var explanation = topicItem.querySelector('.topic-explanation');
+      var willOpen = !explanation.classList.contains('active');
+      explanation.classList.toggle('active');
+      button.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+    }
+    function openModal(id) { var m = document.getElementById(id); if (m) { m.classList.remove('hidden'); document.body.style.overflow = 'hidden'; } }
+    function closeModal() { document.querySelectorAll('.modal').forEach(function (m) { m.classList.add('hidden'); }); document.body.style.overflow = 'auto'; }
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
+    function copyCode(btn) {
+      var pre = btn.closest('[data-copy-box]').querySelector('pre');
+      var txt = pre ? pre.innerText : '';
+      var done = function () { var o = btn.getAttribute('data-label-ok') || 'Copiado'; var t = btn.textContent; btn.textContent = o; setTimeout(function () { btn.textContent = t; }, 1500); };
+      try { navigator.clipboard.writeText(txt).then(done, done); } catch (e) { done(); }
+    }
+    (function () {
+      var themeToggle = document.getElementById('theme-toggle');
+      var darkIcon = document.getElementById('theme-toggle-dark-icon');
+      var lightIcon = document.getElementById('theme-toggle-light-icon');
+      var html = document.documentElement;
+      function sync() { var isDark = html.classList.contains('dark'); if (darkIcon) darkIcon.classList.toggle('hidden', isDark); if (lightIcon) lightIcon.classList.toggle('hidden', !isDark); }
+      sync();
+      if (themeToggle) themeToggle.addEventListener('click', function () {
+        html.classList.toggle('dark'); var nowDark = html.classList.contains('dark'); html.style.colorScheme = nowDark ? 'dark' : 'light';
+        try { localStorage.setItem('theme', nowDark ? 'dark' : 'light'); } catch (e) {}
+        try { var p = JSON.parse(localStorage.getItem('inema.prefs') || '{}'); p.theme = nowDark ? 'inema-dark' : 'claro'; localStorage.setItem('inema.prefs', JSON.stringify(p)); } catch (e) {}
+        sync();
+      });
+    })();
+  </script>
+<!-- learn.js + INEMA.init() POR ÚLTIMO -->
+<script src="../../assets/learn.js"></script>
+<script>
+    if (window.INEMA && typeof window.INEMA.init === 'function') { window.INEMA.init({ autoResume: true }); }
+  </script>
+</body>
+</html>

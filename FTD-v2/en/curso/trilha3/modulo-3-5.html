@@ -1,0 +1,1169 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="ftd-v2-en" name="inema-course"/>
+<title>Module 3.5 · AI Reinforcement Learning | FTD v2</title>
+<meta content="Agent, environment, and reward; RLHF, RL with verifiable rewards, and why RL made models reason." name="description"/>
+<meta content="Module 3.5 · AI Reinforcement Learning | FTD v2" property="og:title"/>
+<meta content="Agent, environment, and reward; RLHF, RL with verifiable rewards, and why RL made models reason." property="og:description"/>
+<!-- ANTI-FOUC (Erro #18) — primeiro script do head -->
+<script>
+(function () {
+  try {
+    var html = document.documentElement;
+    var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+    function clone(o) { var r = {}; for (var x in o) r[x] = o[x]; return r; }
+    var p = clone(DEF);
+    try {
+      var raw = localStorage.getItem('inema.prefs');
+      if (raw) {
+        var parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === 'object') {
+          for (var k in DEF) if (parsed[k] != null) p[k] = parsed[k];
+        }
+      } else {
+        var legacy = localStorage.getItem('theme');
+        if (legacy === 'light') p.theme = 'claro';
+        else if (legacy === 'dark') p.theme = 'inema-dark';
+      }
+    } catch (e) { p = clone(DEF); }
+
+    var THEMES = {
+      'inema-dark': { dark: true,  attr: null,        cs: 'dark'  },
+      'claro':      { dark: false, attr: null,        cs: 'light' },
+      'sepia':      { dark: false, attr: 'sepia',     cs: 'light' },
+      'foco':       { dark: null,  attr: 'foco',      cs: null    },
+      'contraste':  { dark: true,  attr: 'contraste', cs: 'dark'  }
+    };
+    var t = THEMES[p.theme] || THEMES['inema-dark'];
+
+    if (t.dark === true) html.classList.add('dark');
+    else if (t.dark === false) html.classList.remove('dark');
+
+    if (t.attr) html.setAttribute('data-theme', t.attr);
+    else html.removeAttribute('data-theme');
+
+    html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark') ? 'dark' : 'light'));
+
+    html.setAttribute('data-font', p.font || 'inter');
+    html.setAttribute('data-accent', p.accent || 'emerald');
+
+    var s = html.style;
+    var scale = (+p.fontScale || 100);
+    s.setProperty('--inema-font-scale', (scale / 100).toString());
+    s.setProperty('font-size', scale + '%');
+    s.setProperty('--measure', (+p.lineWidth || 68) + 'ch');
+    s.setProperty('--lh-body', (+p.leading || 1.7).toString());
+    var fam = p.font === 'system'
+      ? 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif'
+      : (p.font === 'leitura'
+        ? '"Atkinson Hyperlegible", "Inter", system-ui, sans-serif'
+        : '"Inter", system-ui, sans-serif');
+    s.setProperty('--font-body', fam);
+
+    var ACC = {
+      emerald: [152, 76, 45], blue: [217, 91, 60], purple: [258, 90, 66],
+      amber: [38, 92, 50], teal: [174, 72, 41], rose: [350, 89, 60]
+    };
+    var a = ACC[p.accent] || ACC.emerald;
+    s.setProperty('--accent-h', a[0] + '');
+    s.setProperty('--accent-s', a[1] + '%');
+    s.setProperty('--accent-l', a[2] + '%');
+    s.setProperty('--accent', 'hsl(' + a[0] + ' ' + a[1] + '% ' + a[2] + '%)');
+  } catch (err) {
+    try { document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme = 'dark'; } catch (e) {}
+  }
+})();
+</script>
+<!-- MANIFESTO do curso (Erro #28) — idêntico em todas as páginas -->
+<script data-inema-manifest="" type="application/json">
+{
+  "course": "ftd-v2-en",
+  "tracks": [
+    {
+      "n": "1",
+      "title": "Beginner",
+      "modules": [
+        {
+          "id": "1-1",
+          "title": "The Impact of AI",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-1.html"
+        },
+        {
+          "id": "1-2",
+          "title": "Navigating the Digital World",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-2.html"
+        },
+        {
+          "id": "1-3",
+          "title": "Prompt Engineering",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-3.html"
+        },
+        {
+          "id": "1-4",
+          "title": "AI Assistants and Agents",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-4.html"
+        },
+        {
+          "id": "1-5",
+          "title": "Visual Creativity with AI",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-5.html"
+        },
+        {
+          "id": "1-6",
+          "title": "Marketing and Sales with AI",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-6.html"
+        },
+        {
+          "id": "1-7",
+          "title": "Process Automation",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-7.html"
+        },
+        {
+          "id": "1-8",
+          "title": "Advanced Artificial Intelligence",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-8.html"
+        },
+        {
+          "id": "1-9",
+          "title": "Business and Monetization with AI",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-9.html"
+        }
+      ]
+    },
+    {
+      "n": "2",
+      "title": "Technical",
+      "modules": [
+        {
+          "id": "2-1",
+          "title": "Developing with AI APIs",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-1.html"
+        },
+        {
+          "id": "2-2",
+          "title": "AI Application Architecture",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-2.html"
+        },
+        {
+          "id": "2-3",
+          "title": "RAG and Knowledge Bases",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-3.html"
+        },
+        {
+          "id": "2-4",
+          "title": "Fine-Tuning and Customization",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-4.html"
+        },
+        {
+          "id": "2-5",
+          "title": "Agents and Complex Workflows",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-5.html"
+        },
+        {
+          "id": "2-6",
+          "title": "Advanced Computer Vision",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-6.html"
+        },
+        {
+          "id": "2-7",
+          "title": "NLP and Text Processing",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-7.html"
+        },
+        {
+          "id": "2-8",
+          "title": "MLOps and Production",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-8.html"
+        },
+        {
+          "id": "2-9",
+          "title": "AI Ethics and Governance",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-9.html"
+        }
+      ]
+    },
+    {
+      "n": "3",
+      "title": "Masterclass",
+      "modules": [
+        {
+          "id": "3-1",
+          "title": "Large-Scale AI Architecture",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-1.html"
+        },
+        {
+          "id": "3-2",
+          "title": "Custom and Proprietary Models",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-2.html"
+        },
+        {
+          "id": "3-3",
+          "title": "Advanced Multimodal AI",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-3.html"
+        },
+        {
+          "id": "3-4",
+          "title": "AI Research and Papers",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-4.html"
+        },
+        {
+          "id": "3-5",
+          "title": "Reinforcement Learning for AI",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-5.html"
+        },
+        {
+          "id": "3-6",
+          "title": "Security and Red Teaming",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-6.html"
+        },
+        {
+          "id": "3-7",
+          "title": "AI in Production — Enterprise Scale",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-7.html"
+        },
+        {
+          "id": "3-8",
+          "title": "AI Leadership and Strategy",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-8.html"
+        },
+        {
+          "id": "3-9",
+          "title": "The Future of AI and AGI",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-9.html"
+        }
+      ]
+    }
+  ]
+}
+</script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#0c0c10', 800: '#16161e', 700: '#1e1e28', 600: '#272730', 500: '#33333f' } }, fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'], display: ['Sora', 'Inter', 'sans-serif'], mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'] } } } }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Sora:wght@600;700;800&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    h1, h2, h3, h4, .font-display { font-family: 'Sora', 'Inter', sans-serif; }
+    .dark body { background-color: #0c0c10; }
+    .dark .text-neutral-100 { color: #e9e9ee; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+    pre { white-space: pre-wrap; word-break: break-word; }
+    pre, code, .font-mono { font-family: 'JetBrains Mono', ui-monospace, monospace; }
+
+    /* Light mode — Parte 1: base */
+    html:not(.dark) body { background-color: #f6f7f9; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800\/50 { background-color: #f6f7f9; }
+    html:not(.dark) .bg-dark-700 { background-color: #eceef2; }
+    html:not(.dark) .bg-dark-700\/50 { background-color: #f1f2f5; }
+    html:not(.dark) .bg-dark-700\/30 { background-color: #f4f5f7; }
+    html:not(.dark) .bg-dark-600 { background-color: #e1e3ea; }
+    html:not(.dark) .hover\:bg-dark-600:hover { background-color: #d6d9e1; }
+    html:not(.dark) .hover\:bg-dark-700\/50:hover { background-color: #eceef2; }
+    html:not(.dark) .text-neutral-100 { color: #1a1a22; }
+    html:not(.dark) .text-neutral-200 { color: #26262f; }
+    html:not(.dark) .text-neutral-300 { color: #3f3f4a; }
+    html:not(.dark) .text-neutral-400 { color: #5b5b68; }
+    html:not(.dark) .text-neutral-500 { color: #62626e; }
+    html:not(.dark) .border-dark-600 { border-color: #e1e3ea; }
+    html:not(.dark) .border-dark-700 { border-color: #e8e9ee; }
+    html:not(.dark) .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #e1e3ea; }
+    html:not(.dark) .bg-black\/40 { background-color: #f1f2f5; }
+    html:not(.dark) pre.code-dark { background-color: #1a1a22; color: #e9e9ee; }
+
+    /* Light mode — Parte 2: acento das 3 trilhas (texto -700, nunca -400 no claro) */
+    html:not(.dark) .text-emerald-400 { color: #047857; }
+    html:not(.dark) .text-emerald-300 { color: #047857; }
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #047857; }
+    html:not(.dark) .bg-emerald-500\/20 { background-color: rgba(4,120,87,0.12); }
+    html:not(.dark) .bg-emerald-500\/10 { background-color: rgba(4,120,87,0.08); }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(4,120,87,0.08); }
+    html:not(.dark) .bg-emerald-900\/20 { background-color: rgba(4,120,87,0.07); }
+    html:not(.dark) .bg-emerald-900\/30 { background-color: rgba(4,120,87,0.08); }
+    html:not(.dark) .bg-emerald-900\/40 { background-color: rgba(4,120,87,0.09); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(4,120,87,0.28); }
+    html:not(.dark) .hover\:border-emerald-500\/30:hover { border-color: rgba(4,120,87,0.4); }
+    html:not(.dark) .text-blue-400 { color: #1d4ed8; }
+    html:not(.dark) .text-blue-300 { color: #1d4ed8; }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #1d4ed8; }
+    html:not(.dark) .bg-blue-500\/20 { background-color: rgba(29,78,216,0.12); }
+    html:not(.dark) .bg-blue-500\/10 { background-color: rgba(29,78,216,0.08); }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(29,78,216,0.08); }
+    html:not(.dark) .bg-blue-900\/20 { background-color: rgba(29,78,216,0.07); }
+    html:not(.dark) .bg-blue-900\/30 { background-color: rgba(29,78,216,0.08); }
+    html:not(.dark) .bg-blue-900\/40 { background-color: rgba(29,78,216,0.09); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(29,78,216,0.28); }
+    html:not(.dark) .hover\:border-blue-500\/30:hover { border-color: rgba(29,78,216,0.4); }
+    html:not(.dark) .text-purple-400 { color: #6d28d9; }
+    html:not(.dark) .text-purple-300 { color: #6d28d9; }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #6d28d9; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(109,40,217,0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(109,40,217,0.08); }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(109,40,217,0.08); }
+    html:not(.dark) .bg-purple-900\/20 { background-color: rgba(109,40,217,0.07); }
+    html:not(.dark) .bg-purple-900\/30 { background-color: rgba(109,40,217,0.08); }
+    html:not(.dark) .bg-purple-900\/40 { background-color: rgba(109,40,217,0.09); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(109,40,217,0.28); }
+    html:not(.dark) .hover\:border-purple-500\/30:hover { border-color: rgba(109,40,217,0.4); }
+
+    /* Light mode — Parte 3: gradientes + especiais */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #854d0e; }
+    html:not(.dark) .text-yellow-400 { color: #854d0e; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #713f12; }
+    html:not(.dark) .bg-primary\/10 { background-color: #FEF9C3; }
+    html:not(.dark) .border-primary\/30 { border-color: #EAB308; }
+    html:not(.dark) .text-red-400 { color: #b91c1c; }
+    html:not(.dark) .bg-red-900\/20 { background-color: rgba(185,28,28,0.07); }
+    html:not(.dark) .border-red-500\/30 { border-color: rgba(185,28,28,0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #075985; }
+    html:not(.dark) .bg-sky-900\/20 { background-color: rgba(3,105,161,0.07); }
+    html:not(.dark) .border-sky-500\/30 { border-color: rgba(3,105,161,0.25); }
+
+    /* Light mode — Parte 4: nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255,255,255,0.95); }
+
+    /* Parte 5: bordas suavizadas no DARK (Erro #15) */
+    .dark .border-dark-600 { border-color: #2a2a35; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #2a2a35; }
+
+    /* SVG: no claro, um fundo escuro emoldurado mantém o contraste do desenho */
+    html:not(.dark) .svg-frame { background-color: #12121a; }
+    @media (prefers-reduced-motion: reduce) { svg * { animation: none !important; transition: none !important; } }
+  </style>
+<link href="../../../assets/learn.css" rel="stylesheet"/>
+<link href="https://inematds.github.io/FTD/FTD-v2/curso/trilha3/modulo-3-5.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/FTD/FTD-v2/en/curso/trilha3/modulo-3-5.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/FTD/FTD-v2/es/curso/trilha3/modulo-3-5.html" hreflang="es" rel="alternate"/><link href="https://inematds.github.io/FTD/FTD-v2/curso/trilha3/modulo-3-5.html" hreflang="x-default" rel="alternate"/><link href="https://inematds.github.io/FTD/FTD-v2/en/curso/trilha3/modulo-3-5.html" rel="canonical"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(250,204,21,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha3/modulo-3-5.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="modulo-3-5.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#FACC15">EN</a><a href="../../../es/curso/trilha3/modulo-3-5.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14 gap-2">
+<!-- Logo + INEMA.CLUB -->
+<div class="flex items-center space-x-3 flex-shrink-0">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🚀</span>
+<span class="font-display font-bold text-lg hidden sm:inline">FTD</span>
+</a>
+<span class="text-neutral-600 hidden sm:inline">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium hidden sm:inline" href="https://inema.club" rel="noopener" target="_blank">INEMA.CLUB</a>
+<span class="text-neutral-600 hidden sm:inline">-</span>
+<a class="text-amber-700 dark:text-slate-300 hover:underline text-sm font-medium hidden sm:inline" href="https://inema.pro" rel="noopener" target="_blank">PRO</a>
+</div>
+<!-- Trilhas + controles de aprendizagem + theme toggle -->
+<div class="flex items-center gap-1 sm:gap-1.5">
+<a class="px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors whitespace-nowrap" href="../trilha1/index.html">
+<span class="lg:hidden">T1</span><span class="hidden lg:inline">Beginner</span>
+</a>
+<a class="px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors whitespace-nowrap" href="../trilha2/index.html">
+<span class="lg:hidden">T2</span><span class="hidden lg:inline">Technical</span>
+</a>
+<a class="px-2.5 py-1.5 rounded-lg text-sm font-semibold text-purple-400 bg-purple-500/10 whitespace-nowrap" href="index.html">
+<span class="lg:hidden">T3</span><span class="hidden lg:inline">Masterclass</span>
+</a>
+<span class="w-px h-6 bg-dark-600 mx-1 hidden sm:inline-block"></span>
+<!-- Minha jornada (abre o painel global; badge = % do curso) -->
+<button class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-300 hover:text-neutral-100 hover:bg-dark-700 transition-colors" data-inema-journey-open="" type="button">
+<svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="16"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+<span class="hidden md:inline">My journey</span>
+<span class="inema-journey-badge" data-count="0" data-inema-journey-badge=""></span>
+</button>
+<!-- Aparência (gatilho + painel obrigatório) -->
+<div class="relative">
+<button aria-expanded="false" class="inema-appearance-trigger inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-300 hover:text-neutral-100 transition-colors" data-inema-appearance-toggle="#inema-appearance-panel" type="button">
+<svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="16"><circle cx="12" cy="12" r="9"></circle><path d="M12 3v18"></path><path d="M12 3a9 9 0 0 1 0 18" fill="currentColor"></path></svg>
+<span class="hidden md:inline">Appearance</span>
+</button>
+<div class="inema-appearance-pop right-0" data-inema-appearance="" id="inema-appearance-panel">
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Theme</span>
+<div class="inema-segment">
+<button data-inema-set-theme="inema-dark" type="button">Dark</button>
+<button data-inema-set-theme="claro" type="button">Light</button>
+<button data-inema-set-theme="sepia" type="button">Sepia</button>
+</div>
+<div class="inema-segment">
+<button data-inema-set-theme="foco" type="button">Focus</button>
+<button data-inema-set-theme="contraste" type="button">High contrast</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Font</span>
+<div class="inema-segment">
+<button data-inema-set-font="inter" type="button">Inter</button>
+<button data-inema-set-font="system" type="button">System</button>
+<button data-inema-set-font="leitura" type="button">Reading</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Size</span>
+<div class="inema-segment">
+<button data-inema-set-fontscale="100" type="button">A</button>
+<button data-inema-set-fontscale="112" type="button">A+</button>
+<button data-inema-set-fontscale="125" type="button">A++</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Width</span>
+<div class="inema-segment">
+<button data-inema-set-linewidth="60" type="button">Narrow</button>
+<button data-inema-set-linewidth="68" type="button">Medium</button>
+<button data-inema-set-linewidth="75" type="button">Wide</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Line spacing</span>
+<div class="inema-segment">
+<button data-inema-set-leading="1.45" type="button">Compact</button>
+<button data-inema-set-leading="1.7" type="button">Comfortable</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Accent</span>
+<div class="inema-accent-grid">
+<button aria-label="Emerald accent" data-inema-set-accent="emerald" type="button"></button>
+<button aria-label="Blue accent" data-inema-set-accent="blue" type="button"></button>
+<button aria-label="Purple accent" data-inema-set-accent="purple" type="button"></button>
+<button aria-label="Amber accent" data-inema-set-accent="amber" type="button"></button>
+<button aria-label="Teal accent" data-inema-set-accent="teal" type="button"></button>
+<button aria-label="Pink accent" data-inema-set-accent="rose" type="button"></button>
+</div>
+</div>
+</div>
+</div>
+<!-- Theme toggle sol/lua (núcleo v1; o JS o mantém coerente com o tema) -->
+<button aria-label="Toggle light/dark theme" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20">
+<path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+</svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20">
+<path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path>
+</svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<main data-inema-module="3-5" data-inema-track="3" id="conteudo">
+<!-- BREADCRUMB -->
+<nav aria-label="Navigation track" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-purple-400" href="../../index.html">Home</a><span>/</span>
+<a class="hover:text-purple-400" href="index.html">Track 3</a><span>/</span>
+<span class="text-purple-400">Module 3.5</span>
+</div>
+</nav>
+<!-- HEADER do módulo -->
+<header class="bg-gradient-to-br from-purple-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-purple-500/20 text-purple-400 text-xs font-semibold rounded-full mb-4">MODULE 3.5</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🎮 AI Reinforcement Learning</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">Reinforcement learning is learning by doing and receiving a score. In this module, you’ll understand the agent–environment–reward cycle, see why poorly designed rewards are dangerous, follow the path from RLHF to <strong class="text-purple-400">RL with verifiable rewards</strong> what gave rise to reasoning models, and come away with criteria for deciding whether RL has a place in your company.</p>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">7</div><div class="text-xs text-neutral-400">Topics</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">~55</div><div class="text-xs text-neutral-400">Minutes</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">Advanced</div><div class="text-xs text-neutral-400">Level</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">Concept</div><div class="text-xs text-neutral-400">Type</div></div>
+</div>
+<div class="flex items-center gap-3 mt-8">
+<div aria-label="Module 3.5 progress" class="inema-ring" data-inema-meter="modulo:3-5"><span class="inema-ring__value" data-inema-meter-pct="">0%</span></div>
+<div class="inema-meter-label" data-inema-meter="modulo:3-5"><strong data-inema-meter-frac="">0 of 0</strong> topics read · <span data-inema-section-counter="">Section 1 of 7</span></div>
+</div>
+</div>
+</header>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+<div class="lg:flex lg:gap-10">
+<!-- TOC sticky + scrollspy -->
+<aside class="hidden lg:block lg:w-56 flex-shrink-0">
+<nav aria-label="Page index" class="sticky top-20 self-start" data-inema-toc="">
+<p class="text-xs font-semibold uppercase tracking-wide text-neutral-500 mb-3">In this module</p>
+<ol class="space-y-1 text-sm">
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-purple-400" href="#topico-1">1. The RL cycle</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-purple-400" href="#topico-2">2. Value and policy</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-purple-400" href="#topico-3">3. Reward hacking</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-purple-400" href="#topico-4">4. RLHF</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-purple-400" href="#topico-5">5. Verifiable rewards</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-purple-400" href="#topico-6">6. RL and reasoning</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-purple-400" href="#topico-7">7. RL in the workplace</a></li>
+</ol>
+</nav>
+</aside>
+<!-- ARTIGO -->
+<article class="inema-prose flex-1 min-w-0">
+<h2 class="text-2xl font-bold mb-8">Detailed content</h2>
+<!-- TÓPICO 1 -->
+<section class="mb-16" data-inema-topic="modulo-3-5#topico-1" id="topico-1" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="agente, ambiente e recompensa">🔄 The reinforcement learning cycle</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Mark this topic as a question" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-5-t1-p1">In supervised learning, someone shows the correct answer for each example. In <strong class="text-purple-400">reinforcement learning</strong> (<em>reinforcement learning</em>, RL), no one shows the answer: an <strong class="text-neutral-100">agent</strong> acts in an <strong class="text-neutral-100">environment</strong>, observes what happened, and receives a <strong class="text-neutral-100">reward</strong> —a number that tells it whether that was good or bad. By repeating the cycle many times, it learns which actions lead to more reward over time.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-5-t1-p2">Terms you’ll find in any RL text: <strong class="text-neutral-100">state</strong> is the current situation the agent observes; <strong class="text-neutral-100">action</strong> is what it chooses to do; <strong class="text-neutral-100">policy</strong> is the rule that maps a state to an action (it’s what training adjusts); <strong class="text-neutral-100">episode</strong> is a complete attempt, from start to finish; and <strong class="text-neutral-100">return</strong> is the sum of an episode’s rewards, usually with a <strong class="text-neutral-100">discount factor</strong> that gives less weight to what comes later. The classic reference for all this is the book "Reinforcement Learning: An Introduction," by Richard Sutton and Andrew Barto.</p>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-purple-400 mb-3">What it is</h3>
+<p class="text-neutral-300">RL is learning a policy through trial and error, guided by rewards. The question it answers isn’t "what’s the right answer?" but "what sequence of decisions produces the best cumulative outcome?"</p>
+</div>
+<!-- SVG 1: ciclo agente-ambiente -->
+<figure class="svg-frame rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="Reinforcement learning cycle: guided by its policy, the agent sends an action to the environment; the environment returns the new state and a numeric reward; the agent adjusts its policy, and the cycle repeats at each step of the episode." class="w-full h-auto" role="img" viewbox="0 0 860 300">
+<defs>
+<filter height="160%" id="m35-glow" width="160%" x="-30%" y="-30%"><fegaussianblur result="b" stddeviation="2.2"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="28" id="m35-grid" patternunits="userSpaceOnUse" width="28"><circle cx="1.2" cy="1.2" fill="#a855f7" opacity="0.14" r="1.2"></circle></pattern>
+<marker id="m35-ah" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#c084fc"></path></marker>
+<marker id="m35-ahc" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#38bdf8"></path></marker>
+<style>@keyframes m35dash{to{stroke-dashoffset:-24}} .m35-flow{stroke-dasharray:6 6;animation:m35dash 1.6s linear infinite}</style>
+</defs>
+<rect fill="url(#m35-grid)" height="300" width="860"></rect>
+<g font-family="Inter,sans-serif">
+<rect fill="#1a1028" filter="url(#m35-glow)" height="120" rx="16" stroke="#c084fc" stroke-width="2.5" width="220" x="60" y="90"></rect>
+<text fill="#f3e8ff" font-size="20" font-weight="700" text-anchor="middle" x="170" y="135">Agent</text>
+<text fill="#d8b4fe" font-size="13" text-anchor="middle" x="170" y="160">policy: state → action</text>
+<text fill="#d8b4fe" font-size="12" text-anchor="middle" x="170" y="182">adjusted by the reward</text>
+<rect fill="#0e1b26" filter="url(#m35-glow)" height="120" rx="16" stroke="#38bdf8" stroke-width="2.5" width="220" x="580" y="90"></rect>
+<text fill="#e0f2fe" font-size="20" font-weight="700" text-anchor="middle" x="690" y="135">Environment</text>
+<text fill="#bae6fd" font-size="13" text-anchor="middle" x="690" y="160">game, simulator,</text>
+<text fill="#bae6fd" font-size="12" text-anchor="middle" x="690" y="182">code tests, user</text>
+<path class="m35-flow" d="M170,86 C170,30 690,30 690,84" fill="none" marker-end="url(#m35-ah)" stroke="#c084fc" stroke-width="2.5"></path>
+<text fill="#f3e8ff" font-size="15" font-weight="700" text-anchor="middle" x="430" y="30">action</text>
+<path class="m35-flow" d="M690,214 C690,275 170,275 170,216" fill="none" marker-end="url(#m35-ahc)" stroke="#38bdf8" stroke-width="2.5"></path>
+<text fill="#e0f2fe" font-size="15" font-weight="700" text-anchor="middle" x="430" y="240">new state + reward</text>
+<text fill="#bae6fd" font-size="12" text-anchor="middle" x="430" y="292">the cycle repeats at each step of the episode</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-purple-400">How to read:</strong> follow the purple arrow (the agent acts) and then the blue one (the world responds). The only "right or wrong" signal is the reward number. Everything the agent learns comes from that number—which is why reward design is the most important decision in an RL project.</figcaption>
+</figure>
+<div class="overflow-x-auto mb-6">
+<table class="w-full text-sm border border-dark-600 rounded-xl overflow-hidden">
+<thead><tr class="bg-dark-700"><th class="text-left p-3 text-purple-400">Aspect</th><th class="text-left p-3 text-purple-400">Supervised</th><th class="text-left p-3 text-purple-400">Reinforcement</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr><td class="p-3 font-semibold">Signal</td><td class="p-3 text-neutral-300">Correct answer for each example</td><td class="p-3 text-neutral-300">Score (reward), sometimes only at the end</td></tr>
+<tr><td class="p-3 font-semibold">Data</td><td class="p-3 text-neutral-300">Collected beforehand, fixed</td><td class="p-3 text-neutral-300">Generated by the agent itself as it acts</td></tr>
+<tr><td class="p-3 font-semibold">Question</td><td class="p-3 text-neutral-300">What is the output for this input?</td><td class="p-3 text-neutral-300">Which sequence of actions yields more?</td></tr>
+<tr><td class="p-3 font-semibold">Typical risk</td><td class="p-3 text-neutral-300">Poor labels</td><td class="p-3 text-neutral-300">Reward exploited in an unexpected way</td></tr>
+</tbody>
+</table>
+</div>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Why learn</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-5-t1-p3" data-sum="porque">RL is no longer just about robotics and games: it’s part of training all today’s major assistants. If you understand the agent–environment–reward cycle, you can make sense of model announcements, talk with vendors about fine-tuning, and anticipate odd behaviors caused by poorly chosen rewards.</p>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Key concepts</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Agent</div><div class="text-xs text-neutral-400">who decides</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Reward</div><div class="text-xs text-neutral-400">the score for each step</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Policy</div><div class="text-xs text-neutral-400">state → action</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Return</div><div class="text-xs text-neutral-400">discounted sum of scores</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Mark as read</span>
+<span class="inema-label-done">Read</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 2 -->
+<section class="mb-16" data-inema-topic="modulo-3-5#topico-2" id="topico-2" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="explorar, explotar e as famílias de algoritmos">🧭 Explore, value, and policy</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Mark this topic as a question" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-5-t2-p1">Every agent faces a dilemma: <strong class="text-purple-400">explore</strong> (try something new that might be better) or <strong class="text-purple-400">exploit</strong> (repeat what it already knows works). An agent that only exploits gets stuck on the first reasonable path; one that only explores never makes use of what it has learned. The simplest strategy, called ε-greedy, explores with a probability ε that decreases during training.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-5-t2-p2">Algorithms fall into two broad families. <strong class="text-neutral-100">Value-based methods</strong> estimate the value of each action in each state (the Q function) and choose the one with the highest value—Q-learning is the classic example, and DQN, from DeepMind (published in Nature in 2015), brought the idea to Atari games using neural networks. <strong class="text-neutral-100">Policy-based methods</strong> directly adjust the probability of each action in the direction that increased the reward (<em>policy gradient</em>). The <strong class="text-neutral-100">actor-critic</strong> methods combine the two: an "actor" chooses, and a "critic" evaluates. PPO (Schulman and colleagues, 2017) is a stable actor-critic method that became standard and, years later, was used in RLHF for language models.</p>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-purple-400 mb-3">What it is</h3>
+<p class="text-neutral-300">This is RL’s technical core: balancing exploration and exploitation, and choosing whether to learn the value of actions, learn the policy directly, or combine both approaches.</p>
+</div>
+<div class="overflow-x-auto mb-6">
+<table class="w-full text-sm border border-dark-600 rounded-xl overflow-hidden">
+<thead><tr class="bg-dark-700"><th class="text-left p-3 text-purple-400">Category</th><th class="text-left p-3 text-purple-400">Idea</th><th class="text-left p-3 text-purple-400">Examples</th><th class="text-left p-3 text-purple-400">Good for</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr><td class="p-3 font-semibold">Value</td><td class="p-3 text-neutral-300">Learns Q(state, action)</td><td class="p-3 text-neutral-300">Q-learning, DQN</td><td class="p-3 text-neutral-300">Few discrete actions</td></tr>
+<tr><td class="p-3 font-semibold">Policy</td><td class="p-3 text-neutral-300">Adjusts the probability of actions</td><td class="p-3 text-neutral-300">REINFORCE</td><td class="p-3 text-neutral-300">Continuous actions or many options</td></tr>
+<tr><td class="p-3 font-semibold">Actor-critic</td><td class="p-3 text-neutral-300">Policy + value estimate</td><td class="p-3 text-neutral-300">PPO, SAC</td><td class="p-3 text-neutral-300">Stable training at scale</td></tr>
+<tr><td class="p-3 font-semibold">With a world model</td><td class="p-3 text-neutral-300">Plans by simulating the future</td><td class="p-3 text-neutral-300">AlphaGo (search + networks)</td><td class="p-3 text-neutral-300">Known rules, such as in games</td></tr>
+</tbody>
+</table>
+</div>
+<!-- COPY: Q-learning -->
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-purple-400">Try this:</strong> <span class="text-neutral-300">watch an agent learn from scratch with Q-learning on your computer (Python 3, runs in seconds, no GPU required).</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copy</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900"># pip install gymnasium numpy
+import gymnasium as gym
+import numpy as np
+
+env = gym.make("FrozenLake-v1", is_slippery=False)   # 4x4 grid: reach the gift without falling through the ice
+Q = np.zeros((env.observation_space.n, env.action_space.n))   # state x action table
+
+alpha, gamma = 0.1, 0.99                     # learning rate and discount factor
+epsilon, eps_min, eps_decay = 1.0, 0.05, 0.995
+rng = np.random.default_rng(42)
+env.action_space.seed(42)
+
+for episode in range(2000):
+    state, _ = env.reset(seed=episode)
+    done = False
+    while not done:
+        if rng.random() &lt; epsilon:
+            action = int(env.action_space.sample())    # explore
+        else:
+            action = int(np.argmax(Q[state]))         # exploit
+        new_state, reward, term, trunc, _ = env.step(action)
+        target = reward + gamma * np.max(Q[new_state]) * (not term)
+        Q[state, action] += alpha * (target - Q[state, action])   # Bellman update
+        state, done = new_state, term or trunc
+    epsilon = max(eps_min, epsilon * eps_decay)
+
+successes = 0
+for i in range(100):                        # evaluation: exploit only
+    state, _ = env.reset(seed=10_000 + i)
+    done, r = False, 0.0
+    while not done:
+        state, r, term, trunc, _ = env.step(int(np.argmax(Q[state])))
+        done = term or trunc
+    successes += int(r)
+print(f"success rate: {successes}/100")
+print("learned policy (0=left 1=down 2=right 3=up):")
+print(np.argmax(Q, axis=1).reshape(4, 4))</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">How to check:</strong> the expected output is <code>success rate: 100/100</code> and a 4x4 grid with the direction chosen in each square. Now change <code>range(2000)</code> to <code>range(50)</code>: the rate drops because the agent did not explore enough. Then change to <code>is_slippery=True</code> (the ice makes the agent slip): the rate drops sharply and the policy changes — that is the effect of a stochastic environment.</p>
+</div>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Why learn</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-5-t2-p3" data-sum="porque">The same concepts — value, policy, exploration, discounting — appear in language model training, recommendation systems, and agents. Watching an agent learn on a 4x4 grid gives you an intuition no diagram can: learning depends on how much it explores and when the reward arrives.</p>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Key concepts</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Explore × exploit</div><div class="text-xs text-neutral-400">new or familiar</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Q-function</div><div class="text-xs text-neutral-400">value of each action</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Policy gradient</div><div class="text-xs text-neutral-400">directly adjusts the policy</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">PPO</div><div class="text-xs text-neutral-400">stable actor-critic</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Mark as read</span>
+<span class="inema-label-done">Read</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 3 -->
+<section class="mb-16" data-inema-topic="modulo-3-5#topico-3" id="topico-3" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="o agente otimiza o que você mede, não o que você quer">🏆 Reward and reward hacking</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Mark this topic as a question" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-5-t3-p1">An RL agent is a relentless optimizer: it maximizes exactly the number you give it, not what you had in mind. When it finds a shortcut that increases the reward without fulfilling the goal, this is called <strong class="text-purple-400">reward hacking</strong> or <em>specification gaming</em> (exploiting flaws in the specification). A well-known example was published by OpenAI in 2016: in a boat racing game, the agent discovered that going in circles and collecting bonuses earned more points than finishing the race.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-5-t3-p2">In language models, the same phenomenon appears in subtler ways: longer answers because the evaluator preferred long texts; agreeing with the user (<strong class="text-neutral-100">flattery</strong>, or <em>sycophancy</em>) because people rate those who agree with them more highly; in coding tasks, changing or bypassing the tests instead of fixing the program. None of this is "malice" on the model's part: it is optimization finding the loophole left by the design.</p>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-purple-400 mb-3">What it is</h3>
+<p class="text-neutral-300">Reward hacking is when the reward goes up and the real goal does not improve — or gets worse. This happens because the reward is always an approximation (proxy) of what you want.</p>
+</div>
+<!-- SVG 2: proxy vs objetivo -->
+<figure class="svg-frame rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="Illustrative graph with two curves over the course of training: the measured reward (proxy) keeps rising, while actual quality rises at first and then falls. The point where the curves diverge is marked as the start of reward hacking." class="w-full h-auto" role="img" viewbox="0 0 860 310">
+<rect fill="url(#m35-grid)" height="310" width="860"></rect>
+<g font-family="Inter,sans-serif">
+<line stroke="#6b5a80" stroke-width="1.5" x1="70" x2="70" y1="40" y2="260"></line>
+<line stroke="#6b5a80" stroke-width="1.5" x1="70" x2="640" y1="260" y2="260"></line>
+<text fill="#d8b4fe" font-size="12" text-anchor="middle" x="355" y="284">training steps</text>
+<path d="M80,240 C200,200 300,140 400,105 C480,80 560,62 630,50" fill="none" filter="url(#m35-glow)" stroke="#c084fc" stroke-width="3"></path>
+<path d="M80,245 C180,210 270,150 340,135 C400,125 470,160 630,215" fill="none" stroke="#38bdf8" stroke-width="3"></path>
+<line stroke="#f472b6" stroke-dasharray="5 5" stroke-width="1.5" x1="345" x2="345" y1="70" y2="258"></line>
+<text fill="#fbcfe8" font-size="12" font-weight="700" x="352" y="250">curves diverge</text>
+<rect fill="#1a1028" height="190" rx="12" stroke="#c084fc" stroke-width="1.5" width="190" x="660" y="50"></rect>
+<line stroke="#c084fc" stroke-width="3" x1="676" x2="704" y1="80" y2="80"></line>
+<text fill="#f3e8ff" font-size="13" font-weight="700" x="712" y="85">reward</text>
+<text fill="#e9d5ff" font-size="12" x="712" y="103">(what you measure)</text>
+<line stroke="#38bdf8" stroke-width="3" x1="676" x2="704" y1="132" y2="132"></line>
+<text fill="#e0f2fe" font-size="13" font-weight="700" x="712" y="137">actual quality</text>
+<text fill="#bae6fd" font-size="12" x="712" y="155">(what you want)</text>
+<text fill="#fbcfe8" font-size="12" x="676" y="192">evaluate both,</text>
+<text fill="#fbcfe8" font-size="12" x="676" y="210">not just the first</text>
+<text fill="#d8b4fe" font-size="11" text-anchor="end" x="850" y="300">(illustrative)</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-purple-400">How to read:</strong> at first, reward and quality rise together — the agent is genuinely learning. Starting at the pink line, it discovers shortcuts: the reward keeps rising while quality falls. You can see this point only if you measure actual quality independently of the reward.</figcaption>
+</figure>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6">
+<h4 class="font-bold text-purple-400 mb-4">✓ Well-designed reward</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-purple-400">✓</span><span>Verified by something that is hard to game (hidden tests, real-world results).</span></li>
+<li class="flex items-start gap-2"><span class="text-purple-400">✓</span><span>Tracked with independent metrics that the agent cannot see.</span></li>
+<li class="flex items-start gap-2"><span class="text-purple-400">✓</span><span>Includes a penalty for straying too far from the original behavior.</span></li>
+<li class="flex items-start gap-2"><span class="text-purple-400">✓</span><span>Frequently inspected through samples reviewed by people.</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Fragile reward</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Counting keywords, length, or format.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Tests visible to and editable by the agent itself.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>A single automated judge with no auditing.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Engagement metric as the end goal.</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-primary/10 border border-primary/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-primary font-semibold mb-1">💡 Tip</p>
+<p class="text-sm text-neutral-300" data-inema-block="m3-5-t3-p3">Reward hacking is not exclusive to RL. Any team goal measured by a number (tickets closed, support time) has the same problem. The question that protects you: "What is the cheapest way to hit this target without doing the work?" — if the answer is easy, the goal needs a second metric.</p>
+</div>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Why learn</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-5-t3-p4" data-sum="porque">Strange assistant behaviors — flattery, verbosity, "fixed" tests — make sense when you read them as reward hacking. If you are going to fine-tune models or evaluate agents, designing the reward and the independent metric is the part of the project that requires the most human judgment.</p>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Key concepts</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Proxy</div><div class="text-xs text-neutral-400">approximate measure</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Reward hacking</div><div class="text-xs text-neutral-400">shortcut that games the score</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Flattery</div><div class="text-xs text-neutral-400">agreeing to please</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Independent metric</div><div class="text-xs text-neutral-400">what the agent cannot see</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Mark as read</span>
+<span class="inema-label-done">Read</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 4 -->
+<section class="mb-16" data-inema-topic="modulo-3-5#topico-4" id="topico-4" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="preferências humanas viram recompensa">👥 RLHF: learning from preferences</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Mark this topic as a question" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-5-t4-p1">“Be useful, honest, and polite” doesn’t fit into a formula. The solution of <strong class="text-purple-400">RLHF</strong> (<em>reinforcement learning from human feedback</em>, RL from human feedback) was to turn human judgment into a reward. The method became known through the paper “Training language models to follow instructions with human feedback” (Ouyang et al., 2022), which introduced InstructGPT. It became the basis for training the assistants that came later.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-5-t4-p2">There are three stages. First, <strong class="text-neutral-100">supervised fine-tuning</strong> (SFT) with examples of good responses. Then, people compare pairs of responses and choose the better one; those comparisons are used to train a <strong class="text-neutral-100">reward model</strong>, which learns to predict human preferences. Finally, the model is optimized with RL (originally PPO) to maximize that score, with a <strong class="text-neutral-100">KL penalty</strong> —a measure of how far it has moved from the original model—that prevents it from “drifting” toward strange responses approved only by the reward model.</p>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-purple-400 mb-3">What it is</h3>
+<p class="text-neutral-300">RLHF fine-tunes a language model with RL, using a model trained on human comparisons of responses as the reward, with a constraint that keeps it close to its original behavior.</p>
+</div>
+<!-- SVG 3: pipeline RLHF -->
+<figure class="svg-frame rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="RLHF pipeline in three stages: 1 supervised fine-tuning with examples of good responses; 2 people compare pairs of responses and train a reward model; 3 the model is optimized with RL to maximize the reward, with a KL penalty that keeps it close to the original. Below are the RLAIF and DPO variants." class="w-full h-auto" role="img" viewbox="0 0 880 300">
+<rect fill="url(#m35-grid)" height="300" width="880"></rect>
+<g font-family="Inter,sans-serif">
+<rect fill="#1a1028" height="96" rx="14" stroke="#c084fc" stroke-width="2" width="240" x="20" y="40"></rect>
+<text fill="#f3e8ff" font-size="15" font-weight="700" x="36" y="68">1 · Supervised fine-tuning</text>
+<text fill="#e9d5ff" font-size="12" x="36" y="92">examples of good responses</text>
+<text fill="#e9d5ff" font-size="12" x="36" y="112">teach the assistant format</text>
+<rect fill="#1a1028" height="96" rx="14" stroke="#c084fc" stroke-width="2" width="260" x="310" y="40"></rect>
+<text fill="#f3e8ff" font-size="15" font-weight="700" x="326" y="68">2 · Reward model</text>
+<text fill="#e9d5ff" font-size="12" x="326" y="92">people choose A or B</text>
+<text fill="#e9d5ff" font-size="12" x="326" y="112">the model learns to predict the choice</text>
+<rect fill="#0e1b26" filter="url(#m35-glow)" height="96" rx="14" stroke="#38bdf8" stroke-width="2.5" width="250" x="620" y="40"></rect>
+<text fill="#e0f2fe" font-size="15" font-weight="700" x="636" y="68">3 · RL optimization</text>
+<text fill="#bae6fd" font-size="12" x="636" y="92">maximizes the model’s score</text>
+<text fill="#bae6fd" font-size="12" x="636" y="112">from the reward model − KL penalty</text>
+<path class="m35-flow" d="M262,88 L304,88" fill="none" marker-end="url(#m35-ah)" stroke="#c084fc" stroke-width="2.5"></path>
+<path class="m35-flow" d="M572,88 L614,88" fill="none" marker-end="url(#m35-ah)" stroke="#c084fc" stroke-width="2.5"></path>
+<rect fill="#1a1028" height="64" rx="12" stroke="#a855f7" stroke-dasharray="5 5" stroke-width="1.5" width="400" x="20" y="190"></rect>
+<text fill="#f3e8ff" font-size="13" font-weight="700" x="36" y="215">RLAIF / Constitutional AI</text>
+<text fill="#e9d5ff" font-size="12" x="36" y="237">another model compares, guided by written principles</text>
+<rect fill="#0e1b26" height="64" rx="12" stroke="#38bdf8" stroke-dasharray="5 5" stroke-width="1.5" width="430" x="440" y="190"></rect>
+<text fill="#e0f2fe" font-size="13" font-weight="700" x="456" y="215">DPO</text>
+<text fill="#bae6fd" font-size="12" x="456" y="237">optimizes directly on the comparisons, without a reward model</text>
+<text fill="#d8b4fe" font-size="12" text-anchor="middle" x="440" y="282">variants that swap out parts of the pipeline</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-purple-400">How to read:</strong> The top row shows classic RLHF, from left to right. The dashed boxes below show variants: RLAIF replaces the person comparing responses with a model guided by principles; DPO removes the reward model and the separate RL stage. They all have the same goal: to make the model prefer the responses people prefer.</figcaption>
+</figure>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-4"><p class="text-purple-400 font-semibold text-sm mb-1">Constitutional AI</p><p class="text-xs text-neutral-300" data-inema-block="m3-5-t4-p3">Proposed by Anthropic in 2022 (Bai et al.): a set of written principles guides a model in critiquing and comparing responses, reducing reliance on human labels for safety.</p></div>
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-4"><p class="text-purple-400 font-semibold text-sm mb-1">DPO</p><p class="text-xs text-neutral-300" data-inema-block="m3-5-t4-p4">“Direct Preference Optimization” (Rafailov et al., 2023) showed that you can optimize preferences with a simple classification loss, without explicit RL. It became popular because it is easy to use.</p></div>
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-4"><p class="text-purple-400 font-semibold text-sm mb-1">Common limitation</p><p class="text-xs text-neutral-300" data-inema-block="m3-5-t4-p5">Preference isn’t truth. People prefer confident, long responses that agree with them—and the model learns that, too. That leads to the sycophancy covered in the previous topic.</p></div>
+</div>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Why learn</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-5-t4-p6" data-sum="porque">RLHF explains assistants’ “personalities”: their tone, refusals, and tendency to agree. If you plan to fine-tune an open model with your own data, understanding the three stages and the variants can help you choose the least expensive option that works—often DPO with a few hundred or thousand carefully selected pairs, instead of a full RL pipeline.</p>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Key concepts</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Reward model</div><div class="text-xs text-neutral-400">predicts human preferences</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">KL penalty</div><div class="text-xs text-neutral-400">stay close to the original</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">RLAIF</div><div class="text-xs text-neutral-400">feedback from another model</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">DPO</div><div class="text-xs text-neutral-400">preferences without explicit RL</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Mark as read</span>
+<span class="inema-label-done">Read</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 5 -->
+<section class="mb-16" data-inema-topic="modulo-3-5#topico-5" id="topico-5" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="quando um programa confere a resposta">✅ RL with verifiable rewards</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Mark this topic as a question" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-5-t5-p1">Human preference is expensive and subjective. But for many tasks, there’s a better judge: an <strong class="text-purple-400">automated</strong> verifier. A math problem has a final answer you can check; a program either passes the tests or it doesn’t; an SQL query either returns the expected result or it doesn’t.  <strong class="text-purple-400">RL with verifiable rewards</strong> (in English, <em>RL with verifiable rewards</em>, RLVR) uses that result as the reward—with no learned reward model in between.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-5-t5-p2">The method popularized in this wave is <strong class="text-neutral-100">GRPO</strong> (<em>Group Relative Policy Optimization</em>), introduced in the DeepSeekMath paper (2024): for each problem, the model generates a group of responses, the verifier scores each one, and training reinforces the responses that score above the group average. This removes PPO’s “critic” and makes the process less expensive. The verifier is the critical piece: if it has loopholes, the model will find them—that’s the reward hacking from Topic 3, in an automated form.</p>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-purple-400 mb-3">What it is</h3>
+<p class="text-neutral-300">RLVR trains a model through reinforcement learning using a program-checked result as the reward—such as a correct answer, passing tests, or a valid format. It generates several attempts per problem and reinforces the ones that perform best.</p>
+</div>
+<!-- SVG 4: loop com verificador -->
+<figure class="svg-frame rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="RL loop with verifiable rewards: a problem is fed into the model, which generates a group of four attempts; an automatic verifier scores each one as 1 or 0; attempts above the group average are reinforced, and the model is updated." class="w-full h-auto" role="img" viewbox="0 0 880 300">
+<defs>
+<style>@keyframes m35pulse{0%,100%{opacity:.6}50%{opacity:1}} .m35-ok{animation:m35pulse 2s ease-in-out infinite}</style>
+</defs>
+<rect fill="url(#m35-grid)" height="300" width="880"></rect>
+<g font-family="Inter,sans-serif">
+<rect fill="#1a1028" height="64" rx="12" stroke="#c084fc" stroke-width="2" width="150" x="20" y="108"></rect>
+<text fill="#f3e8ff" font-size="14" font-weight="700" text-anchor="middle" x="95" y="135">Problem</text>
+<text fill="#e9d5ff" font-size="12" text-anchor="middle" x="95" y="155">with answer key</text>
+<rect fill="#1a1028" filter="url(#m35-glow)" height="84" rx="14" stroke="#c084fc" stroke-width="2.5" width="140" x="210" y="98"></rect>
+<text fill="#f3e8ff" font-size="16" font-weight="700" text-anchor="middle" x="280" y="135">Model</text>
+<text fill="#e9d5ff" font-size="12" text-anchor="middle" x="280" y="156">policy</text>
+<path class="m35-flow" d="M172,140 L204,140" fill="none" marker-end="url(#m35-ah)" stroke="#c084fc" stroke-width="2.5"></path>
+<rect fill="#120c1c" height="36" rx="8" stroke="#a855f7" stroke-width="1.5" width="150" x="400" y="46"></rect><text fill="#f3e8ff" font-size="12" x="414" y="69">attempt A</text>
+<rect fill="#120c1c" height="36" rx="8" stroke="#a855f7" stroke-width="1.5" width="150" x="400" y="98"></rect><text fill="#f3e8ff" font-size="12" x="414" y="121">attempt B</text>
+<rect fill="#120c1c" height="36" rx="8" stroke="#a855f7" stroke-width="1.5" width="150" x="400" y="150"></rect><text fill="#f3e8ff" font-size="12" x="414" y="173">attempt C</text>
+<rect fill="#120c1c" height="36" rx="8" stroke="#a855f7" stroke-width="1.5" width="150" x="400" y="202"></rect><text fill="#f3e8ff" font-size="12" x="414" y="225">attempt D</text>
+<path d="M352,140 L396,64 M352,140 L396,116 M352,140 L396,168 M352,140 L396,220" fill="none" stroke="#c084fc" stroke-opacity="0.6" stroke-width="1.5"></path>
+<rect fill="#0e1b26" height="192" rx="14" stroke="#38bdf8" stroke-width="2.5" width="130" x="590" y="46"></rect>
+<text fill="#e0f2fe" font-size="14" font-weight="700" text-anchor="middle" x="655" y="34">Verifier</text>
+<text class="m35-ok" fill="#7dd3fc" font-size="15" font-weight="700" text-anchor="middle" x="655" y="69">score 1</text>
+<text fill="#94a3b8" font-size="15" font-weight="700" text-anchor="middle" x="655" y="121">score 0</text>
+<text class="m35-ok" fill="#7dd3fc" font-size="15" font-weight="700" text-anchor="middle" x="655" y="173">score 1</text>
+<text fill="#94a3b8" font-size="15" font-weight="700" text-anchor="middle" x="655" y="225">score 0</text>
+<path d="M552,64 L586,64 M552,116 L586,116 M552,168 L586,168 M552,220 L586,220" fill="none" stroke="#38bdf8" stroke-opacity="0.6" stroke-width="1.5"></path>
+<rect fill="#1a1028" height="110" rx="12" stroke="#c084fc" stroke-width="1.5" width="130" x="740" y="86"></rect>
+<text fill="#f3e8ff" font-size="13" font-weight="700" x="752" y="112">above average</text>
+<text fill="#e9d5ff" font-size="12" x="752" y="134">A and C are</text>
+<text fill="#e9d5ff" font-size="12" x="752" y="152">reinforced;</text>
+<text fill="#e9d5ff" font-size="12" x="752" y="170">B and D are not</text>
+<path class="m35-flow" d="M805,200 C805,275 280,275 280,186" fill="none" marker-end="url(#m35-ah)" stroke="#c084fc" stroke-width="2"></path>
+<text fill="#d8b4fe" font-size="12" text-anchor="middle" x="540" y="293">updates the policy and moves on to the next problem</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-purple-400">How to read:</strong> The model tries the same problem several times; the verifier on the right doesn’t give an opinion—it only checks. Comparing the responses within the group shows which attempts were better than average, and only those are reinforced. If the verifier is easy to fool, the “clever” attempts are the ones that get a score of 1.</figcaption>
+</figure>
+<!-- COPY: verificador -->
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-purple-400">Try this:</strong> <span class="text-neutral-300">two real, verifiable rewards and one case of reward hacking caught by hidden tests (Python 3, no dependencies).</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copy</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900"># recompensa_verificavel.py — rewards a program can verify (Python 3, no dependencies)
+import re, subprocess, sys, tempfile
+from fractions import Fraction
+
+def para_numero(texto):
+    return Fraction(texto.replace(",", ".").strip().rstrip("."))
+
+def recompensa_matematica(saida, gabarito):
+    """1.0 if the last 'Resposta: X' matches the answer key; 0.0 if it is wrong or doesn't follow the format."""
+    achados = re.findall(r"Resposta:\s*(-?[\d.,/]+)", saida)
+    if not achados:
+        return 0.0
+    try:
+        return 1.0 if para_numero(achados[-1]) == para_numero(gabarito) else 0.0
+    except (ValueError, ZeroDivisionError):
+        return 0.0
+
+def recompensa_codigo(codigo, testes, timeout=5):
+    """Fraction of tests (asserts) that pass. In production, run in an isolated sandbox."""
+    script = codigo + "\n\nok = 0\n"
+    for t in testes:
+        script += f"try:\n    {t}\n    ok += 1\nexcept Exception:\n    pass\n"
+    script += "print(ok)\n"
+    with tempfile.NamedTemporaryFile("w", suffix=".py", delete=False) as f:
+        f.write(script)
+    try:
+        r = subprocess.run([sys.executable, f.name], capture_output=True, text=True, timeout=timeout)
+        return int(r.stdout.strip().splitlines()[-1]) / len(testes)
+    except (subprocess.TimeoutExpired, ValueError, IndexError):
+        return 0.0
+
+if __name__ == "__main__":
+    print("math correct:", recompensa_matematica("I added the parts. Resposta: 3/4", "0.75"))
+    print("math format :", recompensa_matematica("I think it's 0,75", "0.75"))
+    testes = ["assert soma([1, 2, 3]) == 6", "assert soma([]) == 0"]
+    honesto = "def soma(xs):\n    return sum(xs)"
+    trapaca = "def soma(xs):\n    return {3: 6, 0: 0}[len(xs)]"   # memorized the tests
+    print("honest      :", recompensa_codigo(honesto, testes))
+    print("cheating    :", recompensa_codigo(trapaca, testes))
+    ocultos = testes + ["assert soma([5, 5]) == 10", "assert soma([-1, 1]) == 0"]
+    print("cheating w/ hidden tests:", round(recompensa_codigo(trapaca, ocultos), 2))</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">How to check:</strong> run <code>python3 recompensa_verificavel.py</code>. The expected output is <code>1.0</code>, <code>0.0</code>, <code>1.0</code>, <code>1.0</code> e <code>0.5</code>. Look at the fourth line: the "cheating" code memorized the visible tests and got a perfect score. Only the hidden tests (last line) reveal the problem—that's why RL verifiers keep tests the model never sees.</p>
+</div>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Why learn</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-5-t5-p3" data-sum="porque">Verifiable rewards are why models have improved so much at math and programming, areas where there is an answer key. For a company, the practical lesson is: if your task has a reliable verifier (tests, checkable business rules, a verifiable result), it's a candidate for automated evaluation—and, ultimately, reinforcement fine-tuning.</p>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Key concepts</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Verifier</div><div class="text-xs text-neutral-400">checks, doesn't opine</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">RLVR</div><div class="text-xs text-neutral-400">programmatic reward</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">GRPO</div><div class="text-xs text-neutral-400">compares within the group</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Hidden tests</div><div class="text-xs text-neutral-400">against cheating</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Mark as read</span>
+<span class="inema-label-done">Read</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 6 -->
+<section class="mb-16" data-inema-topic="modulo-3-5#topico-6" id="topico-6" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="de jogos de tabuleiro aos modelos que pensam antes">🧠 Why RL made models reason</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Mark this topic as a question" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-5-t6-p1">In September 2024, OpenAI released o1, presented as a model trained with RL to “think before answering”: it produces a long internal chain of reasoning before the final answer. In January 2025, the paper on <strong class="text-purple-400">DeepSeek-R1</strong> openly described a similar recipe and released the model weights. The most discussed point: in a version trained only with RL and verifiable rewards (R1-Zero), the model began writing longer reasoning and reviewing its own steps without anyone having shown it examples of this behavior.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-5-t6-p2">The intuitive explanation: when the reward depends only on getting the final answer right, any behavior that increases the chance of success—breaking down the problem, testing a hypothesis, backtracking—is reinforced. This opened a new avenue for improvement, <strong class="text-neutral-100">inference-time compute</strong> (<em>test-time compute</em>): spending more compute thinking while answering, instead of just training larger models. The debate remains open: 2025 papers discuss whether RL creates new capabilities or mainly makes the base model's existing capabilities more reliable. For business decisions, the practical consequence is the same—reasoning models cost more per response and are worth it for multistep tasks.</p>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-purple-400 mb-3">What it is</h3>
+<p class="text-neutral-300">This is the shift of 2024–2025: applying RL with verifiable rewards to language models produced long, useful reasoning chains and turned “thinking time” into a quality and cost control.</p>
+</div>
+<!-- TIMELINE -->
+<div class="relative border-l-2 border-purple-500/30 ml-3 pl-6 space-y-6 mb-6">
+<div class="relative"><span class="absolute -left-[33px] top-1 w-4 h-4 rounded-full bg-purple-500/20 border-2 border-purple-400"></span><p class="text-sm"><strong class="text-purple-400">2015 · DQN in Nature</strong> <span class="text-neutral-300">— a neural network learns to play dozens of Atari games from pixels and scores.</span></p></div>
+<div class="relative"><span class="absolute -left-[33px] top-1 w-4 h-4 rounded-full bg-purple-500/20 border-2 border-purple-400"></span><p class="text-sm"><strong class="text-purple-400">2016 · AlphaGo</strong> <span class="text-neutral-300">— beats Lee Sedol at Go by combining networks, search, and RL; in 2017, AlphaGo Zero learns solely by playing against itself.</span></p></div>
+<div class="relative"><span class="absolute -left-[33px] top-1 w-4 h-4 rounded-full bg-purple-500/20 border-2 border-purple-400"></span><p class="text-sm"><strong class="text-purple-400">2017 · PPO</strong> <span class="text-neutral-300">— a stable algorithm that becomes the standard and is later used in RLHF.</span></p></div>
+<div class="relative"><span class="absolute -left-[33px] top-1 w-4 h-4 rounded-full bg-purple-500/20 border-2 border-purple-400"></span><p class="text-sm"><strong class="text-purple-400">2022 · InstructGPT and ChatGPT</strong> <span class="text-neutral-300">— RLHF turns language models into assistants.</span></p></div>
+<div class="relative"><span class="absolute -left-[33px] top-1 w-4 h-4 rounded-full bg-sky-500/20 border-2 border-sky-400"></span><p class="text-sm"><strong class="text-sky-400">2024 · o1</strong> <span class="text-neutral-300">— a reasoning model trained with RL; thinking time becomes a quality parameter.</span></p></div>
+<div class="relative"><span class="absolute -left-[33px] top-1 w-4 h-4 rounded-full bg-sky-500/20 border-2 border-sky-400"></span><p class="text-sm"><strong class="text-sky-400">2025 · DeepSeek-R1</strong> <span class="text-neutral-300">— an open recipe using RL and verifiable rewards; reasoning models spread across labs.</span></p></div>
+<div class="relative"><span class="absolute -left-[33px] top-1 w-4 h-4 rounded-full bg-sky-500/20 border-2 border-sky-400"></span><p class="text-sm"><strong class="text-sky-400">2025–2026 · RL in agents</strong> <span class="text-neutral-300">— the environment becomes a code repository, a browser, or an entire computer; the reward comes from completed tasks and tests.</span></p></div>
+</div>
+<div class="bg-dark-800 border border-purple-500/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-purple-400 font-semibold mb-1">🔎 Terms</p>
+<p class="text-sm text-neutral-300" data-inema-block="m3-5-t6-p3"><strong>Reasoning model</strong> is a model trained to generate intermediate steps before the final answer. <strong>Reasoning budget</strong> is the limit on tokens or effort you allow for these steps — several providers expose this kind of control in their API. <strong>Base model</strong> is the model after pretraining, before any fine-tuning or RL.</p>
+</div>
+<div class="bg-primary/10 border border-primary/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-primary font-semibold mb-1">💡 Tip</p>
+<p class="text-sm text-neutral-300" data-inema-block="m3-5-t6-p4">Treat reasoning effort like a cost dial. Measure quality on your evaluation set at low, medium, and high effort; many simple tasks (classifying, extracting, summarizing) don’t improve with more reasoning, and cost more as a result.</p>
+</div>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Why learn</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-5-t6-p5" data-sum="porque">Choosing between a fast model and a reasoning model is now one of the architecture decisions with the greatest impact on cost and quality. Understanding where reasoning comes from — RL with a verifier — helps you predict where it helps (tasks with multiple steps and an answer key) and where it’s wasteful.</p>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Key concepts</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Reasoning model</div><div class="text-xs text-neutral-400">thinks before responding</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Test-time compute</div><div class="text-xs text-neutral-400">spend more on the response</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Emergent behavior</div><div class="text-xs text-neutral-400">wasn’t taught by example</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Budget</div><div class="text-xs text-neutral-400">quality × cost</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Mark as read</span>
+<span class="inema-label-done">Read</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TÓPICO 7 -->
+<section class="mb-16" data-inema-topic="modulo-3-5#topico-7" id="topico-7" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">7</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="quando vale a pena e quando não">🏢 RL at your company</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Mark this topic as a question" type="button"><span aria-hidden="true">?</span><span>I have a question</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-5-t7-p1">Most companies will <strong class="text-neutral-100">use</strong> RL — by using models that have already gone through it — rather than training with RL. Still, there are three situations where in-house RL comes into the picture: sequential decisions with a simulator (inventory, dynamic pricing, routing, industrial control); fine-tuning a language model for a task with a clear verifier; and training agents in a custom environment, with tasks that end in checkable success or failure.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-5-t7-p2">The tools are mature: <strong class="text-neutral-100">Gymnasium</strong> for defining environments, <strong class="text-neutral-100">Stable-Baselines3</strong> for classic algorithms such as PPO and DQN, and the Hugging Face library <strong class="text-neutral-100">TRL</strong> for fine-tuning language models with SFT, DPO, and GRPO. Some providers of closed models also offer reinforcement fine-tuning as a service; availability, supported models, and prices change, so check before planning. The cost that’s almost always underestimated isn’t the GPU: it’s building the environment, the verifier, and the independent evaluation.</p>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-purple-400 mb-3">What it is</h3>
+<p class="text-neutral-300">One decision rule: use RL only when there are sequential decisions or a reliable verifier, when simpler alternatives (prompting, RAG, SFT, DPO) have already been measured and aren’t enough, and when there’s a budget for the environment and evaluation.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6">
+<h4 class="font-bold text-purple-400 mb-4">✓ Signs RL makes sense</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-purple-400">✓</span><span>There’s a simulator or safe environment where the system can fail thousands of times.</span></li>
+<li class="flex items-start gap-2"><span class="text-purple-400">✓</span><span>Success can be checked by a program, without relying on opinion.</span></li>
+<li class="flex items-start gap-2"><span class="text-purple-400">✓</span><span>Prompting, RAG, and supervised fine-tuning have already been measured and have plateaued.</span></li>
+<li class="flex items-start gap-2"><span class="text-purple-400">✓</span><span>There’s a team to maintain the environment and audit behavior.</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Signs it’s not the right time</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>The only way to test is with real customers.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>“A good response” depends on taste and changes every week.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>There’s no in-house evaluation set yet.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>The motivation is “a competitor announced they use RL.”</span></li>
+</ul>
+</div>
+</div>
+<!-- COPY: análise de caso -->
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-purple-400">Goal:</strong> <span class="text-neutral-300">evaluate with an assistant whether a use case justifies RL before spending on it.</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copy</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900">You are a skeptical ML architect who prefers the simplest solution that works.
+Use case: &lt;describe the task, who uses it, and what decision the system makes&gt;
+Available data: &lt;what exists today: histories, logs, labeled examples&gt;
+What’s already been tried and the measured result: &lt;prompting, RAG, fine-tuning... or “nothing”&gt;
+
+Respond in sections:
+1. Formulate it as RL: what would the agent, environment, state, actions, and reward be?
+   If any piece isn’t clearly defined, say so first.
+2. Verifier: can the reward be checked by a program? How could someone game it?
+3. Simpler alternatives, ordered by cost (prompting, RAG, SFT, DPO, RL),
+   with what each would need to solve the case.
+4. Environment: can it be simulated safely? What would it cost to build and maintain?
+5. Independent evaluation: what metric does the agent NOT see that would reveal reward hacking?
+6. Risks: safety, LGPD (Brazil’s data protection law, if there’s personal data), and the impact of an error in production.
+Verdict: DO NOT USE RL / TEST AN ALTERNATIVE FIRST / RL PILOT, with 3 next steps.
+Don’t invent cost or gain figures; mark them as “to be measured.”</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">How to check:</strong> A good analysis identifies at least one concrete way to game the reward (item 2) and one independent metric (item 5). If the verdict is “RL pilot” without items 1 and 2 being clear, the analysis is too optimistic — ask for a reassessment starting with the cheapest alternative.</p>
+</div>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Why learn</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-5-t7-p3" data-sum="porque">RL is at the center of AI news, creating pressure to “use RL.” A leader who knows the conditions under which it works protects the team’s budget, chooses the cheaper alternative when it’s enough, and recognizes the rare case where an environment with a verifier becomes a competitive advantage.</p>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Key concepts</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Use × train</div><div class="text-xs text-neutral-400">most only use it</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Simulator</div><div class="text-xs text-neutral-400">safe place to fail</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Ladder of alternatives</div><div class="text-xs text-neutral-400">prompt → RAG → SFT → DPO → RL</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Hidden cost</div><div class="text-xs text-neutral-400">environment and evaluation</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Mark as read</span>
+<span class="inema-label-done">Read</span>
+</button>
+</div>
+</div>
+</section>
+<!-- RESUMO -->
+<section class="mb-8">
+<div class="bg-gradient-to-br from-purple-900/40 via-dark-800 to-dark-800 rounded-xl border border-purple-500/30 p-6 sm:p-8">
+<h2 class="text-2xl font-bold mb-6">✅ Module summary</h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start gap-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">RL learns through rewards</strong><span class="text-neutral-400"> — agent, environment, policy, and return.</span></div></div>
+<div class="flex items-start gap-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">The agent optimizes what you measure</strong><span class="text-neutral-400"> — reward hacking is addressed with a strong verifier and an independent metric.</span></div></div>
+<div class="flex items-start gap-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">RLHF, DPO, and RLVR</strong><span class="text-neutral-400"> — human preferences and automated verifiers shape today’s models.</span></div></div>
+<div class="flex items-start gap-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">Reasoning has a cost</strong><span class="text-neutral-400"> — use it when the task has multiple steps and an answer key; train with RL only when the rest isn’t enough.</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-purple-400 mb-2">Next module:</h3>
+<p class="text-neutral-300">3.6 — Safety and Red Teaming 🛡️</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="index.html">← Back to Track</a>
+<a class="flex-1 text-center px-6 py-3 bg-purple-700 text-white rounded-lg font-semibold hover:bg-purple-600 transition-colors" href="modulo-3-6.html">Next module →</a>
+</div>
+</div>
+</section>
+</article>
+</div>
+</div>
+</main>
+<footer class="border-t border-dark-600 py-8 mt-8">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>FTD — Digital Transformation Training · open and free content · 2026 · <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" rel="noopener" target="_blank">INEMA.CLUB</a> - <a class="text-amber-700 dark:text-slate-300 hover:underline" href="https://inema.pro" rel="noopener" target="_blank">PRO</a></p>
+</div>
+</footer>
+<!-- SCRIPTS NÚCLEO v1 -->
+<script>
+    function toggleTopic(button) {
+      var topicItem = button.closest('.topic-item');
+      if (!topicItem) return;
+      var explanation = topicItem.querySelector('.topic-explanation');
+      var willOpen = !explanation.classList.contains('active');
+      explanation.classList.toggle('active');
+      button.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+    }
+    function openModal(id) { var m = document.getElementById(id); if (m) { m.classList.remove('hidden'); document.body.style.overflow = 'hidden'; } }
+    function closeModal() { document.querySelectorAll('.modal').forEach(function (m) { m.classList.add('hidden'); }); document.body.style.overflow = 'auto'; }
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
+    function copyCode(btn) {
+      var pre = btn.closest('[data-copy-box]').querySelector('pre');
+      var txt = pre ? pre.innerText : '';
+      var done = function () { var o = btn.getAttribute('data-label-ok') || 'Copiado'; var t = btn.textContent; btn.textContent = o; setTimeout(function () { btn.textContent = t; }, 1500); };
+      try { navigator.clipboard.writeText(txt).then(done, done); } catch (e) { done(); }
+    }
+    (function () {
+      var themeToggle = document.getElementById('theme-toggle');
+      var darkIcon = document.getElementById('theme-toggle-dark-icon');
+      var lightIcon = document.getElementById('theme-toggle-light-icon');
+      var html = document.documentElement;
+      function sync() { var isDark = html.classList.contains('dark'); if (darkIcon) darkIcon.classList.toggle('hidden', isDark); if (lightIcon) lightIcon.classList.toggle('hidden', !isDark); }
+      sync();
+      if (themeToggle) themeToggle.addEventListener('click', function () {
+        html.classList.toggle('dark'); var nowDark = html.classList.contains('dark'); html.style.colorScheme = nowDark ? 'dark' : 'light';
+        try { localStorage.setItem('theme', nowDark ? 'dark' : 'light'); } catch (e) {}
+        try { var p = JSON.parse(localStorage.getItem('inema.prefs') || '{}'); p.theme = nowDark ? 'inema-dark' : 'claro'; localStorage.setItem('inema.prefs', JSON.stringify(p)); } catch (e) {}
+        sync();
+      });
+    })();
+  </script>
+<!-- learn.js + INEMA.init() POR ÚLTIMO -->
+<script src="../../assets/learn.js"></script>
+<script>
+    if (window.INEMA && typeof window.INEMA.init === 'function') { window.INEMA.init({ autoResume: true }); }
+  </script>
+</body>
+</html>
