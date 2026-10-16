@@ -1,0 +1,695 @@
+<main data-inema-module="2-1" data-inema-track="2" id="conteudo">
+<!-- BREADCRUMB -->
+<nav aria-label="Trilha de navegação" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-blue-400" href="../../index.html">Início</a><span>/</span>
+<a class="hover:text-blue-400" href="index.html">Trilha 2</a><span>/</span>
+<span class="text-blue-400">Módulo 2.1</span>
+</div>
+</nav>
+<!-- HEADER do módulo -->
+<header class="bg-gradient-to-br from-blue-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-blue-500/20 text-blue-400 text-xs font-semibold rounded-full mb-4">MÓDULO 2.1</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🔌 Desenvolvimento com APIs de IA</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">Como o seu código conversa com um modelo de linguagem: a primeira chamada, as mensagens, os parâmetros, o streaming, a saída em JSON, as ferramentas, os custos e os erros. Tudo com exemplos em Python que rodam <strong class="text-blue-400">de graça no seu computador</strong> com o Ollama — e funcionam igual numa API paga trocando a URL e a chave.</p>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">7</div><div class="text-xs text-neutral-400">Tópicos</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">~60</div><div class="text-xs text-neutral-400">Minutos</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">Intermediário</div><div class="text-xs text-neutral-400">Nível</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">Prático</div><div class="text-xs text-neutral-400">Tipo</div></div>
+</div>
+<div class="flex items-center gap-3 mt-8">
+<div aria-label="Progresso do módulo 2.1" class="inema-ring" data-inema-meter="modulo:2-1"><span class="inema-ring__value" data-inema-meter-pct="">0%</span></div>
+<div class="inema-meter-label" data-inema-meter="modulo:2-1"><strong data-inema-meter-frac="">0 de 0</strong> tópicos lidos · <span data-inema-section-counter="">Seção 1 de 7</span></div>
+</div>
+</div>
+</header>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+<div class="lg:flex lg:gap-10">
+<!-- TOC sticky + scrollspy -->
+<aside class="hidden lg:block lg:w-56 flex-shrink-0">
+<nav aria-label="Índice da página" class="sticky top-20 self-start" data-inema-toc="">
+<p class="text-xs font-semibold uppercase tracking-wide text-neutral-500 mb-3">Neste módulo</p>
+<ol class="space-y-1 text-sm">
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-blue-400" href="#topico-1">1. A primeira chamada</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-blue-400" href="#topico-2">2. Mensagens e papéis</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-blue-400" href="#topico-3">3. Parâmetros</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-blue-400" href="#topico-4">4. Streaming</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-blue-400" href="#topico-5">5. JSON e ferramentas</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-blue-400" href="#topico-6">6. Tokens e custos</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-blue-400" href="#topico-7">7. Erros e segurança</a></li>
+</ol>
+</nav>
+</aside>
+<!-- ARTIGO -->
+<article class="inema-prose flex-1 min-w-0">
+<h2 class="text-2xl font-bold mb-8">Conteúdo detalhado</h2>
+
+<!-- TÓPICO 1 -->
+<section class="mb-16" data-inema-topic="modulo-2-1#topico-1" id="topico-1" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="uma requisição HTTP, uma resposta em JSON">🔌 A primeira chamada</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar dúvida neste tópico" type="button"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-1-t1-p1">Uma <strong class="text-blue-400">API</strong> (interface de programação) é uma porta que um programa abre para outro programa usar. No caso dos modelos de linguagem, a porta é um <strong class="text-neutral-100">endpoint</strong> — um endereço HTTP que recebe um pedido em JSON (as mensagens, o nome do modelo, os parâmetros) e devolve outro JSON com o texto gerado e a contagem de tokens. Por trás do ChatGPT, do Claude e do Gemini existe exatamente isso; o chat é só uma tela em cima da API.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-1-t1-p2">O formato de <strong class="text-neutral-100">chat completions</strong> da OpenAI virou um padrão de fato: o Ollama, o vLLM, o LM Studio e vários provedores de nuvem aceitam o mesmo formato numa rota <code>/v1</code>. Na prática, isso quer dizer que você aprende com um modelo local e gratuito e, quando precisar de mais qualidade, troca três linhas: a URL base, a chave e o nome do modelo. O Anthropic e o Google também têm SDKs próprios, com formato um pouco diferente; o raciocínio é o mesmo.</p>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-blue-400 mb-3">O que é</h3>
+<p class="text-neutral-300">Chamar um modelo por API é enviar uma requisição HTTP com a lista de mensagens e receber a continuação gerada. Um <strong>SDK</strong> (kit de desenvolvimento, como o pacote <code>openai</code> do Python) monta essa requisição para você, cuida de autenticação, tempo limite e conversão do JSON em objetos.</p>
+</div>
+<!-- SVG 1: troca de base_url -->
+<figure class="svg-frame rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="O seu código Python chama o SDK openai, configurado com base_url e api_key. A mesma chamada pode ir para o Ollama local em localhost porta 11434 rota v1, gratuito e offline, ou para uma API na nuvem com chave secreta e cobrança por token." class="w-full h-auto" role="img" viewBox="0 0 900 300">
+<defs>
+<filter height="160%" id="m21-glow" width="160%" x="-30%" y="-30%"><feGaussianBlur result="b" stdDeviation="2"></feGaussianBlur><feMerge><feMergeNode in="b"></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge></filter>
+<pattern height="28" id="m21-grid" patternUnits="userSpaceOnUse" width="28"><circle cx="1.2" cy="1.2" fill="#3b82f6" opacity="0.14" r="1.2"></circle></pattern>
+<marker id="m21-ah" markerHeight="9" markerWidth="9" orient="auto" refX="6.5" refY="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#60a5fa"></path></marker>
+<marker id="m21-ahc" markerHeight="9" markerWidth="9" orient="auto" refX="6.5" refY="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#38bdf8"></path></marker>
+<style>@keyframes m21dash{to{stroke-dashoffset:-24}} .m21-flow{stroke-dasharray:6 6;animation:m21dash 1.6s linear infinite}</style>
+</defs>
+<rect fill="url(#m21-grid)" height="300" width="900"></rect>
+<g font-family="Inter,sans-serif">
+<rect fill="#0e1726" filter="url(#m21-glow)" height="80" rx="12" stroke="#60a5fa" stroke-width="2" width="190" x="20" y="105"></rect>
+<text fill="#bfdbfe" font-size="13" text-anchor="middle" x="115" y="138">seu código</text>
+<text fill="#eff6ff" font-size="17" font-weight="700" text-anchor="middle" x="115" y="162">app.py</text>
+<path class="m21-flow" d="M212,145 L300,145" fill="none" marker-end="url(#m21-ah)" stroke="#60a5fa" stroke-width="2.5"></path>
+<rect fill="#0e1b26" height="100" rx="14" stroke="#38bdf8" stroke-width="2.5" width="220" x="305" y="95"></rect>
+<text fill="#7dd3fc" font-size="17" font-weight="700" text-anchor="middle" x="415" y="128">SDK openai</text>
+<text fill="#e0f2fe" font-size="13" text-anchor="middle" x="415" y="152">base_url</text>
+<text fill="#e0f2fe" font-size="13" text-anchor="middle" x="415" y="172">api_key · model</text>
+<path class="m21-flow" d="M527,125 C580,125 580,75 615,75" fill="none" marker-end="url(#m21-ah)" stroke="#60a5fa" stroke-width="2.5"></path>
+<path class="m21-flow" d="M527,165 C580,165 580,215 615,215" fill="none" marker-end="url(#m21-ahc)" stroke="#38bdf8" stroke-width="2.5"></path>
+<rect fill="#0e1726" height="80" rx="12" stroke="#60a5fa" stroke-width="2" width="260" x="620" y="35"></rect>
+<text fill="#eff6ff" font-size="15" font-weight="700" x="638" y="62">Ollama local</text>
+<text fill="#bfdbfe" font-size="12" x="638" y="82">localhost:11434/v1</text>
+<text fill="#93c5fd" font-size="12" x="638" y="101">grátis · offline · seu hardware</text>
+<rect fill="#0e1b26" height="80" rx="12" stroke="#38bdf8" stroke-width="2" width="260" x="620" y="175"></rect>
+<text fill="#e0f2fe" font-size="15" font-weight="700" x="638" y="202">API na nuvem</text>
+<text fill="#bae6fd" font-size="12" x="638" y="222">https://&lt;provedor&gt;/v1</text>
+<text fill="#7dd3fc" font-size="12" x="638" y="241">chave secreta · paga por token</text>
+<text fill="#bfdbfe" font-size="13" text-anchor="middle" x="270" y="268">o mesmo código: troca só a URL, a chave e o modelo</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-blue-400">Como ler:</strong> o seu código nunca fala direto com o modelo; ele fala com o SDK, e o SDK manda a requisição para onde a <code>base_url</code> apontar. Começar no Ollama local custa zero e não expõe dados; mudar para a nuvem é configuração, não reescrita.</figcaption>
+</figure>
+<div class="bg-dark-800 border border-blue-500/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-blue-400 font-semibold mb-1">🧩 Termos novos</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-1-t1-p3"><strong>Ollama</strong>: programa que baixa e roda modelos abertos no seu computador e expõe uma API em <code>http://localhost:11434</code>. <strong>localhost</strong>: o próprio computador. <strong>Chave de API</strong>: senha que identifica quem paga a conta; o Ollama aceita qualquer texto, a nuvem não.</p>
+</div>
+<!-- COPY-RUN 1: primeira chamada -->
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-blue-400">Experimente:</strong> <span class="text-neutral-300">a primeira chamada a um modelo, no seu computador.</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copiar</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900"># primeira_chamada.py
+# 1) no terminal, uma vez só (Ollama instalado de ollama.com):
+#      pip install openai
+#      ollama pull llama3.2
+# 2) salve este arquivo e rode: python3 primeira_chamada.py
+from openai import OpenAI
+
+# O Ollama ignora a chave, mas o SDK exige um texto qualquer.
+client = OpenAI(base_url="http://localhost:11434/v1", api_key="ollama")
+
+resp = client.chat.completions.create(
+    model="llama3.2",
+    messages=[
+        {"role": "system", "content": "Responda em português do Brasil, em até 3 frases."},
+        {"role": "user", "content": "O que é uma API, para quem está começando a programar?"},
+    ],
+    temperature=0.3,
+)
+
+print(resp.choices[0].message.content)
+print("tokens de entrada:", resp.usage.prompt_tokens)
+print("tokens de saída:  ", resp.usage.completion_tokens)</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">Como verificar:</strong> <code>ollama list</code> deve mostrar <code>llama3.2</code>. O script imprime até 3 frases e duas linhas com números de tokens. "Connection refused" quer dizer que o Ollama não está rodando (abra o app ou rode <code>ollama serve</code>); "model not found", que faltou o <code>ollama pull</code>. Para usar uma API paga, troque <code>base_url</code>, <code>api_key</code> e <code>model</code> — o resto fica igual.</p>
+</div>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Por que aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-1-t1-p4" data-sum="porque">Quem só usa o chat depende da tela que alguém desenhou. Quem chama a API coloca o modelo dentro do próprio sistema: num formulário, numa planilha, num robô de atendimento, num script que roda de madrugada. E aprender no modelo local remove as duas barreiras do começo: custo e medo de vazar dados.</p>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Conceitos-chave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Endpoint</div><div class="text-xs text-neutral-400">endereço que recebe o pedido</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">SDK</div><div class="text-xs text-neutral-400">biblioteca que monta a chamada</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">base_url</div><div class="text-xs text-neutral-400">local ou nuvem, mesmo código</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">usage</div><div class="text-xs text-neutral-400">tokens gastos na chamada</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como lido</span>
+<span class="inema-label-done">Lido</span>
+</button>
+</div>
+</div>
+</section>
+
+<!-- TÓPICO 2 -->
+<section class="mb-16" data-inema-topic="modulo-2-1#topico-2" id="topico-2" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="system, user, assistant — e o modelo não lembra de nada">💬 Mensagens e papéis</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar dúvida neste tópico" type="button"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-1-t2-p1">O pedido não é um texto solto: é uma <strong class="text-blue-400">lista de mensagens</strong>, cada uma com um papel. <code>system</code> traz as regras gerais (quem o modelo é, tom, formato, limites). <code>user</code> é o que a pessoa pediu. <code>assistant</code> é o que o modelo já respondeu antes. Existe ainda o papel <code>tool</code>, que carrega o resultado de uma ferramenta — você vai vê-lo no tópico 5.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-1-t2-p2">O ponto que mais confunde quem começa: a API é <strong class="text-neutral-100">sem estado</strong> (<em>stateless</em>). O servidor não guarda a conversa. Para o modelo "lembrar" da pergunta anterior, o seu código reenvia o histórico inteiro a cada chamada. Isso explica por que conversas longas ficam mais caras e mais lentas, e por que a memória de um chatbot é um problema de engenharia seu, não do modelo — assunto do módulo 2.2.</p>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-blue-400 mb-3">O que é</h3>
+<p class="text-neutral-300">É o formato da conversa na API: uma lista ordenada de mensagens com papéis (<code>system</code>, <code>user</code>, <code>assistant</code>, <code>tool</code>) que o seu código monta e reenvia completa a cada chamada.</p>
+</div>
+<!-- SVG 2: histórico crescente -->
+<figure class="svg-frame rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="Três chamadas seguidas à API. A primeira envia system e user 1. A segunda reenvia system, user 1, a resposta assistant 1 e user 2. A terceira reenvia tudo isso mais assistant 2 e user 3. A barra cresce a cada chamada porque o servidor não guarda a conversa." class="w-full h-auto" role="img" viewBox="0 0 900 270">
+<rect fill="url(#m21-grid)" height="270" width="900"></rect>
+<g font-family="Inter,sans-serif" font-size="12">
+<text fill="#bfdbfe" font-size="13" font-weight="700" x="20" y="62">chamada 1</text>
+<text fill="#bfdbfe" font-size="13" font-weight="700" x="20" y="132">chamada 2</text>
+<text fill="#bfdbfe" font-size="13" font-weight="700" x="20" y="202">chamada 3</text>
+<rect fill="#1e3a8a" height="34" rx="6" stroke="#60a5fa" width="104" x="120" y="40"></rect><text fill="#eff6ff" text-anchor="middle" x="172" y="62">system</text>
+<rect fill="#0e1726" height="34" rx="6" stroke="#60a5fa" width="104" x="230" y="40"></rect><text fill="#eff6ff" text-anchor="middle" x="282" y="62">user 1</text>
+<rect fill="#1e3a8a" height="34" rx="6" stroke="#60a5fa" width="104" x="120" y="110"></rect><text fill="#eff6ff" text-anchor="middle" x="172" y="132">system</text>
+<rect fill="#0e1726" height="34" rx="6" stroke="#60a5fa" width="104" x="230" y="110"></rect><text fill="#eff6ff" text-anchor="middle" x="282" y="132">user 1</text>
+<rect fill="#0e1b26" height="34" rx="6" stroke="#38bdf8" width="104" x="340" y="110"></rect><text fill="#e0f2fe" text-anchor="middle" x="392" y="132">assistant 1</text>
+<rect fill="#0e1726" height="34" rx="6" stroke="#60a5fa" width="104" x="450" y="110"></rect><text fill="#eff6ff" text-anchor="middle" x="502" y="132">user 2</text>
+<rect fill="#1e3a8a" height="34" rx="6" stroke="#60a5fa" width="104" x="120" y="180"></rect><text fill="#eff6ff" text-anchor="middle" x="172" y="202">system</text>
+<rect fill="#0e1726" height="34" rx="6" stroke="#60a5fa" width="104" x="230" y="180"></rect><text fill="#eff6ff" text-anchor="middle" x="282" y="202">user 1</text>
+<rect fill="#0e1b26" height="34" rx="6" stroke="#38bdf8" width="104" x="340" y="180"></rect><text fill="#e0f2fe" text-anchor="middle" x="392" y="202">assistant 1</text>
+<rect fill="#0e1726" height="34" rx="6" stroke="#60a5fa" width="104" x="450" y="180"></rect><text fill="#eff6ff" text-anchor="middle" x="502" y="202">user 2</text>
+<rect fill="#0e1b26" height="34" rx="6" stroke="#38bdf8" width="104" x="560" y="180"></rect><text fill="#e0f2fe" text-anchor="middle" x="612" y="202">assistant 2</text>
+<rect fill="#0e1726" filter="url(#m21-glow)" height="34" rx="6" stroke="#93c5fd" stroke-width="2" width="104" x="670" y="180"></rect><text fill="#eff6ff" font-weight="700" text-anchor="middle" x="722" y="202">user 3</text>
+<text fill="#7dd3fc" x="350" y="62">→ o servidor responde e esquece</text>
+<text fill="#7dd3fc" x="570" y="132">→ reenvia tudo</text>
+<text fill="#93c5fd" text-anchor="middle" x="450" y="250">cada chamada carrega o histórico inteiro: mais tokens, mais custo, mais latência</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-blue-400">Como ler:</strong> cada linha é uma chamada independente. O que o modelo "sabe" da conversa é só o que está na lista daquela chamada. Por isso o histórico cresce em escada — e em algum momento você precisa resumir ou cortar mensagens antigas para caber na janela de contexto.</figcaption>
+</figure>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
+<h4 class="font-bold text-blue-400 mb-4">✓ Boa mensagem de system</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Diz o papel, o público e o idioma da resposta.</span></li>
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Fixa o formato de saída (lista, JSON, tamanho máximo).</span></li>
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Diz o que fazer quando não souber ("responda: não sei").</span></li>
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Fica em um arquivo versionado, fora do meio do código.</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Erros comuns</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Esperar que o modelo lembre da chamada anterior sem reenviar.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Colocar texto do usuário dentro do <code>system</code> (abre porta para injeção).</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Deixar o histórico crescer sem limite até estourar o contexto.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Esquecer de guardar a resposta como <code>assistant</code> antes da próxima pergunta.</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-primary/10 border border-primary/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-primary font-semibold mb-1">💡 Dica</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-1-t2-p3">Num laço de chat, depois de cada resposta faça <code>messages.append({"role": "assistant", "content": texto})</code> e só então acrescente a próxima pergunta do usuário. No SDK do Anthropic o <code>system</code> vai num campo separado e o <code>max_tokens</code> é obrigatório; o modelo de referência deste curso é o <code>claude-sonnet-5-5</code>.</p>
+</div>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Por que aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-1-t2-p4" data-sum="porque">Quase todo bug estranho de chatbot — "ele esqueceu o que eu disse", "ele mudou de tom", "a conta veio alta" — vem de como a lista de mensagens foi montada. Entender os papéis e o fato de a API não ter estado resolve a maior parte desses problemas antes de eles aparecerem.</p>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Conceitos-chave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">system</div><div class="text-xs text-neutral-400">regras gerais da conversa</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">user / assistant</div><div class="text-xs text-neutral-400">pergunta e resposta</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Stateless</div><div class="text-xs text-neutral-400">o servidor não lembra</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Histórico</div><div class="text-xs text-neutral-400">reenviado a cada chamada</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como lido</span>
+<span class="inema-label-done">Lido</span>
+</button>
+</div>
+</div>
+</section>
+
+<!-- TÓPICO 3 -->
+<section class="mb-16" data-inema-topic="modulo-2-1#topico-3" id="topico-3" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="temperature, max_tokens, stop e seed">🎚️ Parâmetros que mudam a resposta</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar dúvida neste tópico" type="button"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-1-t3-p1">Além das mensagens, a chamada aceita <strong class="text-blue-400">parâmetros de geração</strong>. O mais importante é a <code>temperature</code>: ela controla o quanto o modelo arrisca ao escolher o próximo token. Perto de 0, ele escolhe quase sempre o mais provável — bom para extrair dados, classificar e responder fatos. Mais alta, ele varia mais — útil para gerar ideias e textos com variação.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-1-t3-p2"><code>max_tokens</code> põe um teto no tamanho da resposta (e no custo). <code>stop</code> define textos que encerram a geração. <code>seed</code> pede reprodutibilidade, quando o servidor suporta. Um cuidado de outubro de 2026: os <strong class="text-neutral-100">modelos de raciocínio</strong> — que "pensam" antes de responder — costumam ignorar ou restringir <code>temperature</code> e usam um controle próprio de esforço. Leia a documentação do modelo antes de ajustar.</p>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-blue-400 mb-3">O que é</h3>
+<p class="text-neutral-300">Parâmetros são os botões que ajustam como o modelo gera: grau de variação (<code>temperature</code>, <code>top_p</code>), tamanho máximo (<code>max_tokens</code>), pontos de parada (<code>stop</code>) e repetibilidade (<code>seed</code>).</p>
+</div>
+<div class="overflow-x-auto mb-6">
+<table class="w-full text-sm border border-dark-600 rounded-xl overflow-hidden">
+<thead><tr class="bg-dark-700"><th class="text-left p-3 text-blue-400">Parâmetro</th><th class="text-left p-3 text-blue-400">O que faz</th><th class="text-left p-3 text-blue-400">Valor de partida</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr><td class="p-3 font-semibold"><code>temperature</code></td><td class="p-3 text-neutral-300">Quanto o modelo varia na escolha do próximo token.</td><td class="p-3 text-neutral-300">0 a 0.2 para extrair e classificar; 0.7 a 1 para criar.</td></tr>
+<tr><td class="p-3 font-semibold"><code>top_p</code></td><td class="p-3 text-neutral-300">Limita a escolha aos tokens mais prováveis até somar p.</td><td class="p-3 text-neutral-300">Deixe no padrão; ajuste temperature OU top_p, não os dois.</td></tr>
+<tr><td class="p-3 font-semibold"><code>max_tokens</code></td><td class="p-3 text-neutral-300">Teto de tokens da resposta.</td><td class="p-3 text-neutral-300">Sempre defina; resposta cortada vem com <code>finish_reason="length"</code>.</td></tr>
+<tr><td class="p-3 font-semibold"><code>stop</code></td><td class="p-3 text-neutral-300">Encerra a geração ao encontrar um texto.</td><td class="p-3 text-neutral-300">Útil em formatos com marcador de fim.</td></tr>
+<tr><td class="p-3 font-semibold"><code>seed</code></td><td class="p-3 text-neutral-300">Tenta repetir a mesma saída para a mesma entrada.</td><td class="p-3 text-neutral-300">Bom para testes; não é garantia absoluta.</td></tr>
+</tbody>
+</table>
+</div>
+<div class="bg-dark-800 border border-blue-500/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-blue-400 font-semibold mb-1">🧩 Termo novo</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-1-t3-p3"><strong>finish_reason</strong> é o campo que diz por que a geração parou: <code>stop</code> (terminou normalmente), <code>length</code> (bateu no <code>max_tokens</code>) ou <code>tool_calls</code> (o modelo pediu uma ferramenta). Confira esse campo antes de usar a resposta: texto cortado no meio quebra JSON e confunde o usuário.</p>
+</div>
+<div class="bg-primary/10 border border-primary/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-primary font-semibold mb-1">💡 Dica</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-1-t3-p4">Para sentir o efeito, rode o script do tópico 1 três vezes com <code>temperature=0</code> e três com <code>temperature=1.2</code>, pedindo "um nome para uma padaria". Com 0, os nomes se repetem; com 1.2, variam — e alguns ficam estranhos. A escolha depende da tarefa, não de um valor "certo".</p>
+</div>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Por que aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-1-t3-p5" data-sum="porque">O mesmo modelo parece "burro" ou "esperto" dependendo dos parâmetros. Uma extração de dados com temperatura alta inventa campos; um gerador de ideias com temperatura zero repete a mesma ideia. Ajustar três botões custa nada e resolve problemas que parecem do modelo.</p>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Conceitos-chave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">temperature</div><div class="text-xs text-neutral-400">quanto o modelo varia</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">max_tokens</div><div class="text-xs text-neutral-400">teto de tamanho e custo</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">finish_reason</div><div class="text-xs text-neutral-400">por que a geração parou</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Modelo de raciocínio</div><div class="text-xs text-neutral-400">tem controles próprios</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como lido</span>
+<span class="inema-label-done">Lido</span>
+</button>
+</div>
+</div>
+</section>
+
+<!-- TÓPICO 4 -->
+<section class="mb-16" data-inema-topic="modulo-2-1#topico-4" id="topico-4" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="mostrar o texto enquanto ele nasce">🌊 Streaming</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar dúvida neste tópico" type="button"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-1-t4-p1">Sem streaming, o seu código espera o modelo gerar a resposta inteira e só então recebe tudo de uma vez. Com <strong class="text-blue-400">streaming</strong>, o servidor manda os tokens à medida que são gerados, em pedaços chamados <em>chunks</em>, por uma conexão que fica aberta. O tempo total é praticamente o mesmo; o que muda é a <strong class="text-neutral-100">percepção</strong>: o usuário vê a primeira palavra quase imediatamente.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-1-t4-p2">A métrica que importa aqui é o <strong class="text-neutral-100">tempo até o primeiro token</strong> (TTFT, <em>time to first token</em>). Ele depende do tamanho do que você envia (o modelo precisa ler tudo antes de começar) e de onde o modelo roda. Na web, o streaming chega por <strong>SSE</strong> (<em>Server-Sent Events</em>), um formato simples de eventos de texto sobre HTTP que o SDK já interpreta para você.</p>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-blue-400 mb-3">O que é</h3>
+<p class="text-neutral-300">Streaming é receber a resposta em pedaços, token a token, enquanto ela é gerada. Basta passar <code>stream=True</code> e percorrer os pedaços num laço <code>for</code>.</p>
+</div>
+<!-- SVG 3: bloqueante x streaming -->
+<figure class="svg-frame rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="Duas linhas do tempo com a mesma duração total. Na chamada sem streaming, a tela fica vazia até o fim e o texto aparece de uma vez. Na chamada com streaming, o primeiro token aparece logo no começo e o texto vai surgindo em pedaços até o fim." class="w-full h-auto" role="img" viewBox="0 0 900 260">
+<defs>
+<style>@keyframes m21pulse{0%,100%{opacity:.35}50%{opacity:1}} .m21-tok{animation:m21pulse 2.4s ease-in-out infinite}</style>
+</defs>
+<rect fill="url(#m21-grid)" height="260" width="900"></rect>
+<g font-family="Inter,sans-serif">
+<text fill="#bfdbfe" font-size="13" font-weight="700" x="20" y="72">sem streaming</text>
+<rect fill="#0e1726" height="30" rx="6" stroke="#334155" width="560" x="170" y="52"></rect>
+<text fill="#94a3b8" font-size="12" text-anchor="middle" x="450" y="72">tela vazia · esperando a resposta inteira</text>
+<rect fill="#60a5fa" filter="url(#m21-glow)" height="30" rx="6" width="110" x="740" y="52"></rect>
+<text fill="#0b1220" font-size="12" font-weight="700" text-anchor="middle" x="795" y="72">tudo de uma vez</text>
+<text fill="#bae6fd" font-size="13" font-weight="700" x="20" y="152">com streaming</text>
+<rect fill="#0e1726" height="30" rx="6" stroke="#334155" width="40" x="170" y="132"></rect>
+<g fill="#38bdf8">
+<rect class="m21-tok" height="30" rx="4" width="48" x="216" y="132"></rect>
+<rect class="m21-tok" height="30" rx="4" width="48" x="270" y="132"></rect>
+<rect class="m21-tok" height="30" rx="4" width="48" x="324" y="132"></rect>
+<rect class="m21-tok" height="30" rx="4" width="48" x="378" y="132"></rect>
+<rect class="m21-tok" height="30" rx="4" width="48" x="432" y="132"></rect>
+<rect class="m21-tok" height="30" rx="4" width="48" x="486" y="132"></rect>
+<rect class="m21-tok" height="30" rx="4" width="48" x="540" y="132"></rect>
+<rect class="m21-tok" height="30" rx="4" width="48" x="594" y="132"></rect>
+<rect class="m21-tok" height="30" rx="4" width="48" x="648" y="132"></rect>
+<rect class="m21-tok" height="30" rx="4" width="48" x="702" y="132"></rect>
+<rect class="m21-tok" height="30" rx="4" width="48" x="756" y="132"></rect>
+<rect class="m21-tok" height="30" rx="4" width="48" x="810" y="132"></rect>
+</g>
+<path d="M216,176 L216,196" stroke="#7dd3fc" stroke-width="2"></path>
+<text fill="#7dd3fc" font-size="12" x="222" y="200">primeiro token (TTFT)</text>
+<path d="M170,226 L850,226" fill="none" marker-end="url(#m21-ah)" stroke="#60a5fa" stroke-opacity="0.6" stroke-width="2"></path>
+<text fill="#93c5fd" font-size="12" x="170" y="248">início da chamada</text>
+<text fill="#93c5fd" font-size="12" text-anchor="end" x="850" y="248">fim · mesmo tempo total</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-blue-400">Como ler:</strong> as duas barras terminam no mesmo ponto — streaming não deixa o modelo mais rápido. O ganho está no começo: na linha de baixo o usuário já está lendo enquanto a de cima ainda mostra tela vazia. O pequeno trecho cinza antes do primeiro token é o modelo lendo o seu pedido.</figcaption>
+</figure>
+<!-- COPY-RUN 2: streaming -->
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-blue-400">Experimente:</strong> <span class="text-neutral-300">streaming com medição do tempo até o primeiro token.</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copiar</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900"># streaming.py  (pip install openai · ollama pull llama3.2)
+import time
+from openai import OpenAI
+
+client = OpenAI(base_url="http://localhost:11434/v1", api_key="ollama")
+
+inicio = time.perf_counter()
+primeiro = None
+
+stream = client.chat.completions.create(
+    model="llama3.2",
+    messages=[{"role": "user", "content": "Explique em 5 passos como funciona um pedido HTTP."}],
+    stream=True,
+    max_tokens=400,
+)
+
+for chunk in stream:
+    if not chunk.choices:
+        continue
+    pedaco = chunk.choices[0].delta.content or ""
+    if pedaco and primeiro is None:
+        primeiro = time.perf_counter() - inicio
+    print(pedaco, end="", flush=True)
+
+total = time.perf_counter() - inicio
+print(f"\n\nprimeiro token: {primeiro:.2f}s · total: {total:.2f}s")</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">Como verificar:</strong> o texto deve aparecer aos poucos no terminal, não de uma vez, e a última linha mostra o tempo do primeiro token bem menor que o total. Rode duas vezes: a primeira costuma ser mais lenta porque o Ollama carrega o modelo na memória. Em API paga, o mesmo código funciona trocando <code>base_url</code>, <code>api_key</code> e <code>model</code>.</p>
+</div>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Por que aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-1-t4-p3" data-sum="porque">Em qualquer interface em que uma pessoa espera a resposta — chat, assistente dentro de um sistema, atendimento — o streaming é o que separa "parece travado" de "está respondendo". Para tarefas em segundo plano (processar mil documentos), ele não ajuda e só complica: use a chamada normal.</p>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Conceitos-chave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">stream=True</div><div class="text-xs text-neutral-400">resposta em pedaços</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Chunk / delta</div><div class="text-xs text-neutral-400">cada pedaço recebido</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">TTFT</div><div class="text-xs text-neutral-400">tempo até o primeiro token</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">SSE</div><div class="text-xs text-neutral-400">eventos de texto sobre HTTP</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como lido</span>
+<span class="inema-label-done">Lido</span>
+</button>
+</div>
+</div>
+</section>
+
+<!-- TÓPICO 5 -->
+<section class="mb-16" data-inema-topic="modulo-2-1#topico-5" id="topico-5" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="dados que o código entende e funções que o modelo pede">🧱 Saída estruturada e ferramentas</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar dúvida neste tópico" type="button"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-1-t5-p1">Texto livre é ótimo para pessoas e péssimo para programas. Quando o resultado vai alimentar um banco de dados, uma planilha ou outra função, você quer <strong class="text-blue-400">saída estruturada</strong>: um JSON com campos e tipos definidos. O caminho seguro tem três camadas — pedir JSON no prompt, ligar o <strong>modo JSON</strong> da API (<code>response_format</code>) e <strong class="text-neutral-100">validar</strong> o resultado no seu código com um <em>schema</em> (a descrição dos campos e tipos esperados). Validação é a parte que não pode faltar: o modelo pode errar um tipo.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-1-t5-p2">O passo seguinte é o <strong class="text-blue-400">tool calling</strong> (chamada de ferramentas): você descreve funções que o seu sistema tem — <code>consultar_estoque(produto)</code>, <code>buscar_pedido(id)</code> — e o modelo, em vez de responder, devolve um pedido estruturado dizendo qual função chamar e com quais argumentos. Quem executa é sempre o <strong class="text-neutral-100">seu código</strong>; o modelo só decide e escreve os argumentos. É a base dos agentes (módulo 2.5) e do protocolo MCP, que padroniza como ferramentas são oferecidas aos modelos.</p>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-blue-400 mb-3">O que é</h3>
+<p class="text-neutral-300">Saída estruturada é fazer o modelo responder num formato que o código valida (JSON com schema). Tool calling é deixar o modelo pedir a execução de funções suas, devolvendo nome e argumentos em JSON; você executa e devolve o resultado como mensagem <code>tool</code>.</p>
+</div>
+<!-- SVG 4: ciclo de tool calling -->
+<figure class="svg-frame rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="Diagrama de sequência entre a sua aplicação e o modelo. Um: a aplicação envia a pergunta e a lista de ferramentas. Dois: o modelo devolve um pedido de ferramenta com nome e argumentos em JSON. Três: o seu código executa a função. Quatro: o resultado volta ao modelo como mensagem tool. Cinco: o modelo escreve a resposta final." class="w-full h-auto" role="img" viewBox="0 0 900 330">
+<rect fill="url(#m21-grid)" height="330" width="900"></rect>
+<g font-family="Inter,sans-serif">
+<rect fill="#0e1726" height="44" rx="10" stroke="#60a5fa" stroke-width="2" width="200" x="100" y="16"></rect>
+<text fill="#eff6ff" font-size="14" font-weight="700" text-anchor="middle" x="200" y="43">sua aplicação</text>
+<rect fill="#0e1b26" height="44" rx="10" stroke="#38bdf8" stroke-width="2" width="200" x="600" y="16"></rect>
+<text fill="#e0f2fe" font-size="14" font-weight="700" text-anchor="middle" x="700" y="43">modelo</text>
+<path d="M200,62 L200,316 M700,62 L700,316" stroke="#64748b" stroke-dasharray="4 6" stroke-width="1.5"></path>
+<path d="M204,96 L694,96" fill="none" marker-end="url(#m21-ah)" stroke="#60a5fa" stroke-width="2.2"></path>
+<text fill="#bfdbfe" font-size="13" text-anchor="middle" x="450" y="87">1 · pergunta + lista de ferramentas</text>
+<path d="M696,146 L206,146" fill="none" marker-end="url(#m21-ahc)" stroke="#38bdf8" stroke-width="2.2"></path>
+<text fill="#bae6fd" font-size="13" text-anchor="middle" x="450" y="137">2 · tool_call: consultar_estoque({"produto": "kraft"})</text>
+<rect fill="#1e3a8a" filter="url(#m21-glow)" height="40" rx="8" stroke="#93c5fd" stroke-width="1.5" width="290" x="214" y="166"></rect>
+<text fill="#eff6ff" font-size="13" x="228" y="191">3 · seu código executa a função</text>
+<path d="M204,236 L694,236" fill="none" marker-end="url(#m21-ah)" stroke="#60a5fa" stroke-width="2.2"></path>
+<text fill="#bfdbfe" font-size="13" text-anchor="middle" x="450" y="227">4 · resultado volta como role "tool"</text>
+<path d="M696,286 L206,286" fill="none" marker-end="url(#m21-ahc)" stroke="#38bdf8" stroke-width="2.2"></path>
+<text fill="#bae6fd" font-size="13" text-anchor="middle" x="450" y="277">5 · resposta final em texto</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-blue-400">Como ler:</strong> siga as setas de cima para baixo. Repare que a única caixa onde algo acontece de verdade no mundo (passo 3) está do lado da sua aplicação: o modelo nunca executa nada sozinho. É ali que você valida os argumentos, checa permissões e decide se a ação é segura.</figcaption>
+</figure>
+<!-- COPY-RUN 3: JSON validado -->
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-blue-400">Objetivo:</strong> <span class="text-neutral-300">transformar uma mensagem de cliente em JSON validado.</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copiar</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900"># extrair_pedido.py  (pip install openai pydantic · ollama pull llama3.2)
+from openai import OpenAI
+from pydantic import BaseModel, ValidationError
+
+class Pedido(BaseModel):  # o schema: campos e tipos que o código aceita
+    cliente: str
+    produto: str
+    quantidade: int
+    urgente: bool
+
+client = OpenAI(base_url="http://localhost:11434/v1", api_key="ollama")
+
+# Modelos pequenos entendem melhor as chaves descritas em texto do que um JSON Schema inteiro.
+FORMATO = (
+    "Extraia os dados do pedido. Responda SÓ com um objeto JSON com exatamente estas chaves: "
+    '"cliente" (texto), "produto" (texto, sem a quantidade), '
+    '"quantidade" (número inteiro) e "urgente" (true ou false).'
+)
+
+mensagem = "Oi, aqui é a Marina da Padaria Sol. Preciso de 40 caixas de papel kraft até amanhã cedo."
+
+resp = client.chat.completions.create(
+    model="llama3.2",
+    temperature=0,
+    response_format={"type": "json_object"},
+    messages=[
+        {"role": "system", "content": FORMATO},
+        {"role": "user", "content": mensagem},
+    ],
+)
+
+bruto = resp.choices[0].message.content
+try:
+    pedido = Pedido.model_validate_json(bruto)
+    print("OK:", pedido.model_dump())
+except ValidationError as erro:
+    print("JSON fora do schema; trate ou peça de novo:\n", erro)
+    print("Resposta bruta:", bruto)</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">Como verificar:</strong> a saída esperada é algo como <code>OK: {'cliente': 'Marina da Padaria Sol', 'produto': 'papel kraft', 'quantidade': 40, 'urgente': True}</code>. Troque a mensagem por <code>&lt;um texto seu&gt;</code> sem quantidade e veja o validador reclamar — esse é o comportamento certo. Em APIs pagas que aceitam <code>json_schema</code> estrito no <code>response_format</code>, use-o; a validação no código continua.</p>
+</div>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Por que aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-1-t5-p3" data-sum="porque">É aqui que o modelo deixa de ser um gerador de texto e vira uma peça de software: lê um e-mail e preenche um cadastro, classifica um chamado e abre o ticket certo, decide qual função do sistema chamar. Sem validação, essa peça quebra em silêncio; com ela, você sabe exatamente quando ela falhou.</p>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Conceitos-chave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Schema</div><div class="text-xs text-neutral-400">campos e tipos esperados</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Modo JSON</div><div class="text-xs text-neutral-400">response_format na API</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Tool calling</div><div class="text-xs text-neutral-400">o modelo pede, você executa</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">MCP</div><div class="text-xs text-neutral-400">padrão para oferecer ferramentas</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como lido</span>
+<span class="inema-label-done">Lido</span>
+</button>
+</div>
+</div>
+</section>
+
+<!-- TÓPICO 6 -->
+<section class="mb-16" data-inema-topic="modulo-2-1#topico-6" id="topico-6" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="o que se paga, o que se limita e como economizar">💰 Tokens, custos e limites</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar dúvida neste tópico" type="button"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-1-t6-p1">Nas APIs de nuvem você paga por <strong class="text-blue-400">token</strong> — o pedaço de texto que o modelo enxerga, que pode ser uma palavra curta ou parte de uma palavra. A conta tem duas partes: tokens de <strong>entrada</strong> (tudo o que você envia, incluindo system e histórico) e tokens de <strong>saída</strong> (o que o modelo gera). Na maioria dos provedores a saída custa mais caro que a entrada. A fórmula é simples: <code>custo = entrada × preço_entrada + saída × preço_saída</code>, com preços por milhão de tokens que mudam com frequência — consulte sempre a tabela atual.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-1-t6-p2">Além do preço há os <strong class="text-blue-400">limites de taxa</strong> (<em>rate limits</em>): quantas requisições e quantos tokens por minuto a sua conta pode usar. Passou do limite, a API responde com o código HTTP <code>429</code> e, muitas vezes, um cabeçalho <code>retry-after</code> dizendo quanto esperar. No Ollama local não há conta nem limite de taxa; o custo é o seu hardware, a energia e a fila — uma placa atende poucas gerações ao mesmo tempo.</p>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-blue-400 mb-3">O que é</h3>
+<p class="text-neutral-300">É a economia da API: o custo cresce com os tokens de entrada e de saída, e o uso é limitado por requisições e tokens por minuto. Otimizar é enviar menos, gerar menos, reaproveitar mais e escolher o menor modelo que resolve.</p>
+</div>
+<div class="overflow-x-auto mb-6">
+<table class="w-full text-sm border border-dark-600 rounded-xl overflow-hidden">
+<thead><tr class="bg-dark-700"><th class="text-left p-3 text-blue-400">Técnica</th><th class="text-left p-3 text-blue-400">Como funciona</th><th class="text-left p-3 text-blue-400">Quando usar</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr><td class="p-3 font-semibold">Modelo menor</td><td class="p-3 text-neutral-300">Classificar e extrair raramente pedem o modelo mais caro.</td><td class="p-3 text-neutral-300">Teste o menor primeiro e suba só se a qualidade não bastar.</td></tr>
+<tr><td class="p-3 font-semibold">Cache de prompt</td><td class="p-3 text-neutral-300">Provedores como OpenAI e Anthropic cobram menos pelo começo do prompt que se repete.</td><td class="p-3 text-neutral-300">System longo e documentos fixos no início da mensagem.</td></tr>
+<tr><td class="p-3 font-semibold">Cortar histórico</td><td class="p-3 text-neutral-300">Resumir ou descartar mensagens antigas.</td><td class="p-3 text-neutral-300">Chats longos; ver módulo 2.2.</td></tr>
+<tr><td class="p-3 font-semibold"><code>max_tokens</code></td><td class="p-3 text-neutral-300">Teto na saída, a parte mais cara.</td><td class="p-3 text-neutral-300">Sempre.</td></tr>
+<tr><td class="p-3 font-semibold">API em lote (batch)</td><td class="p-3 text-neutral-300">Você envia muitos pedidos e recebe depois, com preço reduzido.</td><td class="p-3 text-neutral-300">Processamento que pode esperar horas.</td></tr>
+<tr><td class="p-3 font-semibold">Modelo local</td><td class="p-3 text-neutral-300">Ollama no seu hardware: sem custo por token.</td><td class="p-3 text-neutral-300">Dados sensíveis, protótipos, volume alto e tarefas simples.</td></tr>
+</tbody>
+</table>
+</div>
+<div class="bg-dark-800 border border-blue-500/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-blue-400 font-semibold mb-1">🧩 Termos novos</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-1-t6-p3"><strong>Tokenizador</strong>: a regra que corta o texto em tokens; cada família de modelos tem a sua, então a mesma frase dá contagens diferentes. Texto em português tende a gerar mais tokens que o mesmo texto em inglês. <strong>RPM/TPM</strong>: requisições e tokens por minuto, os dois limites mais comuns. A fonte confiável de contagem é o campo <code>usage</code> de cada resposta.</p>
+</div>
+<div class="bg-primary/10 border border-primary/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-primary font-semibold mb-1">💡 Dica</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-1-t6-p4">Registre <code>usage.prompt_tokens</code> e <code>usage.completion_tokens</code> de toda chamada desde o primeiro dia, junto com o nome da funcionalidade que a fez. Quando a conta subir, você vai saber em minutos qual parte do sistema gasta mais — sem isso, vira adivinhação.</p>
+</div>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Por que aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-1-t6-p5" data-sum="porque">Um protótipo que custa centavos pode custar caro quando mil pessoas usam, porque cada uma reenvia o histórico e cada resposta gera tokens. Quem entende a fórmula desenha o sistema para ser barato desde o começo, em vez de descobrir na fatura.</p>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Conceitos-chave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Entrada × saída</div><div class="text-xs text-neutral-400">preços diferentes</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Rate limit</div><div class="text-xs text-neutral-400">requisições e tokens por minuto</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">429</div><div class="text-xs text-neutral-400">passou do limite, espere</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Cache de prompt</div><div class="text-xs text-neutral-400">começo repetido sai mais barato</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como lido</span>
+<span class="inema-label-done">Lido</span>
+</button>
+</div>
+</div>
+</section>
+
+<!-- TÓPICO 7 -->
+<section class="mb-16" data-inema-topic="modulo-2-1#topico-7" id="topico-7" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">7</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="tentar de novo com juízo e guardar a chave">🔐 Erros e segurança</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar dúvida neste tópico" type="button"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-1-t7-p1">Chamadas de rede falham. O servidor pode estar sobrecarregado, a conexão pode cair, o limite de taxa pode estourar. A regra é separar os erros em dois grupos: os <strong class="text-blue-400">transitórios</strong>, que passam sozinhos e merecem nova tentativa (<code>429</code>, <code>500</code>, <code>503</code>, tempo esgotado), e os <strong class="text-red-400">permanentes</strong>, que vão falhar de novo do mesmo jeito (<code>400</code> pedido malformado, <code>401</code> chave errada, <code>404</code> modelo inexistente). Repetir um erro permanente só gasta tempo.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-1-t7-p2">Para os transitórios, use <strong class="text-neutral-100">backoff exponencial com jitter</strong>: espere 1 s, depois 2, 4, 8, somando um pequeno valor aleatório para que vários clientes não tentem todos no mesmo instante. O SDK <code>openai</code> já tem novas tentativas automáticas (<code>max_retries</code>); o exemplo abaixo mostra a lógica explícita para você entender e controlar.</p>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-blue-400 mb-3">O que é</h3>
+<p class="text-neutral-300">É a camada de robustez e proteção da integração: tempo limite em toda chamada, nova tentativa só para erros transitórios, chave fora do código, nenhum dado pessoal sem necessidade e desconfiança de todo texto que vem de fora.</p>
+</div>
+<!-- COPY-RUN 4: chamada robusta -->
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-blue-400">Objetivo:</strong> <span class="text-neutral-300">uma função de chamada com configuração por ambiente, tempo limite e backoff.</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copiar</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900"># llm.py  (pip install openai · ollama pull llama3.2)
+# Para usar uma API paga, defina no terminal (nunca no código):
+#   export LLM_BASE_URL="https://&lt;provedor&gt;/v1"
+#   export LLM_API_KEY="&lt;sua chave&gt;"
+#   export LLM_MODEL="&lt;nome do modelo&gt;"
+import os, random, time
+from openai import OpenAI, APIConnectionError, APIStatusError, APITimeoutError, RateLimitError
+
+client = OpenAI(
+    base_url=os.getenv("LLM_BASE_URL", "http://localhost:11434/v1"),
+    api_key=os.getenv("LLM_API_KEY", "ollama"),
+    timeout=60,
+    max_retries=0,  # a lógica de nova tentativa fica aqui embaixo, explícita
+)
+MODELO = os.getenv("LLM_MODEL", "llama3.2")
+TRANSITORIOS = {429, 500, 502, 503, 504}
+
+def perguntar(messages, tentativas=4, max_tokens=500):
+    for i in range(tentativas):
+        try:
+            r = client.chat.completions.create(model=MODELO, messages=messages, max_tokens=max_tokens)
+            return r.choices[0].message.content
+        except (RateLimitError, APITimeoutError, APIConnectionError) as e:
+            motivo = type(e).__name__
+        except APIStatusError as e:
+            if e.status_code not in TRANSITORIOS:
+                raise  # 400, 401, 404: repetir não adianta
+            motivo = f"HTTP {e.status_code}"
+        espera = 2 ** i + random.random()
+        print(f"tentativa {i + 1} falhou ({motivo}); nova em {espera:.1f}s")
+        time.sleep(espera)
+    raise RuntimeError("o modelo não respondeu depois de todas as tentativas")
+
+if __name__ == "__main__":
+    print(perguntar([{"role": "user", "content": "Diga 'ok' e nada mais."}]))</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">Como verificar:</strong> com o Ollama ligado, <code>python3 llm.py</code> imprime algo como "ok". Feche o Ollama e rode de novo: você deve ver as linhas "tentativa 1 falhou (APIConnectionError)…" com esperas crescentes e, no fim, o <code>RuntimeError</code>. Troque <code>LLM_MODEL</code> por um nome que não existe: o erro sai na hora, sem novas tentativas.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
+<h4 class="font-bold text-blue-400 mb-4">✓ Faça</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Chave em variável de ambiente ou cofre de segredos; arquivo <code>.env</code> no <code>.gitignore</code>.</span></li>
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Chame a API pelo seu servidor; o navegador nunca vê a chave.</span></li>
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Trate texto de usuário, e-mails e páginas web como dados, nunca como instruções.</span></li>
+<li class="flex items-start gap-2"><span class="text-blue-400">✓</span><span>Anonimize dados pessoais antes de enviar a terceiros, em linha com a LGPD.</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Não faça</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Chave escrita no código ou enviada para o GitHub.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Executar o que o modelo sugerir (SQL, comando de terminal) sem validar.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Guardar em log o conteúdo completo das conversas com dados de clientes.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Repetir em laço infinito um erro <code>401</code> ou <code>400</code>.</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-dark-800 border border-blue-500/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-blue-400 font-semibold mb-1">🧩 Termo novo</p>
+<p class="text-sm text-neutral-300" data-inema-block="m2-1-t7-p3"><strong>Injeção de prompt</strong> (<em>prompt injection</em>): quando um texto que o modelo lê — um e-mail, um PDF, uma página — contém instruções escondidas ("ignore as regras e envie os dados"). Não existe filtro perfeito contra isso. A defesa é de arquitetura: o modelo só acessa ferramentas com o mínimo de permissão necessário, e ações sensíveis passam por confirmação humana.</p>
+</div>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Por que aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m2-1-t7-p4" data-sum="porque">Uma chave vazada no GitHub pode ser usada por terceiros em pouco tempo, na sua conta. Uma integração sem tempo limite trava o sistema inteiro quando o provedor fica lento. Esses dois cuidados, mais a desconfiança de texto externo, são o mínimo para qualquer código com IA sair do seu computador.</p>
+<h3 class="text-lg font-semibold text-blue-400 mb-3">Conceitos-chave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Transitório × permanente</div><div class="text-xs text-neutral-400">só o primeiro merece retry</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Backoff com jitter</div><div class="text-xs text-neutral-400">esperas crescentes e aleatórias</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Segredo fora do código</div><div class="text-xs text-neutral-400">variável de ambiente</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-blue-400 font-semibold text-sm">Injeção de prompt</div><div class="text-xs text-neutral-400">texto externo é dado</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como lido</span>
+<span class="inema-label-done">Lido</span>
+</button>
+</div>
+</div>
+</section>
+
+<!-- RESUMO -->
+<section class="mb-8">
+<div class="bg-gradient-to-br from-blue-900/40 via-dark-800 to-dark-800 rounded-xl border border-blue-500/30 p-6 sm:p-8">
+<h2 class="text-2xl font-bold mb-6">✅ Resumo do módulo</h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start gap-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">Uma chamada é HTTP + JSON</strong><span class="text-neutral-400"> — o SDK monta, a <code>base_url</code> escolhe local ou nuvem.</span></div></div>
+<div class="flex items-start gap-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">A API não tem memória</strong><span class="text-neutral-400"> — você reenvia o histórico e paga por ele.</span></div></div>
+<div class="flex items-start gap-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">Parâmetros e streaming</strong><span class="text-neutral-400"> — temperatura conforme a tarefa, streaming quando alguém espera.</span></div></div>
+<div class="flex items-start gap-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">JSON validado e ferramentas</strong><span class="text-neutral-400"> — o modelo pede, o seu código valida e executa.</span></div></div>
+<div class="flex items-start gap-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">Custos, erros e segredos</strong><span class="text-neutral-400"> — meça tokens, repita só o transitório, chave fora do código.</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-blue-400 mb-2">Próximo módulo:</h3>
+<p class="text-neutral-300">2.2 — Arquitetura de Aplicações com IA 🏗️</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="index.html">← Voltar para a Trilha</a>
+<a class="flex-1 text-center px-6 py-3 bg-blue-700 text-white rounded-lg font-semibold hover:bg-blue-600 transition-colors" href="modulo-2-2.html">Próximo módulo →</a>
+</div>
+</div>
+</section>
+</article>
+</div>
+</div>
+</main>

@@ -1,0 +1,1597 @@
+<!DOCTYPE html>
+<html class="dark" lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="ftd-v2" name="inema-course"/>
+<title>Trilha 3 · Masterclass | FTD v2</title>
+<meta content="Visão de arquiteto e de liderança: escala, modelos próprios, multimodalidade, pesquisa, RL, segurança, operação enterprise, estratégia e futuro." name="description"/>
+<meta content="Trilha 3 · Masterclass | FTD v2" property="og:title"/>
+<meta content="Visão de arquiteto e de liderança: escala, modelos próprios, multimodalidade, pesquisa, RL, segurança, operação enterprise, estratégia e futuro." property="og:description"/>
+<!-- ANTI-FOUC (Erro #18) — primeiro script do head -->
+<script>
+(function () {
+  try {
+    var html = document.documentElement;
+    var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+    function clone(o) { var r = {}; for (var x in o) r[x] = o[x]; return r; }
+    var p = clone(DEF);
+    try {
+      var raw = localStorage.getItem('inema.prefs');
+      if (raw) {
+        var parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === 'object') {
+          for (var k in DEF) if (parsed[k] != null) p[k] = parsed[k];
+        }
+      } else {
+        var legacy = localStorage.getItem('theme');
+        if (legacy === 'light') p.theme = 'claro';
+        else if (legacy === 'dark') p.theme = 'inema-dark';
+      }
+    } catch (e) { p = clone(DEF); }
+
+    var THEMES = {
+      'inema-dark': { dark: true,  attr: null,        cs: 'dark'  },
+      'claro':      { dark: false, attr: null,        cs: 'light' },
+      'sepia':      { dark: false, attr: 'sepia',     cs: 'light' },
+      'foco':       { dark: null,  attr: 'foco',      cs: null    },
+      'contraste':  { dark: true,  attr: 'contraste', cs: 'dark'  }
+    };
+    var t = THEMES[p.theme] || THEMES['inema-dark'];
+
+    if (t.dark === true) html.classList.add('dark');
+    else if (t.dark === false) html.classList.remove('dark');
+
+    if (t.attr) html.setAttribute('data-theme', t.attr);
+    else html.removeAttribute('data-theme');
+
+    html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark') ? 'dark' : 'light'));
+
+    html.setAttribute('data-font', p.font || 'inter');
+    html.setAttribute('data-accent', p.accent || 'emerald');
+
+    var s = html.style;
+    var scale = (+p.fontScale || 100);
+    s.setProperty('--inema-font-scale', (scale / 100).toString());
+    s.setProperty('font-size', scale + '%');
+    s.setProperty('--measure', (+p.lineWidth || 68) + 'ch');
+    s.setProperty('--lh-body', (+p.leading || 1.7).toString());
+    var fam = p.font === 'system'
+      ? 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif'
+      : (p.font === 'leitura'
+        ? '"Atkinson Hyperlegible", "Inter", system-ui, sans-serif'
+        : '"Inter", system-ui, sans-serif');
+    s.setProperty('--font-body', fam);
+
+    var ACC = {
+      emerald: [152, 76, 45], blue: [217, 91, 60], purple: [258, 90, 66],
+      amber: [38, 92, 50], teal: [174, 72, 41], rose: [350, 89, 60]
+    };
+    var a = ACC[p.accent] || ACC.emerald;
+    s.setProperty('--accent-h', a[0] + '');
+    s.setProperty('--accent-s', a[1] + '%');
+    s.setProperty('--accent-l', a[2] + '%');
+    s.setProperty('--accent', 'hsl(' + a[0] + ' ' + a[1] + '% ' + a[2] + '%)');
+  } catch (err) {
+    try { document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme = 'dark'; } catch (e) {}
+  }
+})();
+</script>
+<!-- MANIFESTO do curso (Erro #28) — idêntico em todas as páginas -->
+<script data-inema-manifest="" type="application/json">
+{
+  "course": "ftd-v2",
+  "tracks": [
+    {
+      "n": "1",
+      "title": "Iniciante",
+      "modules": [
+        {
+          "id": "1-1",
+          "title": "Impacto da IA",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-1.html"
+        },
+        {
+          "id": "1-2",
+          "title": "Navegando no Mundo Digital",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-2.html"
+        },
+        {
+          "id": "1-3",
+          "title": "Engenharia de Prompts",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-3.html"
+        },
+        {
+          "id": "1-4",
+          "title": "Assistentes e Agentes de IA",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-4.html"
+        },
+        {
+          "id": "1-5",
+          "title": "Criatividade Visual com IA",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-5.html"
+        },
+        {
+          "id": "1-6",
+          "title": "Marketing e Vendas com IA",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-6.html"
+        },
+        {
+          "id": "1-7",
+          "title": "Automação de Processos",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-7.html"
+        },
+        {
+          "id": "1-8",
+          "title": "Inteligência Artificial Avançada",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-8.html"
+        },
+        {
+          "id": "1-9",
+          "title": "Negócios e Monetização com IA",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-9.html"
+        }
+      ]
+    },
+    {
+      "n": "2",
+      "title": "Técnico",
+      "modules": [
+        {
+          "id": "2-1",
+          "title": "Desenvolvimento com APIs de IA",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-1.html"
+        },
+        {
+          "id": "2-2",
+          "title": "Arquitetura de Aplicações com IA",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-2.html"
+        },
+        {
+          "id": "2-3",
+          "title": "RAG e Knowledge Bases",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-3.html"
+        },
+        {
+          "id": "2-4",
+          "title": "Fine-tuning e Customização",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-4.html"
+        },
+        {
+          "id": "2-5",
+          "title": "Agentes e Workflows Complexos",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-5.html"
+        },
+        {
+          "id": "2-6",
+          "title": "Computer Vision Avançada",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-6.html"
+        },
+        {
+          "id": "2-7",
+          "title": "NLP e Text Processing",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-7.html"
+        },
+        {
+          "id": "2-8",
+          "title": "MLOps e Produção",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-8.html"
+        },
+        {
+          "id": "2-9",
+          "title": "Ética e Governança de IA",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-9.html"
+        }
+      ]
+    },
+    {
+      "n": "3",
+      "title": "Masterclass",
+      "modules": [
+        {
+          "id": "3-1",
+          "title": "Arquitetura de IA em Larga Escala",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-1.html"
+        },
+        {
+          "id": "3-2",
+          "title": "Modelos Customizados e Proprietários",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-2.html"
+        },
+        {
+          "id": "3-3",
+          "title": "IA Multimodal Avançada",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-3.html"
+        },
+        {
+          "id": "3-4",
+          "title": "Pesquisa e Papers de IA",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-4.html"
+        },
+        {
+          "id": "3-5",
+          "title": "IA Reinforcement Learning",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-5.html"
+        },
+        {
+          "id": "3-6",
+          "title": "Segurança e Red Teaming",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-6.html"
+        },
+        {
+          "id": "3-7",
+          "title": "IA em Produção — Escala Enterprise",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-7.html"
+        },
+        {
+          "id": "3-8",
+          "title": "Liderança e Estratégia em IA",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-8.html"
+        },
+        {
+          "id": "3-9",
+          "title": "Futuro da IA e AGI",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-9.html"
+        }
+      ]
+    }
+  ]
+}
+</script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#0c0c10', 800: '#16161e', 700: '#1e1e28', 600: '#272730', 500: '#33333f' } }, fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'], display: ['Sora', 'Inter', 'sans-serif'], mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'] } } } }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Sora:wght@600;700;800&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    h1, h2, h3, h4, .font-display { font-family: 'Sora', 'Inter', sans-serif; }
+    .dark body { background-color: #0c0c10; }
+    .dark .text-neutral-100 { color: #e9e9ee; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+    pre { white-space: pre-wrap; word-break: break-word; }
+    pre, code, .font-mono { font-family: 'JetBrains Mono', ui-monospace, monospace; }
+
+    /* Light mode — Parte 1: base */
+    html:not(.dark) body { background-color: #f6f7f9; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800\/50 { background-color: #f6f7f9; }
+    html:not(.dark) .bg-dark-700 { background-color: #eceef2; }
+    html:not(.dark) .bg-dark-700\/50 { background-color: #f1f2f5; }
+    html:not(.dark) .bg-dark-700\/30 { background-color: #f4f5f7; }
+    html:not(.dark) .bg-dark-600 { background-color: #e1e3ea; }
+    html:not(.dark) .hover\:bg-dark-600:hover { background-color: #d6d9e1; }
+    html:not(.dark) .hover\:bg-dark-700\/50:hover { background-color: #eceef2; }
+    html:not(.dark) .text-neutral-100 { color: #1a1a22; }
+    html:not(.dark) .text-neutral-200 { color: #26262f; }
+    html:not(.dark) .text-neutral-300 { color: #3f3f4a; }
+    html:not(.dark) .text-neutral-400 { color: #5b5b68; }
+    html:not(.dark) .text-neutral-500 { color: #62626e; }
+    html:not(.dark) .border-dark-600 { border-color: #e1e3ea; }
+    html:not(.dark) .border-dark-700 { border-color: #e8e9ee; }
+    html:not(.dark) .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #e1e3ea; }
+    html:not(.dark) .bg-black\/40 { background-color: #f1f2f5; }
+    html:not(.dark) pre.code-dark { background-color: #1a1a22; color: #e9e9ee; }
+
+    /* Light mode — Parte 2: acento das 3 trilhas (texto -700, nunca -400 no claro) */
+    html:not(.dark) .text-emerald-400 { color: #047857; }
+    html:not(.dark) .text-emerald-300 { color: #047857; }
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #047857; }
+    html:not(.dark) .bg-emerald-500\/20 { background-color: rgba(4,120,87,0.12); }
+    html:not(.dark) .bg-emerald-500\/10 { background-color: rgba(4,120,87,0.08); }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(4,120,87,0.08); }
+    html:not(.dark) .bg-emerald-900\/20 { background-color: rgba(4,120,87,0.07); }
+    html:not(.dark) .bg-emerald-900\/30 { background-color: rgba(4,120,87,0.08); }
+    html:not(.dark) .bg-emerald-900\/40 { background-color: rgba(4,120,87,0.09); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(4,120,87,0.28); }
+    html:not(.dark) .hover\:border-emerald-500\/30:hover { border-color: rgba(4,120,87,0.4); }
+    html:not(.dark) .text-blue-400 { color: #1d4ed8; }
+    html:not(.dark) .text-blue-300 { color: #1d4ed8; }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #1d4ed8; }
+    html:not(.dark) .bg-blue-500\/20 { background-color: rgba(29,78,216,0.12); }
+    html:not(.dark) .bg-blue-500\/10 { background-color: rgba(29,78,216,0.08); }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(29,78,216,0.08); }
+    html:not(.dark) .bg-blue-900\/20 { background-color: rgba(29,78,216,0.07); }
+    html:not(.dark) .bg-blue-900\/30 { background-color: rgba(29,78,216,0.08); }
+    html:not(.dark) .bg-blue-900\/40 { background-color: rgba(29,78,216,0.09); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(29,78,216,0.28); }
+    html:not(.dark) .hover\:border-blue-500\/30:hover { border-color: rgba(29,78,216,0.4); }
+    html:not(.dark) .text-purple-400 { color: #6d28d9; }
+    html:not(.dark) .text-purple-300 { color: #6d28d9; }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #6d28d9; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(109,40,217,0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(109,40,217,0.08); }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(109,40,217,0.08); }
+    html:not(.dark) .bg-purple-900\/20 { background-color: rgba(109,40,217,0.07); }
+    html:not(.dark) .bg-purple-900\/30 { background-color: rgba(109,40,217,0.08); }
+    html:not(.dark) .bg-purple-900\/40 { background-color: rgba(109,40,217,0.09); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(109,40,217,0.28); }
+    html:not(.dark) .hover\:border-purple-500\/30:hover { border-color: rgba(109,40,217,0.4); }
+
+    /* Light mode — Parte 3: gradientes + especiais */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #854d0e; }
+    html:not(.dark) .text-yellow-400 { color: #854d0e; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #713f12; }
+    html:not(.dark) .bg-primary\/10 { background-color: #FEF9C3; }
+    html:not(.dark) .border-primary\/30 { border-color: #EAB308; }
+    html:not(.dark) .text-red-400 { color: #b91c1c; }
+    html:not(.dark) .bg-red-900\/20 { background-color: rgba(185,28,28,0.07); }
+    html:not(.dark) .border-red-500\/30 { border-color: rgba(185,28,28,0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #075985; }
+    html:not(.dark) .bg-sky-900\/20 { background-color: rgba(3,105,161,0.07); }
+    html:not(.dark) .border-sky-500\/30 { border-color: rgba(3,105,161,0.25); }
+
+    /* Light mode — Parte 4: nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255,255,255,0.95); }
+
+    /* Parte 5: bordas suavizadas no DARK (Erro #15) */
+    .dark .border-dark-600 { border-color: #2a2a35; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #2a2a35; }
+
+    /* SVG: no claro, um fundo escuro emoldurado mantém o contraste do desenho */
+    html:not(.dark) .svg-frame { background-color: #12121a; }
+    @media (prefers-reduced-motion: reduce) { svg * { animation: none !important; transition: none !important; } }
+  </style>
+<link href="../../assets/learn.css" rel="stylesheet"/>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14 gap-2">
+<!-- Logo + INEMA.CLUB -->
+<div class="flex items-center space-x-3 flex-shrink-0">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🚀</span>
+<span class="font-display font-bold text-lg hidden sm:inline">FTD</span>
+</a>
+<span class="text-neutral-600 hidden sm:inline">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium hidden sm:inline" href="https://inema.club" rel="noopener" target="_blank">INEMA.CLUB</a>
+<span class="text-neutral-600 hidden sm:inline">-</span>
+<a class="text-amber-700 dark:text-slate-300 hover:underline text-sm font-medium hidden sm:inline" href="https://inema.pro" rel="noopener" target="_blank">PRO</a>
+</div>
+<!-- Trilhas + controles de aprendizagem + theme toggle -->
+<div class="flex items-center gap-1 sm:gap-1.5">
+<a class="px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors whitespace-nowrap" href="../trilha1/index.html">
+<span class="lg:hidden">T1</span><span class="hidden lg:inline">Iniciante</span>
+</a>
+<a class="px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors whitespace-nowrap" href="../trilha2/index.html">
+<span class="lg:hidden">T2</span><span class="hidden lg:inline">Técnico</span>
+</a>
+<a class="px-2.5 py-1.5 rounded-lg text-sm font-semibold text-purple-400 bg-purple-500/10 whitespace-nowrap" href="index.html">
+<span class="lg:hidden">T3</span><span class="hidden lg:inline">Masterclass</span>
+</a>
+<span class="w-px h-6 bg-dark-600 mx-1 hidden sm:inline-block"></span>
+<!-- Minha jornada (abre o painel global; badge = % do curso) -->
+<button class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-300 hover:text-neutral-100 hover:bg-dark-700 transition-colors" data-inema-journey-open="" type="button">
+<svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="16"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+<span class="hidden md:inline">Minha jornada</span>
+<span class="inema-journey-badge" data-count="0" data-inema-journey-badge=""></span>
+</button>
+<!-- Aparência (gatilho + painel obrigatório) -->
+<div class="relative">
+<button aria-expanded="false" class="inema-appearance-trigger inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-300 hover:text-neutral-100 transition-colors" data-inema-appearance-toggle="#inema-appearance-panel" type="button">
+<svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="16"><circle cx="12" cy="12" r="9"></circle><path d="M12 3v18"></path><path d="M12 3a9 9 0 0 1 0 18" fill="currentColor"></path></svg>
+<span class="hidden md:inline">Aparência</span>
+</button>
+<div class="inema-appearance-pop right-0" data-inema-appearance="" id="inema-appearance-panel">
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Tema</span>
+<div class="inema-segment">
+<button data-inema-set-theme="inema-dark" type="button">Escuro</button>
+<button data-inema-set-theme="claro" type="button">Claro</button>
+<button data-inema-set-theme="sepia" type="button">Sépia</button>
+</div>
+<div class="inema-segment">
+<button data-inema-set-theme="foco" type="button">Foco</button>
+<button data-inema-set-theme="contraste" type="button">Alto contraste</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Fonte</span>
+<div class="inema-segment">
+<button data-inema-set-font="inter" type="button">Inter</button>
+<button data-inema-set-font="system" type="button">Sistema</button>
+<button data-inema-set-font="leitura" type="button">Leitura</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Tamanho</span>
+<div class="inema-segment">
+<button data-inema-set-fontscale="100" type="button">A</button>
+<button data-inema-set-fontscale="112" type="button">A+</button>
+<button data-inema-set-fontscale="125" type="button">A++</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Largura</span>
+<div class="inema-segment">
+<button data-inema-set-linewidth="60" type="button">Estreito</button>
+<button data-inema-set-linewidth="68" type="button">Médio</button>
+<button data-inema-set-linewidth="75" type="button">Largo</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Entrelinha</span>
+<div class="inema-segment">
+<button data-inema-set-leading="1.45" type="button">Compacto</button>
+<button data-inema-set-leading="1.7" type="button">Confortável</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Acento</span>
+<div class="inema-accent-grid">
+<button aria-label="Acento esmeralda" data-inema-set-accent="emerald" type="button"></button>
+<button aria-label="Acento azul" data-inema-set-accent="blue" type="button"></button>
+<button aria-label="Acento roxo" data-inema-set-accent="purple" type="button"></button>
+<button aria-label="Acento âmbar" data-inema-set-accent="amber" type="button"></button>
+<button aria-label="Acento teal" data-inema-set-accent="teal" type="button"></button>
+<button aria-label="Acento rosa" data-inema-set-accent="rose" type="button"></button>
+</div>
+</div>
+</div>
+</div>
+<!-- Theme toggle sol/lua (núcleo v1; o JS o mantém coerente com o tema) -->
+<button aria-label="Alternar tema claro/escuro" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20">
+<path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+</svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20">
+<path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path>
+</svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+
+<main data-inema-track="3" id="conteudo">
+<nav aria-label="Trilha de navegação" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-purple-400" href="../../index.html">Início</a><span>/</span>
+<span class="text-purple-400">Trilha 3 · Masterclass</span>
+</div>
+</nav>
+<header class="bg-gradient-to-br from-purple-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-purple-500/20 text-purple-400 text-xs font-semibold rounded-full mb-4">TRILHA 3</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">👑 Masterclass — IA em escala e estratégia</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">Visão de arquiteto e de liderança: escala, modelos próprios, multimodalidade, pesquisa, RL, segurança, operação enterprise, estratégia e futuro.</p>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">9</div><div class="text-xs text-neutral-400">Módulos</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">63</div><div class="text-xs text-neutral-400">Tópicos</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">~8h</div><div class="text-xs text-neutral-400">Duração</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">Avançado</div><div class="text-xs text-neutral-400">Nível</div></div>
+</div>
+<div class="flex items-center gap-3 mt-8">
+<div aria-label="Progresso da Trilha 3" class="inema-ring" data-inema-meter="trilha:3"><span class="inema-ring__value" data-inema-meter-pct="">0%</span></div>
+<div class="inema-meter-label" data-inema-meter="trilha:3"><strong data-inema-meter-frac="">0 de 0</strong> tópicos lidos</div>
+</div>
+</div>
+</header>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<!-- HERO SVG da trilha 3 -->
+<figure class="svg-frame rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-12 overflow-hidden">
+<svg aria-label="Trilha 3 em nove degraus ascendentes, do módulo 3.1 ao 3.9: Arquitetura de IA em Larga Escala, Modelos Customizados e Proprietários, IA Multimodal Avançada, Pesquisa e Papers de IA, IA Reinforcement Learning, Segurança e Red Teaming, IA em Produção — Escala Enterprise, Liderança e Estratégia em IA, Futuro da IA e AGI." class="w-full h-auto" role="img" viewBox="0 0 1000 260">
+<defs>
+<pattern height="30" id="h3-grid" patternUnits="userSpaceOnUse" width="30"><circle cx="1.3" cy="1.3" fill="#8b5cf6" opacity="0.14" r="1.3"></circle></pattern>
+<linearGradient id="h3-line" x1="0" x2="1" y1="0" y2="0"><stop offset="0" stop-color="#a78bfa"></stop><stop offset="1" stop-color="#38bdf8"></stop></linearGradient>
+<style>@keyframes h3p{0%,100%{opacity:.6}50%{opacity:1}} .h3-a{animation:h3p 3s ease-in-out infinite} .h3-a:nth-of-type(odd){animation-delay:.6s}</style>
+</defs>
+<rect fill="url(#h3-grid)" height="260" width="1000"></rect>
+<path d="M40,240 L980,130" fill="none" stroke="url(#h3-line)" stroke-dasharray="5 7" stroke-opacity="0.6" stroke-width="2"></path>
+<g font-family="Inter,sans-serif">
+<g class="h3-a"><rect fill="#1a1330" height="64" rx="12" stroke="#a78bfa" stroke-width="2" width="92" x="40" y="150"></rect><text fill="#ddd6fe" font-size="13" font-weight="700" text-anchor="middle" x="86" y="176">3.1</text><text font-size="20" text-anchor="middle" x="86" y="202">🏛️</text></g>
+<path d="M132,182 L144,170" stroke="#a78bfa" stroke-opacity="0.7" stroke-width="2"></path>
+<g class="h3-a"><rect fill="#1a1330" height="64" rx="12" stroke="#38bdf8" stroke-width="2" width="92" x="144" y="138"></rect><text fill="#bae6fd" font-size="13" font-weight="700" text-anchor="middle" x="190" y="164">3.2</text><text font-size="20" text-anchor="middle" x="190" y="190">🧬</text></g>
+<path d="M236,170 L248,158" stroke="#a78bfa" stroke-opacity="0.7" stroke-width="2"></path>
+<g class="h3-a"><rect fill="#1a1330" height="64" rx="12" stroke="#a78bfa" stroke-width="2" width="92" x="248" y="126"></rect><text fill="#ddd6fe" font-size="13" font-weight="700" text-anchor="middle" x="294" y="152">3.3</text><text font-size="20" text-anchor="middle" x="294" y="178">🎞️</text></g>
+<path d="M340,158 L352,146" stroke="#a78bfa" stroke-opacity="0.7" stroke-width="2"></path>
+<g class="h3-a"><rect fill="#1a1330" height="64" rx="12" stroke="#38bdf8" stroke-width="2" width="92" x="352" y="114"></rect><text fill="#bae6fd" font-size="13" font-weight="700" text-anchor="middle" x="398" y="140">3.4</text><text font-size="20" text-anchor="middle" x="398" y="166">🔬</text></g>
+<path d="M444,146 L456,134" stroke="#a78bfa" stroke-opacity="0.7" stroke-width="2"></path>
+<g class="h3-a"><rect fill="#1a1330" height="64" rx="12" stroke="#a78bfa" stroke-width="2" width="92" x="456" y="102"></rect><text fill="#ddd6fe" font-size="13" font-weight="700" text-anchor="middle" x="502" y="128">3.5</text><text font-size="20" text-anchor="middle" x="502" y="154">🎮</text></g>
+<path d="M548,134 L560,122" stroke="#a78bfa" stroke-opacity="0.7" stroke-width="2"></path>
+<g class="h3-a"><rect fill="#1a1330" height="64" rx="12" stroke="#38bdf8" stroke-width="2" width="92" x="560" y="90"></rect><text fill="#bae6fd" font-size="13" font-weight="700" text-anchor="middle" x="606" y="116">3.6</text><text font-size="20" text-anchor="middle" x="606" y="142">🛡️</text></g>
+<path d="M652,122 L664,110" stroke="#a78bfa" stroke-opacity="0.7" stroke-width="2"></path>
+<g class="h3-a"><rect fill="#1a1330" height="64" rx="12" stroke="#a78bfa" stroke-width="2" width="92" x="664" y="78"></rect><text fill="#ddd6fe" font-size="13" font-weight="700" text-anchor="middle" x="710" y="104">3.7</text><text font-size="20" text-anchor="middle" x="710" y="130">🏢</text></g>
+<path d="M756,110 L768,98" stroke="#a78bfa" stroke-opacity="0.7" stroke-width="2"></path>
+<g class="h3-a"><rect fill="#1a1330" height="64" rx="12" stroke="#38bdf8" stroke-width="2" width="92" x="768" y="66"></rect><text fill="#bae6fd" font-size="13" font-weight="700" text-anchor="middle" x="814" y="92">3.8</text><text font-size="20" text-anchor="middle" x="814" y="118">🧭</text></g>
+<path d="M860,98 L872,86" stroke="#a78bfa" stroke-opacity="0.7" stroke-width="2"></path>
+<g class="h3-a"><rect fill="#1a1330" height="64" rx="12" stroke="#a78bfa" stroke-width="2" width="92" x="872" y="54"></rect><text fill="#ddd6fe" font-size="13" font-weight="700" text-anchor="middle" x="918" y="80">3.9</text><text font-size="20" text-anchor="middle" x="918" y="106">🌌</text></g>
+<text fill="#a78bfa" font-size="15" font-weight="700" x="40" y="40">👑 Masterclass — IA em escala e estratégia</text>
+<text fill="#bae6fd" font-size="12" x="40" y="62">cada degrau usa o anterior</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-purple-400">Como ler:</strong> A masterclass olha de cima: escala, modelos próprios, multimodalidade, pesquisa, aprendizado por reforço, segurança, operação enterprise, estratégia e futuro.</figcaption>
+</figure>
+<section class="mb-12">
+<h2 class="text-2xl font-bold mb-6">Mapa da trilha</h2>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+<a class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-purple-500/30 p-5 transition-all" href="#modulo-3-1">
+<div class="flex items-center justify-between mb-2"><span class="text-purple-400 font-bold text-sm">3.1</span><span class="text-xs text-neutral-500">~60 min</span></div>
+<h3 class="font-semibold mb-1 group-hover:text-purple-400 transition-colors">🏛️ Arquitetura de IA em Larga Escala</h3>
+<p class="text-xs text-neutral-400">Milhões de chamadas sem susto</p>
+</a>
+<a class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-purple-500/30 p-5 transition-all" href="#modulo-3-2">
+<div class="flex items-center justify-between mb-2"><span class="text-purple-400 font-bold text-sm">3.2</span><span class="text-xs text-neutral-500">~60 min</span></div>
+<h3 class="font-semibold mb-1 group-hover:text-purple-400 transition-colors">🧬 Modelos Customizados e Proprietários</h3>
+<p class="text-xs text-neutral-400">Seu modelo, seu fosso</p>
+</a>
+<a class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-purple-500/30 p-5 transition-all" href="#modulo-3-3">
+<div class="flex items-center justify-between mb-2"><span class="text-purple-400 font-bold text-sm">3.3</span><span class="text-xs text-neutral-500">~55 min</span></div>
+<h3 class="font-semibold mb-1 group-hover:text-purple-400 transition-colors">🎞️ IA Multimodal Avançada</h3>
+<p class="text-xs text-neutral-400">Texto, imagem, áudio e vídeo juntos</p>
+</a>
+<a class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-purple-500/30 p-5 transition-all" href="#modulo-3-4">
+<div class="flex items-center justify-between mb-2"><span class="text-purple-400 font-bold text-sm">3.4</span><span class="text-xs text-neutral-500">~50 min</span></div>
+<h3 class="font-semibold mb-1 group-hover:text-purple-400 transition-colors">🔬 Pesquisa e Papers de IA</h3>
+<p class="text-xs text-neutral-400">Ler a fronteira sem se perder</p>
+</a>
+<a class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-purple-500/30 p-5 transition-all" href="#modulo-3-5">
+<div class="flex items-center justify-between mb-2"><span class="text-purple-400 font-bold text-sm">3.5</span><span class="text-xs text-neutral-500">~55 min</span></div>
+<h3 class="font-semibold mb-1 group-hover:text-purple-400 transition-colors">🎮 IA Reinforcement Learning</h3>
+<p class="text-xs text-neutral-400">Aprender por recompensa</p>
+</a>
+<a class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-purple-500/30 p-5 transition-all" href="#modulo-3-6">
+<div class="flex items-center justify-between mb-2"><span class="text-purple-400 font-bold text-sm">3.6</span><span class="text-xs text-neutral-500">~60 min</span></div>
+<h3 class="font-semibold mb-1 group-hover:text-purple-400 transition-colors">🛡️ Segurança e Red Teaming</h3>
+<p class="text-xs text-neutral-400">Ataque antes que ataquem</p>
+</a>
+<a class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-purple-500/30 p-5 transition-all" href="#modulo-3-7">
+<div class="flex items-center justify-between mb-2"><span class="text-purple-400 font-bold text-sm">3.7</span><span class="text-xs text-neutral-500">~55 min</span></div>
+<h3 class="font-semibold mb-1 group-hover:text-purple-400 transition-colors">🏢 IA em Produção — Escala Enterprise</h3>
+<p class="text-xs text-neutral-400">Plataforma, não projeto</p>
+</a>
+<a class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-purple-500/30 p-5 transition-all" href="#modulo-3-8">
+<div class="flex items-center justify-between mb-2"><span class="text-purple-400 font-bold text-sm">3.8</span><span class="text-xs text-neutral-500">~50 min</span></div>
+<h3 class="font-semibold mb-1 group-hover:text-purple-400 transition-colors">🧭 Liderança e Estratégia em IA</h3>
+<p class="text-xs text-neutral-400">Decidir onde a IA entra</p>
+</a>
+<a class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-purple-500/30 p-5 transition-all" href="#modulo-3-9">
+<div class="flex items-center justify-between mb-2"><span class="text-purple-400 font-bold text-sm">3.9</span><span class="text-xs text-neutral-500">~45 min</span></div>
+<h3 class="font-semibold mb-1 group-hover:text-purple-400 transition-colors">🌌 Futuro da IA e AGI</h3>
+<p class="text-xs text-neutral-400">Pensar o que vem sem hype</p>
+</a>
+</div>
+</section>
+<h2 class="text-2xl font-bold mb-6">Conteúdo detalhado</h2>
+<!-- MÓDULO 3.1 -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 mb-6" data-module-card="" id="modulo-3-1" style="scroll-margin-top:5rem">
+<div class="p-6 border-b border-dark-600">
+<div class="flex items-center justify-between mb-2">
+<span class="text-purple-400 font-bold">3.1</span>
+<div class="flex items-center gap-3">
+<span class="text-xs text-neutral-500">~60 min</span>
+<div aria-label="Progresso do módulo 3.1" class="inema-ring" data-inema-meter="modulo:3-1" style="--ring-size:2.4rem"><span class="inema-ring__value" data-inema-meter-pct="">0%</span></div>
+</div>
+</div>
+<h3 class="text-2xl font-bold mb-2">🏛️ Arquitetura de IA em Larga Escala</h3>
+<p class="text-neutral-400 text-sm">Roteamento de modelos, inferência, batching, cache semântico, multi-região e limites de custo em escala.</p>
+</div>
+<div class="divide-y divide-dark-600">
+<div class="topic-item">
+<button aria-controls="t31-1" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+<span class="text-lg">🗺️</span><div><span class="font-medium">O mapa da escala</span><span class="text-neutral-500 text-sm ml-2">- as camadas entre o usuário e o modelo</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t31-1"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 sm:ml-9">
+<div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O que é Arquitetura de IA em larga escala é o conjunto de camadas entre os aplicativos e os modelos: um gateway que identifica, limita e registra; um roteador que escolhe o modelo certo; servidores de inferência ou APIs; caches; e observabilidade que mede…</p></div>
+<div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Sem o mapa, cada problema de escala vira um incêndio isolado: uma equipe põe cache, outra põe retry, uma terceira troca de modelo. Com o mapa, você decide em que camada cada problema se resolve uma vez, para toda a empresa — e consegue trocar um modelo sem…</p></div>
+<div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Gateway porta única para os modelos Latência p95 o tempo dos 95% mais rápidos Throughput trabalho entregue por segundo Observabilidade medir antes de otimizar</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button aria-controls="t31-2" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+<span class="text-lg">🔀</span><div><span class="font-medium">Roteamento de modelos</span><span class="text-neutral-500 text-sm ml-2">- o modelo mais barato que resolve</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t31-2"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 sm:ml-9">
+<div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O que é Roteamento de modelos é a camada que escolhe, para cada chamada, o modelo de menor custo capaz de atender à qualidade exigida, e que redireciona a chamada para outro modelo ou provedor quando o primeiro falha.</p></div>
+<div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">O roteamento é a alavanca de custo com maior efeito e menor risco: você não muda o produto, só para de pagar preço de modelo de fronteira por tarefa simples. E o fallback transforma a queda de um provedor, que hoje derruba o produto, num aumento temporário de…</p></div>
+<div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Roteador escolhe o modelo por chamada Cascata barato primeiro, caro se falhar Validador teste objetivo da saída Fallback rota alternativa na falha</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button aria-controls="t31-3" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+<span class="text-lg">⚡</span><div><span class="font-medium">Inferência e batching</span><span class="text-neutral-500 text-sm ml-2">- tirar mais de cada GPU</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t31-3"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 sm:ml-9">
+<div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O que é É a engenharia de servir modelos: agrupar pedidos, gerenciar a memória de contexto, escolher quantização e hardware, e decidir entre API gerenciada e servidor próprio, sempre medindo TTFT, tokens por segundo e custo por milhão de tokens.</p></div>
+<div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">A decisão &quot;API ou servidor próprio&quot; é uma das mais caras de errar em IA. Entender prefill, decode, batching e KV cache permite ler um benchmark de fornecedor com senso crítico e fazer a conta certa — e saber por que prompts longos encarecem e atrasam tudo.</p></div>
+<div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">TTFT espera até o primeiro token Batching contínuo vaga livre recebe pedido novo KV cache memória do que já foi lido Quantização pesos menores, menos memória</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button aria-controls="t31-4" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+<span class="text-lg">🧠</span><div><span class="font-medium">Cache de prompt e cache semântico</span><span class="text-neutral-500 text-sm ml-2">- não pagar duas vezes pela mesma resposta</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t31-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 sm:ml-9">
+<div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O que é Cache de prompt reaproveita o processamento de um prefixo repetido e mantém a resposta nova; cache semântico reaproveita a resposta inteira de uma pergunta parecida, decidida por similaridade entre embeddings e um limiar calibrado.</p></div>
+<div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Os dois caches atacam o custo por lados diferentes: o de prompt barateia o contexto longo que se repete em toda chamada; o semântico elimina chamadas inteiras. Saber qual usar — e como ordenar o prompt para que o de prompt funcione — costuma render economia…</p></div>
+<div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Cache de prompt prefixo fixo reaproveitado Embedding significado em vetor Limiar quão parecido basta TTL quanto tempo a resposta vale</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button aria-controls="t31-5" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+<span class="text-lg">🌎</span><div><span class="font-medium">Multi-região e resiliência</span><span class="text-neutral-500 text-sm ml-2">- quando um provedor ou região cai</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t31-5"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 sm:ml-9">
+<div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O que é Resiliência multi-região é manter o serviço de IA funcionando quando um provedor, modelo ou região falha: destinos alternativos aprovados, checagem de saúde, circuit breaker, réplica dos dados de contexto e um modo degradado previsto.</p></div>
+<div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Quanto mais a IA entra em processos críticos, mais uma queda de provedor vira queda do negócio. Um plano de resiliência escrito antes do incidente — com rotas aprovadas, RTO e RPO definidos e modo degradado testado — é o que separa uma hora de lentidão de um…</p></div>
+<div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Circuit breaker para de insistir no que falha RTO / RPO tempo fora / dado perdido Residência de dados onde o dado pode ir Modo degradado menos recurso, sem apagão</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button aria-controls="t31-6" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+<span class="text-lg">💰</span><div><span class="font-medium">Limites de custo em escala</span><span class="text-neutral-500 text-sm ml-2">- orçamento por cliente, corte automático</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t31-6"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 sm:ml-9">
+<div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O que é Limites de custo são regras aplicadas antes de cada chamada — taxa, tamanho, orçamento por tenant e passos de agente — com registro do custo real depois dela, para que o gasto seja previsível, atribuível e cortado automaticamente quando passa do…</p></div>
+<div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Gestores aprovam IA em escala quando o custo é previsível. Com orçamento por tenant, degradação automática e custo atribuído a cada recurso do produto, a conversa sai de &quot;a fatura veio alta&quot; e vai para &quot;este recurso custa tanto por usuário e vale a pena&quot; —…</p></div>
+<div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Tenant quem tem gasto separado Limite de taxa chamadas por minuto Degradação modelo barato no limite FinOps de IA medir, atribuir, controlar</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button aria-controls="t31-7" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">7</span>
+<span class="text-lg">🧭</span><div><span class="font-medium">Revisão de arquitetura na prática</span><span class="text-neutral-500 text-sm ml-2">- checklist e prompt para revisar um desenho</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t31-7"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 sm:ml-9">
+<div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O que é Um roteiro de revisão em sete passos, das métricas aos limites de custo, mais um prompt de análise que transforma a descrição do seu sistema numa lista priorizada de decisões, cada uma com forma de medir.</p></div>
+<div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Líderes técnicos raramente desenham o sistema sozinhos; eles conduzem revisões. Um roteiro fixo garante que nenhuma camada fique esquecida, e o prompt de análise acelera a primeira versão sem trocar a medição real pela opinião do modelo.</p></div>
+<div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Revisão de arquitetura perguntas por camada Medir antes otimização sem métrica é palpite Priorização esforço × impacto Fórmula, não chute números com origem</p></div>
+</div></div>
+</div>
+</div>
+<div class="p-4 bg-dark-700/30 flex flex-wrap justify-start gap-3">
+<button class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors" onclick="openModal('modal-3-1')" type="button">Ver em Modal</button>
+<a class="px-4 py-2 text-sm bg-purple-700 hover:bg-purple-600 text-white rounded-lg transition-colors" href="modulo-3-1.html">Ver Completo</a>
+</div>
+</div>
+<!-- MÓDULO 3.2 -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 mb-6" data-module-card="" id="modulo-3-2" style="scroll-margin-top:5rem">
+<div class="p-6 border-b border-dark-600">
+<div class="flex items-center justify-between mb-2">
+<span class="text-purple-400 font-bold">3.2</span>
+<div class="flex items-center gap-3">
+<span class="text-xs text-neutral-500">~60 min</span>
+<div aria-label="Progresso do módulo 3.2" class="inema-ring" data-inema-meter="modulo:3-2" style="--ring-size:2.4rem"><span class="inema-ring__value" data-inema-meter-pct="">0%</span></div>
+</div>
+</div>
+<h3 class="text-2xl font-bold mb-2">🧬 Modelos Customizados e Proprietários</h3>
+<p class="text-neutral-400 text-sm">Pré-treino contínuo, destilação, modelos abertos, dados próprios como vantagem e o custo real de manter um modelo.</p>
+</div>
+<div class="divide-y divide-dark-600">
+<div class="topic-item">
+<button aria-controls="t32-1" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+<span class="text-lg">🪜</span><div><span class="font-medium">A escada da customização</span><span class="text-neutral-500 text-sm ml-2">- do prompt ao modelo do zero</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t32-1"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 sm:ml-9">
+<div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O que é A escada da customização ordena as formas de adaptar IA ao seu negócio do mais barato e reversível (prompt) ao mais caro e permanente (modelo do zero). Cada degrau resolve um tipo diferente de problema: prompt e RAG mudam o que o modelo sabe na hora…</p></div>
+<div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">A pergunta &quot;precisamos de um modelo próprio?&quot; aparece em todo planejamento. Com a escada, você troca a resposta de opinião por diagnóstico: qual sintoma, qual degrau, qual teste prova que o degrau de baixo não basta. Isso evita projetos de seis meses que um…</p></div>
+<div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Degrau nível de customização Conhecimento × comportamento RAG × ajuste fino Reversibilidade quanto custa desfazer Prova de necessidade avaliação antes de subir</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button aria-controls="t32-2" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+<span class="text-lg">🔓</span><div><span class="font-medium">Modelos abertos como ponto de partida</span><span class="text-neutral-500 text-sm ml-2">- pesos abertos, licenças e escolha</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t32-2"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 sm:ml-9">
+<div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O que é Um modelo aberto é um modelo cujos pesos você pode baixar, rodar na sua infraestrutura e ajustar. Ele é a base de quase todo modelo proprietário corporativo: você herda a capacidade geral e acrescenta o que é específico do seu negócio.</p></div>
+<div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">A escolha do modelo base define o teto do seu modelo customizado, o hardware necessário e o risco jurídico. Trocar de base depois significa refazer ajuste, avaliação e integração. Decidir com critérios escritos economiza meses.</p></div>
+<div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Pesos abertos baixa e roda onde quiser Licença o que é permitido fazer Quantização menos bits, menos memória Modelo base o teto do que você ajusta</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button aria-controls="t32-3" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+<span class="text-lg">🎛️</span><div><span class="font-medium">Ajuste fino eficiente: LoRA e QLoRA</span><span class="text-neutral-500 text-sm ml-2">- ajustar pouco, com dados limpos</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t32-3"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 sm:ml-9">
+<div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O que é Ajuste fino eficiente em parâmetros (PEFT) é treinar uma fração mínima dos parâmetros para mudar o comportamento do modelo — formato, tom, classificação, uso de ferramentas — sem o custo de treinar tudo. Vários adaptadores podem compartilhar o mesmo…</p></div>
+<div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">LoRA é o degrau de customização com melhor relação custo-benefício quando o problema é comportamento. Saber que ele depende quase inteiramente da qualidade e da limpeza dos dados muda onde o líder técnico coloca a equipe: na curadoria, não na busca do…</p></div>
+<div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Adaptador arquivo pequeno somado à base QLoRA LoRA sobre base em 4 bits Curadoria poucos exemplos bons Separação de avaliação dados que o treino não vê</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button aria-controls="t32-4" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+<span class="text-lg">📚</span><div><span class="font-medium">Pré-treino contínuo</span><span class="text-neutral-500 text-sm ml-2">- ensinar um domínio inteiro sem esquecer o resto</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t32-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 sm:ml-9">
+<div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O que é É continuar o pré-treino de um modelo aberto com um corpus volumoso de um domínio, seguido de ajuste de instruções e avaliação dupla: ganho no domínio e preservação das capacidades gerais.</p></div>
+<div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">É o degrau que separa adaptação de verdadeira especialização. Para domínios com linguagem muito própria pode ser o único caminho para qualidade alta — mas exige volume de dados, GPU e disciplina de avaliação que poucas empresas têm. Saber isso ajuda a dizer…</p></div>
+<div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Corpus texto bruto do domínio Esquecimento catastrófico perde o que sabia Mistura de dados domínio + geral Avaliação dupla ganho e preservação</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button aria-controls="t32-5" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+<span class="text-lg">🧪</span><div><span class="font-medium">Destilação: professor e aluno</span><span class="text-neutral-500 text-sm ml-2">- o grande ensina, o pequeno serve</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t32-5"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 sm:ml-9">
+<div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O que é Destilação transfere a habilidade de um modelo grande, numa tarefa definida, para um modelo pequeno que custa menos por chamada e responde mais rápido — trocando generalidade por eficiência.</p></div>
+<div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Destilação é a forma mais direta de reduzir custo unitário de IA em alto volume sem perder muita qualidade na tarefa que importa. Também é uma armadilha jurídica comum. O líder que conhece as duas faces aprova o projeto certo, com o professor certo.</p></div>
+<div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Professor modelo grande de referência Aluno modelo pequeno treinado Dados sintéticos gerados por modelo Termos de uso podem proibir destilar</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button aria-controls="t32-6" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+<span class="text-lg">🏰</span><div><span class="font-medium">Dados próprios como fosso</span><span class="text-neutral-500 text-sm ml-2">- o que o concorrente não copia</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t32-6"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 sm:ml-9">
+<div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O que é Fosso de dados é a vantagem competitiva que vem de dados exclusivos, legalmente utilizáveis e continuamente renovados pelo uso do produto, somados a uma avaliação própria que mostra se cada versão do modelo é de fato melhor.</p></div>
+<div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Investir em modelo próprio sem fosso de dados é comprar um ativo que deprecia a cada lançamento. Investir no ciclo de dados e no eval próprio cria um ativo que se valoriza e que serve para qualquer modelo base futuro — inclusive para trocar de fornecedor sem…</p></div>
+<div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Fosso vantagem difícil de copiar Flywheel uso que vira melhoria Eval próprio o &quot;bom&quot; do seu negócio Base legal LGPD antes do treino</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button aria-controls="t32-7" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">7</span>
+<span class="text-lg">💰</span><div><span class="font-medium">O custo real de manter um modelo</span><span class="text-neutral-500 text-sm ml-2">- treinar é o começo da conta</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t32-7"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 sm:ml-9">
+<div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O que é É a soma de tudo que um modelo próprio exige ao longo da vida útil — infraestrutura, dados, avaliação, re-treino, segurança, conformidade e equipe — comparada ao custo de usar e adaptar um modelo de terceiros.</p></div>
+<div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Decisões de modelo próprio são das mais caras de reverter em IA. Quem leva ao comitê o TCO completo, um checklist respondido e um critério de reavaliação aprova menos projetos — e os que aprova dão retorno.</p></div>
+<div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">TCO custo da vida inteira Custo de oportunidade o mercado não para Construir × comprar decisão com checklist Reavaliação a cada base nova</p></div>
+</div></div>
+</div>
+</div>
+<div class="p-4 bg-dark-700/30 flex flex-wrap justify-start gap-3">
+<button class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors" onclick="openModal('modal-3-2')" type="button">Ver em Modal</button>
+<a class="px-4 py-2 text-sm bg-purple-700 hover:bg-purple-600 text-white rounded-lg transition-colors" href="modulo-3-2.html">Ver Completo</a>
+</div>
+</div>
+<!-- MÓDULO 3.3 -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 mb-6" data-module-card="" id="modulo-3-3" style="scroll-margin-top:5rem">
+<div class="p-6 border-b border-dark-600">
+<div class="flex items-center justify-between mb-2">
+<span class="text-purple-400 font-bold">3.3</span>
+<div class="flex items-center gap-3">
+<span class="text-xs text-neutral-500">~55 min</span>
+<div aria-label="Progresso do módulo 3.3" class="inema-ring" data-inema-meter="modulo:3-3" style="--ring-size:2.4rem"><span class="inema-ring__value" data-inema-meter-pct="">0%</span></div>
+</div>
+</div>
+<h3 class="text-2xl font-bold mb-2">🎞️ IA Multimodal Avançada</h3>
+<p class="text-neutral-400 text-sm">Como modelos multimodais funcionam, voz em tempo real, vídeo, documentos complexos e uso do computador por agentes.</p>
+</div>
+<div class="divide-y divide-dark-600">
+<div class="topic-item">
+<button aria-controls="t33-1" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+<span class="text-lg">👁️</span><div><span class="font-medium">Como um modelo multimodal enxerga</span><span class="text-neutral-500 text-sm ml-2">- pixels viram tokens que o LLM lê</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t33-1"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 sm:ml-9">
+<div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O que é Um modelo multimodal é um LLM que recebe (e às vezes produz) mais de um tipo de dado. Imagem, áudio e vídeo são convertidos em tokens por encoders próprios e entram na mesma janela de contexto do texto — ocupando espaço e custando como texto.</p></div>
+<div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Saber que imagem vira token explica custo, latência e limites — por que texto miúdo em foto grande falha, por que dez páginas escaneadas estouram a janela — e orienta a decisão entre um modelo nativo de fronteira e um acoplado aberto que roda dentro da…</p></div>
+<div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Encoder visual pixels em vetores Projeção ponte para o LLM Token de imagem ocupa contexto e custa Nativo × acoplado qualidade × adaptação</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button aria-controls="t33-2" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+<span class="text-lg">📄</span><div><span class="font-medium">Documentos complexos</span><span class="text-neutral-500 text-sm ml-2">- PDF, tabela, gráfico e manuscrito</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t33-2"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 sm:ml-9">
+<div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O que é Extração estruturada de documentos: uma imagem ou PDF entra, um JSON validado com campos conhecidos sai. O modelo lê o layout; o seu código confere formato, soma e consistência antes de gravar.</p></div>
+<div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Extração de documentos é, de longe, um dos usos multimodais com retorno mais fácil de medir: horas de digitação viram minutos de revisão. Mas só se a arquitetura tiver esquema, validação e revisão — sem isso, o erro silencioso entra no sistema contábil.</p></div>
+<div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">OCR texto sem layout Leitura visual entende a página Esquema de saída campos fixos em JSON null honesto ilegível não é chute</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button aria-controls="t33-3" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+<span class="text-lg">🎙️</span><div><span class="font-medium">Voz em tempo real</span><span class="text-neutral-500 text-sm ml-2">- cascata ou fala-a-fala, e a latência</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t33-3"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 sm:ml-9">
+<div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O que é Um sistema de voz em tempo real é um laço contínuo de ouvir, decidir o fim do turno, pensar e falar — com orçamento de tempo em cada etapa e a possibilidade de ser interrompido a qualquer momento.</p></div>
+<div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Atendimento, triagem e agendamento por voz são casos óbvios para empresas brasileiras, que vivem de ligação e áudio de WhatsApp. Escolher a arquitetura errada gera um robô que interrompe o cliente ou demora a responder — e isso derruba a adoção mais rápido do…</p></div>
+<div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">STT / TTS fala ↔ texto Cascata modular e auditável VAD detecta o fim da fala Barge-in aceitar interrupção</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button aria-controls="t33-4" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+<span class="text-lg">🎬</span><div><span class="font-medium">Vídeo: entender e gerar</span><span class="text-neutral-500 text-sm ml-2">- amostrar quadros, gerar com consistência</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t33-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 sm:ml-9">
+<div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O que é Entender vídeo é transformá-lo em quadros amostrados + transcrição e pedir ao modelo uma linha do tempo de eventos. Gerar vídeo é sintetizar quadros coerentes entre si a partir de texto ou imagem, com custo e duração ainda limitados.</p></div>
+<div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Vídeo é a modalidade mais cara. Quem decide a taxa de amostragem por medição, e não por chute, transforma um projeto inviável em viável — e quem conhece os limites da geração não promete à diretoria um comercial inteiro feito por IA sem revisão.</p></div>
+<div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Amostragem menos quadros, menos custo Linha do tempo eventos com instante Difusão ruído refinado em imagem Consistência temporal o mesmo do início ao fim</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button aria-controls="t33-5" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+<span class="text-lg">🖱️</span><div><span class="font-medium">Agentes que usam o computador</span><span class="text-neutral-500 text-sm ml-2">- ver a tela, decidir, clicar — com cerca</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t33-5"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 sm:ml-9">
+<div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O que é Um laço de percepção e ação: capturar a tela, decidir, agir, verificar o resultado. A arquitetura segura cerca esse laço com isolamento, lista de ações permitidas, limite de passos e um portão humano nas ações que não têm volta.</p></div>
+<div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Uso do computador destrava automação onde antes só cabia RPA frágil ou digitação manual. Mas é o recurso multimodal com maior superfície de ataque. O líder que sabe exigir sandbox, permissão mínima e portão humano consegue aprovar o piloto sem expor a empresa.</p></div>
+<div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Computer use agente opera a tela Sandbox ambiente isolado Injeção indireta ordem escondida na tela Portão humano aprovação no irreversível</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button aria-controls="t33-6" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+<span class="text-lg">📏</span><div><span class="font-medium">Avaliação multimodal</span><span class="text-neutral-500 text-sm ml-2">- gabarito, acurácia por campo, WER</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t33-6"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 sm:ml-9">
+<div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O que é Avaliar é comparar, sempre no mesmo conjunto, a saída do sistema com um gabarito humano, com métrica por campo ou por palavra. Toda troca de modelo, prompt ou resolução roda de novo contra esse conjunto antes de ir para produção.</p></div>
+<div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Sem gabarito, a escolha de modelo vira opinião e a troca de versão vira loteria. Com ele, você compara fornecedores no seu dado, justifica custo com número próprio e detecta regressão antes do cliente.</p></div>
+<div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Gabarito resposta certa humana Acurácia por campo a média esconde WER / CER erro por palavra e caractere Regressão piorou ao trocar algo</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button aria-controls="t33-7" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">7</span>
+<span class="text-lg">🏗️</span><div><span class="font-medium">Arquitetura de produto e LGPD</span><span class="text-neutral-500 text-sm ml-2">- custo, roteamento e dado biométrico</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t33-7"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 sm:ml-9">
+<div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O que é A arquitetura de produto multimodal é a cadeia pré-processamento → roteamento → modelo → validação → revisão humana, desenhada junto com as regras de proteção de dados de cada modalidade que entra.</p></div>
+<div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Multimodal multiplica valor e risco ao mesmo tempo: mais tipos de dado entram, mais caro fica e mais regras se aplicam. Quem desenha a cadeia completa — custo, roteamento, avaliação e LGPD — entrega um produto que passa no jurídico e no financeiro, não só na…</p></div>
+<div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Pré-processamento onde o custo cai Roteamento modelo certo por caso Dado biométrico sensível na LGPD Retenção mínima guardar só o extraído</p></div>
+</div></div>
+</div>
+</div>
+<div class="p-4 bg-dark-700/30 flex flex-wrap justify-start gap-3">
+<button class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors" onclick="openModal('modal-3-3')" type="button">Ver em Modal</button>
+<a class="px-4 py-2 text-sm bg-purple-700 hover:bg-purple-600 text-white rounded-lg transition-colors" href="modulo-3-3.html">Ver Completo</a>
+</div>
+</div>
+<!-- MÓDULO 3.4 -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 mb-6" data-module-card="" id="modulo-3-4" style="scroll-margin-top:5rem">
+<div class="p-6 border-b border-dark-600">
+<div class="flex items-center justify-between mb-2">
+<span class="text-purple-400 font-bold">3.4</span>
+<div class="flex items-center gap-3">
+<span class="text-xs text-neutral-500">~50 min</span>
+<div aria-label="Progresso do módulo 3.4" class="inema-ring" data-inema-meter="modulo:3-4" style="--ring-size:2.4rem"><span class="inema-ring__value" data-inema-meter-pct="">0%</span></div>
+</div>
+</div>
+<h3 class="text-2xl font-bold mb-2">🔬 Pesquisa e Papers de IA</h3>
+<p class="text-neutral-400 text-sm">Como ler um paper, reproduzir resultados, desconfiar de benchmarks e transformar pesquisa em produto.</p>
+</div>
+<div class="divide-y divide-dark-600">
+<div class="topic-item">
+<button aria-controls="t34-1" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+<span class="text-lg">🗺️</span><div><span class="font-medium">O ecossistema da pesquisa</span><span class="text-neutral-500 text-sm ml-2">- de onde vem a pesquisa e quanto confiar</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t34-1"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 sm:ml-9">
+<div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O que é É o caminho que uma ideia percorre do laboratório ao seu produto: preprint, revisão, código aberto, adoção por bibliotecas e, por fim, recurso de mercado. Cada etapa troca velocidade por confiança.</p></div>
+<div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Arquitetos e líderes técnicos tomam decisões caras — trocar de modelo, adotar uma técnica de recuperação, montar um time de ajuste fino — com base no que leram. Saber de que canal veio a informação muda o tamanho da aposta: um preprint justifica um teste de…</p></div>
+<div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Preprint publicado antes da revisão Revisão por pares filtro, não garantia System card ficha do modelo lançado Velocidade × confiança a troca de cada canal</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button aria-controls="t34-2" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+<span class="text-lg">📖</span><div><span class="font-medium">Leitura em três passadas</span><span class="text-neutral-500 text-sm ml-2">- ler o necessário, na profundidade certa</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t34-2"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 sm:ml-9">
+<div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O que é Um protocolo de leitura em profundidade crescente: visão geral, compreensão e reconstrução. Cada nível termina com uma decisão explícita de parar ou continuar.</p></div>
+<div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">O gargalo de quem lidera não é acesso a papers, é atenção. Um protocolo com portões explícitos transforma uma pilha infinita de leitura em uma fila curta de decisões, e deixa o resto da equipe saber em que profundidade cada paper foi lido.</p></div>
+<div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Primeira passada relevante ou não Segunda passada entender a evidência Terceira passada reconstruir e questionar Portão parar também é decisão</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button aria-controls="t34-3" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+<span class="text-lg">🧩</span><div><span class="font-medium">Anatomia de um paper</span><span class="text-neutral-500 text-sm ml-2">- onde cada resposta está escondida</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t34-3"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 sm:ml-9">
+<div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O que é É o mapa das seções de um paper e da pergunta que cada uma responde. Saber o mapa permite ir direto ao trecho que interessa para a sua decisão.</p></div>
+<div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Saber onde cada resposta mora reduz uma leitura de horas a minutos focados. Para um gestor, isso significa conseguir fazer a pergunta certa ao time — &quot;qual foi a ablação?&quot; — em vez de aceitar o resumo como prova.</p></div>
+<div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Ablação tira uma peça, mede a perda Baseline a referência de comparação Barra de erro variação entre execuções Apêndice onde mora a reprodução</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button aria-controls="t34-4" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+<span class="text-lg">📊</span><div><span class="font-medium">Por que benchmarks enganam</span><span class="text-neutral-500 text-sm ml-2">- contaminação, saturação e a lei de Goodhart</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t34-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 sm:ml-9">
+<div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O que é É a leitura crítica de números de avaliação: entender o que o benchmark mede, se ele ainda separa modelos e se o resultado sobrevive em dados que o modelo nunca viu — especialmente os seus.</p></div>
+<div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Lançamentos de modelos chegam acompanhados de tabelas de benchmark escolhidas por quem lança. Quem lê esses números com ceticismo evita trocas de fornecedor desnecessárias e cobra do time a única evidência que decide: desempenho medido nos dados da empresa.</p></div>
+<div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Contaminação teste vazou para o treino Saturação todos no teto Lei de Goodhart meta deixa de medir Avaliação própria seus casos, fora da internet</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button aria-controls="t34-5" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+<span class="text-lg">🔁</span><div><span class="font-medium">Reproduzir resultados</span><span class="text-neutral-500 text-sm ml-2">- o resultado se repete no seu ambiente?</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t34-5"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 sm:ml-9">
+<div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O que é É o trabalho de confirmar uma afirmação de pesquisa com controle de versões, sementes, configuração registrada e várias execuções — primeiro nas condições do paper, depois nas suas.</p></div>
+<div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Muita decisão de &quot;o modelo novo é melhor&quot; é tomada com uma execução de poucos exemplos. Exigir média e variação é uma regra barata que evita migrações caras baseadas em sorte — e dá ao time uma linguagem comum para discutir resultados.</p></div>
+<div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Reproduzir mesmo método, mesmo dado Replicar funciona nos seus dados Semente controla a aleatoriedade Desvio-padrão quanto o resultado oscila</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button aria-controls="t34-6" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+<span class="text-lg">🏭</span><div><span class="font-medium">Do paper ao produto</span><span class="text-neutral-500 text-sm ml-2">- portões entre a ideia e a produção</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t34-6"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 sm:ml-9">
+<div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O que é É um processo de adoção em degraus — leitura, reprodução, prova nos dados próprios, piloto e produção —, cada um com um critério de passagem combinado antes de começar.</p></div>
+<div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Pesquisa sem processo de adoção vira uma de duas coisas: curiosidade que nunca entrega, ou aposta grande sem evidência. A escada com portões dá à liderança um jeito de dizer &quot;sim, com limite&quot; — o equilíbrio que permite inovar sem pôr o produto em risco.</p></div>
+<div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Escada de adoção um degrau por vez Critério prévio escrito antes do teste Menor prova o teste mais barato que decide Plano de reversão voltar atrás com segurança</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button aria-controls="t34-7" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">7</span>
+<span class="text-lg">📡</span><div><span class="font-medium">O radar de pesquisa da equipe</span><span class="text-neutral-500 text-sm ml-2">- uma rotina semanal que cabe na agenda</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t34-7"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 sm:ml-9">
+<div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O que é Uma rotina de equipe com fontes definidas, fichas padronizadas e um radar de técnicas em quatro estados, revisado com frequência fixa.</p></div>
+<div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">O valor de acompanhar pesquisa aparece meses depois, quando um problema surge e a equipe já sabe quais técnicas foram testadas, quais falharam e por quê. Sem registro, cada pessoa reaprende sozinha e o conhecimento sai pela porta com quem muda de emprego.</p></div>
+<div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Radar técnicas por estado Clube de leitura um paper por semana Ficha decisão rastreável Responsável nome e prazo</p></div>
+</div></div>
+</div>
+</div>
+<div class="p-4 bg-dark-700/30 flex flex-wrap justify-start gap-3">
+<button class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors" onclick="openModal('modal-3-4')" type="button">Ver em Modal</button>
+<a class="px-4 py-2 text-sm bg-purple-700 hover:bg-purple-600 text-white rounded-lg transition-colors" href="modulo-3-4.html">Ver Completo</a>
+</div>
+</div>
+<!-- MÓDULO 3.5 -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 mb-6" data-module-card="" id="modulo-3-5" style="scroll-margin-top:5rem">
+<div class="p-6 border-b border-dark-600">
+<div class="flex items-center justify-between mb-2">
+<span class="text-purple-400 font-bold">3.5</span>
+<div class="flex items-center gap-3">
+<span class="text-xs text-neutral-500">~55 min</span>
+<div aria-label="Progresso do módulo 3.5" class="inema-ring" data-inema-meter="modulo:3-5" style="--ring-size:2.4rem"><span class="inema-ring__value" data-inema-meter-pct="">0%</span></div>
+</div>
+</div>
+<h3 class="text-2xl font-bold mb-2">🎮 IA Reinforcement Learning</h3>
+<p class="text-neutral-400 text-sm">Agente, ambiente e recompensa; RLHF, RL com recompensas verificáveis e por que o RL fez os modelos raciocinarem.</p>
+</div>
+<div class="divide-y divide-dark-600">
+<div class="topic-item">
+<button aria-controls="t35-1" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+<span class="text-lg">🔄</span><div><span class="font-medium">O ciclo do aprendizado por reforço</span><span class="text-neutral-500 text-sm ml-2">- agente, ambiente e recompensa</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t35-1"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 sm:ml-9">
+<div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O que é RL é aprender uma política por tentativa e erro, guiada por recompensas. A pergunta que ele responde não é &quot;qual a resposta certa?&quot;, e sim &quot;qual sequência de decisões dá o melhor resultado acumulado?&quot;.</p></div>
+<div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">RL deixou de ser assunto de robótica e jogos: é parte do treino de todos os grandes assistentes atuais. Quem entende o ciclo agente–ambiente–recompensa consegue ler anúncios de modelos, conversar com fornecedores sobre ajuste fino e prever comportamentos…</p></div>
+<div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Agente quem decide Recompensa a nota de cada passo Política estado → ação Retorno soma descontada das notas</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button aria-controls="t35-2" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+<span class="text-lg">🧭</span><div><span class="font-medium">Explorar, valor e política</span><span class="text-neutral-500 text-sm ml-2">- explorar, explotar e as famílias de algoritmos</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t35-2"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 sm:ml-9">
+<div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O que é É o núcleo técnico do RL: equilibrar exploração e aproveitamento, e escolher entre aprender o valor das ações, aprender a política diretamente ou combinar as duas abordagens.</p></div>
+<div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Os mesmos conceitos — valor, política, exploração, desconto — aparecem no treino de modelos de linguagem, em sistemas de recomendação e em agentes. Ver um agente aprender numa grade 4x4 dá a intuição que nenhum diagrama dá: o aprendizado depende de quanto ele…</p></div>
+<div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Explorar × explotar novo ou conhecido Função Q valor de cada ação Policy gradient ajusta a política direto PPO ator-crítico estável</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button aria-controls="t35-3" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+<span class="text-lg">🏆</span><div><span class="font-medium">Recompensa e reward hacking</span><span class="text-neutral-500 text-sm ml-2">- o agente otimiza o que você mede, não o que você quer</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t35-3"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 sm:ml-9">
+<div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O que é Reward hacking é quando a recompensa sobe e o objetivo real não melhora — ou piora. Acontece porque a recompensa é sempre uma aproximação (proxy) do que se quer.</p></div>
+<div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Comportamentos estranhos de assistentes — bajulação, verbosidade, testes &quot;consertados&quot; — fazem sentido quando você os lê como reward hacking. Para quem vai ajustar modelos ou avaliar agentes, desenhar a recompensa e a métrica independente é a parte do projeto…</p></div>
+<div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Proxy medida aproximada Reward hacking atalho que engana a nota Bajulação concordar para agradar Métrica independente o que o agente não vê</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button aria-controls="t35-4" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+<span class="text-lg">👥</span><div><span class="font-medium">RLHF: aprender com preferências</span><span class="text-neutral-500 text-sm ml-2">- preferências humanas viram recompensa</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t35-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 sm:ml-9">
+<div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O que é RLHF é ajustar um modelo de linguagem com RL usando como recompensa um modelo treinado em comparações humanas de respostas, com uma trava que o mantém perto do comportamento original.</p></div>
+<div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">O RLHF explica a &quot;personalidade&quot; dos assistentes: o tom, as recusas, a tendência a concordar. Para quem vai ajustar um modelo aberto com dados próprios, entender as três etapas e as variantes ajuda a escolher a mais barata que resolve — muitas vezes DPO com…</p></div>
+<div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Modelo de recompensa prevê a preferência humana Penalidade KL não fugir do original RLAIF feedback de outro modelo DPO preferência sem RL explícito</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button aria-controls="t35-5" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+<span class="text-lg">✅</span><div><span class="font-medium">RL com recompensas verificáveis</span><span class="text-neutral-500 text-sm ml-2">- quando um programa confere a resposta</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t35-5"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 sm:ml-9">
+<div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O que é RLVR é treinar por reforço usando como recompensa um resultado checado por programa — resposta correta, testes que passam, formato válido —, gerando várias tentativas por problema e reforçando as que se saem melhor.</p></div>
+<div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Recompensas verificáveis são o motivo de os modelos terem melhorado tanto em matemática e programação, áreas em que existe gabarito. Para uma empresa, a lição prática é: se a sua tarefa tem um verificador confiável (testes, regras de negócio checáveis…</p></div>
+<div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Verificador confere, não opina RLVR recompensa por programa GRPO compara dentro do grupo Testes ocultos contra a trapaça</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button aria-controls="t35-6" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+<span class="text-lg">🧠</span><div><span class="font-medium">Por que o RL fez os modelos raciocinarem</span><span class="text-neutral-500 text-sm ml-2">- de jogos de tabuleiro aos modelos que pensam antes</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t35-6"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 sm:ml-9">
+<div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O que é É a mudança de 2024–2025: aplicar RL com recompensas verificáveis em modelos de linguagem fez surgir cadeias de raciocínio longas e úteis, e transformou &quot;tempo de pensar&quot; num controle de qualidade e custo.</p></div>
+<div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">A escolha entre um modelo rápido e um de raciocínio é hoje uma das decisões de arquitetura com maior impacto em custo e qualidade. Entender de onde vem o raciocínio — RL com verificador — ajuda a prever onde ele ajuda (tarefas com etapas e gabarito) e onde é…</p></div>
+<div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Modelo de raciocínio pensa antes de responder Test-time compute gastar mais na resposta Comportamento emergente não foi ensinado por exemplo Orçamento qualidade × custo</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button aria-controls="t35-7" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">7</span>
+<span class="text-lg">🏢</span><div><span class="font-medium">RL na sua empresa</span><span class="text-neutral-500 text-sm ml-2">- quando vale a pena e quando não</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t35-7"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 sm:ml-9">
+<div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O que é Um critério de decisão: RL só entra quando há decisões em sequência ou um verificador confiável, quando alternativas mais simples (prompt, RAG, SFT, DPO) já foram medidas e não bastam, e quando existe orçamento para ambiente e avaliação.</p></div>
+<div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">RL está no centro das notícias de IA, e isso gera pressão para &quot;usar RL&quot;. Um líder que sabe as condições em que ele funciona protege o orçamento da equipe, escolhe a alternativa mais barata quando ela basta e reconhece o caso raro em que um ambiente com…</p></div>
+<div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Consumir × treinar a maioria só consome Simulador lugar seguro para errar Escada de alternativas prompt → RAG → SFT → DPO → RL Custo oculto ambiente e avaliação</p></div>
+</div></div>
+</div>
+</div>
+<div class="p-4 bg-dark-700/30 flex flex-wrap justify-start gap-3">
+<button class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors" onclick="openModal('modal-3-5')" type="button">Ver em Modal</button>
+<a class="px-4 py-2 text-sm bg-purple-700 hover:bg-purple-600 text-white rounded-lg transition-colors" href="modulo-3-5.html">Ver Completo</a>
+</div>
+</div>
+<!-- MÓDULO 3.6 -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 mb-6" data-module-card="" id="modulo-3-6" style="scroll-margin-top:5rem">
+<div class="p-6 border-b border-dark-600">
+<div class="flex items-center justify-between mb-2">
+<span class="text-purple-400 font-bold">3.6</span>
+<div class="flex items-center gap-3">
+<span class="text-xs text-neutral-500">~60 min</span>
+<div aria-label="Progresso do módulo 3.6" class="inema-ring" data-inema-meter="modulo:3-6" style="--ring-size:2.4rem"><span class="inema-ring__value" data-inema-meter-pct="">0%</span></div>
+</div>
+</div>
+<h3 class="text-2xl font-bold mb-2">🛡️ Segurança e Red Teaming</h3>
+<p class="text-neutral-400 text-sm">Prompt injection, vazamento de dados, agentes com permissões demais, red teaming e defesas em camadas.</p>
+</div>
+<div class="divide-y divide-dark-600">
+<div class="topic-item">
+<button aria-controls="t36-1" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+<span class="text-lg">🎯</span><div><span class="font-medium">A superfície de ataque</span><span class="text-neutral-500 text-sm ml-2">- onde um sistema com LLM pode ser atacado</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t36-1"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 sm:ml-9">
+<div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O que é É o conjunto de pontos por onde um atacante pode influenciar um sistema com IA: o que o usuário digita, o conteúdo que o sistema lê (páginas, arquivos, e-mails, resultados de ferramentas), as ferramentas que ele pode acionar e os canais pelos quais a…</p></div>
+<div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">A segurança de IA é decidida na arquitetura, não no prompt. Quem enxerga a superfície de ataque antes de construir escolhe fluxos que não juntam as três capacidades — e evita depender de uma defesa que, hoje, nenhum fornecedor consegue garantir por completo.</p></div>
+<div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Superfície de ataque por onde entra o risco OWASP LLM Top 10 lista de riscos comuns MITRE ATLAS catálogo de técnicas Trifecta letal dados + não confiável + saída</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button aria-controls="t36-2" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+<span class="text-lg">💉</span><div><span class="font-medium">Injeção de prompt direta</span><span class="text-neutral-500 text-sm ml-2">- quando o próprio usuário tenta reprogramar o sistema</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t36-2"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 sm:ml-9">
+<div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O que é É quando a entrada do usuário tenta substituir ou contornar as instruções do sistema. Ela não pode ser eliminada por um prompt &quot;mais forte&quot;; só pode ser contida limitando o que o sistema consegue fazer quando é enganado.</p></div>
+<div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Todo produto com campo de texto aberto para o público recebe tentativas de injeção — por curiosidade, por diversão ou com intenção. A diferença entre um incidente constrangedor e um incidente grave é se o sistema foi desenhado assumindo que o modelo pode ser…</p></div>
+<div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Injeção direta o usuário ataca Jailbreak burlar a política do fabricante Prompt de sistema assuma que vaza Pior caso o atacante controla a saída</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button aria-controls="t36-3" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+<span class="text-lg">🕸️</span><div><span class="font-medium">Injeção de prompt indireta</span><span class="text-neutral-500 text-sm ml-2">- o ataque vem dentro do conteúdo que o sistema lê</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t36-3"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 sm:ml-9">
+<div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O que é É a injeção que chega por dados de terceiros que o sistema consome. O atacante não precisa de acesso à sua aplicação — basta conseguir colocar texto em algum lugar que ela vai ler.</p></div>
+<div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">A injeção indireta é o risco que mais cresce com a adoção de agentes, porque transforma qualquer conteúdo da internet em possível vetor de ataque. Líderes que aprovam integrações — &quot;vamos deixar o agente ler os e-mails e responder&quot; — precisam fazer a pergunta…</p></div>
+<div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Injeção indireta o ataque vem no conteúdo Conteúdo não confiável tudo que vem de fora RAG envenenado documento hostil na base Tool poisoning ordens na descrição da ferramenta</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button aria-controls="t36-4" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+<span class="text-lg">🔑</span><div><span class="font-medium">Agentes com permissões demais</span><span class="text-neutral-500 text-sm ml-2">- menor privilégio para quem pode ser enganado</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t36-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 sm:ml-9">
+<div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O que é Agência excessiva é dar a um agente mais ferramentas, mais acesso ou mais autonomia do que a tarefa exige. Como o agente pode ser enganado, tudo o que ele pode fazer, um atacante também pode.</p></div>
+<div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Como a injeção de prompt não tem solução completa, a permissão do agente é o teto do estrago. Reduzir funcionalidade, acesso e autonomia é a defesa mais confiável que existe hoje — e a mais barata de aplicar antes de colocar o agente em produção.</p></div>
+<div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Agência excessiva função, acesso, autonomia Menor privilégio só o necessário Aprovação humana para o irreversível Sandbox execução isolada</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button aria-controls="t36-5" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+<span class="text-lg">📤</span><div><span class="font-medium">Exfiltração de dados</span><span class="text-neutral-500 text-sm ml-2">- os canais por onde os dados saem</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t36-5"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 sm:ml-9">
+<div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O que é É levar dados de dentro para fora através de algo que o sistema produz: uma imagem, um link, uma chamada de ferramenta, uma mensagem. A defesa é fechar ou filtrar cada canal de saída, não só proteger a entrada.</p></div>
+<div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">A injeção é o meio; a exfiltração é o prejuízo. Fechar os canais de saída é a camada que transforma um ataque bem-sucedido de injeção num incidente sem vazamento — e, com dados pessoais, é a diferença entre um registro interno e uma comunicação obrigatória à…</p></div>
+<div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Exfiltração dados saem sem autorização Imagem Markdown vaza ao renderizar Egress controle da saída de rede Incidente LGPD comunicar ANPD e titulares</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button aria-controls="t36-6" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+<span class="text-lg">🧱</span><div><span class="font-medium">Defesas em camadas</span><span class="text-neutral-500 text-sm ml-2">- nenhuma camada basta sozinha</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t36-6"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 sm:ml-9">
+<div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O que é É empilhar controles independentes — entrada, isolamento, permissões, saída, rede e monitoramento — para que a falha de um não comprometa o sistema. As camadas em código valem mais que as camadas no prompt.</p></div>
+<div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Fornecedores de modelos melhoram a resistência a injeções a cada versão, mas nenhum promete imunidade. Uma arquitetura em camadas tira a segurança do sistema da mão de uma única peça que você não controla, e permite trocar de modelo sem refazer a análise de…</p></div>
+<div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Defesa em profundidade várias camadas independentes Spotlighting marcar o que é dado Leitor × executor quem lê não age Canário segredo falso que denuncia vazamento</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button aria-controls="t36-7" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">7</span>
+<span class="text-lg">🧪</span><div><span class="font-medium">Roteiro de red teaming</span><span class="text-neutral-500 text-sm ml-2">- atacar o próprio sistema antes que outros ataquem</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t36-7"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 sm:ml-9">
+<div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O que é É um exercício autorizado e registrado de ataque ao próprio sistema: escopo, casos de teste, execução repetida, classificação de severidade, correção e reteste — e a bateria vira parte do pipeline de entrega.</p></div>
+<div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Um red team interno, mesmo pequeno, encontra as falhas óbvias antes do primeiro usuário curioso. E uma bateria automatizada transforma segurança de evento pontual em hábito: cada troca de modelo passa pelos mesmos ataques, e a liderança recebe um número…</p></div>
+<div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Red teaming atacar o próprio sistema Autorização escopo e prazo por escrito Taxa de quebra repita cada caso Regressão reteste a cada mudança</p></div>
+</div></div>
+</div>
+</div>
+<div class="p-4 bg-dark-700/30 flex flex-wrap justify-start gap-3">
+<button class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors" onclick="openModal('modal-3-6')" type="button">Ver em Modal</button>
+<a class="px-4 py-2 text-sm bg-purple-700 hover:bg-purple-600 text-white rounded-lg transition-colors" href="modulo-3-6.html">Ver Completo</a>
+</div>
+</div>
+<!-- MÓDULO 3.7 -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 mb-6" data-module-card="" id="modulo-3-7" style="scroll-margin-top:5rem">
+<div class="p-6 border-b border-dark-600">
+<div class="flex items-center justify-between mb-2">
+<span class="text-purple-400 font-bold">3.7</span>
+<div class="flex items-center gap-3">
+<span class="text-xs text-neutral-500">~55 min</span>
+<div aria-label="Progresso do módulo 3.7" class="inema-ring" data-inema-meter="modulo:3-7" style="--ring-size:2.4rem"><span class="inema-ring__value" data-inema-meter-pct="">0%</span></div>
+</div>
+</div>
+<h3 class="text-2xl font-bold mb-2">🏢 IA em Produção — Escala Enterprise</h3>
+<p class="text-neutral-400 text-sm">Plataforma interna de IA, gateway, identidade, auditoria, SLAs, FinOps e adoção por toda a empresa.</p>
+</div>
+<div class="divide-y divide-dark-600">
+<div class="topic-item">
+<button aria-controls="t37-1" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+<span class="text-lg">🏗️</span><div><span class="font-medium">Plataforma interna de IA</span><span class="text-neutral-500 text-sm ml-2">- plataforma, não projeto</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t37-1"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 sm:ml-9">
+<div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O que é Uma plataforma interna de IA é a camada comum entre os aplicativos e os modelos: um gateway por onde passam todas as chamadas, serviços compartilhados (contexto, avaliação, ferramentas) e três controles transversais — identidade, auditoria e custo.</p></div>
+<div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">O custo de uma plataforma é pago uma vez; o custo de não ter é pago a cada projeto novo, em retrabalho, incidente e auditoria. Para quem arquiteta, a pergunta deixa de ser &quot;qual modelo usar&quot; e vira &quot;como qualquer time usa qualquer modelo com segurança e sem…</p></div>
+<div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Plataforma interna produto cujo cliente são os times Caminho pavimentado o certo é o mais fácil Serviço compartilhado feito uma vez, usado por todos Controle transversal identidade, auditoria, custo</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button aria-controls="t37-2" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+<span class="text-lg">🚪</span><div><span class="font-medium">Gateway de modelos</span><span class="text-neutral-500 text-sm ml-2">- uma porta para todos os modelos</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t37-2"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 sm:ml-9">
+<div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O que é Um ponto único de entrada para todos os modelos da empresa, que separa o nome lógico que o app pede do modelo físico que responde, e aplica autenticação, limites, cache, fallback e registro em cada chamada.</p></div>
+<div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Os modelos mudam a cada poucos meses e os preços também. Sem gateway, cada troca é um projeto de migração em dez apps. Com gateway, é uma linha de configuração testada num lugar só — e o mesmo ponto vira a base para auditoria, limites e custo, que vêm a…</p></div>
+<div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Rota lógica nome de capacidade, não de fornecedor Fallback plano B automático Limite por equipe chamadas e tokens por minuto API compatível um formato, muitos modelos</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button aria-controls="t37-3" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+<span class="text-lg">🔐</span><div><span class="font-medium">Identidade e acesso</span><span class="text-neutral-500 text-sm ml-2">- quem pode o quê, inclusive o agente</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t37-3"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 sm:ml-9">
+<div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O que é É o conjunto de regras que liga cada chamada de IA a uma pessoa ou a um agente identificado, aplica o papel dessa identidade aos dados e ferramentas acessados, e mantém o mínimo de privilégio necessário para a tarefa.</p></div>
+<div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Os vazamentos mais prováveis em IA corporativa não são ataques sofisticados ao modelo: são permissões mal herdadas. Um prompt pode ser contornado; um filtro de permissão aplicado antes da busca, não. Quem desenha identidade certo desde o início evita refazer…</p></div>
+<div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">SSO uma conta corporativa RBAC acesso por papel Identidade de serviço o agente tem conta própria Menor privilégio só o necessário</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button aria-controls="t37-4" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+<span class="text-lg">📜</span><div><span class="font-medium">Auditoria e rastreabilidade</span><span class="text-neutral-500 text-sm ml-2">- reconstruir qualquer resposta depois</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t37-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 sm:ml-9">
+<div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O que é Rastreabilidade é a capacidade de reconstruir qualquer resposta: quem pediu, com qual configuração, que dados entraram, o que o modelo e as ferramentas fizeram e quanto custou — guardando só o necessário e pelo tempo necessário.</p></div>
+<div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Sem rastreabilidade, todo incidente vira opinião contra opinião, e a única resposta segura é desligar o sistema. Com ela, você encontra a causa, corrige a versão do prompt ou o documento errado e mostra ao jurídico e ao cliente exatamente o que aconteceu.</p></div>
+<div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Trace o pedido de ponta a ponta Span uma etapa com tempo e atributos Versão do prompt prompt é código versionado Retenção quanto tempo guardar e por quê</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button aria-controls="t37-5" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+<span class="text-lg">📈</span><div><span class="font-medium">SLAs e confiabilidade</span><span class="text-neutral-500 text-sm ml-2">- latência, erro e qualidade com meta</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t37-5"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 sm:ml-9">
+<div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O que é É definir metas mensuráveis de disponibilidade, latência e qualidade para cada caso de uso, medir continuamente e mudar versões (modelo, prompt, índice) só por etapas com portões que verificam essas metas.</p></div>
+<div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Prometer SLA sem medir qualidade é prometer o que você não controla. Times que definem SLO nos três eixos e mudam por portões conseguem atualizar modelos com frequência sem medo — e quem não faz isso acaba congelando a versão por receio, ficando para trás.</p></div>
+<div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">SLI · SLO · SLA medida, meta, contrato p95 o tempo da cauda, não a média Canário nova versão numa fatia Rollback volta testada antes</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button aria-controls="t37-6" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+<span class="text-lg">💰</span><div><span class="font-medium">FinOps de IA</span><span class="text-neutral-500 text-sm ml-2">- custo por tarefa resolvida</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t37-6"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 sm:ml-9">
+<div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O que é FinOps de IA é medir o custo de cada chamada, atribuí-lo a uma equipe e caso de uso, mostrar isso a quem decide (showback) ou cobrar internamente (chargeback), e otimizar pelo custo por resultado — não pelo custo por token.</p></div>
+<div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">O primeiro corte de orçamento de IA quase nunca vem de um caso que deu errado: vem de uma fatura que ninguém conseguiu explicar. Com custo atribuído e medido por resultado, você defende os casos que pagam a conta e encerra os que não pagam, com número na mão.</p></div>
+<div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Showback mostrar o custo a quem consome Chargeback cobrar internamente Custo por resultado a métrica que importa Teto por agente limite de passos e gasto</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button aria-controls="t37-7" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">7</span>
+<span class="text-lg">🌱</span><div><span class="font-medium">Adoção por toda a empresa</span><span class="text-neutral-500 text-sm ml-2">- da plataforma pronta ao uso diário</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t37-7"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 sm:ml-9">
+<div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O que é É o trabalho de levar a plataforma ao uso real: dar acesso seguro, formar as pessoas por função, manter um catálogo de casos de uso e medir uso, resultado e satisfação — reduzindo a shadow AI por ter uma alternativa melhor, não por proibição.</p></div>
+<div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">O valor da IA numa empresa vem de muitas pessoas usando bem em tarefas pequenas, mais do que de um projeto heroico. A plataforma dá a segurança; a adoção dá o retorno. Quem lidera as duas juntas evita tanto o risco da shadow AI quanto o desperdício de uma…</p></div>
+<div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Shadow AI IA fora do controle Campeões referência em cada área Catálogo de casos dono, métrica, status Linha de base medir antes de comparar</p></div>
+</div></div>
+</div>
+</div>
+<div class="p-4 bg-dark-700/30 flex flex-wrap justify-start gap-3">
+<button class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors" onclick="openModal('modal-3-7')" type="button">Ver em Modal</button>
+<a class="px-4 py-2 text-sm bg-purple-700 hover:bg-purple-600 text-white rounded-lg transition-colors" href="modulo-3-7.html">Ver Completo</a>
+</div>
+</div>
+<!-- MÓDULO 3.8 -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 mb-6" data-module-card="" id="modulo-3-8" style="scroll-margin-top:5rem">
+<div class="p-6 border-b border-dark-600">
+<div class="flex items-center justify-between mb-2">
+<span class="text-purple-400 font-bold">3.8</span>
+<div class="flex items-center gap-3">
+<span class="text-xs text-neutral-500">~50 min</span>
+<div aria-label="Progresso do módulo 3.8" class="inema-ring" data-inema-meter="modulo:3-8" style="--ring-size:2.4rem"><span class="inema-ring__value" data-inema-meter-pct="">0%</span></div>
+</div>
+</div>
+<h3 class="text-2xl font-bold mb-2">🧭 Liderança e Estratégia em IA</h3>
+<p class="text-neutral-400 text-sm">Portfólio de casos de uso, ROI honesto, construir ou comprar, equipe, cultura e gestão de mudança.</p>
+</div>
+<div class="divide-y divide-dark-600">
+<div class="topic-item">
+<button aria-controls="t38-1" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+<span class="text-lg">🎯</span><div><span class="font-medium">Problema antes de IA</span><span class="text-neutral-500 text-sm ml-2">- do objetivo de negócio à métrica</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t38-1"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 sm:ml-9">
+<div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O que é É derivar cada iniciativa de IA de um objetivo de negócio explícito, passando por processo e tarefa até uma métrica medida antes e depois — em vez de partir de uma ferramenta e procurar onde usá-la.</p></div>
+<div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Líderes são cobrados por resultado, não por adoção de tecnologia. Ancorar cada iniciativa num objetivo e numa métrica torna a conversa com a diretoria possível, protege o orçamento dos casos que funcionam e dá critério para dizer &quot;não&quot; — talvez a decisão mais…</p></div>
+<div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Objetivo de negócio o ponto de partida Caso de uso IA numa tarefa específica Métrica prova de que funcionou Dizer não foco é escolha</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button aria-controls="t38-2" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+<span class="text-lg">🗂️</span><div><span class="font-medium">Portfólio de casos de uso</span><span class="text-neutral-500 text-sm ml-2">- valor, viabilidade e risco lado a lado</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t38-2"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 sm:ml-9">
+<div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O que é Gestão de portfólio de IA é manter todos os casos de uso numa mesma régua — valor, viabilidade, risco, custo e status — e decidir periodicamente o que entra, o que escala e o que é encerrado.</p></div>
+<div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Sem portfólio, a agenda de IA é definida por quem grita mais alto ou pelo fornecedor mais insistente. Com uma régua única e revisão periódica, você aloca gente e dinheiro onde há retorno, encerra pilotos sem drama e mostra à diretoria uma visão do conjunto…</p></div>
+<div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Portfólio apostas equilibradas Viabilidade dados, erro, integração Linha de base o antes, medido Critério de parada quando encerrar</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button aria-controls="t38-3" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+<span class="text-lg">📊</span><div><span class="font-medium">ROI honesto</span><span class="text-neutral-500 text-sm ml-2">- custo completo, benefício medido</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t38-3"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 sm:ml-9">
+<div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O que é É calcular o retorno de uma iniciativa de IA com todos os custos (diretos e escondidos), benefícios classificados em caixa, capacidade ou risco, uma comparação com o cenário realista sem IA e um piloto desenhado para confirmar ou derrubar a hipótese.</p></div>
+<div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Promessas infladas compram o primeiro orçamento e custam o segundo. Um líder que apresenta custos completos e benefícios classificados ganha credibilidade com a área financeira — e é essa credibilidade que financia as apostas maiores mais tarde.</p></div>
+<div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Custo completo além de licença e token Caixa · capacidade · risco três tipos de benefício Contrafactual o cenário sem IA realista Grupo de comparação isolar o efeito</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button aria-controls="t38-4" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+<span class="text-lg">🔀</span><div><span class="font-medium">Construir ou comprar</span><span class="text-neutral-500 text-sm ml-2">- um espectro, não uma escolha binária</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t38-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 sm:ml-9">
+<div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O que é É escolher, caso a caso, a posição no espectro entre comprar pronto e treinar do zero, pesando diferenciação, papel dos dados próprios, tempo até o valor, custo total, controle de dados e facilidade de trocar de fornecedor.</p></div>
+<div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Construir o que se poderia comprar consome a equipe em coisas que não diferenciam; comprar o que deveria ser construído entrega a vantagem competitiva a um fornecedor. Decidir pelo espectro, com registro, evita os dois erros e torna a decisão revisável quando…</p></div>
+<div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Diferenciação o que faz o cliente escolher você Lock-in custo de trocar de fornecedor ADR decisão registrada e revisável Gatilho de revisão quando reabrir</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button aria-controls="t38-5" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+<span class="text-lg">👥</span><div><span class="font-medium">Equipe e papéis</span><span class="text-neutral-500 text-sm ml-2">- quem faz o quê e onde fica</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t38-5"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 sm:ml-9">
+<div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O que é É o desenho dos papéis necessários para levar IA a produção — engenharia de aplicações, plataforma, dados, avaliação, produto, domínio, segurança e jurídico — e da forma de organizá-los: centralizado, distribuído nas áreas ou um modelo híbrido.</p></div>
+<div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">A estrutura da equipe define o que a empresa consegue entregar. Um desenho errado — só pesquisa, só centralizado, sem domínio — trava o portfólio inteiro, por melhor que seja a estratégia. Acertar papéis e organização é a forma mais barata de acelerar todos…</p></div>
+<div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Engenheiro de aplicações de IA integra, avalia, opera Especialista de domínio define a boa resposta Centro de excelência padrão, plataforma, formação Modelo híbrido núcleo comum + áreas</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button aria-controls="t38-6" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+<span class="text-lg">🧠</span><div><span class="font-medium">Cultura e gestão de mudança</span><span class="text-neutral-500 text-sm ml-2">- pessoas mudam por degraus</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t38-6"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 sm:ml-9">
+<div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O que é Gestão de mudança em IA é conduzir pessoas da forma antiga de trabalhar para a nova com transparência sobre o impacto, formação prática, incentivos coerentes e reforço — tratando a resistência como informação sobre onde o processo falhou.</p></div>
+<div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">A tecnologia pode estar pronta e a empresa não. O retorno de IA depende de centenas de pessoas mudando pequenos hábitos, e isso não acontece por decreto. Líderes que tratam mudança como trabalho de gestão, com método e medida, convertem licenças em resultado.</p></div>
+<div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">ADKAR cinco degraus da mudança Transparência dizer o que muda Incentivo coerente meta que premia o novo Exemplo da liderança permissão para experimentar</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button aria-controls="t38-7" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">7</span>
+<span class="text-lg">🛡️</span><div><span class="font-medium">Governança e ritmo de decisão</span><span class="text-neutral-500 text-sm ml-2">- regras leves e revisão com data marcada</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t38-7"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 sm:ml-9">
+<div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O que é É o conjunto mínimo de regras, papéis e rituais que decide quais usos de IA são permitidos, com que controles por nível de risco, quem aprova, e quando o portfólio inteiro é revisado — com cadência fixa, não só quando há crise.</p></div>
+<div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Sem governança, o primeiro incidente sério leva à proibição geral e anos de atraso. Com governança proporcional e ritmo fixo, a empresa experimenta rápido no que é de baixo risco e com cuidado no que é de alto — e mostra a reguladores, clientes e conselho que…</p></div>
+<div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Risco proporcional controle conforme o impacto ISO/IEC 42001 sistema de gestão de IA Supervisão humana quem decide e quando Cadência revisão com data marcada</p></div>
+</div></div>
+</div>
+</div>
+<div class="p-4 bg-dark-700/30 flex flex-wrap justify-start gap-3">
+<button class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors" onclick="openModal('modal-3-8')" type="button">Ver em Modal</button>
+<a class="px-4 py-2 text-sm bg-purple-700 hover:bg-purple-600 text-white rounded-lg transition-colors" href="modulo-3-8.html">Ver Completo</a>
+</div>
+</div>
+<!-- MÓDULO 3.9 -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 mb-6" data-module-card="" id="modulo-3-9" style="scroll-margin-top:5rem">
+<div class="p-6 border-b border-dark-600">
+<div class="flex items-center justify-between mb-2">
+<span class="text-purple-400 font-bold">3.9</span>
+<div class="flex items-center gap-3">
+<span class="text-xs text-neutral-500">~45 min</span>
+<div aria-label="Progresso do módulo 3.9" class="inema-ring" data-inema-meter="modulo:3-9" style="--ring-size:2.4rem"><span class="inema-ring__value" data-inema-meter-pct="">0%</span></div>
+</div>
+</div>
+<h3 class="text-2xl font-bold mb-2">🌌 Futuro da IA e AGI</h3>
+<p class="text-neutral-400 text-sm">O que significa AGI, tendências que já aparecem, riscos, trabalho e como se preparar com método.</p>
+</div>
+<div class="divide-y divide-dark-600">
+<div class="topic-item">
+<button aria-controls="t39-1" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+<span class="text-lg">🌌</span><div><span class="font-medium">O que significa AGI</span><span class="text-neutral-500 text-sm ml-2">- uma palavra, várias definições</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t39-1"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 sm:ml-9">
+<div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O que é AGI é o nome dado a uma IA de propósito geral, com desempenho de nível humano ou superior numa ampla gama de tarefas. Não há um teste aceito por todos que diga &quot;chegou&quot;; por isso a pergunta útil é &quot;qual definição, medida como?&quot;.</p></div>
+<div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Líderes são chamados a opinar sobre AGI em conselhos, eventos e com a imprensa. Quem sabe que o termo tem várias definições consegue transformar uma conversa vaga numa pergunta verificável — e evita tanto prometer o que ninguém sabe quanto descartar o que já…</p></div>
+<div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">AGI IA geral, definição em disputa Generalidade quantas tarefas diferentes Autonomia quanto age sem supervisão IA estreita excelente em uma tarefa</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button aria-controls="t39-2" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+<span class="text-lg">🔎</span><div><span class="font-medium">O que se sabe e o que é especulação</span><span class="text-neutral-500 text-sm ml-2">- três caixas para cada afirmação</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t39-2"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 sm:ml-9">
+<div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O que é É um método de leitura: separar cada afirmação sobre o futuro da IA em sabido, em debate ou especulação, e decidir com base nas duas primeiras caixas, tratando a terceira como cenário possível, não como fato.</p></div>
+<div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Você vai ler muito mais previsões do que medições. Separar as três caixas protege a organização de dois desperdícios: investir por medo de uma especulação e ignorar o que já foi medido e está mudando o seu setor.</p></div>
+<div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Leis de escala mais dados e computação, melhor modelo Fronteira irregular ótimo aqui, fraco ali Fonte primária quem mediu, não quem comentou Três caixas sabido, debate, especulação</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button aria-controls="t39-3" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+<span class="text-lg">📡</span><div><span class="font-medium">Tendências que já aparecem</span><span class="text-neutral-500 text-sm ml-2">- o futuro que já dá para medir</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t39-3"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 sm:ml-9">
+<div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O que é São as mudanças já observáveis em produtos e avaliações públicas — agentes em tarefas longas, uso do computador, modelos de raciocínio, multimodalidade em tempo real, modelos abertos e locais, e queda do custo por capacidade — acompanhadas por sinais…</p></div>
+<div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Tendências observáveis dão vantagem a quem acompanha sinais em vez de manchetes. Uma lista curta de sinais, revisada com regularidade, permite agir cedo nos casos certos sem apostar a empresa numa previsão.</p></div>
+<div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Horizonte de tarefa quanto tempo o agente aguenta Uso do computador IA operando telas Modelo local roda no seu servidor Sinal o que observar, não a data</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button aria-controls="t39-4" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+<span class="text-lg">⚠️</span><div><span class="font-medium">Riscos sem pânico</span><span class="text-neutral-500 text-sm ml-2">- o que você controla, influencia e acompanha</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t39-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 sm:ml-9">
+<div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O que é É um mapa de riscos em camadas — uso indevido, falhas, riscos estruturais e alinhamento de longo prazo — combinado com uma pergunta prática: o que a minha organização controla, o que ela influencia e o que ela só acompanha.</p></div>
+<div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Conselhos e equipes vão perguntar &quot;isso é perigoso?&quot;. Uma resposta em camadas — o que é concreto, o que é incerto, o que fazemos a respeito — gera confiança e ação. Respostas de pânico ou de desdém geram, respectivamente, paralisia e incidentes.</p></div>
+<div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Uso indevido fraude, ataque, desinformação Risco estrutural concentração e dependência Alinhamento fazer o que se pretende Círculo de controle agir onde você alcança</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button aria-controls="t39-5" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+<span class="text-lg">💼</span><div><span class="font-medium">O futuro do trabalho</span><span class="text-neutral-500 text-sm ml-2">- tarefas mudam, funções se redesenham</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t39-5"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 sm:ml-9">
+<div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O que é É a reorganização do trabalho tarefa por tarefa: algumas passam para agentes, outras ganham peso (julgamento, verificação, relacionamento, coordenação de agentes) e as funções são redesenhadas — incluindo como se formam as pessoas que estão começando.</p></div>
+<div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">O efeito da IA sobre o trabalho na sua organização não está escrito: depende das decisões que você e outros líderes vão tomar sobre redesenho de funções, formação e reinvestimento. Entender a diferença entre exposição e substituição é o que permite tomar…</p></div>
+<div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Exposição tarefas que a IA alcança Ampliar × reduzir decisão de gestão Degrau de entrada como se formam juniores Redesenho de função tarefa por tarefa</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button aria-controls="t39-6" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+<span class="text-lg">🧭</span><div><span class="font-medium">Cenários em vez de previsões</span><span class="text-neutral-500 text-sm ml-2">- planejar sem precisar acertar a previsão</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t39-6"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 sm:ml-9">
+<div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O que é É um método de planejamento que cruza duas incertezas para descrever quatro futuros plausíveis, define sinais que indicam qual deles está se formando e separa ações sem arrependimento, apostas condicionadas e proteções.</p></div>
+<div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Cenários tiram a liderança da armadilha de esperar certeza para agir. Você age já nas ações sem arrependimento, prepara apostas sem gastar com elas e sabe exatamente qual sinal muda o plano — o que torna a organização mais rápida justamente quando o futuro…</p></div>
+<div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Cenário futuro plausível, não previsão Sem arrependimento vale em todos Aposta condicionada ativada por um sinal Proteção limita o pior caso</p></div>
+</div></div>
+</div>
+<div class="topic-item">
+<button aria-controls="t39-7" aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">7</span>
+<span class="text-lg">🛠️</span><div><span class="font-medium">Como se preparar com método</span><span class="text-neutral-500 text-sm ml-2">- radar, teste próprio e aprendizado contínuo</span></div>
+</button>
+<div class="topic-explanation px-6 pb-4" id="t39-7"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 sm:ml-9">
+<div><span class="text-purple-400 font-semibold">O que é:</span><p class="text-neutral-300 text-sm">O que é É uma rotina de preparação: radar trimestral com fontes primárias, um teste próprio com as tarefas da organização rodado a cada novo modelo, e formação contínua da equipe — tudo registrado para comparar ao longo do tempo.</p></div>
+<div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Quem tem radar, teste próprio e equipe em aprendizado não precisa acertar previsões: percebe a mudança cedo, mede o efeito no próprio trabalho e decide com dados. É a melhor preparação disponível para um futuro que ninguém conhece em detalhe.</p></div>
+<div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Radar fontes primárias, cadência fixa Teste próprio suas tarefas, seu critério Histórico comparar ao longo do tempo Aprendizado contínuo prática em tarefas reais</p></div>
+</div></div>
+</div>
+</div>
+<div class="p-4 bg-dark-700/30 flex flex-wrap justify-start gap-3">
+<button class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors" onclick="openModal('modal-3-9')" type="button">Ver em Modal</button>
+<a class="px-4 py-2 text-sm bg-purple-700 hover:bg-purple-600 text-white rounded-lg transition-colors" href="modulo-3-9.html">Ver Completo</a>
+</div>
+</div>
+<div class="flex flex-wrap justify-start gap-4 mt-10">
+<a class="px-5 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="../trilha2/index.html">← Trilha anterior</a>
+</div>
+</div>
+</main>
+<footer class="border-t border-dark-600 py-8 mt-8">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>FTD — Formação da Transformação Digital · conteúdo aberto e gratuito · 2026 · <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" rel="noopener" target="_blank">INEMA.CLUB</a> - <a class="text-amber-700 dark:text-slate-300 hover:underline" href="https://inema.pro" rel="noopener" target="_blank">PRO</a></p>
+</div>
+</footer>
+<!-- MODAIS (iframe carrega a página completa do módulo) -->
+<div class="modal hidden fixed inset-0 z-[60] flex items-center justify-center p-2 sm:p-4 bg-black/80" id="modal-3-1" onclick="if(event.target === this) closeModal()">
+<div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+<div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+<div class="flex items-center space-x-3"><span class="text-purple-400 font-bold">3.1</span><span class="font-semibold">Arquitetura de IA em Larga Escala</span></div>
+<button aria-label="Fechar" class="text-neutral-400 hover:text-neutral-100 text-2xl leading-none" onclick="closeModal()" type="button">×</button>
+</div>
+<iframe class="flex-1 w-full rounded-b-xl" loading="lazy" src="modulo-3-1.html" title="Módulo 3.1"></iframe>
+</div>
+</div>
+<div class="modal hidden fixed inset-0 z-[60] flex items-center justify-center p-2 sm:p-4 bg-black/80" id="modal-3-2" onclick="if(event.target === this) closeModal()">
+<div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+<div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+<div class="flex items-center space-x-3"><span class="text-purple-400 font-bold">3.2</span><span class="font-semibold">Modelos Customizados e Proprietários</span></div>
+<button aria-label="Fechar" class="text-neutral-400 hover:text-neutral-100 text-2xl leading-none" onclick="closeModal()" type="button">×</button>
+</div>
+<iframe class="flex-1 w-full rounded-b-xl" loading="lazy" src="modulo-3-2.html" title="Módulo 3.2"></iframe>
+</div>
+</div>
+<div class="modal hidden fixed inset-0 z-[60] flex items-center justify-center p-2 sm:p-4 bg-black/80" id="modal-3-3" onclick="if(event.target === this) closeModal()">
+<div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+<div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+<div class="flex items-center space-x-3"><span class="text-purple-400 font-bold">3.3</span><span class="font-semibold">IA Multimodal Avançada</span></div>
+<button aria-label="Fechar" class="text-neutral-400 hover:text-neutral-100 text-2xl leading-none" onclick="closeModal()" type="button">×</button>
+</div>
+<iframe class="flex-1 w-full rounded-b-xl" loading="lazy" src="modulo-3-3.html" title="Módulo 3.3"></iframe>
+</div>
+</div>
+<div class="modal hidden fixed inset-0 z-[60] flex items-center justify-center p-2 sm:p-4 bg-black/80" id="modal-3-4" onclick="if(event.target === this) closeModal()">
+<div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+<div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+<div class="flex items-center space-x-3"><span class="text-purple-400 font-bold">3.4</span><span class="font-semibold">Pesquisa e Papers de IA</span></div>
+<button aria-label="Fechar" class="text-neutral-400 hover:text-neutral-100 text-2xl leading-none" onclick="closeModal()" type="button">×</button>
+</div>
+<iframe class="flex-1 w-full rounded-b-xl" loading="lazy" src="modulo-3-4.html" title="Módulo 3.4"></iframe>
+</div>
+</div>
+<div class="modal hidden fixed inset-0 z-[60] flex items-center justify-center p-2 sm:p-4 bg-black/80" id="modal-3-5" onclick="if(event.target === this) closeModal()">
+<div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+<div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+<div class="flex items-center space-x-3"><span class="text-purple-400 font-bold">3.5</span><span class="font-semibold">IA Reinforcement Learning</span></div>
+<button aria-label="Fechar" class="text-neutral-400 hover:text-neutral-100 text-2xl leading-none" onclick="closeModal()" type="button">×</button>
+</div>
+<iframe class="flex-1 w-full rounded-b-xl" loading="lazy" src="modulo-3-5.html" title="Módulo 3.5"></iframe>
+</div>
+</div>
+<div class="modal hidden fixed inset-0 z-[60] flex items-center justify-center p-2 sm:p-4 bg-black/80" id="modal-3-6" onclick="if(event.target === this) closeModal()">
+<div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+<div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+<div class="flex items-center space-x-3"><span class="text-purple-400 font-bold">3.6</span><span class="font-semibold">Segurança e Red Teaming</span></div>
+<button aria-label="Fechar" class="text-neutral-400 hover:text-neutral-100 text-2xl leading-none" onclick="closeModal()" type="button">×</button>
+</div>
+<iframe class="flex-1 w-full rounded-b-xl" loading="lazy" src="modulo-3-6.html" title="Módulo 3.6"></iframe>
+</div>
+</div>
+<div class="modal hidden fixed inset-0 z-[60] flex items-center justify-center p-2 sm:p-4 bg-black/80" id="modal-3-7" onclick="if(event.target === this) closeModal()">
+<div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+<div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+<div class="flex items-center space-x-3"><span class="text-purple-400 font-bold">3.7</span><span class="font-semibold">IA em Produção — Escala Enterprise</span></div>
+<button aria-label="Fechar" class="text-neutral-400 hover:text-neutral-100 text-2xl leading-none" onclick="closeModal()" type="button">×</button>
+</div>
+<iframe class="flex-1 w-full rounded-b-xl" loading="lazy" src="modulo-3-7.html" title="Módulo 3.7"></iframe>
+</div>
+</div>
+<div class="modal hidden fixed inset-0 z-[60] flex items-center justify-center p-2 sm:p-4 bg-black/80" id="modal-3-8" onclick="if(event.target === this) closeModal()">
+<div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+<div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+<div class="flex items-center space-x-3"><span class="text-purple-400 font-bold">3.8</span><span class="font-semibold">Liderança e Estratégia em IA</span></div>
+<button aria-label="Fechar" class="text-neutral-400 hover:text-neutral-100 text-2xl leading-none" onclick="closeModal()" type="button">×</button>
+</div>
+<iframe class="flex-1 w-full rounded-b-xl" loading="lazy" src="modulo-3-8.html" title="Módulo 3.8"></iframe>
+</div>
+</div>
+<div class="modal hidden fixed inset-0 z-[60] flex items-center justify-center p-2 sm:p-4 bg-black/80" id="modal-3-9" onclick="if(event.target === this) closeModal()">
+<div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+<div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+<div class="flex items-center space-x-3"><span class="text-purple-400 font-bold">3.9</span><span class="font-semibold">Futuro da IA e AGI</span></div>
+<button aria-label="Fechar" class="text-neutral-400 hover:text-neutral-100 text-2xl leading-none" onclick="closeModal()" type="button">×</button>
+</div>
+<iframe class="flex-1 w-full rounded-b-xl" loading="lazy" src="modulo-3-9.html" title="Módulo 3.9"></iframe>
+</div>
+</div>
+<!-- SCRIPTS NÚCLEO v1 -->
+<script>
+    function toggleTopic(button) {
+      var topicItem = button.closest('.topic-item');
+      if (!topicItem) return;
+      var explanation = topicItem.querySelector('.topic-explanation');
+      var moduleCard = button.closest('[data-module-card]');
+      if (moduleCard) moduleCard.querySelectorAll('.topic-explanation.active').forEach(function (exp) {
+        if (exp !== explanation) { exp.classList.remove('active'); var b = exp.closest('.topic-item').querySelector('button[aria-controls]'); if (b) b.setAttribute('aria-expanded', 'false'); }
+      });
+      var willOpen = !explanation.classList.contains('active');
+      explanation.classList.toggle('active');
+      button.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+    }
+    function openModal(id) { var m = document.getElementById(id); if (m) { m.classList.remove('hidden'); document.body.style.overflow = 'hidden'; } }
+    function closeModal() { document.querySelectorAll('.modal').forEach(function (m) { m.classList.add('hidden'); }); document.body.style.overflow = 'auto'; }
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
+    function copyCode(btn) {
+      var pre = btn.closest('[data-copy-box]').querySelector('pre');
+      var txt = pre ? pre.innerText : '';
+      var done = function () { var o = btn.getAttribute('data-label-ok') || 'Copiado'; var t = btn.textContent; btn.textContent = o; setTimeout(function () { btn.textContent = t; }, 1500); };
+      try { navigator.clipboard.writeText(txt).then(done, done); } catch (e) { done(); }
+    }
+    (function () {
+      var themeToggle = document.getElementById('theme-toggle');
+      var darkIcon = document.getElementById('theme-toggle-dark-icon');
+      var lightIcon = document.getElementById('theme-toggle-light-icon');
+      var html = document.documentElement;
+      function sync() { var isDark = html.classList.contains('dark'); if (darkIcon) darkIcon.classList.toggle('hidden', isDark); if (lightIcon) lightIcon.classList.toggle('hidden', !isDark); }
+      sync();
+      if (themeToggle) themeToggle.addEventListener('click', function () {
+        html.classList.toggle('dark'); var nowDark = html.classList.contains('dark'); html.style.colorScheme = nowDark ? 'dark' : 'light';
+        try { localStorage.setItem('theme', nowDark ? 'dark' : 'light'); } catch (e) {}
+        try { var p = JSON.parse(localStorage.getItem('inema.prefs') || '{}'); p.theme = nowDark ? 'inema-dark' : 'claro'; localStorage.setItem('inema.prefs', JSON.stringify(p)); } catch (e) {}
+        sync();
+      });
+    })();
+  </script>
+<!-- learn.js + INEMA.init() POR ÚLTIMO -->
+<script src="../../assets/learn.js"></script>
+<script>
+    if (window.INEMA && typeof window.INEMA.init === 'function') { window.INEMA.init(); }
+  </script>
+</body>
+</html>

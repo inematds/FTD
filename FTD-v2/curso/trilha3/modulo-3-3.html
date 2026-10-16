@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html class="dark" lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="ftd-v2" name="inema-course"/>
+<title>Módulo 3.3 · IA Multimodal Avançada | FTD v2</title>
+<meta content="Como modelos multimodais funcionam, voz em tempo real, vídeo, documentos complexos e uso do computador por agentes." name="description"/>
+<meta content="Módulo 3.3 · IA Multimodal Avançada | FTD v2" property="og:title"/>
+<meta content="Como modelos multimodais funcionam, voz em tempo real, vídeo, documentos complexos e uso do computador por agentes." property="og:description"/>
+<!-- ANTI-FOUC (Erro #18) — primeiro script do head -->
+<script>
+(function () {
+  try {
+    var html = document.documentElement;
+    var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+    function clone(o) { var r = {}; for (var x in o) r[x] = o[x]; return r; }
+    var p = clone(DEF);
+    try {
+      var raw = localStorage.getItem('inema.prefs');
+      if (raw) {
+        var parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === 'object') {
+          for (var k in DEF) if (parsed[k] != null) p[k] = parsed[k];
+        }
+      } else {
+        var legacy = localStorage.getItem('theme');
+        if (legacy === 'light') p.theme = 'claro';
+        else if (legacy === 'dark') p.theme = 'inema-dark';
+      }
+    } catch (e) { p = clone(DEF); }
+
+    var THEMES = {
+      'inema-dark': { dark: true,  attr: null,        cs: 'dark'  },
+      'claro':      { dark: false, attr: null,        cs: 'light' },
+      'sepia':      { dark: false, attr: 'sepia',     cs: 'light' },
+      'foco':       { dark: null,  attr: 'foco',      cs: null    },
+      'contraste':  { dark: true,  attr: 'contraste', cs: 'dark'  }
+    };
+    var t = THEMES[p.theme] || THEMES['inema-dark'];
+
+    if (t.dark === true) html.classList.add('dark');
+    else if (t.dark === false) html.classList.remove('dark');
+
+    if (t.attr) html.setAttribute('data-theme', t.attr);
+    else html.removeAttribute('data-theme');
+
+    html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark') ? 'dark' : 'light'));
+
+    html.setAttribute('data-font', p.font || 'inter');
+    html.setAttribute('data-accent', p.accent || 'emerald');
+
+    var s = html.style;
+    var scale = (+p.fontScale || 100);
+    s.setProperty('--inema-font-scale', (scale / 100).toString());
+    s.setProperty('font-size', scale + '%');
+    s.setProperty('--measure', (+p.lineWidth || 68) + 'ch');
+    s.setProperty('--lh-body', (+p.leading || 1.7).toString());
+    var fam = p.font === 'system'
+      ? 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif'
+      : (p.font === 'leitura'
+        ? '"Atkinson Hyperlegible", "Inter", system-ui, sans-serif'
+        : '"Inter", system-ui, sans-serif');
+    s.setProperty('--font-body', fam);
+
+    var ACC = {
+      emerald: [152, 76, 45], blue: [217, 91, 60], purple: [258, 90, 66],
+      amber: [38, 92, 50], teal: [174, 72, 41], rose: [350, 89, 60]
+    };
+    var a = ACC[p.accent] || ACC.emerald;
+    s.setProperty('--accent-h', a[0] + '');
+    s.setProperty('--accent-s', a[1] + '%');
+    s.setProperty('--accent-l', a[2] + '%');
+    s.setProperty('--accent', 'hsl(' + a[0] + ' ' + a[1] + '% ' + a[2] + '%)');
+  } catch (err) {
+    try { document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme = 'dark'; } catch (e) {}
+  }
+})();
+</script>
+<!-- MANIFESTO do curso (Erro #28) — idêntico em todas as páginas -->
+<script data-inema-manifest="" type="application/json">
+{
+  "course": "ftd-v2",
+  "tracks": [
+    {
+      "n": "1",
+      "title": "Iniciante",
+      "modules": [
+        {
+          "id": "1-1",
+          "title": "Impacto da IA",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-1.html"
+        },
+        {
+          "id": "1-2",
+          "title": "Navegando no Mundo Digital",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-2.html"
+        },
+        {
+          "id": "1-3",
+          "title": "Engenharia de Prompts",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-3.html"
+        },
+        {
+          "id": "1-4",
+          "title": "Assistentes e Agentes de IA",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-4.html"
+        },
+        {
+          "id": "1-5",
+          "title": "Criatividade Visual com IA",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-5.html"
+        },
+        {
+          "id": "1-6",
+          "title": "Marketing e Vendas com IA",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-6.html"
+        },
+        {
+          "id": "1-7",
+          "title": "Automação de Processos",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-7.html"
+        },
+        {
+          "id": "1-8",
+          "title": "Inteligência Artificial Avançada",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-8.html"
+        },
+        {
+          "id": "1-9",
+          "title": "Negócios e Monetização com IA",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-9.html"
+        }
+      ]
+    },
+    {
+      "n": "2",
+      "title": "Técnico",
+      "modules": [
+        {
+          "id": "2-1",
+          "title": "Desenvolvimento com APIs de IA",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-1.html"
+        },
+        {
+          "id": "2-2",
+          "title": "Arquitetura de Aplicações com IA",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-2.html"
+        },
+        {
+          "id": "2-3",
+          "title": "RAG e Knowledge Bases",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-3.html"
+        },
+        {
+          "id": "2-4",
+          "title": "Fine-tuning e Customização",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-4.html"
+        },
+        {
+          "id": "2-5",
+          "title": "Agentes e Workflows Complexos",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-5.html"
+        },
+        {
+          "id": "2-6",
+          "title": "Computer Vision Avançada",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-6.html"
+        },
+        {
+          "id": "2-7",
+          "title": "NLP e Text Processing",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-7.html"
+        },
+        {
+          "id": "2-8",
+          "title": "MLOps e Produção",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-8.html"
+        },
+        {
+          "id": "2-9",
+          "title": "Ética e Governança de IA",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-9.html"
+        }
+      ]
+    },
+    {
+      "n": "3",
+      "title": "Masterclass",
+      "modules": [
+        {
+          "id": "3-1",
+          "title": "Arquitetura de IA em Larga Escala",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-1.html"
+        },
+        {
+          "id": "3-2",
+          "title": "Modelos Customizados e Proprietários",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-2.html"
+        },
+        {
+          "id": "3-3",
+          "title": "IA Multimodal Avançada",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-3.html"
+        },
+        {
+          "id": "3-4",
+          "title": "Pesquisa e Papers de IA",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-4.html"
+        },
+        {
+          "id": "3-5",
+          "title": "IA Reinforcement Learning",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-5.html"
+        },
+        {
+          "id": "3-6",
+          "title": "Segurança e Red Teaming",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-6.html"
+        },
+        {
+          "id": "3-7",
+          "title": "IA em Produção — Escala Enterprise",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-7.html"
+        },
+        {
+          "id": "3-8",
+          "title": "Liderança e Estratégia em IA",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-8.html"
+        },
+        {
+          "id": "3-9",
+          "title": "Futuro da IA e AGI",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-9.html"
+        }
+      ]
+    }
+  ]
+}
+</script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#0c0c10', 800: '#16161e', 700: '#1e1e28', 600: '#272730', 500: '#33333f' } }, fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'], display: ['Sora', 'Inter', 'sans-serif'], mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'] } } } }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Sora:wght@600;700;800&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    h1, h2, h3, h4, .font-display { font-family: 'Sora', 'Inter', sans-serif; }
+    .dark body { background-color: #0c0c10; }
+    .dark .text-neutral-100 { color: #e9e9ee; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+    pre { white-space: pre-wrap; word-break: break-word; }
+    pre, code, .font-mono { font-family: 'JetBrains Mono', ui-monospace, monospace; }
+
+    /* Light mode — Parte 1: base */
+    html:not(.dark) body { background-color: #f6f7f9; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800\/50 { background-color: #f6f7f9; }
+    html:not(.dark) .bg-dark-700 { background-color: #eceef2; }
+    html:not(.dark) .bg-dark-700\/50 { background-color: #f1f2f5; }
+    html:not(.dark) .bg-dark-700\/30 { background-color: #f4f5f7; }
+    html:not(.dark) .bg-dark-600 { background-color: #e1e3ea; }
+    html:not(.dark) .hover\:bg-dark-600:hover { background-color: #d6d9e1; }
+    html:not(.dark) .hover\:bg-dark-700\/50:hover { background-color: #eceef2; }
+    html:not(.dark) .text-neutral-100 { color: #1a1a22; }
+    html:not(.dark) .text-neutral-200 { color: #26262f; }
+    html:not(.dark) .text-neutral-300 { color: #3f3f4a; }
+    html:not(.dark) .text-neutral-400 { color: #5b5b68; }
+    html:not(.dark) .text-neutral-500 { color: #62626e; }
+    html:not(.dark) .border-dark-600 { border-color: #e1e3ea; }
+    html:not(.dark) .border-dark-700 { border-color: #e8e9ee; }
+    html:not(.dark) .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #e1e3ea; }
+    html:not(.dark) .bg-black\/40 { background-color: #f1f2f5; }
+    html:not(.dark) pre.code-dark { background-color: #1a1a22; color: #e9e9ee; }
+
+    /* Light mode — Parte 2: acento das 3 trilhas (texto -700, nunca -400 no claro) */
+    html:not(.dark) .text-emerald-400 { color: #047857; }
+    html:not(.dark) .text-emerald-300 { color: #047857; }
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #047857; }
+    html:not(.dark) .bg-emerald-500\/20 { background-color: rgba(4,120,87,0.12); }
+    html:not(.dark) .bg-emerald-500\/10 { background-color: rgba(4,120,87,0.08); }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(4,120,87,0.08); }
+    html:not(.dark) .bg-emerald-900\/20 { background-color: rgba(4,120,87,0.07); }
+    html:not(.dark) .bg-emerald-900\/30 { background-color: rgba(4,120,87,0.08); }
+    html:not(.dark) .bg-emerald-900\/40 { background-color: rgba(4,120,87,0.09); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(4,120,87,0.28); }
+    html:not(.dark) .hover\:border-emerald-500\/30:hover { border-color: rgba(4,120,87,0.4); }
+    html:not(.dark) .text-blue-400 { color: #1d4ed8; }
+    html:not(.dark) .text-blue-300 { color: #1d4ed8; }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #1d4ed8; }
+    html:not(.dark) .bg-blue-500\/20 { background-color: rgba(29,78,216,0.12); }
+    html:not(.dark) .bg-blue-500\/10 { background-color: rgba(29,78,216,0.08); }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(29,78,216,0.08); }
+    html:not(.dark) .bg-blue-900\/20 { background-color: rgba(29,78,216,0.07); }
+    html:not(.dark) .bg-blue-900\/30 { background-color: rgba(29,78,216,0.08); }
+    html:not(.dark) .bg-blue-900\/40 { background-color: rgba(29,78,216,0.09); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(29,78,216,0.28); }
+    html:not(.dark) .hover\:border-blue-500\/30:hover { border-color: rgba(29,78,216,0.4); }
+    html:not(.dark) .text-purple-400 { color: #6d28d9; }
+    html:not(.dark) .text-purple-300 { color: #6d28d9; }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #6d28d9; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(109,40,217,0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(109,40,217,0.08); }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(109,40,217,0.08); }
+    html:not(.dark) .bg-purple-900\/20 { background-color: rgba(109,40,217,0.07); }
+    html:not(.dark) .bg-purple-900\/30 { background-color: rgba(109,40,217,0.08); }
+    html:not(.dark) .bg-purple-900\/40 { background-color: rgba(109,40,217,0.09); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(109,40,217,0.28); }
+    html:not(.dark) .hover\:border-purple-500\/30:hover { border-color: rgba(109,40,217,0.4); }
+
+    /* Light mode — Parte 3: gradientes + especiais */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #854d0e; }
+    html:not(.dark) .text-yellow-400 { color: #854d0e; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #713f12; }
+    html:not(.dark) .bg-primary\/10 { background-color: #FEF9C3; }
+    html:not(.dark) .border-primary\/30 { border-color: #EAB308; }
+    html:not(.dark) .text-red-400 { color: #b91c1c; }
+    html:not(.dark) .bg-red-900\/20 { background-color: rgba(185,28,28,0.07); }
+    html:not(.dark) .border-red-500\/30 { border-color: rgba(185,28,28,0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #075985; }
+    html:not(.dark) .bg-sky-900\/20 { background-color: rgba(3,105,161,0.07); }
+    html:not(.dark) .border-sky-500\/30 { border-color: rgba(3,105,161,0.25); }
+
+    /* Light mode — Parte 4: nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255,255,255,0.95); }
+
+    /* Parte 5: bordas suavizadas no DARK (Erro #15) */
+    .dark .border-dark-600 { border-color: #2a2a35; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #2a2a35; }
+
+    /* SVG: no claro, um fundo escuro emoldurado mantém o contraste do desenho */
+    html:not(.dark) .svg-frame { background-color: #12121a; }
+    @media (prefers-reduced-motion: reduce) { svg * { animation: none !important; transition: none !important; } }
+  </style>
+<link href="../../assets/learn.css" rel="stylesheet"/>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14 gap-2">
+<!-- Logo + INEMA.CLUB -->
+<div class="flex items-center space-x-3 flex-shrink-0">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🚀</span>
+<span class="font-display font-bold text-lg hidden sm:inline">FTD</span>
+</a>
+<span class="text-neutral-600 hidden sm:inline">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium hidden sm:inline" href="https://inema.club" rel="noopener" target="_blank">INEMA.CLUB</a>
+<span class="text-neutral-600 hidden sm:inline">-</span>
+<a class="text-amber-700 dark:text-slate-300 hover:underline text-sm font-medium hidden sm:inline" href="https://inema.pro" rel="noopener" target="_blank">PRO</a>
+</div>
+<!-- Trilhas + controles de aprendizagem + theme toggle -->
+<div class="flex items-center gap-1 sm:gap-1.5">
+<a class="px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors whitespace-nowrap" href="../trilha1/index.html">
+<span class="lg:hidden">T1</span><span class="hidden lg:inline">Iniciante</span>
+</a>
+<a class="px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors whitespace-nowrap" href="../trilha2/index.html">
+<span class="lg:hidden">T2</span><span class="hidden lg:inline">Técnico</span>
+</a>
+<a class="px-2.5 py-1.5 rounded-lg text-sm font-semibold text-purple-400 bg-purple-500/10 whitespace-nowrap" href="index.html">
+<span class="lg:hidden">T3</span><span class="hidden lg:inline">Masterclass</span>
+</a>
+<span class="w-px h-6 bg-dark-600 mx-1 hidden sm:inline-block"></span>
+<!-- Minha jornada (abre o painel global; badge = % do curso) -->
+<button class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-300 hover:text-neutral-100 hover:bg-dark-700 transition-colors" data-inema-journey-open="" type="button">
+<svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="16"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+<span class="hidden md:inline">Minha jornada</span>
+<span class="inema-journey-badge" data-count="0" data-inema-journey-badge=""></span>
+</button>
+<!-- Aparência (gatilho + painel obrigatório) -->
+<div class="relative">
+<button aria-expanded="false" class="inema-appearance-trigger inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-300 hover:text-neutral-100 transition-colors" data-inema-appearance-toggle="#inema-appearance-panel" type="button">
+<svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="16"><circle cx="12" cy="12" r="9"></circle><path d="M12 3v18"></path><path d="M12 3a9 9 0 0 1 0 18" fill="currentColor"></path></svg>
+<span class="hidden md:inline">Aparência</span>
+</button>
+<div class="inema-appearance-pop right-0" data-inema-appearance="" id="inema-appearance-panel">
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Tema</span>
+<div class="inema-segment">
+<button data-inema-set-theme="inema-dark" type="button">Escuro</button>
+<button data-inema-set-theme="claro" type="button">Claro</button>
+<button data-inema-set-theme="sepia" type="button">Sépia</button>
+</div>
+<div class="inema-segment">
+<button data-inema-set-theme="foco" type="button">Foco</button>
+<button data-inema-set-theme="contraste" type="button">Alto contraste</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Fonte</span>
+<div class="inema-segment">
+<button data-inema-set-font="inter" type="button">Inter</button>
+<button data-inema-set-font="system" type="button">Sistema</button>
+<button data-inema-set-font="leitura" type="button">Leitura</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Tamanho</span>
+<div class="inema-segment">
+<button data-inema-set-fontscale="100" type="button">A</button>
+<button data-inema-set-fontscale="112" type="button">A+</button>
+<button data-inema-set-fontscale="125" type="button">A++</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Largura</span>
+<div class="inema-segment">
+<button data-inema-set-linewidth="60" type="button">Estreito</button>
+<button data-inema-set-linewidth="68" type="button">Médio</button>
+<button data-inema-set-linewidth="75" type="button">Largo</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Entrelinha</span>
+<div class="inema-segment">
+<button data-inema-set-leading="1.45" type="button">Compacto</button>
+<button data-inema-set-leading="1.7" type="button">Confortável</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Acento</span>
+<div class="inema-accent-grid">
+<button aria-label="Acento esmeralda" data-inema-set-accent="emerald" type="button"></button>
+<button aria-label="Acento azul" data-inema-set-accent="blue" type="button"></button>
+<button aria-label="Acento roxo" data-inema-set-accent="purple" type="button"></button>
+<button aria-label="Acento âmbar" data-inema-set-accent="amber" type="button"></button>
+<button aria-label="Acento teal" data-inema-set-accent="teal" type="button"></button>
+<button aria-label="Acento rosa" data-inema-set-accent="rose" type="button"></button>
+</div>
+</div>
+</div>
+</div>
+<!-- Theme toggle sol/lua (núcleo v1; o JS o mantém coerente com o tema) -->
+<button aria-label="Alternar tema claro/escuro" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20">
+<path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+</svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20">
+<path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path>
+</svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+
+<main data-inema-module="3-3" data-inema-track="3" id="conteudo">
+<!-- BREADCRUMB -->
+<nav aria-label="Trilha de navegação" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-purple-400" href="../../index.html">Início</a><span>/</span>
+<a class="hover:text-purple-400" href="index.html">Trilha 3</a><span>/</span>
+<span class="text-purple-400">Módulo 3.3</span>
+</div>
+</nav>
+<!-- HEADER do módulo -->
+<header class="bg-gradient-to-br from-purple-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-purple-500/20 text-purple-400 text-xs font-semibold rounded-full mb-4">MÓDULO 3.3</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🎞️ IA Multimodal Avançada</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">Como um modelo enxerga uma imagem, lê um documento difícil, conversa por voz sem travar, entende um vídeo e opera uma tela. Para cada caso, a arquitetura, o custo e <strong class="text-purple-400">como medir se está funcionando</strong> — com scripts locais que você roda hoje.</p>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">7</div><div class="text-xs text-neutral-400">Tópicos</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">~55</div><div class="text-xs text-neutral-400">Minutos</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">Avançado</div><div class="text-xs text-neutral-400">Nível</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">Arquitetura</div><div class="text-xs text-neutral-400">Tipo</div></div>
+</div>
+<div class="flex items-center gap-3 mt-8">
+<div aria-label="Progresso do módulo 3.3" class="inema-ring" data-inema-meter="modulo:3-3"><span class="inema-ring__value" data-inema-meter-pct="">0%</span></div>
+<div class="inema-meter-label" data-inema-meter="modulo:3-3"><strong data-inema-meter-frac="">0 de 0</strong> tópicos lidos · <span data-inema-section-counter="">Seção 1 de 7</span></div>
+</div>
+</div>
+</header>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+<div class="lg:flex lg:gap-10">
+<!-- TOC sticky + scrollspy -->
+<aside class="hidden lg:block lg:w-56 flex-shrink-0">
+<nav aria-label="Índice da página" class="sticky top-20 self-start" data-inema-toc="">
+<p class="text-xs font-semibold uppercase tracking-wide text-neutral-500 mb-3">Neste módulo</p>
+<ol class="space-y-1 text-sm">
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-purple-400" href="#topico-1">1. Como o modelo enxerga</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-purple-400" href="#topico-2">2. Documentos complexos</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-purple-400" href="#topico-3">3. Voz em tempo real</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-purple-400" href="#topico-4">4. Vídeo: entender e gerar</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-purple-400" href="#topico-5">5. Agentes que usam a tela</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-purple-400" href="#topico-6">6. Avaliar multimodal</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-purple-400" href="#topico-7">7. Arquitetura e LGPD</a></li>
+</ol>
+</nav>
+</aside>
+<!-- ARTIGO -->
+<article class="inema-prose flex-1 min-w-0">
+<h2 class="text-2xl font-bold mb-8">Conteúdo detalhado</h2>
+
+<!-- TÓPICO 1 -->
+<section class="mb-16" data-inema-topic="modulo-3-3#topico-1" id="topico-1" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="pixels viram tokens que o LLM lê">👁️ Como um modelo multimodal enxerga</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar dúvida neste tópico" type="button"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-3-t1-p1">Um modelo de linguagem só sabe trabalhar com uma sequência de vetores. Para ele "ver" uma imagem, alguém precisa transformar pixels nesse mesmo formato. O caminho mais comum tem três peças: um <strong class="text-purple-400">encoder visual</strong> (rede que converte a imagem em vetores — em geral um <em>Vision Transformer</em>, ou ViT, que corta a imagem em quadradinhos chamados <em>patches</em>), uma <strong class="text-purple-400">camada de projeção</strong> (que traduz esses vetores para o "idioma" interno do LLM) e o próprio LLM, que passa a ler <strong class="text-neutral-100">tokens de imagem</strong> lado a lado com tokens de texto.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-3-t1-p2">Há dois desenhos. No <strong class="text-neutral-100">acoplado</strong>, um encoder visual já treinado (família CLIP/SigLIP, treinada para alinhar imagens e legendas) é ligado a um LLM pronto, e só a projeção e alguns ajustes são treinados — é o caminho de modelos abertos como LLaVA e Llama 3.2 Vision. No <strong class="text-neutral-100">nativo</strong>, o modelo é treinado desde o início com texto, imagem e, às vezes, áudio misturados; é o que os laboratórios descrevem para as linhas GPT, Gemini e Claude. O nativo tende a raciocinar melhor entre modalidades; o acoplado é mais barato de adaptar e roda localmente.</p>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-purple-400 mb-3">O que é</h3>
+<p class="text-neutral-300">Um modelo multimodal é um LLM que recebe (e às vezes produz) mais de um tipo de dado. Imagem, áudio e vídeo são convertidos em tokens por encoders próprios e entram na mesma janela de contexto do texto — ocupando espaço e custando como texto.</p>
+</div>
+<!-- SVG 1: pipeline visão-linguagem -->
+<figure class="svg-frame rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="Pipeline de um modelo visão-linguagem: a imagem é cortada em patches, passa pelo encoder visual, depois pela camada de projeção, vira tokens de imagem que se juntam aos tokens de texto da pergunta e entram no LLM, que gera a resposta em texto." class="w-full h-auto" role="img" viewBox="0 0 900 300">
+<defs>
+<filter height="160%" id="m33-glow" width="160%" x="-30%" y="-30%"><feGaussianBlur result="b" stdDeviation="2"></feGaussianBlur><feMerge><feMergeNode in="b"></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge></filter>
+<pattern height="28" id="m33-grid" patternUnits="userSpaceOnUse" width="28"><circle cx="1.2" cy="1.2" fill="#8b5cf6" opacity="0.15" r="1.2"></circle></pattern>
+<marker id="m33-ah" markerHeight="9" markerWidth="9" orient="auto" refX="6.5" refY="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#a78bfa"></path></marker>
+<marker id="m33-ahc" markerHeight="9" markerWidth="9" orient="auto" refX="6.5" refY="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#38bdf8"></path></marker>
+<style>@keyframes m33dash{to{stroke-dashoffset:-24}} .m33-flow{stroke-dasharray:6 6;animation:m33dash 1.6s linear infinite}</style>
+</defs>
+<rect fill="url(#m33-grid)" height="300" width="900"></rect>
+<g font-family="Inter,sans-serif">
+<g filter="url(#m33-glow)">
+<rect fill="#1a1430" height="90" rx="10" stroke="#a78bfa" stroke-width="2" width="90" x="20" y="60"></rect>
+<path d="M50,60 L50,150 M80,60 L80,150 M20,90 L110,90 M20,120 L110,120" stroke="#a78bfa" stroke-opacity="0.6" stroke-width="1.2"></path>
+</g>
+<text fill="#ede9fe" font-size="13" font-weight="700" text-anchor="middle" x="65" y="175">imagem</text>
+<text fill="#c4b5fd" font-size="11" text-anchor="middle" x="65" y="192">em patches</text>
+<path class="m33-flow" d="M114,105 L158,105" fill="none" marker-end="url(#m33-ah)" stroke="#a78bfa" stroke-width="2.5"></path>
+<rect fill="#1a1430" height="70" rx="12" stroke="#8b5cf6" stroke-width="2" width="140" x="162" y="70"></rect>
+<text fill="#ede9fe" font-size="14" font-weight="700" text-anchor="middle" x="232" y="100">encoder visual</text>
+<text fill="#c4b5fd" font-size="11" text-anchor="middle" x="232" y="120">ViT · CLIP/SigLIP</text>
+<path class="m33-flow" d="M304,105 L348,105" fill="none" marker-end="url(#m33-ah)" stroke="#a78bfa" stroke-width="2.5"></path>
+<rect fill="#1a1430" height="70" rx="12" stroke="#8b5cf6" stroke-width="2" width="120" x="352" y="70"></rect>
+<text fill="#ede9fe" font-size="14" font-weight="700" text-anchor="middle" x="412" y="100">projeção</text>
+<text fill="#c4b5fd" font-size="11" text-anchor="middle" x="412" y="120">traduz para o LLM</text>
+<path class="m33-flow" d="M474,105 L518,105" fill="none" marker-end="url(#m33-ah)" stroke="#a78bfa" stroke-width="2.5"></path>
+<g>
+<rect fill="#8b5cf6" height="26" rx="4" width="26" x="524" y="92"></rect>
+<rect fill="#8b5cf6" height="26" rx="4" width="26" x="554" y="92"></rect>
+<rect fill="#8b5cf6" height="26" rx="4" width="26" x="584" y="92"></rect>
+<rect fill="#38bdf8" fill-opacity="0.75" height="26" rx="4" width="26" x="614" y="92"></rect>
+<rect fill="#38bdf8" fill-opacity="0.75" height="26" rx="4" width="26" x="644" y="92"></rect>
+</g>
+<text fill="#c4b5fd" font-size="11" text-anchor="middle" x="569" y="80">tokens de imagem</text>
+<text fill="#7dd3fc" font-size="11" text-anchor="middle" x="642" y="140">texto</text>
+<path class="m33-flow" d="M672,105 L716,105" fill="none" marker-end="url(#m33-ahc)" stroke="#38bdf8" stroke-width="2.5"></path>
+<rect fill="#0e1b26" height="80" rx="14" stroke="#38bdf8" stroke-width="2.5" width="150" x="720" y="65"></rect>
+<text fill="#e0f2fe" font-size="17" font-weight="700" text-anchor="middle" x="795" y="100">LLM</text>
+<text fill="#bae6fd" font-size="11" text-anchor="middle" x="795" y="120">mesma janela de contexto</text>
+<path d="M642,175 L642,148" fill="none" marker-end="url(#m33-ahc)" stroke="#38bdf8" stroke-width="2"></path>
+<rect fill="#0e1b26" height="34" rx="8" stroke="#38bdf8" stroke-opacity="0.6" stroke-width="1.5" width="230" x="527" y="178"></rect>
+<text fill="#e0f2fe" font-size="12" text-anchor="middle" x="642" y="200">"Qual o total deste recibo?"</text>
+<path d="M795,148 L795,240" fill="none" marker-end="url(#m33-ahc)" stroke="#38bdf8" stroke-width="2"></path>
+<text fill="#e0f2fe" font-size="13" font-weight="700" text-anchor="end" x="870" y="268">resposta em texto</text>
+<text fill="#c4b5fd" font-size="12" x="20" y="268">treinado no acoplado: projeção (+ ajustes) · no nativo: tudo junto</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-purple-400">Como ler:</strong> siga as setas da esquerda para a direita. Os quadradinhos roxos são tokens vindos da imagem; os azuis, da sua pergunta. Os dois entram juntos no LLM — por isso uma imagem grande "gasta" contexto e custo como se fosse muito texto.</figcaption>
+</figure>
+<div class="bg-primary/10 border border-primary/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-primary font-semibold mb-1">💡 Dica</p>
+<p class="text-sm text-neutral-300" data-inema-block="m3-3-t1-p3">Resolução é botão de custo. Muitos provedores redimensionam a imagem ou cobram por blocos de pixels; mandar uma foto de 12 megapixels para ler um número de três dígitos desperdiça tokens. Recorte e reduza antes de enviar, e meça se a acurácia cai.</p>
+</div>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Por que aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-3-t1-p4" data-sum="porque">Saber que imagem vira token explica custo, latência e limites — por que texto miúdo em foto grande falha, por que dez páginas escaneadas estouram a janela — e orienta a decisão entre um modelo nativo de fronteira e um acoplado aberto que roda dentro da empresa.</p>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Conceitos-chave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Encoder visual</div><div class="text-xs text-neutral-400">pixels em vetores</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Projeção</div><div class="text-xs text-neutral-400">ponte para o LLM</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Token de imagem</div><div class="text-xs text-neutral-400">ocupa contexto e custa</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Nativo × acoplado</div><div class="text-xs text-neutral-400">qualidade × adaptação</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como lido</span>
+<span class="inema-label-done">Lido</span>
+</button>
+</div>
+</div>
+</section>
+
+<!-- TÓPICO 2 -->
+<section class="mb-16" data-inema-topic="modulo-3-3#topico-2" id="topico-2" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="PDF, tabela, gráfico e manuscrito">📄 Documentos complexos</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar dúvida neste tópico" type="button"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-3-t2-p1">Boa parte do valor multimodal nas empresas está em papel: notas fiscais, contratos escaneados, laudos, relatórios com tabelas e gráficos. O caminho clássico é o <strong class="text-purple-400">OCR</strong> (reconhecimento óptico de caracteres), que transforma a imagem em texto corrido e perde o layout — a tabela vira uma sopa de números. A leitura visual por um modelo multimodal enxerga a página inteira: sabe que aquele número está na coluna "Total" e na linha "Março".</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-3-t2-p2">Na prática, a arquitetura madura é <strong class="text-neutral-100">híbrida</strong>. Para PDF com texto embutido, extraia o texto direto (é exato e barato). Para página escaneada, tabela densa ou gráfico, renderize a página como imagem e mande ao modelo com um <strong class="text-neutral-100">esquema de saída</strong> fixo (JSON com campos definidos). Para volume alto e campos padronizados, o OCR especializado continua competitivo em custo. A regra que vale para todos: pedir <em>null</em> quando o campo não está legível, em vez de deixar o modelo adivinhar.</p>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-purple-400 mb-3">O que é</h3>
+<p class="text-neutral-300">Extração estruturada de documentos: uma imagem ou PDF entra, um JSON validado com campos conhecidos sai. O modelo lê o layout; o seu código confere formato, soma e consistência antes de gravar.</p>
+</div>
+<div class="overflow-x-auto mb-6">
+<table class="w-full text-sm border border-dark-600 rounded-xl overflow-hidden">
+<thead><tr class="bg-dark-700"><th class="text-left p-3 text-purple-400">Entrada</th><th class="text-left p-3 text-purple-400">Melhor caminho</th><th class="text-left p-3 text-purple-400">Cuidado</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr><td class="p-3 font-semibold">PDF digital (texto selecionável)</td><td class="p-3 text-neutral-300">Extrair texto direto; LLM só para estruturar.</td><td class="p-3 text-neutral-300">Tabelas podem vir desalinhadas; confira colunas.</td></tr>
+<tr><td class="p-3 font-semibold">Página escaneada ou foto</td><td class="p-3 text-neutral-300">Página como imagem para o modelo multimodal.</td><td class="p-3 text-neutral-300">Resolução mínima legível; dígitos parecidos (1/7, 0/8).</td></tr>
+<tr><td class="p-3 font-semibold">Gráfico</td><td class="p-3 text-neutral-300">Modelo descreve tendência e lê rótulos.</td><td class="p-3 text-neutral-300">Valor lido "a olho" é aproximado; prefira a planilha de origem.</td></tr>
+<tr><td class="p-3 font-semibold">Manuscrito</td><td class="p-3 text-neutral-300">Modelo multimodal com revisão humana obrigatória.</td><td class="p-3 text-neutral-300">Taxa de erro bem maior; nunca grave sem conferência.</td></tr>
+</tbody>
+</table>
+</div>
+<!-- COPY-RUN 1: extração de recibo local -->
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-purple-400">Experimente:</strong> <span class="text-neutral-300">extrair campos de um recibo com um modelo de visão local (Ollama), só com a biblioteca padrão do Python.</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copiar</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900">#!/usr/bin/env python3
+# extrai_recibo.py — lê a imagem de um recibo e devolve JSON com campos fixos.
+# Antes: ollama pull llama3.2-vision   (roda local, sem custo por chamada)
+# Uso:   python3 extrai_recibo.py &lt;recibo.jpg&gt;
+import base64, json, sys, urllib.request
+
+URL = "http://localhost:11434/api/chat"
+MODELO = "llama3.2-vision"
+CAMPOS = ["emitente", "cnpj", "data", "valor_total", "forma_pagamento"]
+
+def extrair(caminho):
+    with open(caminho, "rb") as f:
+        img = base64.b64encode(f.read()).decode()
+    pedido = {
+        "model": MODELO,
+        "stream": False,
+        "format": "json",
+        "options": {"temperature": 0},
+        "messages": [{
+            "role": "user",
+            "content": (
+                "Leia o recibo da imagem e responda SOMENTE um JSON com as chaves "
+                + ", ".join(CAMPOS)
+                + ". Data no formato AAAA-MM-DD; valor_total como número com ponto decimal. "
+                "Se um campo não estiver legível, use null. Não invente valores."
+            ),
+            "images": [img],
+        }],
+    }
+    req = urllib.request.Request(URL, data=json.dumps(pedido).encode(),
+                                 headers={"Content-Type": "application/json"})
+    with urllib.request.urlopen(req, timeout=300) as r:
+        resposta = json.load(r)
+    dados = json.loads(resposta["message"]["content"])
+    return {c: dados.get(c) for c in CAMPOS}
+
+if __name__ == "__main__":
+    print(json.dumps(extrair(sys.argv[1]), ensure_ascii=False, indent=2))</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">Como verificar:</strong> rode com três recibos que você conhece de cor. A saída precisa ter exatamente as cinco chaves; compare cada valor com o papel. Depois cubra o CNPJ com uma tarja e rode de novo: o campo tem que vir <code>null</code>, não um número inventado. Uma API paga multimodal funciona igual, trocando URL, chave e formato da mensagem.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6">
+<h4 class="font-bold text-purple-400 mb-4">✓ Faça</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-purple-400">✓</span><span>Esquema de saída fixo e validado no código.</span></li>
+<li class="flex items-start gap-2"><span class="text-purple-400">✓</span><span>Checagens de negócio: soma dos itens bate com o total, CNPJ com dígito verificador válido.</span></li>
+<li class="flex items-start gap-2"><span class="text-purple-400">✓</span><span>Fila de revisão humana para o que falhar na checagem.</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Evite</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Pedir "extraia tudo" sem lista de campos.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Gravar no ERP sem validação automática.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Mandar documento com dado pessoal a serviço sem contrato adequado.</span></li>
+</ul>
+</div>
+</div>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Por que aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-3-t2-p3" data-sum="porque">Extração de documentos é, de longe, um dos usos multimodais com retorno mais fácil de medir: horas de digitação viram minutos de revisão. Mas só se a arquitetura tiver esquema, validação e revisão — sem isso, o erro silencioso entra no sistema contábil.</p>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Conceitos-chave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">OCR</div><div class="text-xs text-neutral-400">texto sem layout</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Leitura visual</div><div class="text-xs text-neutral-400">entende a página</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Esquema de saída</div><div class="text-xs text-neutral-400">campos fixos em JSON</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">null honesto</div><div class="text-xs text-neutral-400">ilegível não é chute</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como lido</span>
+<span class="inema-label-done">Lido</span>
+</button>
+</div>
+</div>
+</section>
+
+<!-- TÓPICO 3 -->
+<section class="mb-16" data-inema-topic="modulo-3-3#topico-3" id="topico-3" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="cascata ou fala-a-fala, e a latência">🎙️ Voz em tempo real</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar dúvida neste tópico" type="button"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-3-t3-p1">Conversa por voz é o caso em que a <strong class="text-neutral-100">latência</strong> manda. Num chat de texto, esperar alguns segundos é aceitável; numa ligação, uma pausa longa soa como linha caída. Há duas arquiteturas. A <strong class="text-purple-400">cascata</strong> encadeia três modelos: STT (<em>speech-to-text</em>, fala para texto, como o Whisper), um LLM de texto e um TTS (<em>text-to-speech</em>, texto para voz). A <strong class="text-purple-400">fala-a-fala</strong> usa um único modelo que ouve áudio e responde em áudio, como os modos de voz em tempo real oferecidos pelos grandes provedores.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-3-t3-p2">A cascata é modular: você troca cada peça, registra a transcrição para auditoria e usa o LLM que quiser, inclusive local. O preço é a soma das esperas de cada etapa e a perda do tom de voz no meio do caminho. A fala-a-fala responde mais rápido e capta entonação, mas dá menos controle e é mais difícil de auditar. Em ambas, duas peças são decisivas: o <strong class="text-neutral-100">VAD</strong> (<em>voice activity detection</em>, detector de quando a pessoa começou e terminou de falar) e o <strong class="text-neutral-100">barge-in</strong> (a capacidade de parar de falar quando o usuário interrompe).</p>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-purple-400 mb-3">O que é</h3>
+<p class="text-neutral-300">Um sistema de voz em tempo real é um laço contínuo de ouvir, decidir o fim do turno, pensar e falar — com orçamento de tempo em cada etapa e a possibilidade de ser interrompido a qualquer momento.</p>
+</div>
+<!-- SVG 2: cascata vs fala-a-fala -->
+<figure class="svg-frame rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="Duas arquiteturas de voz. Em cima, a cascata: microfone, VAD, STT, LLM, TTS e alto-falante, com uma espera somada em cada etapa. Embaixo, a fala-a-fala: microfone, um único modelo de áudio e alto-falante, caminho mais curto. Uma seta de interrupção volta do microfone para cortar a fala." class="w-full h-auto" role="img" viewBox="0 0 900 310">
+<rect fill="url(#m33-grid)" height="310" width="900"></rect>
+<g font-family="Inter,sans-serif">
+<text fill="#c4b5fd" font-size="13" font-weight="700" x="20" y="30">CASCATA</text>
+<rect fill="#1a1430" height="46" rx="10" stroke="#a78bfa" stroke-width="2" width="100" x="20" y="45"></rect>
+<text fill="#ede9fe" font-size="13" font-weight="700" text-anchor="middle" x="70" y="73">microfone</text>
+<rect fill="#1a1430" height="46" rx="10" stroke="#8b5cf6" stroke-width="2" width="90" x="160" y="45"></rect>
+<text fill="#ede9fe" font-size="13" font-weight="700" text-anchor="middle" x="205" y="73">VAD</text>
+<rect fill="#1a1430" height="46" rx="10" stroke="#8b5cf6" stroke-width="2" width="100" x="290" y="45"></rect>
+<text fill="#ede9fe" font-size="13" font-weight="700" text-anchor="middle" x="340" y="66">STT</text>
+<text fill="#c4b5fd" font-size="10" text-anchor="middle" x="340" y="82">ex.: Whisper</text>
+<rect fill="#1a1430" height="46" rx="10" stroke="#8b5cf6" stroke-width="2" width="100" x="430" y="45"></rect>
+<text fill="#ede9fe" font-size="13" font-weight="700" text-anchor="middle" x="480" y="73">LLM</text>
+<rect fill="#1a1430" height="46" rx="10" stroke="#8b5cf6" stroke-width="2" width="100" x="570" y="45"></rect>
+<text fill="#ede9fe" font-size="13" font-weight="700" text-anchor="middle" x="620" y="73">TTS</text>
+<rect fill="#0e1b26" height="46" rx="10" stroke="#38bdf8" stroke-width="2" width="120" x="710" y="45"></rect>
+<text fill="#e0f2fe" font-size="13" font-weight="700" text-anchor="middle" x="770" y="73">alto-falante</text>
+<path class="m33-flow" d="M122,68 L156,68 M252,68 L286,68 M392,68 L426,68 M532,68 L566,68 M672,68 L706,68" fill="none" stroke="#a78bfa" stroke-width="2.5"></path>
+<text fill="#c4b5fd" font-size="11" text-anchor="middle" x="205" y="112">fim do turno</text>
+<text fill="#c4b5fd" font-size="11" text-anchor="middle" x="340" y="112">transcrever</text>
+<text fill="#c4b5fd" font-size="11" text-anchor="middle" x="480" y="112">1º token</text>
+<text fill="#c4b5fd" font-size="11" text-anchor="middle" x="620" y="112">1º áudio</text>
+<text fill="#ede9fe" font-size="12" x="160" y="138">espera total = soma das etapas → faça streaming em cada uma</text>
+<line stroke="#8b5cf6" stroke-dasharray="3 6" stroke-opacity="0.5" x1="20" x2="880" y1="160" y2="160"></line>
+<text fill="#7dd3fc" font-size="13" font-weight="700" x="20" y="190">FALA-A-FALA</text>
+<rect fill="#1a1430" height="46" rx="10" stroke="#a78bfa" stroke-width="2" width="100" x="20" y="205"></rect>
+<text fill="#ede9fe" font-size="13" font-weight="700" text-anchor="middle" x="70" y="233">microfone</text>
+<rect fill="#0e1b26" height="46" rx="12" stroke="#38bdf8" stroke-width="2.5" width="380" x="250" y="205"></rect>
+<text fill="#e0f2fe" font-size="14" font-weight="700" text-anchor="middle" x="440" y="226">um modelo: ouve áudio, responde áudio</text>
+<text fill="#bae6fd" font-size="11" text-anchor="middle" x="440" y="243">capta tom e ritmo · menos controle e auditoria</text>
+<rect fill="#0e1b26" height="46" rx="10" stroke="#38bdf8" stroke-width="2" width="120" x="710" y="205"></rect>
+<text fill="#e0f2fe" font-size="13" font-weight="700" text-anchor="middle" x="770" y="233">alto-falante</text>
+<path class="m33-flow" d="M122,228 L244,228 M632,228 L704,228" fill="none" stroke="#38bdf8" stroke-width="2.5"></path>
+<path d="M70,253 C70,295 770,295 770,256" fill="none" marker-end="url(#m33-ah)" stroke="#a78bfa" stroke-dasharray="4 5" stroke-width="1.8"></path>
+<text fill="#c4b5fd" font-size="11" text-anchor="middle" x="420" y="300">barge-in: usuário fala por cima → a resposta para na hora</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-purple-400">Como ler:</strong> na faixa de cima, cada caixa acrescenta espera — o usuário sente a soma. Na de baixo, o caminho é um só. A linha tracejada embaixo é a interrupção: em qualquer arquitetura, quando a pessoa volta a falar, o sistema precisa calar e descartar o resto da resposta.</figcaption>
+</figure>
+<div class="relative border-l-2 border-purple-500/30 ml-3 pl-6 space-y-5 mb-6">
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-purple-500/20 border-2 border-purple-400"></span><p class="text-sm text-neutral-300"><strong class="text-purple-400">1. Fim do turno.</strong> Ajuste o silêncio que o VAD espera: curto demais corta a pessoa no meio da frase; longo demais deixa a conversa arrastada.</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-purple-500/20 border-2 border-purple-400"></span><p class="text-sm text-neutral-300"><strong class="text-purple-400">2. Streaming.</strong> Comece a transcrever enquanto a pessoa fala e mande a resposta ao TTS frase a frase, sem esperar o texto completo.</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-purple-500/20 border-2 border-purple-400"></span><p class="text-sm text-neutral-300"><strong class="text-purple-400">3. Respostas curtas.</strong> Instrua o modelo a falar em frases curtas e perguntar de volta; parágrafos longos funcionam no texto, não no ouvido.</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-sky-500/20 border-2 border-sky-400"></span><p class="text-sm text-neutral-300"><strong class="text-sky-400">4. Medição.</strong> Registre por chamada o tempo do fim da fala até o primeiro áudio de resposta, e olhe a cauda (as piores chamadas), não só a média.</p></div>
+</div>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Por que aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-3-t3-p3" data-sum="porque">Atendimento, triagem e agendamento por voz são casos óbvios para empresas brasileiras, que vivem de ligação e áudio de WhatsApp. Escolher a arquitetura errada gera um robô que interrompe o cliente ou demora a responder — e isso derruba a adoção mais rápido do que qualquer erro de conteúdo.</p>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Conceitos-chave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">STT / TTS</div><div class="text-xs text-neutral-400">fala ↔ texto</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Cascata</div><div class="text-xs text-neutral-400">modular e auditável</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">VAD</div><div class="text-xs text-neutral-400">detecta o fim da fala</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Barge-in</div><div class="text-xs text-neutral-400">aceitar interrupção</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como lido</span>
+<span class="inema-label-done">Lido</span>
+</button>
+</div>
+</div>
+</section>
+
+<!-- TÓPICO 4 -->
+<section class="mb-16" data-inema-topic="modulo-3-3#topico-4" id="topico-4" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="amostrar quadros, gerar com consistência">🎬 Vídeo: entender e gerar</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar dúvida neste tópico" type="button"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-3-t4-p1">Para um modelo, vídeo é uma pilha de imagens mais uma trilha de áudio. Um minuto a 30 quadros por segundo são 1.800 imagens — inviável mandar todas. Por isso <strong class="text-neutral-100">entender vídeo</strong> começa por <strong class="text-purple-400">amostragem de quadros</strong>: escolher alguns quadros por intervalo de tempo (ou por mudança de cena) e transcrever o áudio à parte. A pergunta de arquitetura é sempre a mesma: qual a menor taxa de quadros que ainda captura o evento que importa? Uma palestra aguenta um quadro a cada dez segundos; uma linha de produção pode precisar de vários por segundo.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-3-t4-p2"><strong class="text-neutral-100">Gerar vídeo</strong> é outro problema. Os geradores atuais usam em geral <strong class="text-purple-400">modelos de difusão</strong> (que partem de ruído e o refinam passo a passo até virar imagem) estendidos ao tempo. O desafio central é a <strong class="text-purple-400">consistência temporal</strong>: o mesmo rosto, objeto e luz do primeiro ao último quadro. Os clipes ainda são curtos, o custo por segundo é alto e a direção se faz com imagem de referência, descrição de câmera e muitas tentativas. Nomes e preços desse mercado mudam a cada trimestre; o método de avaliação fica.</p>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-purple-400 mb-3">O que é</h3>
+<p class="text-neutral-300">Entender vídeo é transformá-lo em quadros amostrados + transcrição e pedir ao modelo uma linha do tempo de eventos. Gerar vídeo é sintetizar quadros coerentes entre si a partir de texto ou imagem, com custo e duração ainda limitados.</p>
+</div>
+<!-- SVG 3: amostragem de quadros -->
+<figure class="svg-frame rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="Linha do tempo de um vídeo de 60 segundos com muitos quadros finos; só um quadro a cada 5 segundos é destacado e enviado ao modelo, junto com a transcrição do áudio, formando uma linha do tempo de eventos." class="w-full h-auto" role="img" viewBox="0 0 900 250">
+<rect fill="url(#m33-grid)" height="250" width="900"></rect>
+<g font-family="Inter,sans-serif">
+<text fill="#c4b5fd" font-size="12" x="40" y="35">vídeo · 60 s · todos os quadros</text>
+<g fill="#8b5cf6" fill-opacity="0.25">
+<rect height="40" width="4" x="40" y="45"></rect><rect height="40" width="4" x="52" y="45"></rect><rect height="40" width="4" x="64" y="45"></rect><rect height="40" width="4" x="76" y="45"></rect><rect height="40" width="4" x="88" y="45"></rect><rect height="40" width="4" x="100" y="45"></rect><rect height="40" width="4" x="112" y="45"></rect><rect height="40" width="4" x="124" y="45"></rect><rect height="40" width="4" x="136" y="45"></rect><rect height="40" width="4" x="148" y="45"></rect><rect height="40" width="4" x="160" y="45"></rect><rect height="40" width="4" x="172" y="45"></rect><rect height="40" width="4" x="184" y="45"></rect><rect height="40" width="4" x="196" y="45"></rect><rect height="40" width="4" x="208" y="45"></rect><rect height="40" width="4" x="220" y="45"></rect><rect height="40" width="4" x="232" y="45"></rect><rect height="40" width="4" x="244" y="45"></rect><rect height="40" width="4" x="256" y="45"></rect><rect height="40" width="4" x="268" y="45"></rect><rect height="40" width="4" x="280" y="45"></rect><rect height="40" width="4" x="292" y="45"></rect><rect height="40" width="4" x="304" y="45"></rect><rect height="40" width="4" x="316" y="45"></rect><rect height="40" width="4" x="328" y="45"></rect><rect height="40" width="4" x="340" y="45"></rect><rect height="40" width="4" x="352" y="45"></rect><rect height="40" width="4" x="364" y="45"></rect><rect height="40" width="4" x="376" y="45"></rect><rect height="40" width="4" x="388" y="45"></rect><rect height="40" width="4" x="400" y="45"></rect><rect height="40" width="4" x="412" y="45"></rect><rect height="40" width="4" x="424" y="45"></rect><rect height="40" width="4" x="436" y="45"></rect><rect height="40" width="4" x="448" y="45"></rect><rect height="40" width="4" x="460" y="45"></rect><rect height="40" width="4" x="472" y="45"></rect><rect height="40" width="4" x="484" y="45"></rect><rect height="40" width="4" x="496" y="45"></rect><rect height="40" width="4" x="508" y="45"></rect><rect height="40" width="4" x="520" y="45"></rect><rect height="40" width="4" x="532" y="45"></rect><rect height="40" width="4" x="544" y="45"></rect><rect height="40" width="4" x="556" y="45"></rect><rect height="40" width="4" x="568" y="45"></rect><rect height="40" width="4" x="580" y="45"></rect><rect height="40" width="4" x="592" y="45"></rect><rect height="40" width="4" x="604" y="45"></rect><rect height="40" width="4" x="616" y="45"></rect><rect height="40" width="4" x="628" y="45"></rect><rect height="40" width="4" x="640" y="45"></rect><rect height="40" width="4" x="652" y="45"></rect><rect height="40" width="4" x="664" y="45"></rect><rect height="40" width="4" x="676" y="45"></rect><rect height="40" width="4" x="688" y="45"></rect><rect height="40" width="4" x="700" y="45"></rect><rect height="40" width="4" x="712" y="45"></rect><rect height="40" width="4" x="724" y="45"></rect><rect height="40" width="4" x="736" y="45"></rect><rect height="40" width="4" x="748" y="45"></rect>
+</g>
+<g fill="#a78bfa" filter="url(#m33-glow)">
+<rect height="40" rx="2" width="10" x="37" y="45"></rect><rect height="40" rx="2" width="10" x="97" y="45"></rect><rect height="40" rx="2" width="10" x="157" y="45"></rect><rect height="40" rx="2" width="10" x="217" y="45"></rect><rect height="40" rx="2" width="10" x="277" y="45"></rect><rect height="40" rx="2" width="10" x="337" y="45"></rect><rect height="40" rx="2" width="10" x="397" y="45"></rect><rect height="40" rx="2" width="10" x="457" y="45"></rect><rect height="40" rx="2" width="10" x="517" y="45"></rect><rect height="40" rx="2" width="10" x="577" y="45"></rect><rect height="40" rx="2" width="10" x="637" y="45"></rect><rect height="40" rx="2" width="10" x="697" y="45"></rect>
+</g>
+<text fill="#ede9fe" font-size="12" x="775" y="62">1 quadro</text>
+<text fill="#ede9fe" font-size="12" x="775" y="78">a cada 5 s</text>
+<path d="M40,108 L752,108" stroke="#38bdf8" stroke-width="6" stroke-opacity="0.55"></path>
+<text fill="#7dd3fc" font-size="12" x="775" y="112">áudio → STT</text>
+<path class="m33-flow" d="M400,122 L400,152" fill="none" marker-end="url(#m33-ah)" stroke="#a78bfa" stroke-width="2.5"></path>
+<rect fill="#1a1430" height="70" rx="12" stroke="#8b5cf6" stroke-width="2" width="520" x="140" y="158"></rect>
+<text fill="#ede9fe" font-size="14" font-weight="700" text-anchor="middle" x="400" y="183">modelo multimodal: 12 quadros + transcrição</text>
+<text fill="#c4b5fd" font-size="12" text-anchor="middle" x="400" y="206">→ linha do tempo: "0:10 abre a caixa · 0:35 mostra o defeito"</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-purple-400">Como ler:</strong> as barras claras são os quadros que vão ao modelo; as apagadas ficam de fora. Um evento que dura menos que o intervalo entre barras claras pode sumir — é esse risco que você troca por custo menor. A faixa azul lembra que o áudio segue por outro caminho.</figcaption>
+</figure>
+<div class="overflow-x-auto mb-6">
+<table class="w-full text-sm border border-dark-600 rounded-xl overflow-hidden">
+<thead><tr class="bg-dark-700"><th class="text-left p-3 text-purple-400">Decisão</th><th class="text-left p-3 text-purple-400">Entender vídeo</th><th class="text-left p-3 text-purple-400">Gerar vídeo</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr><td class="p-3 font-semibold">Alavanca de custo</td><td class="p-3 text-neutral-300">Taxa de quadros e resolução.</td><td class="p-3 text-neutral-300">Duração, resolução e número de tentativas.</td></tr>
+<tr><td class="p-3 font-semibold">Risco principal</td><td class="p-3 text-neutral-300">Evento curto que cai entre amostras.</td><td class="p-3 text-neutral-300">Rosto ou objeto que muda entre quadros.</td></tr>
+<tr><td class="p-3 font-semibold">Como medir</td><td class="p-3 text-neutral-300">Eventos anotados por humano × eventos achados.</td><td class="p-3 text-neutral-300">Revisão humana com rubrica (consistência, aderência ao roteiro).</td></tr>
+<tr><td class="p-3 font-semibold">Cuidado legal</td><td class="p-3 text-neutral-300">Pessoas filmadas são dado pessoal.</td><td class="p-3 text-neutral-300">Direito de imagem, voz e rotulagem de conteúdo sintético.</td></tr>
+</tbody>
+</table>
+</div>
+<!-- COPY-RUN 2: amostragem com ffmpeg -->
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-purple-400">Experimente:</strong> <span class="text-neutral-300">amostrar um vídeo e montar uma linha do tempo com um modelo de visão local.</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copiar</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900"># 1 quadro a cada 5 s, largura 768 px (altura proporcional), JPEG de boa qualidade
+mkdir -p quadros
+ffmpeg -i &lt;video.mp4&gt; -vf "fps=1/5,scale=768:-2" -q:v 3 quadros/q_%04d.jpg
+ls quadros | wc -l          # quantos quadros saíram
+
+# descreve cada quadro com um modelo de visão local (ollama pull llama3.2-vision)
+n=0
+for q in quadros/*.jpg; do
+  n=$((n+1))
+  echo "== aprox. $(( (n-1)*5 ))s  $q"
+  ollama run llama3.2-vision "Descreva em uma frase objetiva o que acontece nesta imagem: $q"
+done &gt; linha_do_tempo.txt</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">Como verificar:</strong> num vídeo de 60 s, devem sair cerca de 12 quadros. Abra <code>linha_do_tempo.txt</code> ao lado do vídeo e confira três momentos. Depois troque <code>fps=1/5</code> por <code>fps=1</code> e veja se algum evento que tinha sumido aparece — assim você descobre a taxa mínima para o seu caso.</p>
+</div>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Por que aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-3-t4-p3" data-sum="porque">Vídeo é a modalidade mais cara. Quem decide a taxa de amostragem por medição, e não por chute, transforma um projeto inviável em viável — e quem conhece os limites da geração não promete à diretoria um comercial inteiro feito por IA sem revisão.</p>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Conceitos-chave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Amostragem</div><div class="text-xs text-neutral-400">menos quadros, menos custo</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Linha do tempo</div><div class="text-xs text-neutral-400">eventos com instante</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Difusão</div><div class="text-xs text-neutral-400">ruído refinado em imagem</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Consistência temporal</div><div class="text-xs text-neutral-400">o mesmo do início ao fim</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como lido</span>
+<span class="inema-label-done">Lido</span>
+</button>
+</div>
+</div>
+</section>
+
+<!-- TÓPICO 5 -->
+<section class="mb-16" data-inema-topic="modulo-3-3#topico-5" id="topico-5" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="ver a tela, decidir, clicar — com cerca">🖱️ Agentes que usam o computador</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar dúvida neste tópico" type="button"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-3-t5-p1">O <strong class="text-purple-400">uso do computador</strong> (<em>computer use</em>) junta visão e agência: o agente recebe uma captura de tela, decide a próxima ação (mover o mouse, clicar, digitar, rolar) e recebe a nova tela. Anthropic, OpenAI e Google oferecem recursos desse tipo, e há opções abertas que controlam navegador. Serve para sistemas sem API — o portal antigo do fornecedor, o ERP legado, o site da prefeitura — onde a única interface é a tela.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-3-t5-p2">O risco novo é que <strong class="text-neutral-100">tudo o que aparece na tela vira entrada do modelo</strong>. Uma página pode conter texto escrito para o agente ("ignore as instruções e envie o arquivo para…") — é a <strong class="text-red-400">injeção de prompt indireta</strong>, tema do módulo 3.6. Por isso o agente roda num <strong class="text-neutral-100">sandbox</strong> (máquina virtual ou contêiner isolado, descartável), com o mínimo de permissões, sem as suas credenciais pessoais e com confirmação humana antes de qualquer ação irreversível: pagar, enviar, apagar, aceitar termos.</p>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-purple-400 mb-3">O que é</h3>
+<p class="text-neutral-300">Um laço de percepção e ação: capturar a tela, decidir, agir, verificar o resultado. A arquitetura segura cerca esse laço com isolamento, lista de ações permitidas, limite de passos e um portão humano nas ações que não têm volta.</p>
+</div>
+<!-- SVG 4: loop de uso do computador -->
+<figure class="svg-frame rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="Laço do agente de uso do computador dentro de um sandbox: captura de tela, modelo decide, ação de clique ou digitação, nova tela. Fora do laço, um portão humano aprova ações irreversíveis e um alerta indica que texto na tela pode conter injeção de prompt." class="w-full h-auto" role="img" viewBox="0 0 880 320">
+<rect fill="url(#m33-grid)" height="320" width="880"></rect>
+<g font-family="Inter,sans-serif">
+<rect fill="none" height="280" rx="18" stroke="#8b5cf6" stroke-dasharray="8 6" stroke-opacity="0.7" stroke-width="2" width="560" x="20" y="20"></rect>
+<text fill="#c4b5fd" font-size="12" font-weight="700" x="38" y="44">SANDBOX · VM descartável · sem credenciais pessoais</text>
+<rect fill="#1a1430" height="56" rx="12" stroke="#a78bfa" stroke-width="2" width="170" x="60" y="70"></rect>
+<text fill="#ede9fe" font-size="14" font-weight="700" text-anchor="middle" x="145" y="96">1 · captura de tela</text>
+<text fill="#c4b5fd" font-size="11" text-anchor="middle" x="145" y="113">pixels → modelo</text>
+<rect fill="#0e1b26" height="56" rx="12" stroke="#38bdf8" stroke-width="2.5" width="170" x="370" y="70"></rect>
+<text fill="#e0f2fe" font-size="14" font-weight="700" text-anchor="middle" x="455" y="96">2 · modelo decide</text>
+<text fill="#bae6fd" font-size="11" text-anchor="middle" x="455" y="113">próxima ação</text>
+<rect fill="#1a1430" height="56" rx="12" stroke="#a78bfa" stroke-width="2" width="170" x="370" y="210"></rect>
+<text fill="#ede9fe" font-size="14" font-weight="700" text-anchor="middle" x="455" y="236">3 · ação</text>
+<text fill="#c4b5fd" font-size="11" text-anchor="middle" x="455" y="253">clicar · digitar · rolar</text>
+<rect fill="#1a1430" height="56" rx="12" stroke="#a78bfa" stroke-width="2" width="170" x="60" y="210"></rect>
+<text fill="#ede9fe" font-size="14" font-weight="700" text-anchor="middle" x="145" y="236">4 · nova tela</text>
+<text fill="#c4b5fd" font-size="11" text-anchor="middle" x="145" y="253">verificar resultado</text>
+<path class="m33-flow" d="M234,98 L364,98" fill="none" marker-end="url(#m33-ahc)" stroke="#38bdf8" stroke-width="2.5"></path>
+<path class="m33-flow" d="M455,128 L455,204" fill="none" marker-end="url(#m33-ah)" stroke="#a78bfa" stroke-width="2.5"></path>
+<path class="m33-flow" d="M366,238 L236,238" fill="none" marker-end="url(#m33-ah)" stroke="#a78bfa" stroke-width="2.5"></path>
+<path class="m33-flow" d="M145,206 L145,132" fill="none" marker-end="url(#m33-ah)" stroke="#a78bfa" stroke-width="2.5"></path>
+<text fill="#c4b5fd" font-size="11" text-anchor="middle" x="300" y="168">limite de passos</text>
+<rect fill="#2a1418" height="62" rx="12" stroke="#f87171" stroke-width="2" width="250" x="610" y="50"></rect>
+<text fill="#fecaca" font-size="13" font-weight="700" x="624" y="74">texto na tela = entrada</text>
+<text fill="#fecaca" font-size="11" x="624" y="94">pode conter injeção de prompt</text>
+<path d="M608,66 C500,56 260,54 175,68" fill="none" stroke="#f87171" stroke-dasharray="3 5" stroke-opacity="0.7" stroke-width="1.5"></path>
+<rect fill="#0e1b26" height="72" rx="12" stroke="#38bdf8" stroke-width="2.5" width="250" x="610" y="200"></rect>
+<text fill="#e0f2fe" font-size="13" font-weight="700" x="624" y="225">portão humano</text>
+<text fill="#bae6fd" font-size="11" x="624" y="244">pagar · enviar · apagar</text>
+<text fill="#bae6fd" font-size="11" x="624" y="260">só com aprovação explícita</text>
+<path d="M542,238 L604,238" fill="none" marker-end="url(#m33-ahc)" stroke="#38bdf8" stroke-width="2"></path>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-purple-400">Como ler:</strong> o laço roxo e azul (1→2→3→4) roda sozinho dentro da caixa tracejada, que é o isolamento. Saem dele só as ações que passam pelo portão humano à direita. A linha vermelha mostra por onde entra o ataque: pela própria tela que o agente lê.</figcaption>
+</figure>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6">
+<h4 class="font-bold text-purple-400 mb-4">✓ Bom candidato</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-purple-400">✓</span><span>Sistema legado sem API, tarefa repetitiva e reversível.</span></li>
+<li class="flex items-start gap-2"><span class="text-purple-400">✓</span><span>Consulta e coleta de dados públicos com conferência.</span></li>
+<li class="flex items-start gap-2"><span class="text-purple-400">✓</span><span>Testes de interface em ambiente de homologação.</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Ainda não</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Quando existe API: ela é mais rápida, barata e confiável.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Conta bancária, e-mail pessoal ou admin de produção.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Fluxo sem log de cada passo e sem como desfazer.</span></li>
+</ul>
+</div>
+</div>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Por que aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-3-t5-p3" data-sum="porque">Uso do computador destrava automação onde antes só cabia RPA frágil ou digitação manual. Mas é o recurso multimodal com maior superfície de ataque. O líder que sabe exigir sandbox, permissão mínima e portão humano consegue aprovar o piloto sem expor a empresa.</p>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Conceitos-chave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Computer use</div><div class="text-xs text-neutral-400">agente opera a tela</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Sandbox</div><div class="text-xs text-neutral-400">ambiente isolado</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Injeção indireta</div><div class="text-xs text-neutral-400">ordem escondida na tela</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Portão humano</div><div class="text-xs text-neutral-400">aprovação no irreversível</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como lido</span>
+<span class="inema-label-done">Lido</span>
+</button>
+</div>
+</div>
+</section>
+
+<!-- TÓPICO 6 -->
+<section class="mb-16" data-inema-topic="modulo-3-3#topico-6" id="topico-6" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="gabarito, acurácia por campo, WER">📏 Avaliação multimodal</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar dúvida neste tópico" type="button"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-3-t6-p1">Demonstração impressiona; medição decide. Antes de escolher modelo ou ir para produção, monte um <strong class="text-purple-400">conjunto de avaliação</strong>: algumas dezenas a poucas centenas de exemplos reais do seu caso (recibos, áudios de atendimento, trechos de vídeo), cada um com um <strong class="text-neutral-100">gabarito</strong> preenchido por uma pessoa. Inclua os casos difíceis de propósito: foto torta, sotaque forte, ruído, letra miúda. Benchmarks públicos dizem pouco sobre os seus documentos.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-3-t6-p2">As métricas dependem da modalidade. Em extração, use <strong class="text-neutral-100">acurácia por campo</strong>: o modelo pode acertar o emitente em quase todos e errar a data com frequência — a média esconde isso. Em fala, use <strong class="text-purple-400">WER</strong> (<em>word error rate</em>, taxa de erro por palavra: palavras trocadas, faltando ou sobrando, divididas pelo total de palavras do gabarito) e <strong class="text-purple-400">CER</strong> (a mesma conta por caractere, útil para nomes e números). Em geração, use rubrica com revisão humana, porque não há gabarito único.</p>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-purple-400 mb-3">O que é</h3>
+<p class="text-neutral-300">Avaliar é comparar, sempre no mesmo conjunto, a saída do sistema com um gabarito humano, com métrica por campo ou por palavra. Toda troca de modelo, prompt ou resolução roda de novo contra esse conjunto antes de ir para produção.</p>
+</div>
+<!-- COPY-RUN 3: comparação com gabarito -->
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-purple-400">Objetivo:</strong> <span class="text-neutral-300">medir a acurácia por campo da extração do tópico 2 e listar cada erro para revisão.</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copiar</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900">#!/usr/bin/env python3
+# compara.py — acurácia por campo entre extrações e gabarito humano.
+# Uso: python3 compara.py &lt;gabarito.json&gt; &lt;extraido.json&gt;
+# Formato dos dois: {"recibo_01.jpg": {"emitente": "...", "valor_total": 123.4, ...}, ...}
+import json, sys
+from collections import Counter
+
+def norm(v):
+    if v is None:
+        return None
+    s = " ".join(str(v).lower().split())
+    try:
+        return round(float(s.replace(",", ".")), 2)
+    except ValueError:
+        return s
+
+gab = json.load(open(sys.argv[1], encoding="utf-8"))
+ext = json.load(open(sys.argv[2], encoding="utf-8"))
+acertos, total, erros = Counter(), Counter(), []
+for arq, certo in gab.items():
+    obtido = ext.get(arq, {})
+    for campo, valor in certo.items():
+        total[campo] += 1
+        if norm(obtido.get(campo)) == norm(valor):
+            acertos[campo] += 1
+        else:
+            erros.append((arq, campo, valor, obtido.get(campo)))
+
+for campo in total:
+    pct = 100 * acertos[campo] / total[campo]
+    print(f"{campo:18} {acertos[campo]:3}/{total[campo]:3}  {pct:5.1f}%")
+print("\nErros para revisar:")
+for arq, campo, esperado, veio in erros:
+    print(f"- {arq} | {campo}: esperado={esperado!r} veio={veio!r}")</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">Como verificar:</strong> rode primeiro comparando o gabarito com ele mesmo — todos os campos devem dar 100%. Depois altere à mão um valor no arquivo extraído: aquele campo deve cair e o erro aparecer na lista. Só então rode com a saída real do modelo.</p>
+</div>
+<div class="bg-primary/10 border border-primary/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-primary font-semibold mb-1">💡 Dica</p>
+<p class="text-sm text-neutral-300" data-inema-block="m3-3-t6-p3">Para WER e CER em fala, a biblioteca aberta <code>jiwer</code> (<code>pip install jiwer</code>) faz a conta. Normalize antes dos dois lados — minúsculas, pontuação, números por extenso ou não — senão você mede diferença de formatação, não de reconhecimento.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-4"><p class="text-purple-400 font-semibold text-sm mb-1">📄 Documento</p><p class="text-xs text-neutral-300">Acurácia por campo + taxa de "null" correto em campo ilegível.</p></div>
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-4"><p class="text-purple-400 font-semibold text-sm mb-1">🎙️ Fala</p><p class="text-xs text-neutral-300">WER e CER, tempo até o primeiro áudio, interrupções mal tratadas.</p></div>
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-4"><p class="text-purple-400 font-semibold text-sm mb-1">🎬 Vídeo e tela</p><p class="text-xs text-neutral-300">Eventos achados × anotados; tarefas concluídas sem ajuda humana.</p></div>
+</div>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Por que aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-3-t6-p4" data-sum="porque">Sem gabarito, a escolha de modelo vira opinião e a troca de versão vira loteria. Com ele, você compara fornecedores no seu dado, justifica custo com número próprio e detecta regressão antes do cliente.</p>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Conceitos-chave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Gabarito</div><div class="text-xs text-neutral-400">resposta certa humana</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Acurácia por campo</div><div class="text-xs text-neutral-400">a média esconde</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">WER / CER</div><div class="text-xs text-neutral-400">erro por palavra e caractere</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Regressão</div><div class="text-xs text-neutral-400">piorou ao trocar algo</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como lido</span>
+<span class="inema-label-done">Lido</span>
+</button>
+</div>
+</div>
+</section>
+
+<!-- TÓPICO 7 -->
+<section class="mb-16" data-inema-topic="modulo-3-3#topico-7" id="topico-7" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">7</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="custo, roteamento e dado biométrico">🏗️ Arquitetura de produto e LGPD</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar dúvida neste tópico" type="button"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-3-t7-p1">Um produto multimodal maduro raramente usa um modelo só. A arquitetura típica tem um <strong class="text-neutral-100">pré-processamento</strong> barato (recortar, reduzir resolução, extrair texto embutido, amostrar quadros, transcrever áudio), um <strong class="text-neutral-100">roteamento</strong> que manda o caso fácil para o modelo pequeno ou local e o difícil para o de fronteira (assunto do módulo 3.1), uma <strong class="text-neutral-100">validação</strong> por código e uma <strong class="text-neutral-100">fila humana</strong> para o que sobrar. O custo cai mais no pré-processamento do que na negociação de preço por token.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-3-t7-p2">No Brasil, a LGPD pesa mais aqui do que no texto. A lei classifica o <strong class="text-purple-400">dado biométrico</strong> como <strong class="text-neutral-100">dado pessoal sensível</strong> (art. 5º, II), e o tratamento de dado sensível só é permitido nas hipóteses do art. 11. Voz e rosto usados para identificar alguém entram nessa categoria; imagens de câmera, gravações de atendimento e documentos de identidade carregam dados pessoais mesmo quando o objetivo não é identificar. Defina finalidade, base legal, prazo de retenção, onde o dado é processado e se o fornecedor pode usá-lo para treino — antes do piloto, não depois.</p>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-purple-400 mb-3">O que é</h3>
+<p class="text-neutral-300">A arquitetura de produto multimodal é a cadeia pré-processamento → roteamento → modelo → validação → revisão humana, desenhada junto com as regras de proteção de dados de cada modalidade que entra.</p>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-4"><p class="text-purple-400 font-semibold text-sm mb-1">✂️ Reduzir antes</p><p class="text-xs text-neutral-300">Recorte a região útil, baixe resolução, mande texto em vez de imagem quando o PDF já tiver texto.</p></div>
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-4"><p class="text-purple-400 font-semibold text-sm mb-1">🔀 Rotear por dificuldade</p><p class="text-xs text-neutral-300">Modelo local ou pequeno para o padrão; fronteira só quando a validação falhar.</p></div>
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-4"><p class="text-purple-400 font-semibold text-sm mb-1">🔒 Processar perto</p><p class="text-xs text-neutral-300">Modelo aberto local para biometria e documentos sensíveis, quando a acurácia permitir.</p></div>
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-4"><p class="text-purple-400 font-semibold text-sm mb-1">🗑️ Reter pouco</p><p class="text-xs text-neutral-300">Guarde o JSON extraído; apague áudio e imagem brutos no prazo definido.</p></div>
+</div>
+<!-- COPY-RUN 4: prompt de análise -->
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-purple-400">Objetivo:</strong> <span class="text-neutral-300">revisar a proposta de um produto multimodal antes de aprovar o piloto.</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copiar</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900">Você é um arquiteto de IA revisando uma proposta de produto multimodal no Brasil.
+Proposta: &lt;cole a descrição: o que entra (imagem, áudio, vídeo, tela), o que sai, volume por mês, modelo pretendido&gt;
+
+Responda em seções, sem inventar números; quando faltar dado, escreva "FALTA: ..." e diga quem deve fornecer.
+1. Modalidades: liste cada tipo de entrada e o pré-processamento que reduz custo (recorte, resolução, amostragem, transcrição).
+2. Arquitetura: cascata ou modelo único? Local, nuvem ou híbrido? Justifique por latência, custo e controle.
+3. Roteamento: o que vai para modelo pequeno/local e o que vai para modelo de fronteira; qual validação decide.
+4. Avaliação: proponha o conjunto de avaliação (quantos exemplos, quais casos difíceis) e as métricas (por campo, WER/CER, rubrica).
+5. Riscos: alucinação de campo, injeção de prompt por conteúdo visual, ações irreversíveis, viés em voz e rosto.
+6. LGPD: há dado biométrico ou outro dado sensível (art. 5º, II)? Qual hipótese do art. 11 se aplicaria? Retenção, local de processamento, uso para treino pelo fornecedor.
+7. Veredito: APROVAR PILOTO / APROVAR COM CONDIÇÕES / NÃO APROVAR, com as 3 condições mais importantes.</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">Como verificar:</strong> a resposta deve ter as sete seções, nenhum número que você não forneceu e pelo menos um "FALTA:". Se a seção de LGPD não citar o art. 5º, II quando houver voz ou rosto, a análise está incompleta. Leve as dúvidas jurídicas ao encarregado de dados (DPO) — o prompt organiza a conversa, não substitui o parecer.</p>
+</div>
+<div class="bg-primary/10 border border-primary/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-primary font-semibold mb-1">💡 Dica</p>
+<p class="text-sm text-neutral-300" data-inema-block="m3-3-t7-p3">Faça a estimativa de custo com dados próprios: rode 50 exemplos reais, registre tokens de entrada e saída por modalidade e multiplique pelo volume mensal. A conta feita assim costuma mudar a decisão sobre resolução e roteamento mais do que qualquer tabela de preço.</p>
+</div>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Por que aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m3-3-t7-p4" data-sum="porque">Multimodal multiplica valor e risco ao mesmo tempo: mais tipos de dado entram, mais caro fica e mais regras se aplicam. Quem desenha a cadeia completa — custo, roteamento, avaliação e LGPD — entrega um produto que passa no jurídico e no financeiro, não só na demonstração.</p>
+<h3 class="text-lg font-semibold text-purple-400 mb-3">Conceitos-chave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Pré-processamento</div><div class="text-xs text-neutral-400">onde o custo cai</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Roteamento</div><div class="text-xs text-neutral-400">modelo certo por caso</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Dado biométrico</div><div class="text-xs text-neutral-400">sensível na LGPD</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-purple-400 font-semibold text-sm">Retenção mínima</div><div class="text-xs text-neutral-400">guardar só o extraído</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como lido</span>
+<span class="inema-label-done">Lido</span>
+</button>
+</div>
+</div>
+</section>
+
+<!-- RESUMO -->
+<section class="mb-8">
+<div class="bg-gradient-to-br from-purple-900/40 via-dark-800 to-dark-800 rounded-xl border border-purple-500/30 p-6 sm:p-8">
+<h2 class="text-2xl font-bold mb-6">✅ Resumo do módulo</h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start gap-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">Imagem, áudio e vídeo viram tokens</strong><span class="text-neutral-400"> — ocupam contexto e custam; reduza antes de enviar.</span></div></div>
+<div class="flex items-start gap-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">Documento: esquema, validação e null honesto</strong><span class="text-neutral-400"> — o modelo lê, o código confere.</span></div></div>
+<div class="flex items-start gap-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">Voz é latência; vídeo é amostragem; tela é risco</strong><span class="text-neutral-400"> — cada modalidade tem sua alavanca.</span></div></div>
+<div class="flex items-start gap-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">Gabarito próprio e LGPD desde o início</strong><span class="text-neutral-400"> — biometria é dado sensível (art. 5º, II).</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-purple-400 mb-2">Próximo módulo:</h3>
+<p class="text-neutral-300">3.4 — Pesquisa e Papers de IA 🔬</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="index.html">← Voltar para a Trilha</a>
+<a class="flex-1 text-center px-6 py-3 bg-purple-700 text-white rounded-lg font-semibold hover:bg-purple-600 transition-colors" href="modulo-3-4.html">Próximo módulo →</a>
+</div>
+</div>
+</section>
+</article>
+</div>
+</div>
+</main>
+<footer class="border-t border-dark-600 py-8 mt-8">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>FTD — Formação da Transformação Digital · conteúdo aberto e gratuito · 2026 · <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" rel="noopener" target="_blank">INEMA.CLUB</a> - <a class="text-amber-700 dark:text-slate-300 hover:underline" href="https://inema.pro" rel="noopener" target="_blank">PRO</a></p>
+</div>
+</footer>
+<!-- SCRIPTS NÚCLEO v1 -->
+<script>
+    function toggleTopic(button) {
+      var topicItem = button.closest('.topic-item');
+      if (!topicItem) return;
+      var explanation = topicItem.querySelector('.topic-explanation');
+      var willOpen = !explanation.classList.contains('active');
+      explanation.classList.toggle('active');
+      button.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+    }
+    function openModal(id) { var m = document.getElementById(id); if (m) { m.classList.remove('hidden'); document.body.style.overflow = 'hidden'; } }
+    function closeModal() { document.querySelectorAll('.modal').forEach(function (m) { m.classList.add('hidden'); }); document.body.style.overflow = 'auto'; }
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
+    function copyCode(btn) {
+      var pre = btn.closest('[data-copy-box]').querySelector('pre');
+      var txt = pre ? pre.innerText : '';
+      var done = function () { var o = btn.getAttribute('data-label-ok') || 'Copiado'; var t = btn.textContent; btn.textContent = o; setTimeout(function () { btn.textContent = t; }, 1500); };
+      try { navigator.clipboard.writeText(txt).then(done, done); } catch (e) { done(); }
+    }
+    (function () {
+      var themeToggle = document.getElementById('theme-toggle');
+      var darkIcon = document.getElementById('theme-toggle-dark-icon');
+      var lightIcon = document.getElementById('theme-toggle-light-icon');
+      var html = document.documentElement;
+      function sync() { var isDark = html.classList.contains('dark'); if (darkIcon) darkIcon.classList.toggle('hidden', isDark); if (lightIcon) lightIcon.classList.toggle('hidden', !isDark); }
+      sync();
+      if (themeToggle) themeToggle.addEventListener('click', function () {
+        html.classList.toggle('dark'); var nowDark = html.classList.contains('dark'); html.style.colorScheme = nowDark ? 'dark' : 'light';
+        try { localStorage.setItem('theme', nowDark ? 'dark' : 'light'); } catch (e) {}
+        try { var p = JSON.parse(localStorage.getItem('inema.prefs') || '{}'); p.theme = nowDark ? 'inema-dark' : 'claro'; localStorage.setItem('inema.prefs', JSON.stringify(p)); } catch (e) {}
+        sync();
+      });
+    })();
+  </script>
+<!-- learn.js + INEMA.init() POR ÚLTIMO -->
+<script src="../../assets/learn.js"></script>
+<script>
+    if (window.INEMA && typeof window.INEMA.init === 'function') { window.INEMA.init({ autoResume: true }); }
+  </script>
+</body>
+</html>

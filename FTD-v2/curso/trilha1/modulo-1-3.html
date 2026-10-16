@@ -1,0 +1,1151 @@
+<!DOCTYPE html>
+<html class="dark" lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="ftd-v2" name="inema-course"/>
+<title>Módulo 1.3 · Engenharia de Prompts | FTD v2</title>
+<meta content="A anatomia de um bom pedido, exemplos, formato de saída, iteração e modelos de prompt reutilizáveis." name="description"/>
+<meta content="Módulo 1.3 · Engenharia de Prompts | FTD v2" property="og:title"/>
+<meta content="A anatomia de um bom pedido, exemplos, formato de saída, iteração e modelos de prompt reutilizáveis." property="og:description"/>
+<!-- ANTI-FOUC (Erro #18) — primeiro script do head -->
+<script>
+(function () {
+  try {
+    var html = document.documentElement;
+    var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+    function clone(o) { var r = {}; for (var x in o) r[x] = o[x]; return r; }
+    var p = clone(DEF);
+    try {
+      var raw = localStorage.getItem('inema.prefs');
+      if (raw) {
+        var parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === 'object') {
+          for (var k in DEF) if (parsed[k] != null) p[k] = parsed[k];
+        }
+      } else {
+        var legacy = localStorage.getItem('theme');
+        if (legacy === 'light') p.theme = 'claro';
+        else if (legacy === 'dark') p.theme = 'inema-dark';
+      }
+    } catch (e) { p = clone(DEF); }
+
+    var THEMES = {
+      'inema-dark': { dark: true,  attr: null,        cs: 'dark'  },
+      'claro':      { dark: false, attr: null,        cs: 'light' },
+      'sepia':      { dark: false, attr: 'sepia',     cs: 'light' },
+      'foco':       { dark: null,  attr: 'foco',      cs: null    },
+      'contraste':  { dark: true,  attr: 'contraste', cs: 'dark'  }
+    };
+    var t = THEMES[p.theme] || THEMES['inema-dark'];
+
+    if (t.dark === true) html.classList.add('dark');
+    else if (t.dark === false) html.classList.remove('dark');
+
+    if (t.attr) html.setAttribute('data-theme', t.attr);
+    else html.removeAttribute('data-theme');
+
+    html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark') ? 'dark' : 'light'));
+
+    html.setAttribute('data-font', p.font || 'inter');
+    html.setAttribute('data-accent', p.accent || 'emerald');
+
+    var s = html.style;
+    var scale = (+p.fontScale || 100);
+    s.setProperty('--inema-font-scale', (scale / 100).toString());
+    s.setProperty('font-size', scale + '%');
+    s.setProperty('--measure', (+p.lineWidth || 68) + 'ch');
+    s.setProperty('--lh-body', (+p.leading || 1.7).toString());
+    var fam = p.font === 'system'
+      ? 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif'
+      : (p.font === 'leitura'
+        ? '"Atkinson Hyperlegible", "Inter", system-ui, sans-serif'
+        : '"Inter", system-ui, sans-serif');
+    s.setProperty('--font-body', fam);
+
+    var ACC = {
+      emerald: [152, 76, 45], blue: [217, 91, 60], purple: [258, 90, 66],
+      amber: [38, 92, 50], teal: [174, 72, 41], rose: [350, 89, 60]
+    };
+    var a = ACC[p.accent] || ACC.emerald;
+    s.setProperty('--accent-h', a[0] + '');
+    s.setProperty('--accent-s', a[1] + '%');
+    s.setProperty('--accent-l', a[2] + '%');
+    s.setProperty('--accent', 'hsl(' + a[0] + ' ' + a[1] + '% ' + a[2] + '%)');
+  } catch (err) {
+    try { document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme = 'dark'; } catch (e) {}
+  }
+})();
+</script>
+<!-- MANIFESTO do curso (Erro #28) — idêntico em todas as páginas -->
+<script data-inema-manifest="" type="application/json">
+{
+  "course": "ftd-v2",
+  "tracks": [
+    {
+      "n": "1",
+      "title": "Iniciante",
+      "modules": [
+        {
+          "id": "1-1",
+          "title": "Impacto da IA",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-1.html"
+        },
+        {
+          "id": "1-2",
+          "title": "Navegando no Mundo Digital",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-2.html"
+        },
+        {
+          "id": "1-3",
+          "title": "Engenharia de Prompts",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-3.html"
+        },
+        {
+          "id": "1-4",
+          "title": "Assistentes e Agentes de IA",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-4.html"
+        },
+        {
+          "id": "1-5",
+          "title": "Criatividade Visual com IA",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-5.html"
+        },
+        {
+          "id": "1-6",
+          "title": "Marketing e Vendas com IA",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-6.html"
+        },
+        {
+          "id": "1-7",
+          "title": "Automação de Processos",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-7.html"
+        },
+        {
+          "id": "1-8",
+          "title": "Inteligência Artificial Avançada",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-8.html"
+        },
+        {
+          "id": "1-9",
+          "title": "Negócios e Monetização com IA",
+          "topics": 7,
+          "href": "curso/trilha1/modulo-1-9.html"
+        }
+      ]
+    },
+    {
+      "n": "2",
+      "title": "Técnico",
+      "modules": [
+        {
+          "id": "2-1",
+          "title": "Desenvolvimento com APIs de IA",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-1.html"
+        },
+        {
+          "id": "2-2",
+          "title": "Arquitetura de Aplicações com IA",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-2.html"
+        },
+        {
+          "id": "2-3",
+          "title": "RAG e Knowledge Bases",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-3.html"
+        },
+        {
+          "id": "2-4",
+          "title": "Fine-tuning e Customização",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-4.html"
+        },
+        {
+          "id": "2-5",
+          "title": "Agentes e Workflows Complexos",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-5.html"
+        },
+        {
+          "id": "2-6",
+          "title": "Computer Vision Avançada",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-6.html"
+        },
+        {
+          "id": "2-7",
+          "title": "NLP e Text Processing",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-7.html"
+        },
+        {
+          "id": "2-8",
+          "title": "MLOps e Produção",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-8.html"
+        },
+        {
+          "id": "2-9",
+          "title": "Ética e Governança de IA",
+          "topics": 7,
+          "href": "curso/trilha2/modulo-2-9.html"
+        }
+      ]
+    },
+    {
+      "n": "3",
+      "title": "Masterclass",
+      "modules": [
+        {
+          "id": "3-1",
+          "title": "Arquitetura de IA em Larga Escala",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-1.html"
+        },
+        {
+          "id": "3-2",
+          "title": "Modelos Customizados e Proprietários",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-2.html"
+        },
+        {
+          "id": "3-3",
+          "title": "IA Multimodal Avançada",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-3.html"
+        },
+        {
+          "id": "3-4",
+          "title": "Pesquisa e Papers de IA",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-4.html"
+        },
+        {
+          "id": "3-5",
+          "title": "IA Reinforcement Learning",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-5.html"
+        },
+        {
+          "id": "3-6",
+          "title": "Segurança e Red Teaming",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-6.html"
+        },
+        {
+          "id": "3-7",
+          "title": "IA em Produção — Escala Enterprise",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-7.html"
+        },
+        {
+          "id": "3-8",
+          "title": "Liderança e Estratégia em IA",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-8.html"
+        },
+        {
+          "id": "3-9",
+          "title": "Futuro da IA e AGI",
+          "topics": 7,
+          "href": "curso/trilha3/modulo-3-9.html"
+        }
+      ]
+    }
+  ]
+}
+</script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#0c0c10', 800: '#16161e', 700: '#1e1e28', 600: '#272730', 500: '#33333f' } }, fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'], display: ['Sora', 'Inter', 'sans-serif'], mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'] } } } }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Sora:wght@600;700;800&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    h1, h2, h3, h4, .font-display { font-family: 'Sora', 'Inter', sans-serif; }
+    .dark body { background-color: #0c0c10; }
+    .dark .text-neutral-100 { color: #e9e9ee; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+    pre { white-space: pre-wrap; word-break: break-word; }
+    pre, code, .font-mono { font-family: 'JetBrains Mono', ui-monospace, monospace; }
+
+    /* Light mode — Parte 1: base */
+    html:not(.dark) body { background-color: #f6f7f9; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800\/50 { background-color: #f6f7f9; }
+    html:not(.dark) .bg-dark-700 { background-color: #eceef2; }
+    html:not(.dark) .bg-dark-700\/50 { background-color: #f1f2f5; }
+    html:not(.dark) .bg-dark-700\/30 { background-color: #f4f5f7; }
+    html:not(.dark) .bg-dark-600 { background-color: #e1e3ea; }
+    html:not(.dark) .hover\:bg-dark-600:hover { background-color: #d6d9e1; }
+    html:not(.dark) .hover\:bg-dark-700\/50:hover { background-color: #eceef2; }
+    html:not(.dark) .text-neutral-100 { color: #1a1a22; }
+    html:not(.dark) .text-neutral-200 { color: #26262f; }
+    html:not(.dark) .text-neutral-300 { color: #3f3f4a; }
+    html:not(.dark) .text-neutral-400 { color: #5b5b68; }
+    html:not(.dark) .text-neutral-500 { color: #62626e; }
+    html:not(.dark) .border-dark-600 { border-color: #e1e3ea; }
+    html:not(.dark) .border-dark-700 { border-color: #e8e9ee; }
+    html:not(.dark) .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #e1e3ea; }
+    html:not(.dark) .bg-black\/40 { background-color: #f1f2f5; }
+    html:not(.dark) pre.code-dark { background-color: #1a1a22; color: #e9e9ee; }
+
+    /* Light mode — Parte 2: acento das 3 trilhas (texto -700, nunca -400 no claro) */
+    html:not(.dark) .text-emerald-400 { color: #047857; }
+    html:not(.dark) .text-emerald-300 { color: #047857; }
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #047857; }
+    html:not(.dark) .bg-emerald-500\/20 { background-color: rgba(4,120,87,0.12); }
+    html:not(.dark) .bg-emerald-500\/10 { background-color: rgba(4,120,87,0.08); }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(4,120,87,0.08); }
+    html:not(.dark) .bg-emerald-900\/20 { background-color: rgba(4,120,87,0.07); }
+    html:not(.dark) .bg-emerald-900\/30 { background-color: rgba(4,120,87,0.08); }
+    html:not(.dark) .bg-emerald-900\/40 { background-color: rgba(4,120,87,0.09); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(4,120,87,0.28); }
+    html:not(.dark) .hover\:border-emerald-500\/30:hover { border-color: rgba(4,120,87,0.4); }
+    html:not(.dark) .text-blue-400 { color: #1d4ed8; }
+    html:not(.dark) .text-blue-300 { color: #1d4ed8; }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #1d4ed8; }
+    html:not(.dark) .bg-blue-500\/20 { background-color: rgba(29,78,216,0.12); }
+    html:not(.dark) .bg-blue-500\/10 { background-color: rgba(29,78,216,0.08); }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(29,78,216,0.08); }
+    html:not(.dark) .bg-blue-900\/20 { background-color: rgba(29,78,216,0.07); }
+    html:not(.dark) .bg-blue-900\/30 { background-color: rgba(29,78,216,0.08); }
+    html:not(.dark) .bg-blue-900\/40 { background-color: rgba(29,78,216,0.09); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(29,78,216,0.28); }
+    html:not(.dark) .hover\:border-blue-500\/30:hover { border-color: rgba(29,78,216,0.4); }
+    html:not(.dark) .text-purple-400 { color: #6d28d9; }
+    html:not(.dark) .text-purple-300 { color: #6d28d9; }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #6d28d9; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(109,40,217,0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(109,40,217,0.08); }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(109,40,217,0.08); }
+    html:not(.dark) .bg-purple-900\/20 { background-color: rgba(109,40,217,0.07); }
+    html:not(.dark) .bg-purple-900\/30 { background-color: rgba(109,40,217,0.08); }
+    html:not(.dark) .bg-purple-900\/40 { background-color: rgba(109,40,217,0.09); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(109,40,217,0.28); }
+    html:not(.dark) .hover\:border-purple-500\/30:hover { border-color: rgba(109,40,217,0.4); }
+
+    /* Light mode — Parte 3: gradientes + especiais */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #854d0e; }
+    html:not(.dark) .text-yellow-400 { color: #854d0e; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #713f12; }
+    html:not(.dark) .bg-primary\/10 { background-color: #FEF9C3; }
+    html:not(.dark) .border-primary\/30 { border-color: #EAB308; }
+    html:not(.dark) .text-red-400 { color: #b91c1c; }
+    html:not(.dark) .bg-red-900\/20 { background-color: rgba(185,28,28,0.07); }
+    html:not(.dark) .border-red-500\/30 { border-color: rgba(185,28,28,0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #075985; }
+    html:not(.dark) .bg-sky-900\/20 { background-color: rgba(3,105,161,0.07); }
+    html:not(.dark) .border-sky-500\/30 { border-color: rgba(3,105,161,0.25); }
+
+    /* Light mode — Parte 4: nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255,255,255,0.95); }
+
+    /* Parte 5: bordas suavizadas no DARK (Erro #15) */
+    .dark .border-dark-600 { border-color: #2a2a35; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #2a2a35; }
+
+    /* SVG: no claro, um fundo escuro emoldurado mantém o contraste do desenho */
+    html:not(.dark) .svg-frame { background-color: #12121a; }
+    @media (prefers-reduced-motion: reduce) { svg * { animation: none !important; transition: none !important; } }
+  </style>
+<link href="../../assets/learn.css" rel="stylesheet"/>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14 gap-2">
+<!-- Logo + INEMA.CLUB -->
+<div class="flex items-center space-x-3 flex-shrink-0">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🚀</span>
+<span class="font-display font-bold text-lg hidden sm:inline">FTD</span>
+</a>
+<span class="text-neutral-600 hidden sm:inline">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium hidden sm:inline" href="https://inema.club" rel="noopener" target="_blank">INEMA.CLUB</a>
+<span class="text-neutral-600 hidden sm:inline">-</span>
+<a class="text-amber-700 dark:text-slate-300 hover:underline text-sm font-medium hidden sm:inline" href="https://inema.pro" rel="noopener" target="_blank">PRO</a>
+</div>
+<!-- Trilhas + controles de aprendizagem + theme toggle -->
+<div class="flex items-center gap-1 sm:gap-1.5">
+<a class="px-2.5 py-1.5 rounded-lg text-sm font-semibold text-emerald-400 bg-emerald-500/10 whitespace-nowrap" href="index.html">
+<span class="lg:hidden">T1</span><span class="hidden lg:inline">Iniciante</span>
+</a>
+<a class="px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors whitespace-nowrap" href="../trilha2/index.html">
+<span class="lg:hidden">T2</span><span class="hidden lg:inline">Técnico</span>
+</a>
+<a class="px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors whitespace-nowrap" href="../trilha3/index.html">
+<span class="lg:hidden">T3</span><span class="hidden lg:inline">Masterclass</span>
+</a>
+<span class="w-px h-6 bg-dark-600 mx-1 hidden sm:inline-block"></span>
+<!-- Minha jornada (abre o painel global; badge = % do curso) -->
+<button class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-300 hover:text-neutral-100 hover:bg-dark-700 transition-colors" data-inema-journey-open="" type="button">
+<svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="16"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+<span class="hidden md:inline">Minha jornada</span>
+<span class="inema-journey-badge" data-count="0" data-inema-journey-badge=""></span>
+</button>
+<!-- Aparência (gatilho + painel obrigatório) -->
+<div class="relative">
+<button aria-expanded="false" class="inema-appearance-trigger inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-sm font-semibold text-neutral-300 hover:text-neutral-100 transition-colors" data-inema-appearance-toggle="#inema-appearance-panel" type="button">
+<svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="16"><circle cx="12" cy="12" r="9"></circle><path d="M12 3v18"></path><path d="M12 3a9 9 0 0 1 0 18" fill="currentColor"></path></svg>
+<span class="hidden md:inline">Aparência</span>
+</button>
+<div class="inema-appearance-pop right-0" data-inema-appearance="" id="inema-appearance-panel">
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Tema</span>
+<div class="inema-segment">
+<button data-inema-set-theme="inema-dark" type="button">Escuro</button>
+<button data-inema-set-theme="claro" type="button">Claro</button>
+<button data-inema-set-theme="sepia" type="button">Sépia</button>
+</div>
+<div class="inema-segment">
+<button data-inema-set-theme="foco" type="button">Foco</button>
+<button data-inema-set-theme="contraste" type="button">Alto contraste</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Fonte</span>
+<div class="inema-segment">
+<button data-inema-set-font="inter" type="button">Inter</button>
+<button data-inema-set-font="system" type="button">Sistema</button>
+<button data-inema-set-font="leitura" type="button">Leitura</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Tamanho</span>
+<div class="inema-segment">
+<button data-inema-set-fontscale="100" type="button">A</button>
+<button data-inema-set-fontscale="112" type="button">A+</button>
+<button data-inema-set-fontscale="125" type="button">A++</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Largura</span>
+<div class="inema-segment">
+<button data-inema-set-linewidth="60" type="button">Estreito</button>
+<button data-inema-set-linewidth="68" type="button">Médio</button>
+<button data-inema-set-linewidth="75" type="button">Largo</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Entrelinha</span>
+<div class="inema-segment">
+<button data-inema-set-leading="1.45" type="button">Compacto</button>
+<button data-inema-set-leading="1.7" type="button">Confortável</button>
+</div>
+</div>
+<div class="inema-pref-group">
+<span class="inema-pref-group__label">Acento</span>
+<div class="inema-accent-grid">
+<button aria-label="Acento esmeralda" data-inema-set-accent="emerald" type="button"></button>
+<button aria-label="Acento azul" data-inema-set-accent="blue" type="button"></button>
+<button aria-label="Acento roxo" data-inema-set-accent="purple" type="button"></button>
+<button aria-label="Acento âmbar" data-inema-set-accent="amber" type="button"></button>
+<button aria-label="Acento teal" data-inema-set-accent="teal" type="button"></button>
+<button aria-label="Acento rosa" data-inema-set-accent="rose" type="button"></button>
+</div>
+</div>
+</div>
+</div>
+<!-- Theme toggle sol/lua (núcleo v1; o JS o mantém coerente com o tema) -->
+<button aria-label="Alternar tema claro/escuro" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20">
+<path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+</svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20">
+<path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path>
+</svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+
+<main data-inema-module="1-3" data-inema-track="1" id="conteudo">
+<!-- BREADCRUMB -->
+<nav aria-label="Trilha de navegação" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-emerald-400" href="../../index.html">Início</a><span>/</span>
+<a class="hover:text-emerald-400" href="index.html">Trilha 1</a><span>/</span>
+<span class="text-emerald-400">Módulo 1.3</span>
+</div>
+</nav>
+<!-- HEADER do módulo -->
+<header class="bg-gradient-to-br from-emerald-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-emerald-500/20 text-emerald-400 text-xs font-semibold rounded-full mb-4">MÓDULO 1.3</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">✍️ Engenharia de Prompts</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">"Engenharia" assusta, mas a ideia é simples: <strong class="text-emerald-400">pedir bem</strong>. Você vai aprender as partes de um bom pedido, como usar exemplos, como mandar no formato da resposta, como melhorar em rodadas, o que fazer em tarefas difíceis e como guardar os pedidos que funcionam para nunca mais escrever do zero.</p>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">7</div><div class="text-xs text-neutral-400">Tópicos</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">~50</div><div class="text-xs text-neutral-400">Minutos</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">Inicial</div><div class="text-xs text-neutral-400">Nível</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">Prático</div><div class="text-xs text-neutral-400">Tipo</div></div>
+</div>
+<div class="flex items-center gap-3 mt-8">
+<div aria-label="Progresso do módulo 1.3" class="inema-ring" data-inema-meter="modulo:1-3"><span class="inema-ring__value" data-inema-meter-pct="">0%</span></div>
+<div class="inema-meter-label" data-inema-meter="modulo:1-3"><strong data-inema-meter-frac="">0 de 0</strong> tópicos lidos · <span data-inema-section-counter="">Seção 1 de 7</span></div>
+</div>
+</div>
+</header>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+<div class="lg:flex lg:gap-10">
+<!-- TOC sticky + scrollspy -->
+<aside class="hidden lg:block lg:w-56 flex-shrink-0">
+<nav aria-label="Índice da página" class="sticky top-20 self-start" data-inema-toc="">
+<p class="text-xs font-semibold uppercase tracking-wide text-neutral-500 mb-3">Neste módulo</p>
+<ol class="space-y-1 text-sm">
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-emerald-400" href="#topico-1">1. Por que o pedido importa</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-emerald-400" href="#topico-2">2. Anatomia do prompt</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-emerald-400" href="#topico-3">3. Mostrar com exemplos</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-emerald-400" href="#topico-4">4. Formato de saída</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-emerald-400" href="#topico-5">5. Iterar em rodadas</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-emerald-400" href="#topico-6">6. Tarefas difíceis</a></li>
+<li><a class="inema-toc-link block py-1 text-neutral-400 hover:text-emerald-400" href="#topico-7">7. Biblioteca de prompts</a></li>
+</ol>
+</nav>
+</aside>
+<!-- ARTIGO -->
+<article class="inema-prose flex-1 min-w-0">
+<h2 class="text-2xl font-bold mb-8">Conteúdo detalhado</h2>
+
+<!-- TÓPICO 1 -->
+<section class="mb-16" data-inema-topic="modulo-1-3#topico-1" id="topico-1" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="o vago abre mil caminhos">🎯 Por que o pedido importa</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar dúvida neste tópico" type="button"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m1-3-t1-p1">Lembre do módulo 1.1: o modelo escolhe a continuação mais provável para o texto que recebe. Se o pedido é "escreve sobre marketing", existem milhares de continuações prováveis — para estudante, para empresa grande, em tom de aula, em tom de anúncio. A IA escolhe uma delas, quase sempre a mais genérica. <strong class="text-neutral-100">A resposta fraca não é preguiça da IA: é o pedido que deixou tudo em aberto.</strong></p>
+<div class="bg-dark-800 border border-emerald-500/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-emerald-400 font-semibold mb-1">🌱 Novo aqui?</p>
+<p class="text-sm text-neutral-300" data-inema-block="m1-3-t1-p2"><strong>Prompt</strong> é tudo o que você escreve (ou cola, ou anexa) para a IA numa mensagem. <strong>Engenharia de prompts</strong> é o hábito de montar esse pedido de propósito, com as informações que a IA precisa, em vez de digitar a primeira frase que vem à cabeça. <strong>Saída</strong> é a resposta que a IA devolve.</p>
+</div>
+<div class="bg-gradient-to-br from-emerald-900/30 to-dark-800 rounded-xl border border-emerald-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">O que é</h3>
+<p class="text-neutral-300">Engenharia de prompts é escrever o pedido de forma que reste pouca dúvida sobre o que você quer: para quem, para quê, em que formato e com quais limites.</p>
+</div>
+<!-- SVG 1: vago x específico -->
+<figure class="svg-frame rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="Comparação em duas faixas. Em cima, um pedido vago abre um leque largo de setas para muitas respostas possíveis espalhadas. Embaixo, um pedido com contexto abre um leque estreito que acerta um alvo: a resposta que você queria." class="w-full h-auto" role="img" viewBox="0 0 860 340">
+<defs>
+<filter height="160%" id="m13-glow" width="160%" x="-30%" y="-30%"><feGaussianBlur result="b" stdDeviation="2.5"></feGaussianBlur><feMerge><feMergeNode in="b"></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge></filter>
+<pattern height="28" id="m13-grid" patternUnits="userSpaceOnUse" width="28"><circle cx="1.2" cy="1.2" fill="#10b981" opacity="0.13" r="1.2"></circle></pattern>
+<style>@keyframes m13blink{0%,100%{opacity:.35}50%{opacity:1}} .m13-b{animation:m13blink 2.4s ease-in-out infinite}</style>
+</defs>
+<rect fill="url(#m13-grid)" height="340" width="860"></rect>
+<g font-family="Inter,sans-serif">
+<text fill="#fca5a5" font-size="12" font-weight="700" x="20" y="22">PEDIDO VAGO</text>
+<rect fill="#1f0f10" height="50" rx="12" stroke="#f87171" stroke-width="2" width="250" x="20" y="40"></rect>
+<text fill="#fee2e2" font-size="14" font-weight="700" text-anchor="middle" x="145" y="70">"escreve sobre marketing"</text>
+<g fill="none" stroke="#f87171" stroke-opacity="0.45" stroke-width="1.5">
+<path d="M272,65 L560,22"></path><path d="M272,65 L600,45"></path><path d="M272,65 L580,70"></path><path d="M272,65 L620,95"></path><path d="M272,65 L560,118"></path><path d="M272,65 L660,130"></path>
+</g>
+<g fill="#fca5a5">
+<circle class="m13-b" cx="566" cy="22" r="6"></circle><circle cx="606" cy="45" r="6"></circle><circle class="m13-b" cx="586" cy="70" r="6"></circle><circle cx="626" cy="95" r="6"></circle><circle class="m13-b" cx="566" cy="118" r="6"></circle><circle cx="666" cy="130" r="6"></circle>
+</g>
+<text fill="#fecaca" font-size="12" x="690" y="62">milhares de respostas</text>
+<text fill="#fecaca" font-size="12" x="690" y="80">possíveis; vem a</text>
+<text fill="#fecaca" font-size="12" x="690" y="98">mais genérica</text>
+<path d="M20,168 L840,168" stroke="#334155" stroke-dasharray="4 6"></path>
+<text fill="#6ee7b7" font-size="12" font-weight="700" x="20" y="196">PEDIDO COM CONTEXTO</text>
+<rect fill="#0f1f18" height="96" rx="12" stroke="#34d399" stroke-width="2" width="300" x="20" y="212"></rect>
+<text fill="#ecfdf5" font-size="12" x="36" y="236">para: dona de padaria de bairro</text>
+<text fill="#ecfdf5" font-size="12" x="36" y="256">objetivo: vender mais no café da manhã</text>
+<text fill="#ecfdf5" font-size="12" x="36" y="276">formato: 5 ideias, 2 linhas cada</text>
+<text fill="#ecfdf5" font-size="12" x="36" y="296">limite: orçamento zero</text>
+<g fill="none" stroke="#34d399" stroke-opacity="0.8" stroke-width="2">
+<path d="M322,260 L612,252"></path><path d="M322,260 L612,260"></path><path d="M322,260 L612,268"></path>
+</g>
+<circle cx="640" cy="260" fill="none" filter="url(#m13-glow)" r="34" stroke="#38bdf8" stroke-width="2"></circle>
+<circle cx="640" cy="260" fill="none" r="20" stroke="#38bdf8" stroke-width="2"></circle>
+<circle cx="640" cy="260" fill="#38bdf8" r="7"></circle>
+<text fill="#7dd3fc" font-size="13" font-weight="700" x="690" y="255">a resposta que</text>
+<text fill="#7dd3fc" font-size="13" font-weight="700" x="690" y="273">você queria</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-emerald-400">Como ler:</strong> em cima, um pedido de três palavras espalha a resposta em qualquer direção — e a IA escolhe a mais comum. Embaixo, cada linha de contexto fecha o leque até ele mirar num alvo só. Cada informação que você acrescenta elimina respostas que você não queria.</figcaption>
+</figure>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Pedido vago</h4>
+<p class="text-sm text-neutral-200 mb-3">"Faz um post para as redes sociais."</p>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Qual rede? Qual assunto?</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Para quem e com que objetivo?</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Tamanho, tom e chamada para ação?</span></li>
+</ul>
+</div>
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ Pedido claro</h4>
+<p class="text-sm text-neutral-200 mb-3">"Escreva um post de Instagram para a minha padaria anunciando o pão de fermentação natural que chega toda sexta às 7h. Público: moradores do bairro. Tom: acolhedor, sem exagero. Até 80 palavras, termine convidando para provar."</p>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-emerald-400">✓</span><span>Rede, assunto e público definidos.</span></li>
+<li class="flex items-start gap-2"><span class="text-emerald-400">✓</span><span>Tom e tamanho combinados.</span></li>
+<li class="flex items-start gap-2"><span class="text-emerald-400">✓</span><span>Final com ação concreta.</span></li>
+</ul>
+</div>
+</div>
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Por que aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m1-3-t1-p3" data-sum="porque">O mesmo assistente parece "burro" para quem pede mal e "genial" para quem pede bem. Escrever um pedido completo leva um minuto a mais e economiza várias rodadas de "não era isso". É a habilidade que mais melhora seu resultado com IA, em qualquer ferramenta.</p>
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Conceitos-chave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Prompt</div><div class="text-xs text-neutral-400">o pedido inteiro</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Contexto</div><div class="text-xs text-neutral-400">fecha o leque de respostas</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Resposta genérica</div><div class="text-xs text-neutral-400">sintoma de pedido vago</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Saída</div><div class="text-xs text-neutral-400">o que a IA devolve</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como lido</span>
+<span class="inema-label-done">Lido</span>
+</button>
+</div>
+</div>
+</section>
+
+<!-- TÓPICO 2 -->
+<section class="mb-16" data-inema-topic="modulo-1-3#topico-2" id="topico-2" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="as seis peças de um bom pedido">🧱 Anatomia do prompt</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar dúvida neste tópico" type="button"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m1-3-t2-p1">Um bom pedido costuma ter seis peças. Você não precisa de todas sempre — para "traduza esta frase" basta a tarefa — mas, quando o resultado importa, passe mentalmente pela lista: <strong class="text-emerald-400">papel, contexto, tarefa, exemplos, formato e restrições</strong>.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m1-3-t2-p2">A peça mais importante é o <strong class="text-neutral-100">contexto</strong>. Escreva como se estivesse explicando a tarefa para um colega competente que acabou de chegar na empresa: ele é capaz, mas não sabe nada do seu cliente, do seu produto nem do que aconteceu ontem. O "papel" ("você é um consultor de vendas") ajuda a ajustar o tom, mas sozinho não substitui o contexto.</p>
+<div class="bg-gradient-to-br from-emerald-900/30 to-dark-800 rounded-xl border border-emerald-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">O que é</h3>
+<p class="text-neutral-300">A anatomia do prompt é uma lista de verificação com seis peças — papel, contexto, tarefa, exemplos, formato e restrições — que você usa para montar pedidos completos.</p>
+</div>
+<!-- SVG 2: blocos empilhados -->
+<figure class="svg-frame rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="Seis blocos empilhados formam um prompt completo. Papel: quem a IA deve ser. Contexto: a situação e o público. Tarefa: o que fazer, com um verbo claro. Exemplos: um modelo do que você espera. Formato: como a resposta deve vir. Restrições: limites de tamanho, tom e o que evitar." class="w-full h-auto" role="img" viewBox="0 0 860 380">
+<rect fill="url(#m13-grid)" height="380" width="860"></rect>
+<g font-family="Inter,sans-serif">
+<rect fill="#0f1f18" height="46" rx="10" stroke="#34d399" stroke-width="2" width="520" x="30" y="20"></rect>
+<text fill="#6ee7b7" font-size="14" font-weight="700" x="48" y="49">1 · PAPEL</text><text fill="#d1fae5" font-size="12" x="190" y="49">"Você é um consultor de atendimento..."</text>
+<rect fill="#0f1f18" height="46" rx="10" stroke="#34d399" stroke-width="2.5" width="520" x="30" y="76"></rect>
+<text fill="#6ee7b7" font-size="14" font-weight="700" x="48" y="105">2 · CONTEXTO</text><text fill="#d1fae5" font-size="12" x="190" y="105">"Tenho uma loja online de roupas infantis..."</text>
+<rect fill="#0e1b26" height="46" rx="10" stroke="#38bdf8" stroke-width="2.5" width="520" x="30" y="132"></rect>
+<text fill="#7dd3fc" font-size="14" font-weight="700" x="48" y="161">3 · TAREFA</text><text fill="#e0f2fe" font-size="12" x="190" y="161">"Escreva 3 respostas para esta reclamação"</text>
+<rect fill="#0f1f18" height="46" rx="10" stroke="#34d399" stroke-width="2" width="520" x="30" y="188"></rect>
+<text fill="#6ee7b7" font-size="14" font-weight="700" x="48" y="217">4 · EXEMPLOS</text><text fill="#d1fae5" font-size="12" x="190" y="217">"Veja como respondemos uma vez: ..."</text>
+<rect fill="#0f1f18" height="46" rx="10" stroke="#34d399" stroke-width="2" width="520" x="30" y="244"></rect>
+<text fill="#6ee7b7" font-size="14" font-weight="700" x="48" y="273">5 · FORMATO</text><text fill="#d1fae5" font-size="12" x="190" y="273">"Cada uma com até 60 palavras, numeradas"</text>
+<rect fill="#0f1f18" height="46" rx="10" stroke="#34d399" stroke-width="2" width="520" x="30" y="300"></rect>
+<text fill="#6ee7b7" font-size="14" font-weight="700" x="48" y="329">6 · RESTRIÇÕES</text><text fill="#d1fae5" font-size="12" x="190" y="329">"Não prometa reembolso; tom calmo"</text>
+<path d="M570,20 L590,20 L590,346 L570,346" fill="none" stroke="#38bdf8" stroke-opacity="0.7" stroke-width="2"></path>
+<path d="M590,183 L615,183" fill="none" stroke="#38bdf8" stroke-width="2"></path>
+<rect fill="#0e1b26" filter="url(#m13-glow)" height="90" rx="14" stroke="#38bdf8" stroke-width="2.5" width="220" x="620" y="138"></rect>
+<text fill="#7dd3fc" font-size="15" font-weight="700" text-anchor="middle" x="730" y="170">prompt completo</text>
+<text fill="#bae6fd" font-size="12" text-anchor="middle" x="730" y="192">pouca dúvida sobre</text>
+<text fill="#bae6fd" font-size="12" text-anchor="middle" x="730" y="210">o que você quer</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-emerald-400">Como ler:</strong> cada bloco responde a uma pergunta que a IA faria se pudesse. A tarefa (em azul) é a única obrigatória; o contexto, logo acima dela, é o que mais muda a qualidade. Os outros você acrescenta conforme a importância do resultado.</figcaption>
+</figure>
+<!-- COPY-RUN: template completo -->
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-emerald-400">Objetivo:</strong> <span class="text-neutral-300">usar as seis peças num pedido real do seu trabalho.</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copiar</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900">Papel: você é &lt;ex.: um especialista em atendimento ao cliente de e-commerce&gt;.
+
+Contexto: &lt;quem você é, qual o negócio, quem é o público, o que aconteceu&gt;
+
+Tarefa: &lt;verbo + o que fazer. Ex.: escreva 3 versões de resposta para a
+mensagem abaixo&gt;
+
+Exemplo do que eu gosto: &lt;cole uma resposta antiga que deu certo, ou apague
+esta linha&gt;
+
+Formato: &lt;ex.: lista numerada, cada versão com até 60 palavras&gt;
+
+Restrições: &lt;ex.: não prometer prazo, não usar gírias, tratar por "você"&gt;
+
+Material: &lt;cole aqui a mensagem ou o texto, sem dados pessoais&gt;</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">Como verificar:</strong> leia a resposta com a lista de restrições ao lado e marque cada uma como cumprida ou não. Depois apague a linha de contexto e rode de novo numa conversa nova: a diferença entre as duas respostas mostra quanto o contexto pesa.</p>
+</div>
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Por que aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m1-3-t2-p3" data-sum="porque">Com a anatomia na cabeça você para de depender de "prompts mágicos" copiados da internet. Você sabe montar o seu, para a sua situação, e sabe diagnosticar o que faltou quando a resposta vem fraca: quase sempre é contexto, formato ou restrição.</p>
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Conceitos-chave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Papel</div><div class="text-xs text-neutral-400">ajusta tom e foco</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Contexto</div><div class="text-xs text-neutral-400">a peça que mais pesa</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Tarefa</div><div class="text-xs text-neutral-400">verbo claro, uma por vez</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Restrição</div><div class="text-xs text-neutral-400">o que fica de fora</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como lido</span>
+<span class="inema-label-done">Lido</span>
+</button>
+</div>
+</div>
+</section>
+
+<!-- TÓPICO 3 -->
+<section class="mb-16" data-inema-topic="modulo-1-3#topico-3" id="topico-3" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="mostre, não só descreva">📎 Mostrar com exemplos</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar dúvida neste tópico" type="button"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m1-3-t3-p1">Descrever um estilo em palavras é difícil: "tom leve, mas profissional" significa coisas diferentes para cada pessoa. Mostrar é mais fácil. Quando você cola dois ou três exemplos do que considera bom, a IA percebe o padrão — tamanho, vocabulário, estrutura — e repete. Essa técnica é uma das mais eficientes que existem.</p>
+<div class="bg-dark-800 border border-emerald-500/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-emerald-400 font-semibold mb-1">🌱 Novo aqui?</p>
+<p class="text-sm text-neutral-300" data-inema-block="m1-3-t3-p2"><strong>Zero exemplos</strong> (em inglês, <em>zero-shot</em>) é pedir sem mostrar modelo nenhum. <strong>Poucos exemplos</strong> (<em>few-shot</em>) é colar alguns pares "entrada → saída" antes do pedido, para a IA imitar o padrão. <strong>Material de referência</strong> é um documento que você anexa para a IA consultar: a política da empresa, o cardápio, o manual.</p>
+</div>
+<div class="bg-gradient-to-br from-emerald-900/30 to-dark-800 rounded-xl border border-emerald-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">O que é</h3>
+<p class="text-neutral-300">Usar exemplos é incluir no pedido alguns modelos do resultado esperado, para que a IA copie o padrão em vez de adivinhar o que você quis dizer com palavras vagas.</p>
+</div>
+<!-- COPY-RUN: few-shot -->
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-emerald-400">Experimente:</strong> <span class="text-neutral-300">classificar mensagens de clientes com três exemplos.</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copiar</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900">Classifique mensagens de clientes em: DÚVIDA, RECLAMAÇÃO, ELOGIO ou PEDIDO.
+Responda só com a categoria e um resumo de até 8 palavras.
+
+Exemplos:
+Mensagem: "Vocês entregam em Niterói?"
+Resposta: DÚVIDA — pergunta sobre área de entrega
+
+Mensagem: "Meu pedido chegou com a caixa amassada."
+Resposta: RECLAMAÇÃO — produto chegou com embalagem danificada
+
+Mensagem: "Amei o atendimento da Júlia, muito atenciosa!"
+Resposta: ELOGIO — elogia atendente pelo cuidado
+
+Agora classifique:
+&lt;cole aqui de 5 a 10 mensagens reais, sem nomes nem telefones&gt;</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">Como verificar:</strong> todas as respostas devem seguir exatamente o padrão dos exemplos (CATEGORIA — resumo curto). Confira se a categoria faz sentido em cada uma. Se uma mensagem for ambígua, acrescente um quarto exemplo parecido com ela e rode de novo.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ Exemplos que ajudam</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-emerald-400">✓</span><span>Dois a cinco, variados entre si.</span></li>
+<li class="flex items-start gap-2"><span class="text-emerald-400">✓</span><span>Todos no mesmo formato que você quer receber.</span></li>
+<li class="flex items-start gap-2"><span class="text-emerald-400">✓</span><span>Tirados do seu trabalho real, anonimizados.</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Exemplos que atrapalham</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Todos iguais: a IA copia demais e perde variedade.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Com erros: a IA repete o erro com fidelidade.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>Texto de terceiros que você quer só "copiar" — cuidado com direitos autorais.</span></li>
+</ul>
+</div>
+</div>
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Por que aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m1-3-t3-p3" data-sum="porque">Exemplos resolvem num segundo o que dez linhas de descrição não resolvem. É o caminho mais rápido para a IA escrever "do seu jeito", seguir a padronização da empresa ou classificar coisas exatamente como você classificaria.</p>
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Conceitos-chave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Zero-shot</div><div class="text-xs text-neutral-400">pedido sem modelo</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Few-shot</div><div class="text-xs text-neutral-400">alguns exemplos antes</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Padrão</div><div class="text-xs text-neutral-400">o que a IA imita</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Referência</div><div class="text-xs text-neutral-400">documento anexado</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como lido</span>
+<span class="inema-label-done">Lido</span>
+</button>
+</div>
+</div>
+</section>
+
+<!-- TÓPICO 4 -->
+<section class="mb-16" data-inema-topic="modulo-1-3#topico-4" id="topico-4" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="tabela, lista, tamanho e tom">📐 Formato de saída</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar dúvida neste tópico" type="button"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m1-3-t4-p1">Metade do trabalho depois que a IA responde é reorganizar: transformar parágrafos em tabela, encurtar, trocar o tom. Dá para pular essa etapa pedindo o formato logo de início. A IA segue formatos muito bem — <strong class="text-neutral-100">desde que você diga qual</strong>.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m1-3-t4-p2">Pense em onde a resposta vai parar. Vai para uma planilha? Peça tabela com colunas nomeadas. Vai para o WhatsApp? Peça texto curto, sem marcações. Vai para uma apresentação? Peça títulos e tópicos de até dez palavras. O destino define o formato.</p>
+<div class="bg-gradient-to-br from-emerald-900/30 to-dark-800 rounded-xl border border-emerald-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">O que é</h3>
+<p class="text-neutral-300">Formato de saída é a forma da resposta — estrutura, tamanho, tom e idioma — definida no próprio pedido, de acordo com o lugar onde o texto vai ser usado.</p>
+</div>
+<div class="overflow-x-auto mb-6">
+<table class="w-full text-sm border border-dark-600 rounded-xl overflow-hidden">
+<thead><tr class="bg-dark-700"><th class="text-left p-3 text-emerald-400">Destino</th><th class="text-left p-3 text-emerald-400">Peça assim</th><th class="text-left p-3 text-emerald-400">Exemplo de frase</th></tr></thead>
+<tbody class="divide-y divide-dark-600">
+<tr><td class="p-3 font-semibold">Planilha</td><td class="p-3 text-neutral-300">Tabela com colunas fixas</td><td class="p-3 text-neutral-300">"Tabela com as colunas Produto | Preço | Observação."</td></tr>
+<tr><td class="p-3 font-semibold">WhatsApp</td><td class="p-3 text-neutral-300">Texto curto, sem formatação</td><td class="p-3 text-neutral-300">"Até 3 frases, sem negrito, sem listas."</td></tr>
+<tr><td class="p-3 font-semibold">Apresentação</td><td class="p-3 text-neutral-300">Título + tópicos curtos</td><td class="p-3 text-neutral-300">"5 slides: título e 3 tópicos de até 10 palavras."</td></tr>
+<tr><td class="p-3 font-semibold">E-mail formal</td><td class="p-3 text-neutral-300">Assunto + corpo + fecho</td><td class="p-3 text-neutral-300">"Escreva assunto, corpo de até 120 palavras e despedida."</td></tr>
+<tr><td class="p-3 font-semibold">Decisão rápida</td><td class="p-3 text-neutral-300">Resposta primeiro, detalhe depois</td><td class="p-3 text-neutral-300">"Comece com sim ou não e uma frase de motivo."</td></tr>
+</tbody>
+</table>
+</div>
+<div class="bg-primary/10 border border-primary/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-primary font-semibold mb-1">💡 Dica</p>
+<p class="text-sm text-neutral-300" data-inema-block="m1-3-t4-p3">Diga o que você quer, não só o que não quer. "Não seja prolixo" funciona pior do que "responda em até 80 palavras". Números concretos (palavras, itens, linhas) são seguidos com muito mais fidelidade do que adjetivos como "curto" ou "detalhado".</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Formato vago</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>"Faz um resumo bom."</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400">✗</span><span>"Não escreve muito."</span></li>
+</ul>
+</div>
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ Formato concreto</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start gap-2"><span class="text-emerald-400">✓</span><span>"Resumo em 5 tópicos de uma linha, do mais ao menos urgente."</span></li>
+<li class="flex items-start gap-2"><span class="text-emerald-400">✓</span><span>"Até 100 palavras, em português simples."</span></li>
+</ul>
+</div>
+</div>
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Por que aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m1-3-t4-p4" data-sum="porque">Pedir o formato certo transforma a resposta da IA em algo que você usa direto, sem retrabalho. É o detalhe que separa "a IA me deu um texto" de "a IA me deu a tabela pronta para colar na planilha".</p>
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Conceitos-chave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Destino</div><div class="text-xs text-neutral-400">define o formato</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Número concreto</div><div class="text-xs text-neutral-400">melhor que adjetivo</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Tom</div><div class="text-xs text-neutral-400">formal, próximo, técnico</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Resposta primeiro</div><div class="text-xs text-neutral-400">conclusão antes do detalhe</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como lido</span>
+<span class="inema-label-done">Lido</span>
+</button>
+</div>
+</div>
+</section>
+
+<!-- TÓPICO 5 -->
+<section class="mb-16" data-inema-topic="modulo-1-3#topico-5" id="topico-5" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="o primeiro resultado é rascunho">🔁 Iterar em rodadas</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar dúvida neste tópico" type="button"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m1-3-t5-p1">Raramente a primeira resposta é a final, e tudo bem. A conversa existe para isso: você lê, diz o que mudar, e a IA ajusta. A diferença entre quem tira proveito e quem desiste está em <strong class="text-neutral-100">como</strong> dá esse retorno. "Melhora isso" é tão vago quanto o pedido vago do tópico 1; "o segundo parágrafo ficou formal demais, reescreva como se falasse com um vizinho" é um retorno que funciona.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m1-3-t5-p2">Uma técnica útil é inverter a direção: em vez de você adivinhar o que falta, peça para a IA <strong class="text-emerald-400">perguntar antes de responder</strong>. Ela lista o que precisa saber, você responde, e a primeira versão já sai muito mais perto do alvo.</p>
+<div class="bg-gradient-to-br from-emerald-900/30 to-dark-800 rounded-xl border border-emerald-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">O que é</h3>
+<p class="text-neutral-300">Iterar é melhorar a resposta em rodadas curtas: pedir, ler com critério, dar um retorno específico e pedir de novo, até chegar à versão que você usaria.</p>
+</div>
+<!-- SVG 3: ciclo de iteração -->
+<figure class="svg-frame rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4 mb-6">
+<svg aria-label="Ciclo de quatro etapas em volta de um núcleo que vai do rascunho à versão final: 1 pedir com contexto, 2 ler com critério, 3 dar retorno específico, 4 pedir a nova versão. A seta volta ao início até a resposta estar pronta para usar." class="w-full h-auto" role="img" viewBox="0 0 860 360">
+<defs>
+<marker id="m13-ah" markerHeight="9" markerWidth="9" orient="auto" refX="6.5" refY="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#34d399"></path></marker>
+<style>@keyframes m13spin{to{stroke-dashoffset:-40}} .m13-flow{stroke-dasharray:8 6;animation:m13spin 2s linear infinite}</style>
+</defs>
+<rect fill="url(#m13-grid)" height="360" width="860"></rect>
+<g font-family="Inter,sans-serif">
+<path class="m13-flow" d="M500,70 C600,80 640,120 645,150" fill="none" marker-end="url(#m13-ah)" stroke="#34d399" stroke-width="2.5"></path>
+<path class="m13-flow" d="M640,215 C630,260 590,285 510,295" fill="none" marker-end="url(#m13-ah)" stroke="#34d399" stroke-width="2.5"></path>
+<path class="m13-flow" d="M350,295 C270,285 230,260 220,215" fill="none" marker-end="url(#m13-ah)" stroke="#34d399" stroke-width="2.5"></path>
+<path class="m13-flow" d="M215,150 C220,120 260,80 355,70" fill="none" marker-end="url(#m13-ah)" stroke="#34d399" stroke-width="2.5"></path>
+<rect fill="#0f1f18" height="56" rx="12" stroke="#34d399" stroke-width="2" width="150" x="355" y="40"></rect>
+<text fill="#ecfdf5" font-size="14" font-weight="700" text-anchor="middle" x="430" y="63">1 · Pedir</text><text fill="#a7f3d0" font-size="11" text-anchor="middle" x="430" y="82">com contexto</text>
+<rect fill="#0f1f18" height="56" rx="12" stroke="#34d399" stroke-width="2" width="170" x="565" y="155"></rect>
+<text fill="#ecfdf5" font-size="14" font-weight="700" text-anchor="middle" x="650" y="178">2 · Ler</text><text fill="#a7f3d0" font-size="11" text-anchor="middle" x="650" y="197">com seus critérios</text>
+<rect fill="#0f1f18" height="56" rx="12" stroke="#34d399" stroke-width="2" width="160" x="350" y="268"></rect>
+<text fill="#ecfdf5" font-size="14" font-weight="700" text-anchor="middle" x="430" y="291">3 · Retorno</text><text fill="#a7f3d0" font-size="11" text-anchor="middle" x="430" y="310">o que e onde mudar</text>
+<rect fill="#0f1f18" height="56" rx="12" stroke="#34d399" stroke-width="2" width="170" x="125" y="155"></rect>
+<text fill="#ecfdf5" font-size="14" font-weight="700" text-anchor="middle" x="210" y="178">4 · Nova versão</text><text fill="#a7f3d0" font-size="11" text-anchor="middle" x="210" y="197">mantendo o que era bom</text>
+<circle cx="430" cy="183" fill="#0e1b26" filter="url(#m13-glow)" r="62" stroke="#38bdf8" stroke-width="2.5"></circle>
+<text fill="#bae6fd" font-size="11" text-anchor="middle" x="430" y="170">rascunho</text>
+<text fill="#7dd3fc" font-size="16" font-weight="700" text-anchor="middle" x="430" y="190">↓</text>
+<text fill="#e0f2fe" font-size="13" font-weight="700" text-anchor="middle" x="430" y="210">versão final</text>
+<text fill="#7dd3fc" font-size="12" x="760" y="60">saia do ciclo</text>
+<text fill="#7dd3fc" font-size="12" x="760" y="78">quando você</text>
+<text fill="#7dd3fc" font-size="12" x="760" y="96">usaria o texto</text>
+</g>
+</svg>
+<figcaption class="text-xs text-neutral-400 mt-3 px-1"><strong class="text-emerald-400">Como ler:</strong> siga as setas no sentido horário. Cada volta transforma o rascunho do centro numa versão melhor. O passo que mais faz diferença é o 3: um retorno específico ("o segundo parágrafo", "mais curto", "sem jargão") vale mais que três voltas de "melhora".</figcaption>
+</figure>
+<!-- COPY-RUN: perguntas antes -->
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-emerald-400">Experimente:</strong> <span class="text-neutral-300">deixe a IA perguntar o que falta antes de escrever.</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copiar</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900">Preciso de &lt;ex.: um texto de apresentação da minha empresa para o site&gt;.
+
+Antes de escrever qualquer coisa, me faça as perguntas que você precisa
+para acertar de primeira — no máximo 5, numeradas, uma linha cada.
+Espere minhas respostas.
+
+Depois de escrever, termine com:
+- 2 pontos fracos que você vê na sua própria versão;
+- 1 pergunta sobre algo que ainda pode melhorar.</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">Como verificar:</strong> as perguntas devem ser sobre coisas que só você sabe (público, diferencial, tom), não genéricas. Compare a versão final com uma feita sem as perguntas: a com perguntas costuma pedir menos rodadas de ajuste.</p>
+</div>
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Por que aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m1-3-t5-p3" data-sum="porque">Quem espera perfeição na primeira resposta se frustra e desiste. Quem trata a primeira resposta como rascunho e sabe dar retorno chega a um resultado de qualidade em poucas rodadas — e aprende, a cada rodada, o que colocar no próximo pedido.</p>
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Conceitos-chave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Rodada</div><div class="text-xs text-neutral-400">pedir, ler, ajustar</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Retorno específico</div><div class="text-xs text-neutral-400">o que e onde mudar</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Perguntas antes</div><div class="text-xs text-neutral-400">a IA pede o que falta</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Autocrítica</div><div class="text-xs text-neutral-400">a IA aponta pontos fracos</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como lido</span>
+<span class="inema-label-done">Lido</span>
+</button>
+</div>
+</div>
+</section>
+
+<!-- TÓPICO 6 -->
+<section class="mb-16" data-inema-topic="modulo-1-3#topico-6" id="topico-6" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="dividir, fundamentar e raciocinar">🧠 Tarefas difíceis</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar dúvida neste tópico" type="button"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m1-3-t6-p1">Algumas tarefas são grandes demais para um pedido só: analisar um contrato, montar um plano de negócio, comparar cinco fornecedores. Se você joga tudo de uma vez, a resposta sai rasa ou mistura partes. Três técnicas resolvem a maioria dos casos: <strong class="text-emerald-400">dividir em etapas</strong>, <strong class="text-emerald-400">fundamentar no material</strong> e <strong class="text-emerald-400">usar o modo de raciocínio</strong>.</p>
+<div class="bg-dark-800 border border-emerald-500/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-emerald-400 font-semibold mb-1">🌱 Novo aqui?</p>
+<p class="text-sm text-neutral-300" data-inema-block="m1-3-t6-p2"><strong>Modelo de raciocínio</strong> é uma versão do assistente que "pensa" por um tempo antes de responder, testando caminhos e corrigindo a si mesma. Nos assistentes atuais ele aparece como uma opção de "pensar mais" ou como um modelo separado no seletor. É mais lento, mas acerta mais em lógica, contas e análises. <strong>Fundamentar</strong> é mandar a IA responder só com base no material que você colou, sem completar com o que "acha".</p>
+</div>
+<div class="bg-gradient-to-br from-emerald-900/30 to-dark-800 rounded-xl border border-emerald-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">O que é</h3>
+<p class="text-neutral-300">São técnicas para pedidos complexos: quebrar a tarefa em etapas encadeadas, prender a resposta ao material fornecido e ativar o raciocínio estendido quando a tarefa exige lógica.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-4"><p class="text-emerald-400 font-semibold text-sm mb-1">✂️ Dividir em etapas</p><p class="text-xs text-neutral-300" data-inema-block="m1-3-t6-p3">Primeiro "liste os pontos principais", depois "analise o ponto 2", depois "escreva a recomendação". Cada etapa usa a anterior. Você confere no meio do caminho.</p></div>
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-4"><p class="text-emerald-400 font-semibold text-sm mb-1">📄 Fundamentar</p><p class="text-xs text-neutral-300" data-inema-block="m1-3-t6-p4">"Responda só com base no documento abaixo. Se a resposta não estiver nele, diga 'não consta'." Isso reduz muito a invenção.</p></div>
+<div class="bg-dark-800 border border-dark-600 rounded-xl p-4"><p class="text-emerald-400 font-semibold text-sm mb-1">🧮 Raciocínio</p><p class="text-xs text-neutral-300" data-inema-block="m1-3-t6-p5">Em contas, lógica e comparações, ligue o modo de pensar mais. Peça também que mostre os passos principais, para você conferir onde errou, se errou.</p></div>
+</div>
+<!-- COPY-RUN: fundamentado + etapas -->
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-emerald-400">Objetivo:</strong> <span class="text-neutral-300">analisar um documento longo sem a IA inventar.</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copiar</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900">Vou te passar um documento: &lt;ex.: contrato de aluguel comercial&gt;.
+Regra principal: use SÓ o que está no documento. Se algo não constar,
+escreva "não consta no documento". Cite o trecho (cláusula ou página)
+de cada afirmação.
+
+Etapa 1 — Liste os 8 pontos mais importantes, em uma linha cada.
+Etapa 2 — Marque quais desses pontos envolvem prazo, multa ou dinheiro.
+Etapa 3 — Liste as dúvidas que eu deveria levar a um profissional
+          (advogado, contador) antes de assinar.
+
+Faça só a Etapa 1 agora e espere eu pedir a próxima.
+
+Documento:
+&lt;cole o texto aqui, sem dados pessoais das partes&gt;</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">Como verificar:</strong> abra o documento e confira se cada trecho citado existe e diz aquilo. Se alguma afirmação vier sem citação, peça: "mostre o trecho exato". Lembre: a IA ajuda a ler, mas não substitui um profissional em decisões jurídicas ou financeiras.</p>
+</div>
+<div class="bg-primary/10 border border-primary/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-primary font-semibold mb-1">💡 Dica</p>
+<p class="text-sm text-neutral-300" data-inema-block="m1-3-t6-p6">Dê permissão para a IA dizer "não sei". Uma frase como "se não tiver certeza, diga que não tem" no fim do pedido diminui as respostas inventadas com cara de certeza.</p>
+</div>
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Por que aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m1-3-t6-p7" data-sum="porque">São justamente as tarefas difíceis que mais economizam tempo quando dão certo — e que mais prejudicam quando dão errado. Dividir, fundamentar e raciocinar deixam você usar IA em trabalho sério, com pontos de conferência no caminho.</p>
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Conceitos-chave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Etapas encadeadas</div><div class="text-xs text-neutral-400">uma tarefa por vez</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Fundamentar</div><div class="text-xs text-neutral-400">só o que está no material</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Modo de raciocínio</div><div class="text-xs text-neutral-400">pensa antes de responder</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Citar o trecho</div><div class="text-xs text-neutral-400">prova de cada afirmação</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como lido</span>
+<span class="inema-label-done">Lido</span>
+</button>
+</div>
+</div>
+</section>
+
+<!-- TÓPICO 7 -->
+<section class="mb-16" data-inema-topic="modulo-1-3#topico-7" id="topico-7" style="scroll-margin-top:5rem">
+<div class="flex items-start gap-4 mb-4">
+<span class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">7</span>
+<h2 class="text-2xl font-bold pt-1" data-sub="modelos que você reusa toda semana">📚 Sua biblioteca de prompts</h2>
+</div>
+<div class="ml-0 sm:ml-16">
+<div class="flex justify-start mb-5">
+<button aria-pressed="false" data-inema-doubt-toggle="" title="Marcar dúvida neste tópico" type="button"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
+</div>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m1-3-t7-p1">Depois de algumas semanas, você vai perceber que pede as mesmas coisas: responder cliente, resumir reunião, criar post, revisar texto. Escrever esses pedidos do zero toda vez é desperdício. A saída é uma <strong class="text-emerald-400">biblioteca de prompts</strong>: um documento com seus melhores pedidos, cada um com espaços marcados para o que muda.</p>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m1-3-t7-p2">Os assistentes também guardam pedidos fixos por você: as <strong class="text-neutral-100">instruções personalizadas</strong> (valem para todas as conversas) e as instruções de <strong class="text-neutral-100">projetos</strong> (valem dentro de um assunto). O que você repete em toda conversa — quem você é, o tom que prefere — vai para lá. O módulo 1.4 aprofunda isso.</p>
+<div class="bg-gradient-to-br from-emerald-900/30 to-dark-800 rounded-xl border border-emerald-500/30 p-6 mb-6" data-sum="oque">
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">O que é</h3>
+<p class="text-neutral-300">A biblioteca de prompts é uma coleção organizada dos pedidos que funcionaram, escritos como modelos com variáveis, prontos para copiar, preencher e usar.</p>
+</div>
+<!-- PASSO A PASSO -->
+<div class="relative border-l-2 border-emerald-500/30 ml-3 pl-6 space-y-5 mb-6">
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-emerald-500/20 border-2 border-emerald-400"></span><p class="text-sm text-neutral-300"><strong class="text-emerald-400">Passo 1 · Colete.</strong> Sempre que um pedido der muito certo, copie-o para o documento "Meus prompts".</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-emerald-500/20 border-2 border-emerald-400"></span><p class="text-sm text-neutral-300"><strong class="text-emerald-400">Passo 2 · Generalize.</strong> Troque o que é específico por variáveis entre &lt; &gt;: &lt;cliente&gt;, &lt;produto&gt;, &lt;tom&gt;.</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-emerald-500/20 border-2 border-emerald-400"></span><p class="text-sm text-neutral-300"><strong class="text-emerald-400">Passo 3 · Dê nome e uso.</strong> Título claro e uma linha dizendo quando usar.</p></div>
+<div class="relative"><span class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-sky-500/20 border-2 border-sky-400"></span><p class="text-sm text-neutral-300"><strong class="text-sky-400">Passo 4 · Revise.</strong> A cada mês, melhore os modelos que mais usa com o que aprendeu nas rodadas.</p></div>
+</div>
+<!-- COPY-RUN: gerar modelo -->
+<div class="bg-black/40 rounded-xl border border-dark-600 mb-6 overflow-hidden" data-copy-box="">
+<div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-dark-600">
+<p class="text-sm"><strong class="text-emerald-400">Objetivo:</strong> <span class="text-neutral-300">transformar um pedido que deu certo num modelo reutilizável.</span></p>
+<button class="px-3 py-1 text-xs bg-dark-600 hover:bg-dark-500 rounded-md" data-label-ok="Copiado" onclick="copyCode(this)" type="button">Copiar</button>
+</div>
+<pre class="code-dark p-4 text-sm text-neutral-200 bg-dark-900">Abaixo está um pedido que funcionou muito bem para mim.
+Transforme-o num MODELO reutilizável:
+
+1. Mantenha a estrutura e o que fez ele funcionar.
+2. Troque tudo o que é específico por variáveis entre &lt; &gt;,
+   com um exemplo de preenchimento em cada uma.
+3. Use as seis peças: papel, contexto, tarefa, exemplos, formato, restrições.
+4. Dê um título curto e uma linha "Use quando: ...".
+5. No fim, diga que tipo de pedido parecido NÃO deve usar este modelo.
+
+Pedido original:
+&lt;cole aqui o prompt que deu certo&gt;</pre>
+<p class="px-4 py-3 border-t border-dark-600 text-xs text-neutral-400"><strong class="text-neutral-300">Como verificar:</strong> preencha o modelo com um caso NOVO, diferente do original, e rode numa conversa nova. Se a resposta for tão boa quanto a primeira, o modelo entra na biblioteca. Se não, veja qual variável ficou vaga e acrescente um exemplo nela.</p>
+</div>
+<div class="bg-primary/10 border border-primary/30 rounded-xl p-4 mb-6">
+<p class="text-sm text-primary font-semibold mb-1">💡 Dica</p>
+<p class="text-sm text-neutral-300" data-inema-block="m1-3-t7-p3">Comece pequeno: três modelos para as três tarefas que você mais repete. Uma biblioteca curta que você usa vale mais do que uma lista de cem prompts baixados que você nunca abre.</p>
+</div>
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Por que aprender</h3>
+<p class="text-neutral-300 leading-relaxed mb-6" data-inema-block="m1-3-t7-p4" data-sum="porque">A biblioteca transforma uma boa resposta isolada num resultado que se repete. Ela também é fácil de compartilhar com a equipe: todo mundo passa a pedir do mesmo jeito, e a qualidade deixa de depender de quem está digitando.</p>
+<h3 class="text-lg font-semibold text-emerald-400 mb-3">Conceitos-chave</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-2" data-sum="conceitos">
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Modelo de prompt</div><div class="text-xs text-neutral-400">pedido com variáveis</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Variável</div><div class="text-xs text-neutral-400">o que muda, entre &lt; &gt;</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Instruções fixas</div><div class="text-xs text-neutral-400">valem em toda conversa</div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-lg p-3"><div class="text-emerald-400 font-semibold text-sm">Teste com caso novo</div><div class="text-xs text-neutral-400">prova que o modelo serve</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span>
+<span aria-hidden="true" class="inema-ico-done"><svg fill="none" height="16" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24" width="16"><path d="M5 12l5 5L20 6"></path></svg></span>
+<span class="inema-label-todo">Marcar como lido</span>
+<span class="inema-label-done">Lido</span>
+</button>
+</div>
+</div>
+</section>
+
+<!-- RESUMO -->
+<section class="mb-8">
+<div class="bg-gradient-to-br from-emerald-900/40 via-dark-800 to-dark-800 rounded-xl border border-emerald-500/30 p-6 sm:p-8">
+<h2 class="text-2xl font-bold mb-6">✅ Resumo do módulo</h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start gap-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-neutral-100">Contexto fecha o leque</strong><span class="text-neutral-400"> — pedido vago gera resposta genérica.</span></div></div>
+<div class="flex items-start gap-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-neutral-100">Seis peças, exemplos e formato</strong><span class="text-neutral-400"> — papel, contexto, tarefa, exemplos, formato, restrições.</span></div></div>
+<div class="flex items-start gap-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-neutral-100">Itere com retorno específico</strong><span class="text-neutral-400"> — e deixe a IA perguntar antes.</span></div></div>
+<div class="flex items-start gap-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-neutral-100">Divida, fundamente e guarde</strong><span class="text-neutral-400"> — tarefas difíceis em etapas, bons pedidos na biblioteca.</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-emerald-400 mb-2">Próximo módulo:</h3>
+<p class="text-neutral-300">1.4 — Assistentes e Agentes de IA 🤖</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="index.html">← Voltar para a Trilha</a>
+<a class="flex-1 text-center px-6 py-3 bg-emerald-700 text-white rounded-lg font-semibold hover:bg-emerald-600 transition-colors" href="modulo-1-4.html">Próximo módulo →</a>
+</div>
+</div>
+</section>
+</article>
+</div>
+</div>
+</main>
+<footer class="border-t border-dark-600 py-8 mt-8">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>FTD — Formação da Transformação Digital · conteúdo aberto e gratuito · 2026 · <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" rel="noopener" target="_blank">INEMA.CLUB</a> - <a class="text-amber-700 dark:text-slate-300 hover:underline" href="https://inema.pro" rel="noopener" target="_blank">PRO</a></p>
+</div>
+</footer>
+<!-- SCRIPTS NÚCLEO v1 -->
+<script>
+    function toggleTopic(button) {
+      var topicItem = button.closest('.topic-item');
+      if (!topicItem) return;
+      var explanation = topicItem.querySelector('.topic-explanation');
+      var willOpen = !explanation.classList.contains('active');
+      explanation.classList.toggle('active');
+      button.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+    }
+    function openModal(id) { var m = document.getElementById(id); if (m) { m.classList.remove('hidden'); document.body.style.overflow = 'hidden'; } }
+    function closeModal() { document.querySelectorAll('.modal').forEach(function (m) { m.classList.add('hidden'); }); document.body.style.overflow = 'auto'; }
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
+    function copyCode(btn) {
+      var pre = btn.closest('[data-copy-box]').querySelector('pre');
+      var txt = pre ? pre.innerText : '';
+      var done = function () { var o = btn.getAttribute('data-label-ok') || 'Copiado'; var t = btn.textContent; btn.textContent = o; setTimeout(function () { btn.textContent = t; }, 1500); };
+      try { navigator.clipboard.writeText(txt).then(done, done); } catch (e) { done(); }
+    }
+    (function () {
+      var themeToggle = document.getElementById('theme-toggle');
+      var darkIcon = document.getElementById('theme-toggle-dark-icon');
+      var lightIcon = document.getElementById('theme-toggle-light-icon');
+      var html = document.documentElement;
+      function sync() { var isDark = html.classList.contains('dark'); if (darkIcon) darkIcon.classList.toggle('hidden', isDark); if (lightIcon) lightIcon.classList.toggle('hidden', !isDark); }
+      sync();
+      if (themeToggle) themeToggle.addEventListener('click', function () {
+        html.classList.toggle('dark'); var nowDark = html.classList.contains('dark'); html.style.colorScheme = nowDark ? 'dark' : 'light';
+        try { localStorage.setItem('theme', nowDark ? 'dark' : 'light'); } catch (e) {}
+        try { var p = JSON.parse(localStorage.getItem('inema.prefs') || '{}'); p.theme = nowDark ? 'inema-dark' : 'claro'; localStorage.setItem('inema.prefs', JSON.stringify(p)); } catch (e) {}
+        sync();
+      });
+    })();
+  </script>
+<!-- learn.js + INEMA.init() POR ÚLTIMO -->
+<script src="../../assets/learn.js"></script>
+<script>
+    if (window.INEMA && typeof window.INEMA.init === 'function') { window.INEMA.init({ autoResume: true }); }
+  </script>
+</body>
+</html>
