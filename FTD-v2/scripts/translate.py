@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Traduz i18n/source.json (gerado por localization.py) para EN/ES e guarda em i18n/<lang>.json.
-Motor ÚNICO: Codex pela assinatura (`codex exec -m gpt-6-luna`). Nenhuma API, nenhuma reserva.
+Motor ÚNICO: tradutor central do INEMA (`inema-traduz`, INEMA_TRADUCAO_* em ~/.config/inema/modelos.env, hoje Sonnet 5.5)
+pela assinatura. Nenhuma API, nenhuma reserva.
 Só envia o que ainda não está no cache; lotes em paralelo; resposta validada (ids, tipo, tamanho) antes de gravar.
 Uso: python3 scripts/translate.py [en] [es]      (PARALELO=4 LOTE=5000 por variável de ambiente)"""
 import json, os, re, subprocess, sys, tempfile, threading
@@ -8,10 +9,8 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-MODEL = os.environ.get('CODEX_MODEL', 'gpt-6-luna')
 PARALELO = int(os.environ.get('PARALELO', '4'))
 LOTE = int(os.environ.get('LOTE', '5000'))
-CODEX = next((c for c in [os.path.expanduser('~/.npm-global/bin/codex')] if os.path.exists(c)), 'codex')
 NOME = {'en': 'clear, natural US English', 'es': 'neutral Latin American Spanish'}
 LOCK = threading.Lock()
 
@@ -29,15 +28,24 @@ RULES
 - Tone: direct, second person ("you"/"tú"), active voice, no hype."""
 
 
-def codex_json(prompt):
+_TRADUTOR = os.path.expanduser("~/projetos/wifi/scripts/inema-traduz")
+def chamar_tradutor(pedido: str, timeout: int = 900) -> str:
+    """Tradução pelo tradutor central do INEMA (INEMA_TRADUCAO_* em ~/.config/inema/modelos.env). Assinatura, nunca API."""
+    if os.path.exists(_TRADUTOR):
+        cmd = [_TRADUTOR]
+    else:  # fora da máquina do Nei: Claude Code da assinatura com o modelo da variável (padrão Sonnet 5.5)
+        cmd = ["claude", "-p", "--model", os.environ.get("INEMA_TRADUCAO_MODELO", "claude-sonnet-5-5"),
+               "--output-format", "text", "--tools", ""]
+    env = {k: v for k, v in os.environ.items() if k not in ("ANTHROPIC_API_KEY", "OPENAI_API_KEY", "CLAUDECODE")}
     with tempfile.TemporaryDirectory() as d:
-        out = Path(d) / 'out.txt'
-        env = {**os.environ, 'PATH': os.path.dirname(CODEX) + ':' + os.environ.get('PATH', '')}
-        r = subprocess.run([CODEX, 'exec', '-m', MODEL, '--skip-git-repo-check', '--ephemeral', '--sandbox', 'read-only',
-                            '-C', d, '-o', str(out), '-'], input=prompt, text=True, capture_output=True, timeout=1200, env=env)
-        if r.returncode or not out.exists():
-            raise RuntimeError(f'codex rc={r.returncode}: {r.stderr[-300:]}')
-        t = re.sub(r'^```(?:json)?\s*|\s*```$', '', out.read_text().strip())
+        r = subprocess.run(cmd, input=pedido, capture_output=True, text=True, timeout=timeout, env=env, cwd=d)
+    if r.returncode != 0 or not r.stdout.strip():
+        raise RuntimeError(f"tradutor falhou rc={r.returncode}: {(r.stderr or r.stdout)[-300:]}")
+    return r.stdout
+
+
+def tradutor_json(prompt):
+    t = re.sub(r'^```(?:json)?\s*|\s*```$', '', chamar_tradutor(prompt, timeout=1200).strip())
     return json.loads(t[t.index('{'):t.rindex('}') + 1])
 
 
@@ -80,7 +88,7 @@ def translate(lang):
         prompt = SYS.format(nome=NOME[lang]) + '\n\nINPUT JSON:\n' + payload
         for tent in range(3):
             try:
-                out = check(batch, ids, codex_json(prompt), lang)
+                out = check(batch, ids, tradutor_json(prompt), lang)
                 with LOCK:
                     cache.update(out)
                     path.write_text(json.dumps(cache, ensure_ascii=False, indent=1) + '\n')
